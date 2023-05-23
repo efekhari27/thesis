@@ -1,0 +1,46 @@
+%!TEX root = ../thesis.tex
+%*******************************************************************************
+%*********************************** First Chapter *****************************
+%*******************************************************************************
+\chapter{Treatment of uncertainties in computer experiments}
+%*******************************************************************************
+    \section{Problem specification (step A)}
+        \subsection{Black-box computer model}
+        \subsection{Output quantity of interest}
+    \section{Input uncertainty quantification (step B)}
+        \subsection{Joint probability distribution \elias{copulogram package}}
+        \subsection{Parametric multivariate estimation}
+        \subsection{Non-parametric multivariate estimation}
+        \subsection{Goodness-of-fit}
+    \section{Uncertainty propagation for central tendency estimation (step C)}
+        \subsection{Numerical integration}
+            \subsubsection{``Good'' properties}
+            \elias{Curse of dim / Sequential / Deterministic}
+            \subsubsection{Gauss-Kronrod}
+            \subsubsection{Monte Carlo}
+            \subsubsection{Quasi-Monte Carlo and Koksma-Hlawka inequality}
+        \subsection{Numerical design of experiments}
+            \subsubsection{Space-filling metrics}
+            \elias{MinMax / PhiP / MaxMin / Discrepancies}
+            \subsubsection{``Good'' properties}
+            \elias{Curse of dim / Projections in sub-spaces / Sequential / Deterministic}
+            \subsubsection{Monte Carlo, quasi-Monte Carlo, randomized quasi-Monte Carlo designs}
+            \subsubsection{LHS, optimized LHS designs}
+        \subsection{Central tendency estimation}
+            \subsubsection{Iso-probabilistic transformation}
+            \subsubsection{Central tendency estimation is a probabilistic integration}
+    \section{Uncertainty propagation for rare event estimation (step C)}
+        \subsection{Problem formalization}
+            \subsubsection{Limit-state function, failure event and domain}
+            \subsubsection{Risk measures \elias{Failure probability, quantile, super-quantile}}
+        \subsection{Rare event estimation methods}
+            \subsubsection{FORM/SORM}
+            \subsubsection{Monte Carlo}
+            \subsubsection{Importance sampling}
+            \subsubsection{Adaptive sampling (SS/NAIS/IS-CE/Moving particles)}
+    \section{Sensitivity analysis (step C')}
+        \subsection{Global sensitivity analysis}
+        \subsection{Reliability-oriented sensitivity analysis}
+    \section{Metamodeling}
+        \subsection{Global metamodel}
+        \subsection{Reliability-oriented metamodel}
