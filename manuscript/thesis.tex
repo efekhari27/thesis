@@ -80,11 +80,11 @@
 
 % ********************************** Preamble **********************************
 % Preamble: Contains packages and user-defined commands and settings
-\input{preamble}
+\input{classes/macro}
 
 % ************************ Thesis Information & Meta-data **********************
 % Thesis title and author information, refernce file for biblatex
-\input{thesis-info}
+\input{classes/thesis-info}
 
 % ***************************** Abstract Separate ******************************
 % To printout only the titlepage and the abstract with the PhD title and the
@@ -93,7 +93,7 @@
 
 \ifdefineAbstract
  \pagestyle{empty}
- \includeonly{declaration, abstract}
+ \includeonly{classes/declaration, classes/abstract}
 \fi
 
 % ***************************** Chapter Mode ***********************************
@@ -166,7 +166,7 @@
 %\bibliographystyle{unsrt} % Use for unsorted references  
 %\bibliographystyle{plainnat} % use this to have URLs listed in References
 \cleardoublepage
-\bibliography{references} % Path to your References.bib file
+\bibliography{references.bib} % Path to your References.bib file
 
 
 % If you would like to use BibLaTeX for your references, pass `custombib' as

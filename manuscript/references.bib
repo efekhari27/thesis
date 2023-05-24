@@ -1,390 +1,1051 @@
-% ------------------------------------------------------------------------
-% SAMPLE BIBLIOGRAPHY FILE
-% ------------------------------------------------------------------------
-@misc{cve-2008-1368,
-  key =          {CVE-2008-1368},
-  title =        {Publication quality tables in \LaTeX*},
-  howpublished = {},
-  institution  = {NIST},
-  day =       17,
-  month =     {March},
-  year =         2008,
-  note =         {[online] \url{http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-1368}},
-  url = {http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-1368}
+%% Remarques VCN
+% Warning when copy-paste with bad encoding
+% Double { } around titles
+% Respect the same type order
+% Do not show first names
+% Name-coding examples 
+% abdallah_lataniotis_PEM_2017
+
+%======================== PAPERS EFI ========================%
+@unpublished{fekhari_DCE_2023,
+    title = {{Fast given-data uncertainty propagation in offshore wind turbine simulator using Bayesian quadrature}},
+    author = {Fekhari, E. and Chabridon, V. and Mure, J. and Iooss, B.},
+    note = {preprint: hal-04052859v1},
+    year = {2023},
+    HAL_ID = {hal-04052859v1},
 }
 
-@MISC{prime-number-theorem,
-   author = "Charles Louis Xavier Joseph de la Vall{\'e}e Poussin",
-   note = "A strong form of the prime number theorem, 19th century" }
-
-% ------------------------------------------------------------------------
-
-@BOOK{texbook,
-   author = "Donald E. Knuth",
-   title= "The {{\TeX}book}",
-   publisher = "Addison-Wesley",
-   year = 1984 }
-
-@BOOK{latex,
-   author = "Leslie Lamport",
-   title = "{\LaTeX:} {A} Document Preparation System",
-   publisher = "Addison-Wesley",
-   year = 1986 }
-
-% ------------------------------------------------------------------------
-@article{Ancey1996,
-author = {Ancey, Christophe and Coussot, Philippe and Evesque, Pierre},
-journal = {Mechanics of Cohesive-frictional Materials},
-number = {4},
-pages = {385--403},
-title = {Examination of the possibility of a fluid-mechanics treatment of dense granular flows},
-url = {http://doi.wiley.com/10.1002/(SICI)1099-1484(199610)1:4<385::AID-CFM20>3.0.CO;2-0},
-volume = {1},
-year = {1996}
+@unpublished{fekhari_ICASP_2023,
+    title = {{Bernstein adaptive nonparametric conditional sampling: a new method for rare event probability estimation}},
+    author = {Fekhari, E. and Chabridon, V. and Mure, J. and Iooss, B.},
+    note = {preprint: hal-04052861v1},
+    year = {2023},
+    HAL_ID = {hal-04052861v1},
 }
 
-@BOOK{RR73,
- author={H. Radjavi and P. Rosenthal},
- title={Invariant {Subspaces}},
- publisher={Springer-Verlag},
- address={New York},
- year={1973},
+@inproceedings{lovera_fekhari_2023,
+    author = {A. Lovera and E. Fekhari and B. Jézéquel and M. Dupoiron and M. Guiton and E. Ardillon},
+    title = {{Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis}},
+    publisher = {IOP Publishing},
+    booktitle = {Journal of Physics: Conference Series},
+    year = {2023},
 }
 
-@BOOK{Aup91,
- author={B. Aupetit},
- title={A {Primer} on {Spectral} {Theory}},
- publisher={Springer-Verlag},
- address={New York},
- year={1991},
+@inproceedings{vanem_fekhari_2023,
+    author = {Vanem, E. and Fekhari, E. and Dimitrov, N. and Kelly, M and Cousin, A. and Guiton, M.},
+    title = {{A joint probability distribution model for multivariate wind and wave conditions}},
+    booktitle = {Proceedings of the ASME 2023 42th International Conference on Ocean, Offshore and Arctic Engineering},
+    year = {to appear in 2023},
 }
 
-@BOOK{Dou72,
- author={R. G. Douglas},
- title={Banach {Algebra} {Techniques} in {Operator} {Theory}},
- publisher={Academic Press},
- address={New York},
- year={1972},
+@inproceedings{fekhari_iooss_2023,
+    author = {E. Fekhari and B. Iooss and J. Mur\'e and L. Pronzato and J. Rendas},
+    title = {{Model predictivity assessment: incremental test-set selection and accuracy evaluation}},
+    editor = {N. Salvati and C. Perna and S. Marchetti and R. Chambers},
+    publisher = {Springer Cham},
+    booktitle = {Studies in Theoretical and Applied Statistics, SIS 2021, Pisa, Italy, June 21-25},
+    year = {2023}
 }
 
-@BOOK{Hal82,
- author={P. R. Halmos},
- title={A {Hilbert} {Space} {Problem} {Book}},
- edition={Second},
- publisher={Springer-Verlag},
- address={New York},
- year={1982},
+@inproceedings{fekhari_renew_2021,
+    author = {Fekhari, E. and Iooss, B. and Chabridon, V. and {Mur\'{e}}, J.},
+    title = {{Efficient techniques for fast uncertainty propagation in an offshore wind turbine multi-physics simulation tool}},
+    year = {2021},
+    booktitle = {Proceedings of the 5th International Conference on Renewable Energies Offshore},
+    pages = {837--846},
 }
 
-@BOOK{Rud73,
- author={W. Rudin},
- title={Functional {Analysis}},
- publisher={McGraw-Hill},
- address={New York},
- year={1973},
+@inproceedings{fekhari_baudin_2021,
+    author = {Fekhari, E. and Baudin, M. and Chabridon, V. and Jebroun, Y.},
+    year = {2021},
+    pages = {218 -- 231},
+    booktitle={Proceedings of the 4\textsuperscript{th} International Conference on Uncertainty Quantification in Computational Sciences and Engineering},
+    title = {{otbenchmark: an open source Python package for benchmarking and validating uncertainty quantification algorithms}},
 }
 
-@BOOK{Con90,
- author={J. B. Conway},
- title={A {Course} in {Functional} {Analysis}},
- edition={Second},
- publisher={Springer-Verlag},
- address={New York},
- year={1990},
+
+%============================================================%
+%============================================================%
+%=========== DESIGN OF EXPERIMENTS & QUADRATURE =============%
+%============================================================%
+%============================================================%
+
+%%------------------------ PAPERS --------------------------%%
+@article{damblin_couplet_2013,
+    author = {Damblin, G. and Couplet, M. and Iooss, B.},
+    year = {2013},
+    title = {{Numerical studies of space-filling designs: Optimization of Latin Hypercube Samples and subprojection properties}},
+    volume = {7},
+    journal = {Journal of Simulation},
 }
 
-@BOOK{Con78,
- author={J. B. Conway},
- title={Functions of {One} {Complex} {Variable}},
- publisher={Springer-Verlag},
- address={New York},
- year={1978},
+@article{kucherenko_feil_2011,
+    author = {Kucherenko, S. and Feil, B. and Shah, N. and Mauntz, W.},
+    year = {2011},
+    month = {04},
+    title = {{The identification of model effective dimensions using global sensitivity analysis}},
+    volume = {96},
+    pages = {440--449},
+    journal = {Reliability Engineering \& System Safety},
 }
 
-@BOOK{KR83,
- author={R. V. Kadison and J. R. Ringrose},
- title={Fundamentals of the {Theory} of {Operator} {Algebras},
-        {Part} {I}},
- publisher={Academic Press},
- address={New York},
- year={1983},
+@article{morokoff_1995,
+    title = {{Quasi-Monte Carlo Integration}},
+    journal = {Journal of Computational Physics},
+    volume = {122},
+    number = {2},
+    pages = {218--230},
+    year = {1995},
+    author = {William J. Morokoff and Russel E. Caflisch},
 }
 
-@BOOK{KR86,
- author={R. V. Kadison and J. R. Ringrose},
- title={Fundamentals of the {Theory} of {Operator} {Algebras},
-        {Part} {II}},
- publisher={Academic Press},
- address={New York},
- year={1986},
+@article{mckay_beckman_1979,
+    author = {Mckay, M. and Beckman, R. and Conover, W.},
+    year = {1979},
+    month = {05},
+    pages = {239 -- 245},
+    title = {{A Comparison of Three Methods for Selecting Vales of Input Variables in the Analysis of Output From a Computer Code}},
+    volume = {21},
+    journal = {Technometrics},
 }
 
-@INBOOK{SFPT,
- author={N. Dunford and J. T. Schwartz},
- title={Linear {Operators},
-        {Part} {I}: {General} {Theory}},
- pages={456},
- publisher={Interscience},
- address={New York},
- year={1957},
+@article{owen_2003,
+    author = {Owen, A.},
+    year = {2003},
+    pages = {1--17},
+    title = {{The dimension distribution and quadrature test functions}},
+    volume = {13},
+    journal = {Statistica Sinica}
 }
 
-@BOOK{DS57,
- author={N. Dunford and J. T. Schwartz},
- title={Linear {Operators},
-        {Part} {I}: {General} {Theory}},
- publisher={Interscience},
- address={New York},
- year={1957},
+@article{torossian_picheny_2020,
+    author = {L. Torossian and V. Picheny and R. Faivre and A. Garivier},
+    year = {2020},
+    volume = {201},
+    number = {106858},
+    title = {{A review on quantile regression for stochastic computer experiments}},
+    journal = {Reliab. Eng. Syst. Saf.}
 }
 
-@BOOK{Gan59,
- author={F. R. Gantmacher},
- title={Applications of the {Theory} of {Matrices}},
- publisher={Interscience},
- address={New York},
- year={1959},
+@inproceedings{tuffin_2019,
+    title={{Randomized quasi-Monte Carlo for quantile estimation}},
+    author={Kaplan, Z.T. and Li, Y. and Nakayama, M.K. and Tuffin, B.},
+    booktitle={2019 Winter Simulation Conference (WSC)},
+    pages={428--439},
+    year={2019},
 }
 
-@BOOK{Pau86,
- author={Vern I. Paulsen},
- title={Completely bounded maps and dilations},
- series={Pitman Research Notes in Mathematics Series},
- volume={146},
- publisher={Longman Scientific \& Technical},
- address={Harlow UK},
- year={1986},
+
+
+
+%%--------------- BOOKS - REPORTS - THESIS -----------------%%
+@phdthesis{franco_2008,
+    author       = {Franco, J.}, 
+    title        = {{Planification d'exp\'{e}riences num\'{e}riques en phase exploratoire pour la simulation des ph\'{e}nomènes complexes}},
+    school       = {Ecole Nationale Sup\'{e}rieure des Mines de Saint-Etienne},
+    year         = 2008,
 }
 
-@BOOK{Dav88,
- author={Kenneth R. Davidson},
- title={Nest algebras},
- series={Pitman Research Notes in Mathematics Series},
- volume={191},
- publisher={Longman Scientific \& Technical},
- address={Harlow UK},
- year={1988},
+@book{fang_li_2006,
+    author             = {K-T. Fang and R. Li and A. Sudjianto},
+    publisher          = {Chapman \& Hall/CRC},
+    title              = {{Design and Modeling for Computer Experiments}},
+    year               = {2006}
 }
 
-@BOOK{Spi65,
- author={Michael Spivak},
- title={Calculus on {Manifolds}},
- publisher={The Benjamin/Cummings Publishing Company},
- address={New York},
- year={1965},
+
+
+
+%============================================================%
+%============================================================%
+%================= RELIABILITY ANALYSIS =====================%
+%============================================================%
+%============================================================%
+
+%%------------------------ PAPERS --------------------------%%
+@article{AuBeck2001,
+	author = {Au, S.-K. and Beck, J. L.},
+	year = 2001,
+	title = {Estimation of small failure probabilities in high dimensions by subset simulation},
+	journal = {Probabilistic Engineering Mechanics},
+	volume = 16,
+	number = 4,
+	pages = {263--277}
 }
 
-@BOOK{Dev68,
- author={Allen Devinaz},
- title={Advanced {Calculus}},
- publisher={Holt, Rinehart and Winston},
- address={New York},
- year={1968},
+@article{bect_ginsbourger_2012,
+    author = {Bect, J. and Ginsbourger, D. and Li, L. and Picheny, V. and Vazquez, E.},
+    year = {2012},
+    pages = {773 -- 793},
+    volume={22},
+    title = {{Sequential design of computer experiments for the estimation of a probability of failure}},
+    journal = {Statistics and Computing}
 }
 
-@BOOK{Gam90,
- editor={R. V. Gamkerlidze},
- title={Analysis {I}{I}: {Convex} {Analysis} and
-        {Approximation} {Theory}},
- series={Encyclopaedia of Mathematical Sciences},
- volume={14},
- publisher={Springer-Verlag},
- address={New York},
- year={1990},
+@article{cerou2012sequential,
+    title={Sequential Monte Carlo for rare event estimation},
+    author={C{\'e}rou, F. and Del Moral, P. and Furon, T. and Guyader, A.},
+    journal={Statistics and computing},
+    volume={22},
+    pages={795--808},
+    year={2012},
+    publisher={Springer}
 }
 
-@BOOK{Hen93,
- author={Peter Henderson},
- title={Object-oriented specification and design with {C}$++$},
- publisher={McGraw-Hill},
- address={London},
- year={1993},
+@article{chabridon2021global,
+  title={Global Reliability-oriented Sensitivity Analysis under Distribution Parameter Uncertainty},
+  author={Chabridon, Vincent and Balesdent, Mathieu and Perrin, Guillaume and Morio, J{\'e}r{\^o}me and Bourinet, Jean-Marc and Gayton, Nicolas},
+  journal={Mechanical Engineering under Uncertainties: From Classical Approaches to Some Recent Developments},
+  pages={237--277},
+  year={2021},
+  publisher={Wiley Online Library}
 }
 
-% ------------------------------------------------------------------------
-
-@ARTICLE{Rea85,
- author={C. J. Read},
- title={A solution to the invariant subspace problem on the space $l_1$},
- journal={Bull. London Math. Soc.},
- volume={17},
- year={1985},
- pages={305-317},
+@article{echard_2011,
+    title = {{AK-MCS: An active learning reliability method combining Kriging and Monte Carlo Simulation}},
+    journal = {Structural Safety},
+    volume = {33},
+    pages = {145--154},
+    year = {2011},
+    author = {B. Echard and N. Gayton and M. Lemaire},
 }
 
-@ARTICLE{Enf87,
- author={P. Enflo},
- title={On the invariant subspaces problem for {Banach} spaces},
- journal={Acta. Math.},
- note={Seminare Maurey-Schwartz (1975-1976)},
- volume={158},
- year={1987},
- pages={213-313},
+@article{glasserman1999multilevel,
+    title={Multilevel splitting for estimating rare event probabilities},
+    author={Glasserman, P. and Heidelberger, P. and Shahabuddin, P. and Zajic, T.},
+    journal={Operations Research},
+    volume={47},
+    pages={585--600},
+    year={1999},
 }
 
-@ARTICLE{Dau75,
- author={J. Daughtry},
- title={An invariant subspace theorem},
- journal={Proc. Amer. Math. Soc.},
- volume={49},
- year={1975},
- pages={267-268},
+@article{lebrun_2009,
+    title={{A generalization of the Nataf transformation to distributions with elliptical copula}},
+    author={Lebrun, R. and Dutfoy, A.},
+    journal={Probabilistic Engineering Mechanics},
+    volume={24},
+    number={2},
+    pages={172--178},
+    year={2009},
 }
 
-@ARTICLE{KPS75,
- author={H. W. Kim and C. Pearcy and A. L. Shields},
- title={Rank-One Commutators and Hyperinvariant Subspaces},
- journal={Michigan Math. J.},
- volume={22},
- number={3},
- year={1975},
- pages={193-194},
+@article{marrel_chabridon_2021,
+    title = {{Statistical developments for target and conditional sensitivity analysis: Application on safety studies for nuclear reactor}},
+    journal = {Reliability Engineering \& System Safety},
+    volume = {214},
+    pages = {107711},
+    year = {2021},
+    author = {A. Marrel and V. Chabridon},
 }
 
-% --------------------------------------------------------------------------
-
-@ARTICLE{Rad87,
- author={H. Radjavi},
- title={The {Engel}-{Jacobson} {Theorem} {Revisited}},
- journal={J. Alg.},
- volume={111},
- year={1987},
- pages={427-430},
+@inproceedings{mell_rey_2021,
+    author = {Mell, L. and Rey, V. and Schoefs, F.},
+    year = {2021},
+    title = {{A multifidelity approach using discretization error bounds to estimate the probability of failure of structures}},
+    booktitle= {Proceedings of the 14th World Congress on Computational Mechanics (WCCM) ECCOMAS Congress}
 }
 
-@ARTICLE{MOR91,
- author={B. Mathes and M. Omladi\v{c} and H. Radjavi},
- title={Linear {Spaces} of {Nilpotent} {Operators}},
- journal={Linear Algebra Appl.},
- volume={149},
- year={1991},
- pages={215-225},
+@article{moustapha_ss_2022,
+    title = {Active learning for structural reliability: Survey, general framework and benchmark},
+    journal = {Structural Safety},
+    volume = {96},
+    pages = {102174},
+    year = {2022},
+    author = {M. Moustapha and S. Marelli and B. Sudret},
 }
 
-@ARTICLE{Lom73,
- author={V. I. Lomonosov},
- title={Invariant subspaces for operators commuting with compact
-        operators},
- journal={Functional Anal. Appl.},
- volume=7,
- year=1973,
- pages="213-214",
+@article{Morio_RESS_2011,
+	author = {Morio, J.},
+	year = 2011,
+	title = {Non-parametric adaptive importance sampling for the probability estimation of a launcher impact position},
+	journal = {Reliability Engineering and System Safety},
+	volume = 96,
+	number = 1,
+	pages = {178--183}
 }
 
-@ARTICLE{Lom91,
- author={V. I. Lomonosov},
- title={An extension of {Burnside}'s theorem to infinite
-        dimensional spaces},
- journal={Israel J. Math},
- volume=75,
- year=1991,
- pages="329-339",
+@article{NKurtz_JSong_StrucSaf_2013,
+	author = {Kurtz, N. and Song, J.},
+	title = {{Cross-entropy-based adaptive importance sampling using Gaussian mixture}},
+	year = 2013,
+	journal = {Structural Safety},
+	volume = 42,
+	pages = {35--44}
 }
 
-@ARTICLE{Lom92,
- author={V. I. Lomonosov},
- title={On {Real} {Invariant} {Subspaces} of {Bounded} {Operators} with
-       {Compact} {Imaginary} {Part}},
- journal={Proc. Amer. Math. Soc.},
- volume=115,
- number=3,
- month=jul,
- year=1992,
- pages="775-777",
+@article{Papaioannou_PEM_2015,
+	author = {Papaioannou, I. and Betz, W. and Zwirglmaier, K. and Straub, D.},
+	year = 2015,
+	title = {{MCMC algorithms for Subset Simulation}},
+	journal = {Probabilistic Engineering Mechanics},
+	volume = 41,
+	pages = {89--103}
 }
 
-@ARTICLE{dB59,
- author={L. de Branges},
- title={The {Stone}-{Weierstrass} {Theorem}},
- journal={Proc. Amer. Math. Soc.},
- volume=10,
- year=1959,
- pages="822-824",
+@article{yun2018efficient,
+    title={An efficient global reliability sensitivity analysis algorithm based on classification of model output and subset simulation},
+    author={Yun, W. and Lu, Z. and Zhang, Y. and Jiang, X.},
+    journal={Structural Safety},
+    volume={74},
+    pages={49--57},
+    year={2018},
+    publisher={Elsevier}
 }
 
-@ARTICLE{dB93,
- author={L. de Branges},
- title={A construction of invariant subspaces},
- journal={Math. Nachr.},
- volume=163,
- year=1993,
- pages="163-175",
+
+
+
+%%--------------- BOOKS - REPORTS - THESIS -----------------%%
+@phdthesis{ajenjo_2023,
+    author = {Ajenjo, A.},
+    year = {2023},
+    title = {{Info-gap robustness assessment of reliability evaluations for the safety of critical industrialsystems}},
+    school = {Universit\'e Bourgogne Franche-Comt\'e},}
+
+@phdthesis{dubourg_2011,
+    author = {Dubourg, V.},
+    year = {2011},
+    school = {Universit\'{e} Blaise Pascal},
+    title = {{Adaptive surrogate models for reliability analysis and reliability-based design optimization}}
 }
 
-@ARTICLE{AAB95,
- author={Y. A. Abramovich and C. D. Aliprantis and O. Burkinshaw},
- title={Another Characterization of the Invariant Subspace Problem},
- journal={Operator Theory in Function Spaces and Banach Lattices.
-          {\em The A.C.\,Zaanen Anniversary Volume},
-          Operator Theory: Advances and Applications},
- volume={75},
- year={1995},
- pages={15-31},
- note={Birkh\"auser Verlag},
+@book{MorioBalesdent2015,
+	author = {Morio, J. and Balesdent, M.},
+	year = 2015,
+	title={{Estimation of Rare Event Probabilities in Complex Aerospace and Other Systems: A Practical Approach}},
+	publisher = {Woodhead Publishing, Elsevier}
 }
 
-@ARTICLE{LM65,
- author={Ju. I. Ljubi\v{c} and V. I. Macaev},
- title={On Operators with a Separable Spectrum},
- journal={Amer. Math. Soc. Transl. (2)},
- volume={47},
- year={1965},
- pages={89-129},
+@BOOK{RubinsteinKroese1981,
+	author = {Rubinstein, R. Y. and Kroese, D. P.},
+	year = 2008,
+	title = {{S}imulation and the {M}onte {C}arlo {M}ethod},
+	edition = {{S}econd ed.},
+	publisher = {Wiley}
 }
 
-% ------------------------------------------------------------------------
-
-@MASTERSTHESIS{Sim90,
- author={A. Simoni\v{c}},
- title={Grupe Operatorjev s Pozitivnim Spektrom},
- school={Univerza v Ljubljani, FNT, Oddelek za Matematiko},
- year={1990},
+@phdthesis{waarts2000structural,
+    title={Structural reliability using finite element methods: an appraisal of directional adaptive response surface sampling (DARS)},
+    author={Waarts, PH},
+    year={2000},
+    school={Technical University of Delft},
+    address={The Netherlands}
 }
 
-@UNPUBLISHED{Sim91,
- author={A. Simoni\v{c}},
- title={Notes on {Subharmonic} {Functions}},
- note={Lecture Notes, Dalhousie University,
-       Department of Mathematics, Statistics, \& Computing Science},
- year={1991},
+
+
+
+%============================================================%
+%============================================================%
+%======================= COPULAS ============================%
+%============================================================%
+%============================================================%
+
+%%------------------------ PAPERS --------------------------%%
+@article{nagler_2017,
+    title = {{Nonparametric estimation of simplified vine copula models: comparison of methods}},
+    author = {T. Nagler and C. Schellhase and C. Czado},
+    pages = {99--120},
+    volume = {5},
+    journal = {Dependence Modeling},
+    year = {2017},
 }
 
-@ARTICLE{Sim92,
- author={A. Simoni\v{c}},
- title={Matrix {Groups} with {Positive} {Spectra}},
- journal={Linear Algebra Appl.},
- volume={173},
- year={1992},
- pages={57-76},
+@article{sancetta_satchell_2004, 
+    title={The {B}ernstein copula and its applications to modeling and approximations of multivariate distributions}, 
+    volume={20}, 
+    number={3}, 
+    journal={Econometric Theory}, 
+    author={Sancetta, A. and Satchell, S.}, 
+    year={2004}, 
+    pages={535--562}
 }
 
-@PHDTHESIS{Sim94,
- author={A. Simoni\v{c}},
- title={An {Extension} of {Lomonosov's} {Techniques} to {Non}-{Compact}
-       {Operators}},
- school={Dalhousie University,
-         Department of Mathematics, Statistics, \& Computing Science},
- year={1994},
+@article{segers_2017,
+    title = {The empirical beta copula},
+    journal = {Journal of Multivariate Analysis},
+    volume = {155},
+    pages = {35--51},
+    year = {2017},
+    author = {J. Segers and M. Sibuya and H. Tsukahara},
 }
 
-@ARTICLE{Sim96a,
- author={A. Simoni\v{c}},
- title={A {Construction} of {Lomonosov} {Functions} and
-       {Applications} to the {Invariant} {Subspace} {Problem}},
- journal={Pacific J. Math.},
- volume={175},
- pages={257-270},
- year={1996},
+
+
+
+%%--------------- BOOKS - REPORTS - THESIS -----------------%%
+@book{joe_1997,
+    title={Multivariate Models and Multivariate Dependence Concepts},
+    author={H. Joe},
+    year={1997},
+    publisher={Chapman and Hall}
 }
 
-@ARTICLE{Sim96b,
- author={A. Simoni\v{c}},
- title={An extension of {Lomonosov's} {Techniques} to non-compact
-       {Operators}},
- journal={Trans. Amer. Math. Soc.},
- volume={348},
- pages={975-995},
- year={1996},
+@book{joe2011dependence,
+    title={Dependence modeling: vine copula handbook},
+    author={Joe, Harry and Kurowicka, Dorota},
+    year={2011},
+    publisher={World Scientific}
 }
 
-% ------------------------------------------------------------------------
+@phdthesis{lasserre_2022,
+    author = {Lasserre, M.},
+    year = {2022},
+    title = {Apprentissages dans les réseaux bayésiens à base de copules non-paramétriques},
+    school={Sorbonne Université}, 
+}
+
+@phdthesis{Lebrun_PHD_2013,
+	author = {Lebrun, R.},
+	year = 2013,
+	title = {{Contributions \`a la mod\'elisation de la d\'ependance stochastique}},
+	school = {Universit\'e Paris-Diderot -- Paris VII},
+	note = {(in English)},
+    address = {}
+}
+
+%============================================================%
+%============================================================%
+%===================== METAMODELING =========================%
+%============================================================%
+%============================================================%
+
+%%------------------------ PAPERS --------------------------%%
+@inproceedings{chevalier_ginsbourger_2014,
+    author={Chevalier, C.and Ginsbourger, D. and Emery, X.},
+    title={{Corrected Kriging Update Formulae for Batch-Sequential Data Assimilation}},
+    booktitle={Mathematics of Planet Earth},
+    year={2014},
+    pages={119 -- 122},
+}
+
+@article{fau_2021,
+    title = {{State-of-the-Art and Comparative Review of Adaptive Sampling Methods for Kriging}},
+    journal = {Archives of Computational Methods in Engineering},
+    volume = {28},
+    pages = {2689--2747},
+    year = {2021},
+    author = {J.N Fuhg. and A. Fau and U. Nackenhorst},
+}
+
+
+
+%%--------------- BOOKS - REPORTS - THESIS -----------------%%
+@book{rasmussen_2006,
+    author             = {C.E. Rasmussen and C.K.I. Williams},
+    publisher          = {MIT Press},
+    title              = {{Gaussian Processes for Machine Learning}},
+    year               = {2006}
+}
+
+
+%============================================================%
+%============================================================%
+%================ WIND TURBINES MODELING ====================%
+%============================================================%
+%============================================================%
+
+%%------------------------ PAPERS --------------------------%%
+@article{dowling_1972,
+    author = {Dowling, N. E.},
+    year = {1972},
+    pages = {71 -- 87},
+    title = {{Fatigue Failure Predictions for Complicated Stress-Strain Histories}},
+    volume = {7},
+    journal = {Journal of Materials, JMLSA},
+}
+
+@article{fatemi_1998,
+    title = {{Cumulative fatigue damage and life prediction theories: a survey of the state of the art for homogeneous materials}},
+    journal = {International Journal of Fatigue},
+    volume = {20},
+    number = {1},
+    pages = {9--34},
+    year = {1998},
+    author = {A. Fatemi and L. Yang},
+}
+
+@article{kaimal_1972,
+    title={{Spectral characteristics of surface-layer turbulence}},
+    author={Kaimal, J.C. and Wyngaard, J.C.J. and Izumi, Y. and Cot{\'e}, O.R.},
+    journal={Quarterly Journal of the Royal Meteorological Society},
+    volume={98},
+    number={417},
+    pages={563--589},
+    year={1972},
+}
+
+@article{kim_natarajan_2022,
+    year = {2022},
+    volume = {2265},
+    number = {4},
+    pages = {042006},
+    author = {Kim, T. and Natarajan, A. and Lovera, A. and Julan, E. and Peyrard, E. and Capaldo, M. and Huwart, G. and Bozonnet, P. and Guiton, M.},
+    title = {{A comprehensive code-to-code comparison study with the modified {IEA}15MW-{UMaine} Floating Wind Turbine for H2020 {HIPERWIND} project}},
+    journal = {Journal of Physics: Conference Series},
+}
+
+@inproceedings{milano_peyrarg_2019,
+    author = {Milano, D. and Peyrard, C. and Capaldo, M. and Ingram, D. and Xiao, Q. and Johanning, L.},
+    year = {2019},
+    booktitle = {Proceedings of the ASME 2019 38th International Conference on Ocean, Offshore and Arctic Engineering},
+    title = {{Impact of High Order Wave Loads on a 10 MW Tension-Leg Platform Floating Wind Turbine at Different Tendon Inclination Angles}},
+}
+
+
+
+
+%%-------------------- BOOKS & THESIS ----------------------%%
+@techreport{dnv_loads_2016,
+    author      = {DNV-GL},
+    title       = {{DNVGL-ST-0437: Loads and site conditions for wind turbines}},
+    institution = {DNVGL},
+    year        = {2016}
+}
+
+@techreport{dnv_fatigue_2016,
+    author      = {DNV-GL},
+    title       = {{DNVGL-RP-C203: Fatigue design of offshore steel structures}},
+    institution = {DNVGL},
+    year        = {2016}, 
+}
+
+@book{dtu_controler_2013,
+    title = "Basic DTU Wind Energy controller",
+    author = "Hansen, {Morten Hartvig} and Henriksen, {Lars Christian}",
+    year = "2013",
+    series = "DTU Wind Energy E",
+    number = "0028",
+    publisher = "DTU Wind Energy",
+}
+
+@techreport{hiperwind_2021,
+    author      = {Matteo Capaldo and Martin Guiton and Guillaume Huwart and Emricka Julan and Nikolay Krasimirov Dimitrov and Taeseong Kim and Anaïs Lovera and Christophe Peyrard},
+    title       = {{Design brief of HIPERWIND offshore wind turbine cases: bottom fixed 10MW and floating 15MW}},
+    institution = {H2020 European project HIPERWIND},
+    year        = {2021}
+}
+
+@techreport{turbsim_2009,
+    author = {Jonkman, B},
+    year = {2009},
+    title = {{Turbsim User's Guide: Version 1.50}},
+    doi = {10.2172/965520},
+    institution = {NREL}
+}
+
+@techreport{iec_2019,
+    author= {IEC}, 
+    year = {2019},
+    title = {{IEC 61400-1: Wind energy generation systems - Part 1: Design requirements}},
+    institution = {International Electrotechnical Commission (IEC)}, 
+}
+
+@techreport{hiperwind_2022,
+    author      = {M. Kelly and E. Vanem},
+    title       = {{Environmental joint probability distributions and uncertainties}},
+    institution = {H2020 European project HIPERWIND},
+    year        = {2022}
+}
+
+
+
+
+%============================================================%
+%============================================================%
+%=================== UQ WIND TURBINES =======================%
+%============================================================%
+%============================================================%
+
+%%------------------------ PAPERS --------------------------%%
+@article{abdallah_lataniotis_2017,
+    title = {{Parametric hierarchical kriging for multi-fidelity aero-servo-elastic simulators  --  Application to extreme loads on wind turbines}},
+    journal = {Probabilistic Engineering Mechanics},
+    volume = {55},
+    pages = {67 -- 77},
+    year = {2019},
+    author = {Abdallah, I. and Lataniotis, C. and Sudret, B.},
+}
+
+@article{aoues_2023,
+    title = {{Estimation of probability distribution of long-term fatigue damage on wind turbine tower using residual neural network}},
+    journal = {Mechanical Systems and Signal Processing},
+    volume = {190},
+    pages = {110101},
+    year = {2023},
+    author = {H. Bai and L. Shi and Y. Aoues and C. Huang and D. Lemosse},
+}
+
+@article{chen_2018_owt_diagram,
+    title = {{Fatigue bending test on grouted connections for monopile offshore wind turbines}},
+    journal = {Marine Structures},
+    volume = {60},
+    pages = {52-71},
+    year = {2018},
+    author = {Tao Chen and Xian Wang and Guokai Yuan and Jinchao Liu},
+}
+
+@article{dimitrov_kelly_2018,
+    author = {Dimitrov, N. and Kelly, M. and Vignaroli, A. and Berg, J.},
+    year = {2018},
+    pages = {767 -- 790},
+    title = {{From wind to loads: wind turbine site-specific load estimation with surrogate models trained on high-fidelity load databases}},
+    volume = {3},
+    journal = {Wind Energy Science},
+}
+
+@article{drexler_musculus_2021,
+    author = {Drexler, S. and Muskulus, M.},
+    year = {2021},
+    pages = {012014},
+    title = {{Reliability of an offshore wind turbine with an uncertain S-N curve}},
+    volume = {2018},
+    journal = {Journal of Physics: Conference Series},
+}
+
+@article{huebler_gebhardt_2017,
+    author = {Huebler, C. and Gebhardt, C.G. and Rolfes, R.},
+    year = {2017},
+    pages = {878--891},
+    title = {{Hierarchical four-step global sensitivity analysis of offshore wind turbines based on aeroelastic time domain simulations}},
+    volume = {111},
+    journal = {Renewable Energy},
+}
+
+@article{graf_2016,
+    author = {P.A. Graf and G. Stewart and M. Lackner and K. Dykes and P. Veers},
+    title = {{High-throughput computation and the applicability of Monte Carlo integration in fatigue load estimation of floating offshore wind turbines}},
+    journal = {Wind Energy},
+    volume = {19},
+    number = {5},
+    pages = {861--872},
+    year = {2016}
+}
+
+@article{huchet_mattrand_2019,
+    author = {Huchet, Q. and Mattrand, C. and Beaurepaire, P. and Relun, N. and Gayton, N.},
+    title = {{AK-DA: An efficient method for the fatigue assessment of wind turbine structures}},
+    journal = {Wind Energy},
+    volume = {22},
+    number = {5},
+    pages = {638--652},
+    year = {2019}
+}
+
+@article{li_zhan_2020,
+    title = {{Long-term fatigue damage assessment for a floating offshore wind turbine under realistic environmental conditions}},
+    journal = {Renewable Energy},
+    volume = {159},
+    pages = {570--584},
+    year = {2020},
+    author = {X. Li and W. Zhang},
+}
+
+@article{muller_cheng_2018,
+    author = {Müller, K. and Cheng, P.W.},
+    year = {2018},
+    pages = {149 -- 162},
+    title = {{Application of a Monte Carlo procedure for probabilistic fatigue design of floating offshore wind turbines}},
+    volume = {3},
+    journal = {Wind Energy Science},
+}
+
+@article{murcia_dimitrov_2018,
+    title = {{Uncertainty propagation through an aeroelastic wind turbine model using polynomial surrogates}},
+    journal = {Renewable Energy},
+    volume = {119},
+    pages = {910-922},
+    year = {2018},
+    author = {J.P. Murcia and P.E. Réthoré and N. Dimitrov and A. Natarajan and J.D. Sørensen and P. Graf and T. Kim}
+}
+
+@article{slot_sorensen_2020,
+    title = {{Surrogate model uncertainty in wind turbine reliability assessment}},
+    journal = {Renewable Energy},
+    volume = {151},
+    pages = {1150 -- 1162},
+    year = {2020},
+    author = {Ren\'{e} M.M. Slot and John D. S\o{}rensen and Bruno Sudret and Lasse Svenningsen and Morten L. Th\o{}gersen},
+}
+
+@article{stieng_muskulus_2020,
+    author = {Stieng, L. and Muskulus, M.},
+    year = {2020},
+    title = {{Reliability-based design optimization of offshore wind turbine support structures using analytical sensitivities and factorized uncertainty modeling}},
+    journal = {Wind Energy Science},
+    volume = {5},
+    pages = {171--198}
+}
+
+@article{robertson_shaler_2019,
+    author = {Robertson, A. and Shaler, K. and Sethuraman, L. and Jonkman, J.},
+    year = {2019},
+    pages = {479 -- 513},
+    title = {{Sensitivity analysis of the effect of wind characteristics and turbine properties on wind turbine loads}},
+    volume = {4},
+    journal = {Wind Energy Science},
+}
+
+@article{teixeira_oconnor_2017,
+    author = {Teixeira, R and O’Connor, A. and Nogal, M. and Nandakumar, K. and Nichols, J.},
+    year = {2017},
+    pages = {951 -- 958},
+    title = {{Analysis of the design of experiments of offshore wind turbine fatigue reliability design with Kriging surfaces}},
+    volume = {5},
+    journal = {Procedia Structural Integrity},
+}
+
+@article{verlade_kramhoft_2019,
+    author = {Velarde, J. and Kramh\o{}ft, C. and S\o{}rensen, J.},
+    year = {2019},
+    pages = {177 -- 189},
+    title = {{Global sensitivity analysis of offshore wind turbine foundation fatigue loads}},
+    volume = {140},
+    journal = {Renewable Energy},
+}
+
+@article{wilkie_galasso_2021,
+    author = {Wilkie, D. and Galasso, C.},
+    year = {2021},
+    pages = {102020},
+    title = {{Gaussian process regression for fatigue reliability analysis of offshore wind turbines}},
+    volume = {88},
+    journal = {Structural Safety},
+}
+
+@article{zwick_muskulus_2015,
+    title={{The simulation error caused by input loading variability in offshore wind turbine structural analysis}},
+    author={D. Zwick and M. Muskulus},
+    journal={Wind Energy},
+    year={2015},
+    volume={18},
+    pages={1421 -- 1432}
+}
+
+
+
+%%--------------- BOOKS - REPORTS - THESIS -----------------%%
+@phdthesis{bos_2020,
+    author = {Van den Bos, L.},
+    school = {Delft University of Technology},
+    year = {2020},
+    title = {{Quadrature Methods for Wind Turbine Load Calculations}}
+}
+
+@phdthesis{cousin_2021,
+    author = {Cousin, A.},
+    year = {2021},
+    school = {Institut Polytechnique de Paris},
+    title = {{Optimisation sous contraintes probabilistes d'un système complexe : Application au dimensionnement d'une \'{e}olienne offshore flottante}}
+}
+
+@phdthesis{hirvoas_2021,
+    author = {Hirvoas, A.},
+    year = {2021},
+    school = {Universit\'{e} Grenoble Alpes},
+    title = {{Development of a data assimilation method for the calibration and continuous update of wind turbines digital twins.}}
+}
+
+@phdthesis{huchet_2019,
+    author = {Huchet, Q.},
+    year = {2019},
+    school={Universit\'{e} Blaise Pascal},
+    title = {{Kriging based methods for the structural damage assessment of offshore wind turbines}},
+}
+
+@phdthesis{lataniotis_2019,
+    author = {Lataniotis, Christos},
+    school = {ETH Z\"urich},
+    year = {2019},
+    title = {{Data-driven uncertainty quantification for high-dimensional engineering problems}}
+}
+
+@phdthesis{petrovska_2022,
+    author = {Petrovska, E.},
+    year = {2022},
+    title = {{Fatigue life reassessment of monopile-supported offshore wind turbine structures}},
+    school={University of Edinburgh}
+}
+
+
+
+
+%============================================================%
+%============================================================%
+%============== MMD & BAYESIAN QUADRATURE ===================%
+%============================================================%
+%============================================================%
+
+%%------------------------ PAPERS --------------------------%%
+@article{briol_oates_2019,
+    author = {Briol, F.X. and Oates, C. and Girolami, M. and Osborne, M. and Sejdinovic, D.},
+    year = {2019},
+    pages = {1 -- 22},
+    title = {{Probabilistic Integration: A Role in Statistical Computation?}},
+    volume = {34},
+    journal = {Statistical Science},
+}
+
+@article{daveiga_2015,
+author = {Da Veiga, S.},
+title = {{Global sensitivity analysis with dependence measures}},
+journal = {Journal of Statistical Computation and Simulation},
+volume = {85},
+pages = {1283 -- 1305},
+year  = {2015},
+}
+
+@article{joseph_gul_2015,
+    author = {Joseph, V.R. and Gul, E. and Ba, S.},
+    year = {2015},
+    title = {{Maximum projection designs for computer experiments}},
+    volume = {102},
+    journal = {Biometrika},
+}
+
+@article{mak_joseph_2018,
+    author = {Mak, S. and Joseph, V.R.},
+    title = {{Support points}},
+    volume = {46},
+    journal = {The Annals of Statistics},
+    pages = {2562 -- 2592},
+    year = {2018},
+}
+
+@unpublished{motonobu_2018,
+    author = {Kanagawa, M. and Hennig, P. and Sejdinovic, D. and Sriperumbudur, B.K.},
+    title = {{Gaussian Processes and Kernel Methods: A Review on Connections and Equivalences}},
+    note = {preprint},
+    year = {2018},
+}
+
+@misc{oates_21,
+    author = {Oates, Chris J.},
+    title = {{Minimum Discrepancy Methods in Uncertainty Quantification}},
+    year = {2021},
+    note={Lecture Notes at \'{E}cole Th\'{e}matique sur les Incertitudes en Calcul Scientifique (ETICS21), \url{https://www.gdr-mascotnum.fr/etics.html}}
+}
+
+@article{ohagan_1991,
+    title = {Bayes-{H}ermite quadrature},
+    journal = {Journal of Statistical Planning and Inference},
+    volume = {29},
+    pages = {245-260},
+    year = {1991},
+    author = {A. O'Hagan}
+}
+
+@unpublished{pronzato_2021,
+    TITLE = {{Performance analysis of greedy algorithms for minimising a Maximum Mean Discrepancy}},
+    AUTHOR = {Pronzato, L.},
+    NOTE = {preprint, \url{https://hal.inria.fr/hal-03114891/}},
+    YEAR = {2022},
+    HAL_ID = {hal-03114891},
+}
+
+@unpublished{pronzato_rendas_2021,
+    doi = {10.48550/ARXIV.2112.05583},
+    author = {Pronzato, L. and Rendas, M.J},
+    title = {{Validation design I: construction of validation designs via kernel herding}},
+    note = {preprint, \url{https://arxiv.org/abs/2112.05583}},
+    year = {2021},
+}
+
+@article{pronzato_zhigljavsky_2020,
+    TITLE = {{Bayesian quadrature and energy minimization for space-filling design}},
+    AUTHOR = {Pronzato, L. and Zhigljavsky, A.A.},
+    YEAR = {2020},
+    volume = {8},
+    pages = {959 -- 1011},
+    journal = {SIAM/ASA Journal on Uncertainty Quantification}
+}
+
+@article{sejdinovic_2013,
+    author = {D. Sejdinovic and B. Sriperumbudur and A. Gretton and K. Fukumizu},
+    journal = {The Annals of Statistics},
+    pages = {2263--2291},
+    title = {EQUIVALENCE OF DISTANCE-BASED AND {RKHS}-BASED STATISTICS IN HYPOTHESIS TESTING},
+    volume = {41},
+    year = {2013}
+}
+
+@article{sriperumbudur_2010,
+    author = {Sriperumbudur, B.K. and Gretton, A. and Fukumizu, K. and Sch\"{o}lkopf, B. and Lanckriet, G.R.G.},
+    title = {{Hilbert Space Embeddings and Metrics on Probability Measures}},
+    year = {2010},
+    volume = {11},
+    journal = {J. Mach. Learn. Res.},
+    pages = {1517--1561},
+}
+
+@article{szekely_rizzo_2013,
+    title={{Energy statistics: A class of statistics based on distances}},
+    author={Sz\'ekely, G. J. and Rizzo, M. L.},
+    journal={Journal of Statistical Planning and Inference},
+    volume={143},
+    pages={1249 -- 1272},
+    year={2013}
+}
+
+@article{shang_apley_2020,
+    author = {Shang, B. and Apley, D.},
+    year = {2020},
+    pages = {1 -- 24},
+    title = {{Fully-sequential space-filling design algorithms for computer experiments}},
+    volume = {53},
+    journal = {Journal of Quality Technology},
+}
+
+@article{sullivan_2020,
+    title={{A rigorous theory of conditional mean embeddings}},
+    author={Klebanov, I. and Schuster, I. and Sullivan, T.J},
+    journal={SIAM Journal on Mathematics of Data Science},
+    volume={2},
+    number={3},
+    pages={583--606},
+    year={2020},
+}
+
+@article{wei_2020,
+    title = {{Adaptive experiment design for probabilistic integration}},
+    journal = {Computer Methods in Applied Mechanics and Engineering},
+    volume = {365},
+    pages = {113035},
+    year = {2020},
+    author = {P. Wei and X. Zhang and M. Beer},
+}
+
+@inproceedings{briol_2015,
+    author = {Briol, F-X and Oates, C. and Girolami, M. and Osborne, M.A},
+    booktitle = {Advances in Neural Information Processing Systems},
+    title = {{Frank-Wolfe Bayesian Quadrature: Probabilistic Integration with Theoretical Guarantees}},
+    year = {2015}
+}
+@inproceedings{chen_welling_2010,
+    title={{Super-samples from kernel herding}},
+    author={Y. Chen and M. Welling and A. Smola},
+    booktitle={Proceedings of the Twenty-Sixth Conference on Uncertainty in Artificial Intelligence},
+    pages={109 -- 116},
+    year={2010},
+    organization={AUAI Press}
+}
+
+@inproceedings{gretton_2006,
+    author = {Gretton, A. and Borgwardt, K. M. and Rasch, M. and Sch\"{o}lkopf, B. and Smola, A.J.},
+    title = {{A Kernel Method for the Two-Sample-Problem}},
+    year = {2006},
+    booktitle = {Proceedings of the 19th International Conference on Neural Information Processing Systems},
+    pages = {513--520},
+}
+
+@inproceedings{husar_duvenaud_2012,
+    author = {Husz\'{a}r, F. and Duvenaud, D.},
+    title = {{Optimally-Weighted Herding is Bayesian Quadrature}},
+    year = {2012},
+    booktitle = {Proceedings of the Twenty-Eighth Conference on Uncertainty in Artificial Intelligence},
+    pages = {377 -- 386},
+    numpages = {10},
+}
+
+@inproceedings{lacoste_2015,
+    title = 	 {{Sequential Kernel Herding: Frank-Wolfe Optimization for Particle Filtering}},
+    author = 	 {Lacoste-Julien, S. and Lindsten, F. and Bach, F.},
+    booktitle = 	 {Proceedings of the Eighteenth International Conference on Artificial Intelligence and Statistics},
+    pages = 	 {544--552},
+    year = 	 {2015},
+    volume = 	 {38},
+}
+
+@inproceedings{motonobu_2019,
+    author = {Kanagawa, M. and Hennig, P.},
+    booktitle = {Advances in Neural Information Processing Systems},
+    title = {{Convergence Guarantees for Adaptive Bayesian Quadrature Methods}},
+    volume = {32},
+    year = {2019}
+}
+
+@inproceedings{obsborne_garnett_2012,
+    author = {Osborne, M. and Garnett, R. and Ghahramani, Z. and Duvenaud, D. K and Roberts, S. J and Rasmussen, C.},
+    booktitle = {Advances in Neural Information Processing Systems},
+    title = {{Active Learning of Model Evidence Using Bayesian Quadrature}},
+    volume = {25},
+    year = {2012}
+}
+
+@inproceedings{teymur_gorham_2021,
+    title={{Optimal Quantisation of Probability Measures Using Maximum Mean Discrepancy}},
+    author={O. Teymur and J. Gorham and M. Riabiz and C.J. Oates},
+    booktitle={Proceedings of The 24th International Conference on Artificial Intelligence and Statistics},
+    pages={1027 -- 1035},
+    year={2021},
+    volume={130},
+}
+
+
+
+%%--------------- BOOKS - REPORTS - THESIS -----------------%%
+@phdthesis{briol_phd_2019,
+    author = {Briol, F-X},
+    school = {University of Warwick},
+    year = {2019},
+    title = {{Statistical computation with kernels}}
+}
+
+
+
+
+%============================================================%
+%============================================================%
+%========================= OTHER ============================%
+%============================================================%
+%============================================================%
+
+%%------------------------ PAPERS --------------------------%%
+@article{Kiureghian2009,
+author    = {Der Kiureghian, A. and Ditlevsen, O.},
+title     = {Aleatory or epistemic? {D}oes it matter?},
+journal   = {Structural Safety},
+year      = {2009},
+volume    = {31},
+number    = {2},
+pages     = {105--112},
+issn      = {0167-4730},
+doi       = {10.1016/j.strusafe.2008.06.020},
+url       = {http://www.sciencedirect.com/science/article/pii/S0167473008000556},
+}
+
+@article{Marrel_Iooss_Chab_ICSCREAM_2020,
+	author = {Marrel, A. and Iooss, B. and Chabridon, V.},
+	title = {{The ICSCREAM methodology: Identification of penalizing configurations in computer experiments using screening and metamodel – Applications in thermal-hydraulics}},
+	volume = 196,
+	pages = {301-321},
+	journal = {Nuclear Science and Engineering},
+	year = {2022}
+}
+
+%%--------------- BOOKS - REPORTS - THESIS -----------------%%
+@incollection{baudin_dutfoy_2017,
+    author =	 {M. Baudin and A. Dutfoy and B. Iooss and {A-L.} Popelin},
+    title = 	 {{Open TURNS: An industrial software for uncertainty quantification in simulation}},
+    editor =	 {R. Ghanem and D. Higdon and H. Owhadi},
+    publisher =    {Springer},
+    booktitle = 	 {Springer Handbook on {Uncertainty Quantification}},
+    pages = {2001--2038},
+    year = 	 {2017}
+}
+
+@book{daveiga_iooss_2021,
+    author = {Da Veiga, S. and Gamboa, F. and Iooss, B. and Prieur, C.},
+    year = {2021},
+    month = {01},
+    title = {{Basics and Trends in Sensitivity Analysis: Theory and Practice in R}},
+    publisher = {Society for Industrial and Applied Mathematics},
+}
+
+@book{rocquigny_2008,
+    title={{Uncertainty in industrial practice: a guide to quantitative uncertainty management}},
+    author={de Rocquigny, E. and Devictor, N. and Tarantola, S.},
+    year={2008},
+    publisher={John Wiley \& Sons}
+}
+

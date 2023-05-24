@@ -1,7 +1,80 @@
-\usepackage[dvipsnames,table]{xcolor}%
+% ******************************************************************************
+% ********************************* PACKAGES ***********************************
+\usepackage[dvipsnames,table]{xcolor}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{bbm}
+\usepackage{algorithm}
+\usepackage{algpseudocodex}
+
+
+% ******************************************************************************
+% ********************************* COMMANDS ***********************************
 \newcommand{\elias}[1]{\textcolor{BrickRed}{[#1]}}
 \newcommand{\contrib}[1]{\textcolor{OliveGreen}{(#1)}}
-\newcommand{\vcn}[1]{\textcolor{magenta}{VCN : [#1]}}
+\newcommand{\vcn}[1]{\textcolor{magenta}{VCN: [#1]}}
+\newcommand{\ber}[1]{\textcolor{orange}{BER: [#1]}}
+
+\newcommand{\eq}[1]{Eq.~\eqref{#1}}
+\newcommand{\fig}[1]{Fig.~\ref{#1}}
+
+\newcommand*\what[1]{\widehat{#1}}
+\newcommand*\wtilde[1]{\widetilde{#1}}
+
+% ******************************************************************************
+% *********************************** MATHS ************************************
+\def\bx{{\bf x}}
+\def\bX{{\bf X}}
+\def\bz{{\bf z}}
+\def\bZ{{\bf Z}}
+\def\bY{{\bf Y}}
+\def\by{{\bf y}}
+\def\bw{{\bf w}}
+\def\bW{{\bf W}}
+\def\bu{{\bf u}}
+\def\bU{{\bf U}}
+\def\bk{{\bf k}}
+\def\bK{{\bf K}}
+\def\bm{{\bf m}}
+\def\bM{{\bf M}}
+\def\br{{\bf r}}
+\def\bR{{\bf R}}
+\def\bh{{\bf h}}
+\def\bL{{\bf L}}
+\def\bE{{\bf E}}
+
+\def\R{\mathbb{R}}
+\def\N{\mathbb{N}}
+\def\E{\mathbb{E}}
+
+\def\d{\mathrm{d}}
+\def\dx{\mathrm{d}\bx}
+\def\wBQ{\mathbf{w}_{\mathrm{BQ}}}
+\def\iX{\mathcal{X}}
+\def\iN{\mathcal{N}}
+\def\iD{\mathcal{D}}
+\def\iH{\mathcal{H}}
+\def\iS{\mathcal{S}}
+\def\A{\mathcal{A}}
+\def\iF{\mathcal{F}}
+
+\def\domega{\mathrm{d}\omega}
+\def\var{\operatorname{Var}}
+\def\mse{\mathrm{MSE}}
+\def\imse{\mathrm{IMSE}}
+\def\mise{\mathrm{MISE}}
+\def\ise{\mathrm{ISE}}
+\def\MMD{\mathrm{MMD}}
+\def\yth{y_\mathrm{th}}
+\def\pf{p_\mathrm{f}}
+
+\def\P{\mathbb{P}}
+\def\1{\mathbbm{1}} 
+
+\def\TT{^\top}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\Tr}{Tr}
 
 % ******************************************************************************
 % ****************************** Custom Margin *********************************
