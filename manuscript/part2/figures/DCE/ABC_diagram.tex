@@ -1,0 +1,32 @@
+%\begin{figure}[h]
+%    \centering
+\begin{tikzpicture}[scale=0.6, every node/.style={transform shape}]
+    \node[rectangle,draw,fill=YellowOrange!70!gray] (a) at (-9,0) {\shortstack{\textbf{Step B:} \\ \textbf{Uncertainty} \\ \textbf{quantification}}};
+\node[rectangle,draw,fill=YellowGreen!70!gray] (f) at (-1.5,2.2) {
+\textbf{Step C: Uncertainty propagation}};
+\node[rectangle,draw,fill=YellowGreen!70!gray] (g) at (-1.5,-2.7) {\shortstack{
+\textbf{Step C': Inverse analysis} \\ Robustness analysis \\ Sensitivity analysis}};
+\node[rectangle,draw,minimum width=13.3cm,fill=SkyBlue!40!gray] (h) at (-0.3,0) {\shortstack{\textbf{Step A: Problem specification} \\ \phantom{a} \\ \phantom{a} \\ \phantom{a} \\ \phantom{a} \\ \phantom{a} \\ \phantom{a} \\ \phantom{a} \\ \phantom{a} \\ \phantom{a} }};
+\node[rectangle,draw,fill=lightgray] (b) at (-5.3,0) {\shortstack{
+Input random \\ variables: $\mathbf{X}$}};
+\node[rectangle,draw,fill=lightgray] (c) at (-1.8,0) {\shortstack{
+OWT simulator: \\$g\left(\cdot\right)$}};
+\node[rectangle,draw,fill=lightgray] (d) at (1.5,0) {\shortstack{
+Variables \\ of interest: \\ $\mathbf{Y}=g\left(\mathbf{X}\right)$}};
+\node[rectangle,draw,fill=lightgray] (e) at (5,0) {\shortstack{
+Quantities \\ of interest: \\ $\psi \left(\mathbf{Y}\right)$}};
+\node[rectangle,draw,fill=lightgray, dashed] (i) at (-1.8,-1.2) {Metamodel};
+\node[rectangle,draw,fill=lightgray] (j) at (5,-2.7) {\shortstack{Decision \\ making}};
+\draw[-stealth, black, line width=1pt] (-4.4,2.7) -- (1.4,2.7);
+\draw[-stealth, black, line width=1pt] (0.8,-3.6) -- (-3.8,-3.6);
+\draw[-stealth, black] (a) -- (b);
+\draw[-stealth, black] (b) -- (c);
+\draw[-stealth, black] (c) -- (d);
+\draw[-stealth, black] (d) -- (e);
+\draw[-stealth, black, dashed] (b) -- (-5.3,-1.2) -- (i) -- (1.5,-1.2) -- (d);
+ \draw[-stealth, black] (e) -- (j);
+
+\end{tikzpicture}
+%    \caption{General uncertainty quantification and propagation framework}
+%    \label{Fig:UQ}
+%\end{figure}
