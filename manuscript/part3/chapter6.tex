@@ -7,12 +7,8 @@
 
 %============================================================%
 %============================================================%
-\section{Bernstein adaptive nonparametric conditional sampling}
+\section{Introduction}
 %============================================================%
-%============================================================%
-
-%============================================================%
-\subsection{Introduction}
 %============================================================%
 Reliability analysis of a system is often associated with rare event probability estimation. 
 Considering that the system's performance is modeled by a deterministic scalar function $g: \iD_\bx \subseteq \R^d \rightarrow \R$, called \emph{limit-state function} and a critical threshold on the system's output $\yth\in\R$, one can define the \emph{failure domain} as $\iF_{\bx} := \{\bx \in \iD_\bx | g(\bx) \leq \yth\}$. 
@@ -109,7 +105,7 @@ Since univariate marginals are usually well-fitted with nonparametric tools (e.g
 
 %============================================================%
 %============================================================%
-\section{A NEW COPULA-BASED CONDITIONAL SAMPLING METHOD}
+\section{Bernstein adaptive nonparametric conditional sampling}
 %============================================================%
 %============================================================%
 
@@ -165,7 +161,7 @@ In the following, this nonparametric tool is used to fit the intermediary condit
 
 
 %------------------------------------------------------------%
-\subsection{Bernstein adaptive nonparametric conditional sampling (BANCS) method}
+\subsection{Bernstein adaptive nonparametric conditional sampling algorithm}
 %------------------------------------------------------------%
 
 This new method reuses the main idea from SS while employing a different approach to generate conditional samples. 
@@ -244,9 +240,10 @@ This fit is also good, even if a slight bias is again visible.
 \end{figure}
 
 
-
+%============================================================%
 %============================================================%
 \section{Numerical experiments}
+%============================================================%
 %============================================================%
 In the following analytical numerical experiments, the intermediary probabilities were set to $p_0=0.1$, allowing a fair comparison with subset sampling. 
 Then, the subset sample size is set to $N=10^4$, in order to get a reasonable sample size $n = N p_0 = 10^3$ to perform the nonparametric fitting. 
@@ -348,11 +345,11 @@ However, one can note that SS coefficient of variation is computed by an approxi
 \section{Application to wind turbine fatigue reliability}
 %\section{Application to a floating offshore wind turbine reliability}
 
-
+%============================================================%
 %============================================================%
 \section{Conclusion}
 %============================================================%
-
+%============================================================%
 Subset Simulation uses MCMC sampling to generate its intermediary conditional samples. 
 However, MCMC algorithms tends to be complex to tune and does not generate i.i.d. conditional samples. 
 In this work, a new method is proposed, replacing MCMC sampling with a simpler procedure. 
@@ -366,4 +363,5 @@ Theoretical works offer optimal tuning, allowing us to find the optimal compromi
 In our numerical experiments, an empirical estimation of BANCS variance is computed over a set of repetitions. 
 BANCS estimated coefficient of variation is higher than SS approximated coefficient of variation. 
 This work can be further explored by building an approximation of BANCS variance and confidence interval. 
-One major advantage remains that the samples generated at each iteration are i.i.d. leading to a possible use of these samples to perform global reliability-oriented sensitivity analysis \citep{marrel_chabridon_2021} in order to detect and analyze the most influential input variables leading to failure.
+One major advantage remains that the samples generated at each iteration are i.i.d. leading to a possible use of these samples to perform global reliability-oriented sensitivity analysis \citep{marrel_chabridon_2021} 
+in order to detect and analyze the most influential input variables leading to failure.

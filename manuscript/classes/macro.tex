@@ -7,6 +7,8 @@
 \usepackage{algpseudocodex}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,arrows,calc}
+\usepackage{tabularx}
+
 
 % ******************************************************************************
 % ********************************* COMMANDS ***********************************
@@ -88,7 +90,8 @@
 % Set {innerside margin / outerside margin / topmargin / bottom margin}  and
 % other page dimensions
 \ifsetCustomMargin
-  \RequirePackage[left=37mm,right=30mm,top=35mm,bottom=30mm]{geometry}
+  %\RequirePackage[left=37mm,right=30mm,top=35mm,bottom=30mm]{geometry}
+  \RequirePackage[left=32mm,right=25mm,top=30mm,bottom=25mm]{geometry}
   \setFancyHdr % To apply fancy header after geometry package is loaded
 \fi
 

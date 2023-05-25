@@ -204,10 +204,10 @@ This concept was introduced as \textit{empirical Bernstein copula} (EBC) by \cit
 Later on, \cite{segers_2017} offered further asymptotic studies. Formally, the multivariate Bernstein polynomial for a function $C: [0, 1]^p \rightarrow \R$ on a grid over the unit hypercube $G:=\left\{\frac{0}{h_1}, \dots, \frac{h_1}{h_1}\right\} \times \dots \times \left\{\frac{0}{h_p}, \dots, \frac{h_p}{h_p}\right\}, \mathbf{h} = (h_1, \dots, h_p) \in \N^p$, is written as follows: 
 
 \begin{equation}
-    B_{\mathbf{h}}(C)(\bu) := \sum_{t_1=0}^{h_1} \dots \sum_{t_p=0}^{h_p} C\left(\frac{t_1}{h_1}, \dots, \frac{t_p}{h_p}\right) \prod_{j=1}^p P_{h_j, t_j}(u_j),\label{eq:ebc}
+    B_{\mathbf{h}}(C)(\bu) := \sum_{t_1=0}^{h_1} \dots \sum_{t_p=0}^{h_p} C\left(\frac{t_1}{h_1}, \dots, \frac{t_p}{h_p}\right) \prod_{j=1}^p P_{h_j, t_j}(u_j),\label{eq:ebc_chap4}
 \end{equation}
 with $\bu = (u_1, \dots, u_p) \in [0, 1]^p$, and the Bernstein polynomial $P_{h, t}(u):= \frac{t!}{h!(t-h)!}u^h(1-u)^{t-h}$. When $C$ is a copula, then $B_{\bm}(C)$ is called ``Bernstein copula''. 
-Therefore, the empirical Bernstein copula is an application of the Bernstein polynomial in \eq{eq:ebc} to the so-called ``empirical copula''. 
+Therefore, the empirical Bernstein copula is an application of the Bernstein polynomial in \eq{eq:ebc_chap4} to the so-called ``empirical copula''. 
 In practice, considering a sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \in \R^{np}$ and the associated ranked sample $\bR_n = \left\{\br^{(1)}, \dots, \br^{(n)}\right\}$, the corresponding empirical copula is written: 
 
 \begin{equation}
