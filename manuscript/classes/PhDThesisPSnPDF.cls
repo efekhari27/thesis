@@ -919,46 +919,45 @@ wish to left align your text}
 \begin{center}
 
 % University Crest Long if college crest is defined
-\ifPHD@collegeshield%
-	{\usebox{\PHD@crest}}
-	\vspace{.15\PHD@titlepagespacing}
-\fi
+%\ifPHD@collegeshield%
+%	{\usebox{\PHD@crest}}
+%	\vspace{.15\PHD@titlepagespacing}
+%\fi
+
+% Crest
+%\ifPHD@collegeshield%
+%	\vspace{.15\PHD@titlepagespacing}
+%	{\usebox{\PHD@collegecrest}}
+%	\vspace{.1\PHD@titlepagespacing}
+%\else
+%\vspace{.25\PHD@titlepagespacing}
+{\usebox{\PHD@crest}}
+\vspace{.17\PHD@titlepagespacing}
+%\fi
 
 % Title
 {\usebox{\PHD@Title}} % subtitle is defined
-
-% Crest
-\ifPHD@collegeshield%
-	\vspace{.15\PHD@titlepagespacing}
-	{\usebox{\PHD@collegecrest}}
-	\vspace{.1\PHD@titlepagespacing}
-\else
-	\vspace{.25\PHD@titlepagespacing}
-	{\usebox{\PHD@crest}}
-	\vspace{.15\PHD@titlepagespacing}
-\fi
-
-
+\vspace{.15\PHD@titlepagespacing}
 
 % Author
 {\usebox{\PHD@author}}
 \vspace*{1em}
 
 % Supervisor
-\ifPHD@supervisor%
-{\usebox{\PHD@supervisor}}
-\vspace*{0.5em}
-\fi
+%\ifPHD@supervisor%
+%{\usebox{\PHD@supervisor}}
+%\vspace*{0.5em}
+%\fi
 
 % Advisor
-\ifPHD@advisor%
-{\usebox{\PHD@advisor}}
-\vspace*{0.5em}
-\fi
+%\ifPHD@advisor%
+%{\usebox{\PHD@advisor}}
+%\vspace*{0.5em}
+%\fi
 
 % Department and University
 {\usebox{\PHD@dept}}
-\vspace{.2\PHD@titlepagespacing}
+\vspace{.15\PHD@titlepagespacing}
 
 % Submission Text
 {\usebox{\PHD@submission}}
@@ -967,18 +966,21 @@ wish to left align your text}
 %\vfill
 %{\usebox{\PHD@collegedate}}
 
+
 \vfill
+publicly defended on January xx, 2024 in front of the following jury:
+\vspace*{1em}
+
 \begin{tabular}{lll}
     Pr. Mireille BOSSY, & INRIA, Sophia-Antipolis & Examiner\\
     Dr. Vincent CHABRIDON & EDF R\&D, Chatou & Co-advisor\\
     Dr. Sébastien DA VEIGA & ENSAI, Rennes & Examiner\\
     Dr. Bertrand IOOSS & EDF R\&D, Chatou & Thesis director\\
+    Dr. Ana\"is LOVERA & EDF R\&D, Saclay& Invite\\
     Dr. Joseph MUR\'E & EDF R\&D, Chatou & Co-advisor\\
     Pr. Franck SCHOEFS & Nantes Université, Nantes & Reviewer\\
     Pr. Daniel STRAUB & TUM, Munich & Reviewer\\
-    Pr. Bruno SUDRET & ETH, Z\"urich & Examiner\\
-
-    
+    Pr. Bruno SUDRET & ETH, Z\"urich & Examiner\\ 
 \end{tabular}
 
 \end{center}

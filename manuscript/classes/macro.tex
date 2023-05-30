@@ -9,6 +9,8 @@
 \usetikzlibrary{arrows.meta,arrows,calc}
 \usepackage{tabularx}
 
+\usepackage[acronym]{glossaries}
+
 
 % ******************************************************************************
 % ********************************* COMMANDS ***********************************
@@ -84,6 +86,15 @@
 \DeclareMathOperator{\Tr}{Tr}
 
 % ******************************************************************************
+% ********************************* Acronyms ***********************************
+\newacronym{UQ}{UQ}{Ucerainty Quantification}
+\newacronym{OWT}{OWT}{Offshore Wind Turbine}
+\newacronym{FOWT}{FOWT}{Floating Offshore Wind Turbine}
+
+
+
+\makeglossaries
+% ******************************************************************************
 % ****************************** Custom Margin *********************************
 
 % Add `custommargin' in the document class options to use this section
@@ -91,7 +102,7 @@
 % other page dimensions
 \ifsetCustomMargin
   %\RequirePackage[left=37mm,right=30mm,top=35mm,bottom=30mm]{geometry}
-  \RequirePackage[left=32mm,right=25mm,top=30mm,bottom=25mm]{geometry}
+  \RequirePackage[left=28mm,right=21mm,top=27mm,bottom=22mm]{geometry}
   \setFancyHdr % To apply fancy header after geometry package is loaded
 \fi
 
@@ -105,12 +116,17 @@
 
 % *****************************************************************************
 % ******************* Fonts (like different typewriter fonts etc.)*************
-%\usepackage{mathpazo}%Palatino font
-%\usepackage{fourier}%Utopia font: very nice
-%\usepackage{fbb}%Garamond font: looks good but a bit dated
-%\usepackage{gfsdidot}% Not the best maths
-\usepackage[sb]{libertine}
-\usepackage[T1]{fontenc}
+%\RequirePackage{mathpazo}%Palatino font
+%\RequirePackage{fourier}%Utopia font: very nice
+%\RequirePackage{fbb}%Garamond font: looks good but a bit dated
+%\RequirePackage{gfsdidot}% Not the best maths
+
+
+%\RequirePackage[sb]{libertine} % sb for Semi-Bold
+\RequirePackage{libertine}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[libertine]{newtxmath}
+%\RequirePackage{lmodern}
 
 % Add `customfont' in the document class option to use this section
 
