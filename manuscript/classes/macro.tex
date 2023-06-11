@@ -1,15 +1,31 @@
 % ******************************************************************************
 % ********************************* PACKAGES ***********************************
 \usepackage[dvipsnames,table]{xcolor}
-\usepackage{amsmath,amssymb,amsfonts}
 \usepackage{bbm}
 \usepackage{algorithm}
 \usepackage{algpseudocodex}
 \usepackage{tikz}
+\usepackage[many]{tcolorbox}
 \usetikzlibrary{arrows.meta,arrows,calc}
-\usepackage{tabularx}
-
+\usepackage{array}
+\usepackage{footnote}
 \usepackage[acronym]{glossaries}
+
+
+\usepackage{etoc} %chapter table of contents
+\usepackage[Lenny]{fncychap} %fancy chapters
+\usepackage{epigraph} 
+\usepackage{titlesec}
+
+% Custom PART style
+\makeatletter
+\titleformat{\part}[display]
+  {\Huge\scshape\filright}
+  {\partname~\thepart:}
+  {20pt}
+  {\thispagestyle{epigraph}}
+\makeatother
+
 
 
 % ******************************************************************************
@@ -18,6 +34,12 @@
 \newcommand{\contrib}[1]{\textcolor{OliveGreen}{(#1)}}
 \newcommand{\vcn}[1]{\textcolor{magenta}{VCN: [#1]}}
 \newcommand{\ber}[1]{\textcolor{orange}{BER: [#1]}}
+\definecolor{midblue}{HTML}{024873}
+% EDF colors
+%oranges
+\definecolor{ofonce}{HTML}{FE5716}
+\definecolor{omoyen}{HTML}{FF861D}
+\definecolor{oclair}{HTML}{FFB210}
 
 \newcommand{\eq}[1]{Eq.~\eqref{#1}}
 \newcommand{\fig}[1]{Fig.~\ref{#1}}
@@ -25,9 +47,39 @@
 \newcommand*\what[1]{\widehat{#1}}
 \newcommand*\wtilde[1]{\widetilde{#1}}
 
-%\theoremstyle{remark}
+% See good practice: https://www.overleaf.com/learn/latex/Theorems_and_proofs
+\theoremstyle{remark}
 \newtheorem{remark}{Remark}
+
+
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\tcolorboxenvironment{example}{
+  colback=SpringGreen!10!white,
+  boxrule=0.5pt,
+  %boxsep=1pt,
+  %left=2pt,right=2pt,top=2pt,bottom=2pt,
+  %oversize=2pt,
+  sharp corners,
+  before skip=\topsep,
+  after skip=\topsep,
+}
+
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\tcolorboxenvironment{theorem}{
+  colback=gray!2!white,
+  boxrule=0.5pt,
+  %boxsep=1pt,
+  %left=2pt,right=2pt,top=2pt,bottom=2pt,
+  %oversize=2pt,
+  sharp corners,
+  before skip=\topsep,
+  after skip=\topsep,
+}
+
 
 % ******************************************************************************
 % *********************************** MATHS ************************************
@@ -50,6 +102,7 @@
 \def\bh{{\bf h}}
 \def\bL{{\bf L}}
 \def\bE{{\bf E}}
+\def\btheta{{\boldsymbol{\theta}}}
 
 \def\R{\mathbb{R}}
 \def\N{\mathbb{N}}
@@ -59,15 +112,17 @@
 \def\dx{\mathrm{d}\bx}
 \def\wBQ{\mathbf{w}_{\mathrm{BQ}}}
 \def\iX{\mathcal{X}}
+\def\iM{\mathcal{M}}
 \def\iN{\mathcal{N}}
 \def\iD{\mathcal{D}}
 \def\iH{\mathcal{H}}
 \def\iS{\mathcal{S}}
-\def\A{\mathcal{A}}
+\def\iA{\mathcal{A}}
 \def\iF{\mathcal{F}}
 
 \def\domega{\mathrm{d}\omega}
 \def\var{\operatorname{Var}}
+\def\cov{\operatorname{Cov}}
 \def\mse{\mathrm{MSE}}
 \def\imse{\mathrm{IMSE}}
 \def\mise{\mathrm{MISE}}
@@ -75,6 +130,8 @@
 \def\MMD{\mathrm{MMD}}
 \def\yth{y_\mathrm{th}}
 \def\pf{p_\mathrm{f}}
+\def\ln{\mathrm{ln}}
+
 
 \def\P{\mathbb{P}}
 \def\1{\mathbbm{1}} 
@@ -127,6 +184,7 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage[libertine]{newtxmath}
 %\RequirePackage{lmodern}
+\usepackage{tgcursor}%required for texttt font
 
 % Add `customfont' in the document class option to use this section
 
@@ -188,8 +246,8 @@
 
 %\usepackage{multicol}
 %\usepackage{longtable}
-%\usepackage{tabularx}
-
+\usepackage{tabularx}
+\renewcommand\tabularxcolumn[1]{m{#1}}
 
 % *********************************** SI Units *********************************
 \usepackage{siunitx} % use this package module for SI units
@@ -246,7 +304,6 @@
 
 
 % ********************** TOC depth and numbering depth *************************
-
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{2}
 

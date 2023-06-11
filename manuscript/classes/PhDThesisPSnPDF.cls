@@ -242,7 +242,6 @@ supported!}
 % ******************************** Packages ************************************
 % ******************************************************************************
 % ************************** Layout and Formatting *****************************
-
 \RequirePackage{lscape}   % Supports Landscape Layout
 \RequirePackage{setspace} % Define line spacing in paragraph
 \RequirePackage{calc}     % calculate vertical spacing
@@ -587,6 +586,7 @@ supported!}
   \RequirePackage{amsfonts}
   \RequirePackage{amsmath}
   \RequirePackage{amssymb}
+  \RequirePackage{amsthm}
 \fi
 
 % Don't break enumeration (etc.) across pages in an ugly manner
@@ -614,9 +614,9 @@ supported!}
     breaklinks=true,
     linktocpage,
     colorlinks=true,
-    linkcolor=black,
+    linkcolor=midblue,%CHANGED
     urlcolor=black,
-    citecolor=black,
+    citecolor=midblue,%CHANGED
     anchorcolor=black
   }
   \ifsetCustomMargin
@@ -666,7 +666,7 @@ supported!}
 % Redefining urlstyle to use smaller fontsize in References with URLs
 \newcommand{\url@leostyle}{%
  \@ifundefined{selectfont}{\renewcommand{\UrlFont}{\sffamily}}
- {\renewcommand{\UrlFont}{\normalsize}}}
+ {\renewcommand{\UrlFont}{\footnotesize}}}
 \urlstyle{leo}
 
 % option to split urls over multiple lines for latex >> DVIPS >> PDF option
@@ -1146,7 +1146,7 @@ publicly defended on January xx, 2024 in front of the following jury:
 \newsavebox{\PHD@Title}
 \begin{lrbox}{\PHD@Title}
   \begin{minipage}[c]{0.98\textwidth}
-    \centering \Huge \bfseries{\@title}
+    \centering \Huge \scshape{\@title}
     \ifthenelse{\equal{\@subtitle}{}}{
       % subtitle is not defined
     }{

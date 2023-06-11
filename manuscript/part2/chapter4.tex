@@ -5,7 +5,9 @@
 %*******************************************************************************
 \chapter{Kernel-based central tendency estimation}
 %*******************************************************************************
-
+\hfill
+\localtableofcontents
+\newpage
 
 %\section{Kernel discrepancy}
 %\section{Quantization with kernel herding \elias{SIAM UQ talk 2022, RENEW cpaper 2022}}
@@ -135,7 +137,7 @@ The wave data arise from a buoy placed in the middle of the farm. This data desc
 
 The farm of Teesside is located close to the coast, making the environmental conditions very different depending on the direction (see the wind farm layout in \fig{fig:teesside_layout}). 
 Since measures are also subject to uncertainties, a few checks were realized to ensure that the data were physically consistent. 
-The truncation bounds defined in Table \ref{tab:envi_variables} were applied since this study is not interested in extreme values but central tendency estimation (i.e., mean behavior). 
+The truncation bounds defined in Table \ref{tab:envi_variables} were applied since this study is not interested in extreme values but in central tendency estimation (i.e., mean behavior). 
 In addition, a simple trigonometric transform is applied to each directional feature to take into account their cyclic structure. 
 Finally, the remaining features are rescaled (i.e., using a min-max normalization). 
 The matrix plot of the transformed data in \fig{fig:envi_pairplot} is an innovative plot named \emph{copulogram}. 

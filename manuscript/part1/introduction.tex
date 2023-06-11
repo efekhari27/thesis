@@ -73,7 +73,7 @@ Figure \ref{fig:UQ_methodo} illustrates the UQ methodologies and the standardize
 
 \begin{figure}[!h]
     \centering
-    \input{part2/figures/DCE/ABC_diagram.tex}
+    \input{part1/figures/ABC_diagram_nomaths.tex}
     \caption{General uncertainty quantification framework (adapted from \cite{ajenjo_2023}) \elias{remove maths and add image?}}
     \label{fig:UQ_methodo}
 \end{figure}
@@ -106,19 +106,63 @@ The first part gathers an introduction to UQ's state-of-the-art and a specificat
 The second part presents the contributions to uncertainty quantification and propagation while the third part the contributions to rare event estimation.
 This manuscript is divided into seven chapters, which are summarized hereafter: 
 
-\textbf{Chapter 1} introduces the 
+\textbf{Chapter 1} introduces the Treatment of uncertainties in computer experiments. Uncertainty quantification 
 
-\textbf{Chapter 2}
+\textbf{Chapter 2} Introduction to wind turbine modeling and design
 
-\textbf{Chapter 3}
+\textbf{Chapter 3} Kernel-based uncertainty quantification
 
-\textbf{Chapter 4} 
+\textbf{Chapter 4} Kernel-based central tendency estimation
 
-\textbf{Chapter 5}
+\textbf{Chapter 5} Kernel-based metamodel validation
 
-\textbf{Chapter 6} 
+\textbf{Chapter 6} Nonparametric rare event estimation
 
-\textbf{Chapter 7} 
+\textbf{Chapter 7} Sequential reliability oriented sensitivity analysis
+
+
+\clearpage
+%============================================================%
+%============================================================%
+\section*{Numerical developments}
+%============================================================%
+%============================================================%
+
+
+In the vain of an open-data approach, this aims at sharing the implementations developed and allows the reader to reproduce numerical results.
+Along this thesis, the contributions to numerical developments are summarized below: 
+
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{c >{\raggedleft\arraybackslash}X}
+    \texttt{otkerneldesign\footnote{Documentation: \url{https://efekhari27.github.io/otkerneldesign/master/}}}
+    &    
+    \begin{itemize}[left=0pt]
+        \item This Python package generates designs of experiments based on kernel methods such as Kernel Herding and Support Points. 
+        A tensorized implementation of the algorithms was proposed, significantly increasing their performances. 
+        Additionally, optimal weights for Bayesian quadrature are provided. 
+        \item This Python package, developed in collaboration with J.Muré, is available on the platform Pypi and fully documented.
+    \end{itemize}\\ \hline
+    \texttt{bancs\footnote{Repository: \url{https://github.com/efekhari27/bancs}}} &    
+    \begin{itemize}[left=0pt]
+        \item This Python package proposes an implementation of the ``Bernstein Adaptive Nonparametric Conditional Sampling'' method for rare event estimation. 
+        \item This Python package is available on the PyPI platform and is illustrated with examples and analytical benchmarks.
+    \end{itemize}\\ \hline
+    \texttt{ctbenchmark\footnote{Repository: \url{https://github.com/efekhari27/ctbenchmark}}} &    
+    \begin{itemize}[left=0pt]
+        \item This Python package presents a standardized process to benchmark different sampling methods for central tendency estimation. 
+        \item This Python package is available on a GitHub repository with analytical benchmarks.
+    \end{itemize}\\ \hline
+    \texttt{copulogram\footnote{Repository: \url{https://github.com/efekhari27/copulogram}}} &    
+    \begin{itemize}[left=0pt]
+        \item This Python package proposes an implementation of a synthetic visualization tool for multivariate distributions. 
+        \item This Python package, developed in collaboration with V.Chabridon, is available on the Pypi platform and fully documented.
+    \end{itemize}\\
+\end{tabularx} 
+\end{center}
+
+
 
 \newpage
 %============================================================%
@@ -136,11 +180,11 @@ The research contributions in this manuscript are based on the following publica
         Book Chap. & \underline{E. Fekhari}, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). 
                     ``Model predictivity assessment: incremental test-set selection and accuracy evaluation''. 
                     In: \textit{Studies in Theoretical and Applied Statistics}, pages 315--347. Springer.\\
-
+        \hline
         Jour Pap.   & \underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2023).
                     ``Fast given-data uncertainty propagation in offshore wind turbine simulator using Bayesian quadrature''. 
                     In: \textit{Data-Centric Engineering}.\\
-        
+        \hline
         Int. Conf   & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022).
                     ``Numerical Studies of Bayesian Quadrature Applied to Offshore Wind Turbine Load Estimation''.
                     In: \textit{SIAM Conference on Uncertainty Quantification (SIAM UQ22)}, Atlanta, USA. (Talk)\\
@@ -164,7 +208,7 @@ The research contributions in this manuscript are based on the following publica
                     & A. Lovera, \underline{E. Fekhari}, B. Jézéquel, M. Dupoiron, M. Guiton and E. Ardillon (2023). 
                     ``Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis". 
                     In: \textit{Journal of Physics: Conference Series (WAKE 2023)}, Visby, Sweden (Paper)\\
-        
+        \hline
         Nat. Conf.  & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022).
                     ``Kernel-based quadrature applied to offshore wind turbine damage estimation''. 
                     In: \textit{Proceedings of the Mascot-Num 2022 Annual Conference (MASCOT NUM 2022)}, Clermont-Ferrand, France (Poster)\\
@@ -176,29 +220,3 @@ The research contributions in this manuscript are based on the following publica
         \end{tabularx}    
 \end{table*}
 
-
-%============================================================%
-%============================================================%
-\section*{Numerical developments}
-%============================================================%
-%============================================================%
-
-Along this work, the contributions to numerical developments are summarized below. 
-In the vain of an open-data approach, this aims at sharing the implementations developed and allows the reader to reproduce numerical results.
-
-\begin{table*}[h]
-    \small
-    \renewcommand*{\arraystretch}{1.4}
-    \begin{tabularx}{\textwidth}{l X}
-        \texttt{otkerneldesign} & \begin{itemize}
-            \item This Python package generates designs of experiments based on kernel methods such as Kernel Herding and Support Points. 
-            A tensorized implementation of the algorithms was proposed, significantly increasing their performances. 
-            Additionally, optimal weights for Bayesian quadrature are provided. 
-            \item This Python package, developed in collaboration with J.Muré, is available on the platform Pypi and fully documented.
-        \end{itemize}\\
-
-        \texttt{ctbenchmark} & \texttt{ctbenchmark}. What does it do? Who contributed? Where is it available?\\
-        \texttt{bancs} & . What does it do? Who contributed? Where is it available?\\
-        \texttt{copulogram} & . What does it do? Who contributed? Where is it available?\\
-        \end{tabularx}    
-\end{table*}

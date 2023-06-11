@@ -107,9 +107,8 @@
 \fi
 
 % ******************************** Front Matter ********************************
+
 \begin{document}
-%\setcounter{tocdepth}{4}
-%\setcounter{secnumdepth}{4}
 
 \frontmatter
 
@@ -121,8 +120,9 @@
 %\include{abstract}
 
 % *********************** Adding TOC and List of Figures ***********************
-
 \tableofcontents
+
+\etocsettocstyle{\noindent\rule{\linewidth}{.4pt}}{\noindent\rule{\linewidth}{.4pt}}
 
 \listoffigures
 
@@ -140,19 +140,39 @@
 \mainmatter
 
 \include{part1/introduction}
-\part{Introduction to treatment of uncertainties and wind energy}
+
+%\epigraph{Il n'y a pas de hasard, \\il n'y a que des rendez-vous.}{\textsc{P. Eluard}}
+%\epigraph{\textit{Le hasard, c'est le purgatoire de la causalité.}}{\textsc{J. Baudrillard}}
+%\epigraph{\textit{Le savoir acquis dans un pays étranger peut-être une patrie et l'ignorance peut-être un exil vécu dans son propre pays.}}{\textsc{Averroes - Ibn Rochd}}
+%\epigraph{\textit{Toute pensée émet un coup de dé.}}{\textsc{S. Mallarmé}}
+%\epigraph{\textit{Essayez encore. Rater encore. Rater mieux.}}{\textsc{S. Beckett}}
+\setlength\epigraphwidth{.35\textwidth}
+\epigraphhead[550]{
+    \epigraph{\textit{Toute pensée émet un coup de dé.}}{\textsc{S. Mallarmé}} 
+}
+\part{Introduction to uncertainty quantification and wind energy}
 \include{part1/chapter1}
 \include{part1/chapter2}
 
-\part{Contributions to uncertainty quantification and propagation}
-\include{part2/chapter3}
-\include{part2/chapter4}
-\include{part2/chapter5}
 
-\part{Contributions to rare event estimation}
-\include{part3/chapter6}
-\include{part3/chapter7}
-\include{part3/conclusion}
+%\setlength\epigraphwidth{.3\textwidth}
+%\epigraphhead[550]{
+%    \epigraph{\textit{Essayez encore. Rater encore. Rater mieux.}}{\textsc{S. Beckett}}
+%}
+%\part{Contributions to uncertainty quantification and propagation}
+%\include{part2/chapter3}
+%\include{part2/chapter4}
+%\include{part2/chapter5}
+
+
+%\setlength\epigraphwidth{.35\textwidth}
+%\epigraphhead[550]{
+%    \epigraph{\textit{Le savoir acquis dans un pays étranger peut-être une patrie et l'ignorance peut-être un exil vécu dans son propre pays.}}{\textsc{Averroes - Ibn Rochd}}
+%}
+%\part{Contributions to rare event estimation}
+%\include{part3/chapter6}
+%\include{part3/chapter7}
+%\include{part3/conclusion}
 
 % ********************************** Back Matter *******************************
 % Backmatter should be commented out, if you are using appendices after References
@@ -186,8 +206,10 @@
 
 
 \begin{appendices} % Using appendices environment for more functunality
-\include{appendices/appencixA}
-
+\include{appendices/appendixA}
+\include{appendices/appendixB}
+\include{appendices/appendixC}
+\include{appendices/appendixD}
 \end{appendices}
 
 % *************************************** Index ********************************
