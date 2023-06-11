@@ -312,6 +312,52 @@ Using a pseudo-random generator, one can generate $n \in \N$ i.i.d realizations 
 
 \elias{Remark on randomized quasi-Monte Carlo: paper on quantiles}
 
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/MonteCarlo64.png}
+        \caption{Monte Carlo}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/quasi_MonteCarlo_64.png}
+        \caption{Sobol' sequence}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/quasi_MonteCarlo_Halton_64.png}
+        \caption{Halton sequence}
+    \end{subfigure}
+       \caption{Monte Carlo and quasi-Monte Carlo designs ($n=256$)}
+       \label{fig:monte_carlo_designs}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/MonteCarlo256.png}
+        \caption{Monte Carlo}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/quasi_MonteCarlo_256.png}
+        \caption{Sobol' sequence}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/quasi_MonteCarlo_Halton_256.png}
+        \caption{Halton sequence}
+    \end{subfigure}
+       \caption{Monte Carlo and quasi-Monte Carlo designs ($n=256$)}
+       \label{fig:monte_carlo_designs}
+\end{figure}
+
 %------------------------------------------------------------%
 \subsubsection{Latin hypercube sampling}
 %------------------------------------------------------------%
