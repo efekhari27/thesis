@@ -99,11 +99,11 @@ For example, imprecise probability theory allows more general modeling of the un
 It becomes useful when dealing with very limited and possibly contradictory information (e.g., expert elicitation). 
 The core probabilistic tools and objects are introduced hereafter. 
 
-The \textit{probability space} (i.e., a measure space with its total measure summing to one), also called probability triple and denoted $(\Omega, \iA, \P)$.
+The \textit{probability space} (i.e., a measure space with its total measure summing to one), also called probability triple and denoted $(\Omega, \iA, \mu)$.
 This mathematical concept first includes a sample space $\Omega$, which contains a set of outcomes $\omega \in \Omega$. 
 An \textit{event} is defined as a set of outcomes in the sample space.
 Then, a $\sigma$-algebra $\iA$ (also called event space) is a set of events. 
-Finally, a probability function $\P: \iA \rightarrow [0, 1]$, is a positive probability measure associated with an event.
+Finally, a probability function $\mu: \iA \rightarrow [0, 1]$, is a positive probability measure associated with an event.
 Most often, the choice of the probability space will not be specified. 
 The main object will be functions defined over this probability space: random variables. 
 
@@ -115,20 +115,20 @@ The \textit{random vector} $\bX$ (i.e., multivariate random variable) is a measu
     \omega & \longmapsto & \bX(\omega) = \bx.
 \end{array}
 \end{equation}
-In the following, the random vector $\bX$ will be considered to be a squared-integrable function against the measure $\P$ (i.e., $\int_{\Omega} |\bX(\omega)|^2 \,\d \P(\omega) < \infty$).
+In the following, the random vector $\bX$ will be considered to be a squared-integrable function against the measure $\mu$ (i.e., $\int_{\Omega} |\bX(\omega)|^2 \,\d \mu(\omega) < \infty$).
 Moreover, this work will focus on continuous random variables.
 
-The \textit{probability distribution} of the random vector $\bX$ is the pushforward measure of $\P$ by $\bX$.
-Which is a probability measure on $(\iD_{\bx}, \iA)$, denoted $\P_{\bX}$ and defined by: 
+The \textit{probability distribution} of the random vector $\bX$ is the pushforward measure of $\mu$ by $\bX$.
+Which is a probability measure on $(\iD_{\bx}, \iA)$, denoted $\mu_{\bX}$ and defined by: 
 \begin{equation}
-    \P_{\bX}(B) = \P(\bX \in B) = \P(\omega \in \Omega : \bX(\omega)\in B), \quad \forall B \in \iA.
+    \mu_{\bX}(B) = \mu(\bX \in B) = \mu(\omega \in \Omega : \bX(\omega)\in B), \quad \forall B \in \iA.
 \end{equation}
 The \textit{cumulative distribution function} (CDF) is a common tool to manipulate random variables. 
 It is a function $F_{\bX} : \iD_{\bx} \rightarrow [0, 1]$ defined for all $\bx \in \iD_{\bx}$ as: 
 \begin{equation}
-    F_{\bX}(\bx) = \P(\bX \leq \bx)
-            = \P(X_1 \leq x_1, \dots, X_p \leq x_p)
-            = \P_{\bX}(]-\infty, x_1] \times \dots \times ]-\infty, x_p]).
+    F_{\bX}(\bx) = \mu(\bX \leq \bx)
+            = \mu(X_1 \leq x_1, \dots, X_p \leq x_p)
+            = \mu_{\bX}(]-\infty, x_1] \times \dots \times ]-\infty, x_p]).
 \end{equation}
 The CDF is a positive, increasing, right-continuous function, which tends to $0$ as $\bx$ tends to $-\infty$ and to $1$ as $\bx$ tends to $+\infty$.
 In the continuous case, one can also define a corresponding \textit{probability density function} (PDF) $f_{\bX}: \iD_{\bx} \rightarrow \R_+$  with 
@@ -136,7 +136,7 @@ $f_{\bX}(\bx) = \frac{\partial^p F_{\bX}(\bx)}{\partial x_1 \dots \partial x_p}$
 
 The expected value of a random vector $\E[\bX]$, also called the first moment, is a vector defined as:
 \begin{equation}
-    \E[\bX] = \int_{\Omega} \bX(\omega) \,\d \P(\omega) =  \int_{\iD_{\bx}} \bx f_{\bX}(\bx) \, \d\bx = \left(\E[X_1], \dots, \E[X_p]\right)\TT.
+    \E[\bX] = \int_{\Omega} \bX(\omega) \,\d \mu(\omega) =  \int_{\iD_{\bx}} \bx f_{\bX}(\bx) \, \d\bx = \left(\E[X_1], \dots, \E[X_p]\right)\TT.
 \end{equation}
 In addition, considering two random variables $X_j$ and $X_j$, with $i, j \in \{1, \dots, p\}$, one can write their respective variance:
 \begin{equation}
@@ -244,7 +244,7 @@ This property is important to understand the use of rank transformation to displ
 
 Identically to the univariate continuous distributions, a large catalog of families of copulas exists (e.g., independent, Normal, Clayton, Frank, Gumbel copula, etc.).
 
-\elias{define the independent copula, also called product of marginals.}
+\elias{define the independent copula, also called a product of marginals.}
 
 To infer a joint distribution, this theorem divides the fitting problem into two independent problems: fitting the marginals and fitting the copula
 Provided a dataset, this framework allows the combination of a parametric (or nonparametric) fit of marginals with a parametric (or nonparametric) fit of the copula. 
@@ -260,7 +260,7 @@ The following points can be checked at this early stage:
     \item Is the distribution unimodal? If not, mixtures methods or nonparametric models might be required;
     \item Is the validity domain restrictive? If so, specific families of parametric distributions can be chosen or truncations can be applied;
     \item Is the dimension high? If the dimension is too high: tensorize the distribution as much as possible.
-    \item Is the dependence structure complex? Graphically, the dataset in the ranked space gives an empirical description but some independence test exist as well. 
+    \item Is the dependence structure complex? Graphically, the dataset in the ranked space gives an empirical description but some independence tests exist as well. 
 \end{itemize} 
 
 
@@ -271,28 +271,125 @@ The following points can be checked at this early stage:
 %============================================================%
 %============================================================%
 
+The previous section aimed at building a probabilistic model of the uncertainties considering the knowledge available.
+This one will introduce diverse forward propagation of uncertainty through a numerical model. 
+This step is hereafter qualified as ``global'' because the analysis of the resulting output random variable will particularly focus on its central tendency (i.e., expected value and variance).
+This approach contrasts with the uncertainty propagation dedicated to rare event estimation, which will be introduced in the next section (e.g., for a reliability or certification problem).
+
+The difficulties related to any uncertainty propagation mostly arise from the practical properties of the numerical model. 
+Its potential high dimension, low regularity and nonlinearities each represent a challenge. 
+These studies rely on a finite number of observations which depends on the computational budget the analyst can afford.   
+This forward propagation might be a finality of the uncertainty quantification, but keep in mind that it fully stands on an accurate uncertainty modeling.
+Uncertainty propagation should be perceived as a standardized process with modular bricks, on which the ``garbage in, garbage out'' concept fully applies.
+
+This section introduces the main methods of global uncertainty propagation. 
+Outlining the strong links between numerical integration (i.e., Lebesgue integration or central tendency estimation) and numerical design of experiments. 
+
 
 %============================================================%
 \subsection{Numerical integration}
 %============================================================%
-%------------------------------------------------------------%
-\subsubsection{``Good'' properties}
-%------------------------------------------------------------%
-\elias{Curse of dim / Sequential / Deterministic}
+
+Forward uncertainty propagation aims at integrating a measurable function $g: \iD_{\bX} \rightarrow \R$ with respect to a probability measure $\mu$.
+Numerical integration brings algorithmic tools to help the resolution of this probabilistic integration (i.e., Lebesgue integration). 
+
+In practice, this integral is approximated by summing a finite $n$-sized set of realizations $\by_n = \left\{g(\bx^{(1)}), \dots, g(\bx^{(n)})\right\}$ from a set of input samples $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\}$. 
+A \textit{quadrature} establishes a rule to select the input samples $\bX_n$ (also called nodes), and an associated set of weights $\bw_n = \{w_1, \dots, w_n\} \in \R^n$. 
+The approximation given by a quadrature rule is defined as a weighted arithmetic mean of the realizations:
+\begin{equation}
+    I_{\mu}(g) := \int_{\iD_\bX} g(\bx) \d\mu(\bx) \approx \sum_{i=1}^n w_i g\left(\bx^{(i)}\right).
+    \label{eq:quadrature_rule}
+\end{equation}
+For a given sample size $n$, our goal is to find a set of tuples $\left\{\bx^{(i)}, w_i \right\}_{i=1}^n$ (i.e., quadrature rule), giving the best approximation of our quantity. 
+Ideally, the approximation quality should be fulfilled for a wide class of integrands. 
+Most quadrature rules only depend on the measure space $(\Omega, \iA, \mu)$, regardless of the integrand values.
+In the context of a costly numerical model, this property allows the analyst to massively distribute the calls to the numerical model. 
+
+This section aims at presenting the main multivariate numerical integration techniques. 
+These methods have very different properties: 
+some are deterministic and some are aleatory; 
+some are sequential (or nested) some are not; 
+some are victims of the curse of dimensionality and some are not. 
+A summary table of the different methods and their respective properties is proposed \elias{add ref to table}.
+
+%\item Some quadratures define negative weights, which can introduce numerical instabilities when $n$ gets large.
+%\item The nature of the probability measure (i.e., presence of dependence) might restrict the use of methods
 
 %------------------------------------------------------------%
-\subsubsection{Gauss-Kronrod}
+\subsubsection{Classical multivariate deterministic quadrature}
 %------------------------------------------------------------%
 
+Historically, quadrature methods have been developed for univariate integrals. 
+The Gaussian rule and the Fejér-Clenshaw-Curtis rule are two univariate deterministic quadratures that will be briefly introduced. 
+
+%Let us first mention the Newton-Cotes quadratures, generalizing multiple rules (e.g., the trapezoidal rule, Simpson's rule, etc.).
+Gaussian quadrature is a powerful univariate quadrature building together a set of irregular nodes and a set of weights. 
+The computed weights are positive, which ensures a numerically stable rule even for large sample sizes.
+
+Different variants of rules exist, the most famous being the Gauss-Legendre quadrature. 
+In this case, the function $g$ to be integrated with respect to the uniform measure on $[-1, 1]$ is approximated by Legendre polynomials.
+Considering the Legendre polynomial of order $n$, denoted $l_n$, the quadrature nodes ${x^{(i)}}_{i=1}^n$ are given by the polymonial roots.
+The respective weights are given by the following formula: 
+\begin{equation}
+    w_{i}={\frac {2}{\left(1-\left(x^{(i)}\right)^{2}\right)\left(l'_{n}(x^{(i)})\right)^{2}}}.
+\end{equation}
+This rule guarantees a very precise approximation provided that the integrand is well-approximated by a polynomial of degree $2n-1$ or less on $[-1, 1]$.
+This rule is deterministic but not sequential, meaning that two rules with sizes $n_1$ and $n_2$, $n_1 < n_2$ will not be nested. 
+However, a sequential extension is proposed by the Gauss-Kronrod rule \elias{add ref}, offering lower accuracy. 
+
+To overcome this practical drawback, the Fejér-Clenshaw-Curtis is a fully nested rule with mostly equivalent accuracy as Gaussian quadrature.
+This method is usually presented to integrate a function with respect to the uniform measure on $[-1, 1]$ and starts with a change of variables:
+\begin{equation}
+    \int_{-1}^{1} g(x) \, \d x = \int_{0}^{\pi} g(\cos(\theta)) \sin(\theta) \, \d \theta 
+\end{equation}
+This expression can be written as an expansion of the integrand using cosine series. 
+Moreover, cosine series are closely related to the Chebyshev polynomials of the first kind. 
+Féjer's ``first rule'' \elias{LLOYD N. TREFETHEN 2008} relies on the Chebyshev polynomials roots as nodes $x^{(i)} = \cos(\theta^{(i+1/2)})$, and the following weights:
+\begin{equation}
+    w_i=\frac{2}{n}\left(1-2\sum_{j=1}^{\lfloor n/2 \rfloor}\frac{1}{4j^2-1}\cos\left(j\theta^{(2i+1)}\right)\right)    
+\end{equation}
+These two univariate integration schemes are both very efficient on a wide panel of functions. 
+Yet, Fejér-Clenshaw-Curtis is sequential and offers easy implementations, benefitting from powerful algorithms such as \textit{fast Fourier transform}. 
+
+\elias{add 1D Gaussian nodes and Féjer nodes and show that some are nested and some are not}
+
+UQ problems are rarely unidimensional, but one can build a multivariate quadrature rule by defining the tensor product (also called full grids) of univariate rules. 
+This exhaustive approach quickly shows its practical limits as the problem's dimension increases. 
+Alternatively, sparse multivariate quadratures (e.g., Smolyak sparse grid) propose a more efficient exploration of the joint domain (see \elias{add ref} for more details).
+
+
+%\item Note that when the distribution is not on a closed domain or if the inputs are dependent, it requires a transform.
+
+
 %------------------------------------------------------------%
-\subsubsection{Monte Carlo}
+\subsubsection{Monte Carlo methods}
 %------------------------------------------------------------%
+\begin{itemize}
+    \item The Vanilla MC is a frequentist resolution of the Lebesgue integral. 
+    \item Definition 
+    \item The TCL: convergence and variance
+    \item This method requires the generation of pseudorandom numbers. 
+    Pseudorandom number generators are used with the Sklar theorem.
+    \item Mention variance-reduction techniques such as importance sampling and multi-level Monte Carlo
+    \item Markov Chain Monte Carlo When the input distribution is complex
+\end{itemize}
+
 
 %------------------------------------------------------------%
 \subsubsection{Quasi-Monte Carlo and Koksma-Hlawka inequality}
 %------------------------------------------------------------%
 
+\begin{itemize}
+    \item Numerical integration scheme over $[0, 1]^p$ wrt uniform measure.
+    \item Synthesis: deterministic quadratures are subject to the curse of dim while MC has a slow convergence rate.
+    \item Quasi-MC combines the good properties from both deterministic and MC integration schemes by selecting nodes following a low discrepancy sequence.
+\end{itemize}
+ 
+
+
+%============================================================%
 \subsection{Numerical design of experiments}
+%============================================================%
 %------------------------------------------------------------%
 \subsubsection{Space-filling metrics}
 %------------------------------------------------------------%
@@ -307,7 +404,7 @@ The following points can be checked at this early stage:
 \subsubsection{Monte Carlo and quasi-Monte Carlo designs}
 %------------------------------------------------------------%
 
-Monte-Carlo sampling is the simplest way to propagate uncertainty (either for central tendency or probability estimation). 
+Monte Carlo sampling is the simplest way to propagate uncertainty (either for central tendency or probability estimation). 
 Using a pseudo-random generator, one can generate $n \in \N$ i.i.d realizations $\left\{\bX^{(i)}\right\}_{i=1,...,n}$ of a random vector $\bX$.
 
 \elias{Remark on randomized quasi-Monte Carlo: paper on quantiles}
@@ -365,7 +462,7 @@ The LHS is a method introduced in 1979 \citep{mckay_beckman_1979}, initially cre
 The main idea is that to make sure that the information is not redundant, the distribution of each sub-projection of the domain should be as uniform as possible. 
 To force this concept, each variable's domain is divided into $n$ identical segments creating a square lattice over the domain. 
 This lattice is composed of $n^{p}$ squared elements. 
-Among the $n^{p}$ elements, the LHS samples $n$ points (only one point by element) with the constraint of having one and only one sample for each segment of each the variables. 
+Among the $n^{p}$ elements, the LHS samples $n$ points (only one point by element) with the constraint of having one and only one sample for each segment of each variables. 
 This ensures a good distribution over the sub-projections of the domain. 
 Inside each selected element in the square lattice, the points can be placed in the center or randomly.
 \elias{Illustration LHS vs. Monte Carlo}
@@ -373,11 +470,11 @@ Inside each selected element in the square lattice, the points can be placed in 
 \elias{Illustration pathological LHS (diagonal design)}
 
 %------------------------------------------------------------%
-\subsubsection{Optimized latin hypercube sampling}
+\subsubsection{Optimized Latin hypercube sampling}
 %------------------------------------------------------------%
 
 \cite{franco_2008} discusses how LHS can have very poor space-filling properties in some cases, which can be prevented by adding an optimization step. 
-Knowing that a LHS can be permuted to another one, one can find the permutation on a LHS that would optimize a given space-filling criteria. 
+Knowing that an LHS can be permuted to another one, one can find the permutation on an LHS that would optimize a given space-filling criteria. 
 The optimization according to the two following criteria is discussed in \cite{damblin_couplet_2013} and the sub-projections issue is also raised. 
 Note that LHS designs are very efficient at exploring a domain but handle poorly some complex dependency models such as copulas.
 
