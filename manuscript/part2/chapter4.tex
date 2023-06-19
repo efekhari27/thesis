@@ -301,14 +301,14 @@ The log-damage presents a little asymmetry,so it is unlikely to be normally dist
 \subsection{Quadrature rules and quasi-Monte Carlo methods}
 %------------------------------------------------------------%
 The present section explores different methods aiming at estimating the expected value of a function against a probability measure. 
-Considering a measurable space $\iD_\bX \subset \R^p, p \in \N_+$, associated with a known Lebesgue measure $\mu$, let us study the approximation of integrals of the form $\int_{\iD_\bX} g(\bx) \d\mu(\bx)$, with $g$ the map $g(\bx): \iD_\bX \to \R$. 
+Considering a measurable space $\iD_\bX \subset \R^p, p \in \N_+$, associated with a known Lebesgue measure $\mu$, let us study the approximation of integrals of the form $\int_{\iD_\bX} g(\bx) \dd\mu(\bx)$, with $g$ the map $g(\bx): \iD_\bX \to \R$. 
 This problem is equivalent to the central tendency estimation of $\bY = g(\bX)$, the image of the environmental random variable $\bX$ by the damage function $g$ (see \eq{eq:mean_integral}). 
 Some authors also named this generic problem \emph{probabilistic integration} \citep{briol_oates_2019}. 
 In practice, this quantity of interest is estimated on an $n$-sized set of damage realizations $\by_n = \left\{g(\bx^{(1)}), \dots, g(\bx^{(n)})\right\}$ of an input sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\}$. 
 Our numerical experiment framework often implies that the function $g$ is costly to evaluate, making the realization number limited. 
 A weighted arithmetic mean of the realizations $\left\{g(\bx^{(1)}), \dots, g(\bx^{(n)})\right\}$ is called a \emph{quadrature rule} with a set of unconstrained weights $\bw_n = \{w_1, \dots, w_n\} \in \R^n$:
 \begin{equation}
-    I_{\mu}(g) := \int_{\iD_\bX} g(\bx) \d\mu(\bx) \approx \sum_{i=1}^n w_i g(\bx^{(i)}).
+    I_{\mu}(g) := \int_{\iD_\bX} g(\bx) \dd\mu(\bx) \approx \sum_{i=1}^n w_i g(\bx^{(i)}).
     \label{eq:quadrature_rule}
 \end{equation}
 For a given sample size $n$, our goal is to find a set of tuples $\left\{\bx^{(i)}, w_i \right\}_{i=1}^n$ (i.e., quadrature rule), giving the best approximation of our quantity. 
@@ -328,10 +328,10 @@ In the literature, this procedure is also called \emph{quantization} of a contin
 Overall, numerical integration is a particular case of probabilistic integration against a uniform input measure. 
 For uniform measures, the Koksma-Hlawka inequality \citep{morokoff_1995} provides a useful upper bound on the absolute error of a quadrature rule: 
 \begin{equation}
-    \left| \int_{[0, 1]^p} g(\bx) \dx - \frac1n \sum_{i=1}^n g(\bx^{(i)})\right| \leq  V(g) D_n^*(\bX_n).
+    \left| \int_{[0, 1]^p} g(\bx) \ddx - \frac1n \sum_{i=1}^n g(\bx^{(i)})\right| \leq  V(g) D_n^*(\bX_n).
     \label{eq:KH_inequality}
 \end{equation}
-As explained in \cite{oates_21}, $V(g) = \sum_{\mathfrak{u}\subseteq\{1, \dots, p \}} \int_{[0, 1]^\mathfrak{u}} \left| \frac{\partial^{\mathfrak{u}}g}{\partial \bx_{\mathfrak{u}}}(\bx_{\mathfrak{u}}, 1)\right| \d\bx$, quantifies the complexity of the integrand, while $D_n^*(\bX_n)$ evaluates the discrepancy to uniformity of the design $\bX_n$. 
+As explained in \cite{oates_21}, $V(g) = \sum_{\mathfrak{u}\subseteq\{1, \dots, p \}} \int_{[0, 1]^\mathfrak{u}} \left| \frac{\partial^{\mathfrak{u}}g}{\partial \bx_{\mathfrak{u}}}(\bx_{\mathfrak{u}}, 1)\right| \dd\bx$, quantifies the complexity of the integrand, while $D_n^*(\bX_n)$ evaluates the discrepancy to uniformity of the design $\bX_n$. 
 Therefore, the Koksma-Hlawka inequality shows that the quadrature rule's accuracy relies on the good quantization of $\mu$ by $\bX_n$. For a uniform target measure $\mu$, the star discrepancy is a metric assessing how far from uniformity a sample $\bX_n$ is. 
 When generalizing to a non-uniform measure, a good quantization of $\mu$ should also lead to a good approximation of the quantity. %In the following, a kernel-based distance between multivariate distributions will be introduced to assess the quantization quality.
 
@@ -348,13 +348,13 @@ This framework allows us to embed a continuous or discrete probability measure i
 For any measure $\mu$, its \emph{kernel mean embedding} \citep{sejdinovic_2013}, also called ``potential'' $P_{\mu}(\bx)$ in \cite{pronzato_zhigljavsky_2020}, associated with the kernel $k$ is defined as:
 
 \begin{equation}
-   P_{\mu}(\bx) := \int_{\iD_{\bX}} k(\bx, \bx') \d \mu(\bx').
+   P_{\mu}(\bx) := \int_{\iD_{\bX}} k(\bx, \bx') \dd \mu(\bx').
 \end{equation}
 
 Respectively, the potential $P_{\zeta_n}(\bx)$ of a discrete distribution $\zeta_n = \sum_{i=1}^{n} w_i \delta(\bx^{(i)}), w_i \in \R$ associated with the kernel $k$ can be written as:
 \begin{equation}\label{eq:potential}
     %P_{\mu}(\bx) := \int_{\iD_{\bX}} k(\bx, \bx') \d \mu(\bx'), \qquad 
-    P_{\zeta_n}(\bx) =  \int_{\iD_{\bX}} k(\bx, \bx') \d \zeta_n(\bx') = \sum_{i=1}^{n} w_i k(\bx, \bx^{(i)}).
+    P_{\zeta_n}(\bx) =  \int_{\iD_{\bX}} k(\bx, \bx') \dd \zeta_n(\bx') = \sum_{i=1}^{n} w_i k(\bx, \bx^{(i)}).
 \end{equation}
 The potential $P_{\mu}(\bx)$ of the targeted measure $\mu$ will be referred to as ``target potential'' and the potential $P_{\zeta_n}(\bx)$ associated with the discrete distribution $\zeta_n$ called ``current potential'' when its support is the design $\bX_n$. 
 If $P_{\zeta_n}(\bx)$ is close to $P_{\mu}(\bx)$, it can be interpreted to mean that $\zeta_n$ is an adequate quantization or representation of $\mu$ by the discrete distribution $\zeta_n$ (and therefore lead to a good estimation of a quantity such as $I_{\mu}(g)$ from \eq{eq:quadrature_rule}). 
@@ -366,7 +366,7 @@ However, in most cases, the target potentials must be estimated on a large and r
 \begin{definition}
 The \emph{energy} of a measure $\mu$ is defined as the integral of the potential $P_\mu$ against the measure, which leads to the following scalar quantity:
 \begin{equation}
-    \varepsilon_\mu:= \int_{\iD_{\bX}} P_{\mu}(\bx) \d \mu(\bx) = \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \d\mu(\bx) \d\mu(\bx').
+    \varepsilon_\mu:= \int_{\iD_{\bX}} P_{\mu}(\bx) \dd \mu(\bx) = \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\mu(\bx) \dd\mu(\bx').
 \end{equation}
 \label{eq:target_energy}
 \end{definition}
@@ -381,7 +381,7 @@ Finally, using the reproducing property and writing the Cauchy-Schwarz inequalit
 
 \begin{subequations}
 \begin{align}
-    \left| \sum_{i=1}^{n} w_i g(\bx^{(i)}) - \int_{\iD_{\bX}} g(\bx) \d \mu(\bx) \right| &= \left| \left\langle g, P_{\zeta_n}(\bx) \right\rangle_{\iH(k)} - \left\langle g, P_{\mu}(\bx) \right\rangle_{\iH(k)} \right| \\
+    \left| \sum_{i=1}^{n} w_i g(\bx^{(i)}) - \int_{\iD_{\bX}} g(\bx) \dd \mu(\bx) \right| &= \left| \left\langle g, P_{\zeta_n}(\bx) \right\rangle_{\iH(k)} - \left\langle g, P_{\mu}(\bx) \right\rangle_{\iH(k)} \right| \\
     &= \left| \left\langle g, \left(P_{\zeta_n}(\bx) - P_{\mu}(\bx)\right) \right\rangle_{\iH(k)} \right|\\
     &\leq \lVert g \lVert_{\iH(k)}  \left\lVert P_{\mu}(\bx) - P_{\zeta_n}(\bx) \right\lVert_{\iH(k)}.
     \label{eq:quad_error}
@@ -395,7 +395,7 @@ This distance between two probability distributions $\mu$ and $\zeta$ is given b
 \begin{equation}
     \MMD_k(\mu, \zeta) := %\\ 
     \sup_{\lVert g \lVert_{\iH(k)} \leq 1}
-            \left | \int_{\iD_{\bX}} g(\bx) \d \mu(\bx) - \int_{\iD_{\bX}} g(\bx) \d \zeta(\bx) \right| %= \left\lVert P_{\mu}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH(k)}.
+            \left | \int_{\iD_{\bX}} g(\bx) \dd \mu(\bx) - \int_{\iD_{\bX}} g(\bx) \dd \zeta(\bx) \right| %= \left\lVert P_{\mu}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH(k)}.
     \label{eq:mmd}  
 \end{equation}
 
@@ -410,7 +410,7 @@ It can be written as follows:
     \MMD_k(\mu, \zeta)^2 &= \left\lVert P_{\mu}(\bx) - P_{\zeta}(\bx) \right\lVert^2_{\iH(k)}\\
         &= \left\langle \left(P_{\mu}(\bx) - P_{\zeta}(\bx) \right), \left(P_{\mu}(\bx) - P_{\zeta}(\bx) \right) \right\rangle_{\iH(k)}\\
         &= \left\langle P_{\mu}(\bx), P_{\mu}(\bx) \right\rangle_{\iH(k)} - 2 \left\langle P_{\mu}(\bx), P_{\zeta}(\bx) \right\rangle_{\iH(k)} + \left\langle P_{\zeta}(\bx), P_{\zeta}(\bx) \right\rangle_{\iH(k)}\\
-        &= \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \d\mu(\bx) \d\mu(\bx') - 2 \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \d\mu(\bx) \d\zeta(\bx') + \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \d\zeta(\bx) \d\zeta(\bx').
+        &= \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\mu(\bx) \dd\mu(\bx') - 2 \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\mu(\bx) \dd\zeta(\bx') + \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\zeta(\bx) \dd\zeta(\bx').
 \end{align}
 \end{subequations}
 Taking a discrete distribution with uniform weights $\zeta_n= \frac{1}{n} \sum_{i=1}^{n} \delta(\bx^{(i)})$, the squared MMD reduces to: 
@@ -543,7 +543,7 @@ To solve a probabilistic integration problem, the concept of Bayesian quadrature
 \paragraph{Gaussian processes for Bayesian quadrature}%------%
 Kernel methods and Gaussian processes present a lot of connections and equivalences, thoroughly reviewed by \cite{motonobu_2018}. 
 In numerical integration, Gaussian processes have been used to build quadrature rules in the seminal paper of \cite{ohagan_1991}, introducing the concept of \emph{Bayesian quadrature} (BQ). 
-Let us recall the probabilistic integration problem $I_\mu(g) = \int_{\iD_\bX} g(\bx) \d \mu(\bx)$ (introduced in \eq{eq:quadrature_rule}). 
+Let us recall the probabilistic integration problem $I_\mu(g) = \int_{\iD_\bX} g(\bx) \dd \mu(\bx)$ (introduced in \eq{eq:quadrature_rule}). 
 From a general point of view, this quantity could be generalized by composing $g$ with another function $\psi$ (e.g., other moments, quantiles, exceedance probabilities). 
 The quantity of interest then becomes, $I_\mu(\psi(g))$, for example when $\psi$ is a monomial, it gives a moment the distribution of the output.
 
@@ -564,7 +564,7 @@ where $\bk_n(\bx)$ is the column vector of the covariance kernel evaluations $[k
 In BQ, the main object is the random variable $I_{\mu}(\xi_n)$. 
 According to \cite{briol_oates_2019}, its distribution on $\R$ is the pushforward of $\xi_n$ through the integration operator $I_\mu(\cdot)$, sometimes called \emph{posterior distribution}: 
 \begin{equation}
-    I_{\mu}(\xi_n) = \int_{\iD_\bX} (\xi(\bx) | \by_n)  \d \mu(\bx) = \int_{\iD_\bX} \xi_n(\bx)  \d \mu(\bx) \,.
+    I_{\mu}(\xi_n) = \int_{\iD_\bX} (\xi(\bx) | \by_n)  \dd \mu(\bx) = \int_{\iD_\bX} \xi_n(\bx)  \dd \mu(\bx) \,.
 \label{eq:posterior}
 \end{equation}
 
@@ -589,20 +589,20 @@ This comes from the linearity of the infinite sum of realizations of a Gaussian 
 The posterior distribution is described in a closed form through its mean and variance by applying Fubini's theorem (see the supplementary materials from \cite{briol_oates_2019} for the proof regarding the variance): %\elias{Add the full proof for the variance in appendix?}:
 \begin{equation}
      \bar{y}_n^{\mathrm{BQ}} := \E\left[I_{\mu}(\xi_n) | \by_n \right] 
-     = \int_{\iD_\bX} \eta_n(\bx) \d \mu(\bx)
-     = \left[\int_{\iD_\bX} \bk_n\TT(\bx) \d \mu(\bx) \right] \bK_n^{-1} \by_n
+     = \int_{\iD_\bX} \eta_n(\bx) \dd \mu(\bx)
+     = \left[\int_{\iD_\bX} \bk_n\TT(\bx) \dd \mu(\bx) \right] \bK_n^{-1} \by_n
      = P_\mu(\bX_n) \bK_n^{-1} \by_n,       
 \label{eq:mean_post}
 \end{equation}
 
 \begin{equation}
     \left(\sigma_n^{\mathrm{BQ}}\right)^2 := \var\left(I_{\mu}(\xi_n) \right) 
-    = \iint_{\iD_{\bX^2}} k_n(\bx, \bx') \d \mu(\bx) \d \mu(\bx') 
+    = \iint_{\iD_{\bX^2}} k_n(\bx, \bx') \dd \mu(\bx) \dd \mu(\bx') 
     = \varepsilon_\mu - P_\mu(\bX_n) \bK_n^{-1} P_\mu(\bX_n)\TT.
 \label{eq:var_post}
 \end{equation}
 \noindent
-Where $P_\mu(\bX_n)$ is the row vector of potentials $\left[\int k_n(\bx, \bx^{(1)}) \d \mu(\bx), \dots, \int k_n(\bx, \bx^{(n)}) \d \mu(\bx)\right]$, and $\varepsilon_\mu$ is given in \eq{eq:target_energy}. 
+Where $P_\mu(\bX_n)$ is the row vector of potentials $\left[\int k_n(\bx, \bx^{(1)}) \dd \mu(\bx), \dots, \int k_n(\bx, \bx^{(n)}) \dd \mu(\bx)\right]$, and $\varepsilon_\mu$ is given in \eq{eq:target_energy}. 
 As in the one-dimensional example presented in \fig{fig:bayesian_quad}, the expected value of $I_{\mu}(\xi_n)$ expressed in \eq{eq:mean_post} is a direct estimator of the quantity of interest \eq{eq:quadrature_rule}. 
 The so-called ``Bayesian quadrature estimator'' appears to be a simple linear combination of the observations by taking the row vector of ``optimal weights'' as: 
 \begin{equation}
@@ -732,29 +732,29 @@ Note that the prediction interval around the BQ estimator is not plotted for the
 
 In these two toy-cases, the MMD is shown to quantify numerical integration convergence well, which illustrates the validity of the inequality given in \eq{eq:quad_error}, similar to the Koksma-Hlawka inequality, recalled in \eq{eq:KH_inequality}.
 
-\begin{figure}[!h]
-\begin{center}
-    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian Mixture_convergence_SE.pdf}
-    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian Mixture_convergence_MMD_SE.pdf}\\
-    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian Mixture_convergence_Matern.pdf}
-    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian Mixture_convergence_MMD_Matern.pdf}\\
-    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian Mixture_convergence_ED.pdf}
-    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian Mixture_convergence_MMD_ED.pdf}\\
-\end{center}
-\caption{Analytical benchmark results on the toy-case \#1} \label{fig:toy-case1}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol 10D (normal input)_convergence_SE.pdf}
-    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol 10D (normal input)_convergence_MMD_SE.pdf}\\
-    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol 10D (normal input)_convergence_Matern.pdf}
-    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol 10D (normal input)_convergence_MMD_Matern.pdf}\\
-    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol 10D (normal input)_convergence_ED.pdf}
-    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol 10D (normal input)_convergence_MMD_ED.pdf}\\
-\end{center}
-\caption{Analytical benchmark results on the toy-case \#2} \label{fig:toy-case2}
-\end{figure}
+%\begin{figure}[!h]
+%\begin{center}
+%    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian Mixture_convergence_SE.pdf}
+%    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian Mixture_convergence_MMD_SE.pdf}\\
+%    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian Mixture_convergence_Matern.pdf}
+%    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian Mixture_convergence_MMD_Matern.pdf}\\
+%    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian Mixture_convergence_ED.pdf}
+%    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian Mixture_convergence_MMD_ED.pdf}\\
+%\end{center}
+%\caption{Analytical benchmark results on the toy-case \#1} \label{fig:toy-case1}
+%\end{figure}
+%
+%\begin{figure}[!h]
+%\begin{center}
+%    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol 10D (normal input)_convergence_SE.pdf}
+%    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol 10D (normal input)_convergence_MMD_SE.pdf}\\
+%    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol 10D (normal input)_convergence_Matern.pdf}
+%    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol 10D (normal input)_convergence_MMD_Matern.pdf}\\
+%    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol 10D (normal input)_convergence_ED.pdf}
+%    \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol 10D (normal input)_convergence_MMD_ED.pdf}\\
+%\end{center}
+%\caption{Analytical benchmark results on the toy-case \#2} \label{fig:toy-case2}
+%\end{figure}
 
 %----------------------------------------------------------------------%
 \subsection{Application to the Teesside wind turbine fatigue estimation}

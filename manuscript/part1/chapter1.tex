@@ -115,7 +115,7 @@ The \textit{random vector} $\bX$ (i.e., multivariate random variable) is a measu
     \omega & \longmapsto & \bX(\omega) = \bx.
 \end{array}
 \end{equation}
-In the following, the random vector $\bX$ will be considered to be a squared-integrable function against the measure $\mu$ (i.e., $\int_{\Omega} |\bX(\omega)|^2 \,\d \mu(\omega) < \infty$).
+In the following, the random vector $\bX$ will be considered to be a squared-integrable function against the measure $\mu$ (i.e., $\int_{\Omega} |\bX(\omega)|^2 \,\dd \mu(\omega) < \infty$).
 Moreover, this work will focus on continuous random variables.
 
 The \textit{probability distribution} of the random vector $\bX$ is the pushforward measure of $\mu$ by $\bX$.
@@ -136,7 +136,7 @@ $f_{\bX}(\bx) = \frac{\partial^p F_{\bX}(\bx)}{\partial x_1 \dots \partial x_p}$
 
 The expected value of a random vector $\E[\bX]$, also called the first moment, is a vector defined as:
 \begin{equation}
-    \E[\bX] = \int_{\Omega} \bX(\omega) \,\d \mu(\omega) =  \int_{\iD_{\bx}} \bx f_{\bX}(\bx) \, \d\bx = \left(\E[X_1], \dots, \E[X_p]\right)\TT.
+    \E[\bX] = \int_{\Omega} \bX(\omega) \,\dd \mu(\omega) =  \int_{\iD_{\bx}} \bx f_{\bX}(\bx) \, \dd\bx = \left(\E[X_1], \dots, \E[X_p]\right)\TT.
 \end{equation}
 In addition, considering two random variables $X_j$ and $X_j$, with $i, j \in \{1, \dots, p\}$, one can write their respective variance:
 \begin{equation}
@@ -267,7 +267,7 @@ The following points can be checked at this early stage:
 
 %============================================================%
 %============================================================%
-\section{Global uncertainty propagation}
+\section{Central tendency uncertainty propagation}
 %============================================================%
 %============================================================%
 
@@ -297,7 +297,7 @@ In practice, this integral is approximated by summing a finite $n$-sized set of 
 A \textit{quadrature} establishes a rule to select the input samples $\bX_n$ (also called nodes), and an associated set of weights $\bw_n = \{w_1, \dots, w_n\} \in \R^n$. 
 The approximation given by a quadrature rule is defined as a weighted arithmetic mean of the realizations:
 \begin{equation}
-    I_{\mu}(g) := \int_{\iD_\bX} g(\bx) \d\mu(\bx) \approx \sum_{i=1}^n w_i g\left(\bx^{(i)}\right).
+    I_{\mu}(g) := \int_{\iD_\bX} g(\bx) \dd\mu(\bx) \approx \sum_{i=1}^n w_i g\left(\bx^{(i)}\right).
     \label{eq:quadrature_rule}
 \end{equation}
 For a given sample size $n$, our goal is to find a set of tuples $\left\{\bx^{(i)}, w_i \right\}_{i=1}^n$ (i.e., quadrature rule), giving the best approximation of our quantity. 
@@ -340,7 +340,7 @@ However, a sequential extension is proposed by the Gauss-Kronrod rule \elias{add
 To overcome this practical drawback, the Fejér-Clenshaw-Curtis is a fully nested rule with mostly equivalent accuracy as Gaussian quadrature.
 This method is usually presented to integrate a function with respect to the uniform measure on $[-1, 1]$ and starts with a change of variables:
 \begin{equation}
-    \int_{-1}^{1} g(x) \, \d x = \int_{0}^{\pi} g(\cos(\theta)) \sin(\theta) \, \d \theta 
+    \int_{-1}^{1} g(x) \, \dd x = \int_{0}^{\pi} g(\cos(\theta)) \sin(\theta) \, \dd \theta 
 \end{equation}
 This expression can be written as an expansion of the integrand using cosine series. 
 Moreover, cosine series are closely related to the Chebyshev polynomials of the first kind. 
@@ -364,15 +364,42 @@ Alternatively, sparse multivariate quadratures (e.g., Smolyak sparse grid) propo
 %------------------------------------------------------------%
 \subsubsection{Monte Carlo methods}
 %------------------------------------------------------------%
-\begin{itemize}
-    \item The Vanilla MC is a frequentist resolution of the Lebesgue integral. 
-    \item Definition 
-    \item The TCL: convergence and variance
-    \item This method requires the generation of pseudorandom numbers. 
-    Pseudorandom number generators are used with the Sklar theorem.
-    \item Mention variance-reduction techniques such as importance sampling and multi-level Monte Carlo
-    \item Markov Chain Monte Carlo When the input distribution is complex
-\end{itemize}
+Monte Carlo methods were initially developed in the 1940's to solve problems in neutronics.  
+Ever since, this frequentist techniques have been applied to the resolution of the Lebesgue integral. 
+To integrate a function $g$ against a measure $\mu$, it randomly generates points following the input measure. 
+The integral is estimated by taking the uniform arithmetic mean of the images of these nodes obtained by this random process. 
+
+This purely aleatory method requires to be able to generate points following a given distribution. 
+To do so, the most common approach is to first generate a sequence of random points uniformily on $[0, 1]$. 
+Then, inverse transform of the CDF is applied on marginals before adding the possible dependence effects using the Sklar theorem \elias{add pointer}.
+These sequences mimic a actual uniform randomness but are in fact generated by deterministic algorithms (also called pseudorandom number generators).
+Pseudorandom algorithms generate a sequence of numbers with a very large, but finite length. 
+This sequence can be exactly repeated by fixing the same initial point, also called \textit{pseudorandom seed}.
+Most programming languages use the Mersenne Twister pseudorandom generator \elias{cite MATSUMOTO}, offering a very long period (around $4.3\times10^{6001}$ iterations).
+
+Formally, the ``Vanilla'' Monte Carlo (sometimes called ``crude'' Monte Carlo) method uses a set of i.i.d samples $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\}$ following the joint distribution of $\mu$. 
+The Monte Carlo estimator of the integral \elias{add ref} is given by: 
+\begin{equation}
+    I_{\mu}(g) \approx \Bar{y}_n^{MC} = \frac1n \sum_{i=1}^{n} g(\bx^{(i)}).
+\end{equation}
+By construction, the law of large numbers makes this estimator unbiased, however it converges relatively slowly. 
+Considering the images of the sample $\bX_n$, one can also estimate the variance of the output random variable $\what{\sigma}^2_Y$.
+The variance of the Monte Carlo estimator \elias{add ref to above} results from a manipulation of the central tendency theorem:
+\begin{equation}
+    \var\left(\Bar{y}_n^{MC}\right) = \frac{1}{\sqrt{n}} \var\left(\what{\sigma}^2_Y\right). 
+\end{equation}
+This estimator also comes with theoretical confidence intervals at $\alpha \%$, regardless of the output distribution: 
+\begin{equation}
+    I_{\mu}(g) \in \left[\Bar{y}_n^{MC}  - q_\alpha \frac{\var\left(\what{\sigma}^2_Y\right)}{\sqrt{n}}, \Bar{y}_n^{MC}  + q_\alpha \frac{\var\left(\what{\sigma}^2_Y\right)}{\sqrt{n}} \right],
+\end{equation}
+where $q_\alpha$ is the $\alpha$-quantile of the standard normal distribution.
+Monte Carlo presents the advantage of being a universal method, with no bias and strong convergence guarantees. 
+Moreover, it is worth noting that its convergence properties does not depend on the dimension of the input domain (i.e., no curse of dimension).
+The main limit of crude Monte Carlo is its convergence speed, more recent method aim at keeping the interesting properties if this technique while making it more efficient².
+Among them, one can mention two variance-reduction techniques: importance sampling and multi-level Monte Carlo. 
+\elias{Quick definition and references}.
+
+\elias{Remark: when it is hard to sample from the distribution, Markov Chain Monte Carlo is an option for UP.}
 
 
 %------------------------------------------------------------%

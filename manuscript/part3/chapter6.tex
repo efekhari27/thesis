@@ -179,14 +179,14 @@ Note that the BANCS method does not require iso-probabilistic transform.
 \caption{Bernstein adaptive nonparametric conditional sampling (BANCS).}\label{alg:bancs}
 \footnotesize
 \begin{algorithmic}
-\LComment{Inputs:}
+\State \Comment{Inputs:}
 \State $f_\bX$, joint PDF of the inputs
 \State $g(\cdot)$, limit-state function
 \State $\yth \in \R$, threshold defining the failure event 
 \State $N$, number of samples per iteration
 \State $m \in \N$, parameter of the EBC fitting
 \State $p_0 \in \left]0, 1\right[$, empirical quantile order (rarity parameter)
-\LComment{Algorithm:}
+\State \Comment{Algorithm:}
 \State Set $k = 0$ and $f_{[0]} = f_\bX$
 \State Sample $\bX_{[0], N} = \{\bX_{[0]}^{(j)}\}_{j=1}^N \overset{\text{i.i.d}}{\sim} f_{[0]}$
 \State Evaluate $G_{[0], N} = \{g(\bX_{[0]}^{(j)})\}_{j=1}^N$
@@ -204,7 +204,7 @@ Note that the BANCS method does not require iso-probabilistic transform.
 \EndWhile
 \State Set total iteration number $k_\# = k-1$ 
 \State Estimate $\widehat{\pf} = (1 - p_0)^{k_\#} \cdot \frac{1}{N} \sum_{j=1}^N \1_{\{g(\bX_{[k_\#]}^{(j)}) \geq \yth  \}}(\bX_{[k_\#]^{(j)}}) $
-\LComment{Outputs:}
+%\COMMENT{Outputs:}
 \State $\widehat{\pf}$, estimate of $\pf$
 \end{algorithmic}
 \end{algorithm}
