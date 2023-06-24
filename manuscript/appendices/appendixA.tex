@@ -25,9 +25,9 @@ Note that the following tools can be used to estimate the marginals of a multiva
 The moments method aims at looking for a parametric distribution with density $f_X(\btheta)$, whose first moments (e.g., $m(\btheta)$ and $\sigma^2(\btheta)$) match 
 the empirical moments of the sample $X_n$ (e.g., $\what{m}_{X_n}$ and $\what{\sigma}^2$). After computing the empirical moments: 
 \begin{equation}
-    \what{m}_{X_n} = \frac1n \sum_{i=1}^{n} x^{(i)}, \qquad \what{\sigma}^2 = \frac{1}{n-1} \sum_{i=1}^{n} \left(x^{(i)} - \what{m}_{X_n}\right)^2,
+    \what{m}_{n} = \frac1n \sum_{i=1}^{n} x^{(i)}, \qquad \what{\sigma}^2_n = \frac{1}{n-1} \sum_{i=1}^{n} \left(x^{(i)} - \what{m}_{X_n}\right)^2,
 \end{equation} 
-one can solve the system of equations $\left(m(\btheta) = \what{m}_{X_n}; \ \sigma^2(\btheta) = \what{\sigma}^2\right)$ to determine the optimal set of parameters $\btheta$ in this situation. 
+one can solve the system of equations $\left(m(\btheta) = \what{m}_{n}; \ \sigma^2(\btheta) = \what{\sigma}_n^2\right)$ to determine the optimal set of parameters $\btheta$ in this situation. 
 Some families of distributions are more suited to this method (i.e., ) because of the analytical expression of their moments. 
 Moreover, this technique is sensitive to the possible biases in the estimation of the sample moments.
 

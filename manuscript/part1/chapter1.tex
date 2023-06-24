@@ -40,14 +40,14 @@ Moreover, the simulation model is in most cases deterministic, otherwise, it is 
 Then, most numerical simulation presents modeling errors. 
 In the following, it will be assumed that the numerical models passed a \textit{validation \& verification} phase, to quantify their confidence and predictive accuracy. 
 
-Formally, part of the problem specification is the definition of the set of $p$ input variables $\bx = \left(x_1, \dots, x_p\right)\TT$ considered uncertain (e.g., wind speed, wave period, etc.). 
+Formally, part of the problem specification is the definition of the set of $d$ input variables $\bx = \left(x_1, \dots, x_d\right)\TT$ considered uncertain (e.g., wind speed, wave period, etc.). 
 In this thesis, the models considered will only present scalar outputs. 
-UQ methods dedicated to other types of outputs exist (see e.g., for time series outputs \cite{lataniotis_2019}, \elias{functional Alvaro?}). 
+UQ methods dedicated to other types of outputs exist (see e.g., for time series outputs \citet{lataniotis_2019}, \elias{functional Alvaro?}). 
 Let us then define the following numerical model:
 \begin{equation}
 \iM : \bigg|
     \begin{array}{rcl}
-        \iD_{\bx} \subseteq \R^p & \longrightarrow & \iD_{\by} \subseteq \R \\
+        \iD_{\bx} \subseteq \R^d & \longrightarrow & \iD_{\by} \subseteq \R \\
         \bx & \longmapsto & y.
     \end{array}
 \end{equation}
@@ -81,7 +81,7 @@ The authors proposed to classify them for practical purposes into two groups:
     Contrarily to the aleatory ones, epistemic uncertainties might be reduced by investigating their origin. 
 \end{itemize} 
 
-\cite{Kiureghian2009} offers a discussion on the relevance of this classification. 
+\citet{kiureghian_2009} offers a discussion on the relevance of this classification. 
 They affirm that this split is practical for decision-makers to identify possible ways to reduce their uncertainties. 
 However, this distinction should not affect the way of modeling or propagating uncertainties. 
 \elias{To illustrate the limits of this split, some uncertainties present both an aleatory and epistemic aspect.}
@@ -111,7 +111,7 @@ The \textit{random vector} $\bX$ (i.e., multivariate random variable) is a measu
 \begin{equation}
 \bX : \bigg|
 \begin{array}{rcl}
-    \Omega & \longrightarrow & \iD_{\bx} \subseteq \R^p\\
+    \Omega & \longrightarrow & \iD_{\bx} \subseteq \R^d\\
     \omega & \longmapsto & \bX(\omega) = \bx.
 \end{array}
 \end{equation}
@@ -127,18 +127,18 @@ The \textit{cumulative distribution function} (CDF) is a common tool to manipula
 It is a function $F_{\bX} : \iD_{\bx} \rightarrow [0, 1]$ defined for all $\bx \in \iD_{\bx}$ as: 
 \begin{equation}
     F_{\bX}(\bx) = \mu(\bX \leq \bx)
-            = \mu(X_1 \leq x_1, \dots, X_p \leq x_p)
-            = \mu_{\bX}(]-\infty, x_1] \times \dots \times ]-\infty, x_p]).
+            = \mu(X_1 \leq x_1, \dots, X_d \leq x_d)
+            = \mu_{\bX}(]-\infty, x_1] \times \dots \times ]-\infty, x_d]).
 \end{equation}
 The CDF is a positive, increasing, right-continuous function, which tends to $0$ as $\bx$ tends to $-\infty$ and to $1$ as $\bx$ tends to $+\infty$.
 In the continuous case, one can also define a corresponding \textit{probability density function} (PDF) $f_{\bX}: \iD_{\bx} \rightarrow \R_+$  with 
-$f_{\bX}(\bx) = \frac{\partial^p F_{\bX}(\bx)}{\partial x_1 \dots \partial x_p}$.
+$f_{\bX}(\bx) = \frac{\partial^d F_{\bX}(\bx)}{\partial x_1 \dots \partial x_d}$.
 
 The expected value of a random vector $\E[\bX]$, also called the first moment, is a vector defined as:
 \begin{equation}
-    \E[\bX] = \int_{\Omega} \bX(\omega) \,\dd \mu(\omega) =  \int_{\iD_{\bx}} \bx f_{\bX}(\bx) \, \dd\bx = \left(\E[X_1], \dots, \E[X_p]\right)\TT.
+    \E[\bX] = \int_{\Omega} \bX(\omega) \,\dd \mu(\omega) =  \int_{\iD_{\bx}} \bx f_{\bX}(\bx) \, \dd\bx = \left(\E[X_1], \dots, \E[X_d]\right)\TT.
 \end{equation}
-In addition, considering two random variables $X_j$ and $X_j$, with $i, j \in \{1, \dots, p\}$, one can write their respective variance:
+In addition, considering two random variables $X_j$ and $X_j$, with $i, j \in \{1, \dots, d\}$, one can write their respective variance:
 \begin{equation}
     \var(X_i) = \E\left[X_i - \E[X_i]\right],
 \end{equation}
@@ -190,7 +190,7 @@ One can assume that the joint distribution is the composition of the single effe
 An empirical way of isolating the three dependence structures from this example is to transform the samples in the ranked space. 
 Let us consider a $n$-sized sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \in \iD_{\bx}^{n}$. 
 The corresponding ranked sample is defined as: $\bR_n = \left\{\br^{(1)}, \dots, \br^{(n)}\right\}$, 
-where $r^{(l)}_j = \sum_{i=1}^n \1_{\left\{x^{(i)}_j \leq x^{(l)}_j\right\}},$ $\forall j \in \{1, \dots p\}$.
+where $r^{(l)}_j = \sum_{i=1}^n \1_{\left\{x^{(i)}_j \leq x^{(l)}_j\right\}},$ $\forall j \in \{1, \dots d\}$.
 Ranking a multivariate dataset allows us to isolate the dependence structure witnessed empirically. 
 \fig{fig:ranked_joint_dist_samples} shows the same three samples from \fig{fig:joint_dist_samples} in the ranked space.
 One can first notice that the marginals are uniform since each rank is uniformly distributed. 
@@ -223,9 +223,9 @@ First, a set of univariate marginal distributions describing the behavior of the
 Second, a function describing the dependence structure between all variables: a copula. 
 
 \begin{theorem}[Sklar's theorem]
-    Let $\mathbf{X} \in \R^p$ be a random vector and its joint CDF $F_{\bX}$ with marginals $\{F_{X_j}\}_{j=1}^p$, there exists a copula $C: [0, 1]^p \rightarrow [0, 1]$, such that:
+    Let $\mathbf{X} \in \R^d$ be a random vector and its joint CDF $F_{\bX}$ with marginals $\{F_{X_j}\}_{j=1}^d$, there exists a copula $C: [0, 1]^d \rightarrow [0, 1]$, such that:
     \begin{equation}
-        F_{\bX}(x_1, \dots, x_p) = C\left(F_{X_1}(x_1), \dots, F_{X_p}(x_p)\right). 
+        F_{\bX}(x_1, \dots, x_d) = C\left(F_{X_1}(x_1), \dots, F_{X_d}(x_d)\right). 
     \end{equation}
     If the marginals $F_{X_i}$ are continuous, then this copula is unique.
     \label{thm:sklar}
@@ -234,7 +234,7 @@ Second, a function describing the dependence structure between all variables: a 
 Theorem \ref{thm:sklar} expresses the joint CDF by combining marginal CDFs and a copula, which is practical for sampling joint distributions. 
 Conversely, the copula can be defined by using the joint CDF and the marginal CDFs: 
 \begin{equation}
-    C(u_1, \dots, u_p) = F_{\bX}(F^{-1}_{X_1}(u_1), \dots, F^{-1}_{X_p}(u_p))
+    C(u_1, \dots, u_d) = F_{\bX}(F^{-1}_{X_1}(u_1), \dots, F^{-1}_{X_d}(u_d))
 \end{equation}
 This equation allows us to extract a copula from a joint distribution by knowing its marginals.
 Additionally, copulas are invariant under creasing transformations. 
@@ -310,7 +310,7 @@ These methods have very different properties:
 some are deterministic and some are aleatory; 
 some are sequential (or nested) some are not; 
 some are victims of the curse of dimensionality and some are not. 
-A summary table of the different methods and their respective properties is proposed \elias{add ref to table}.
+\elias{A summary table of the different methods and their respective properties is proposed ADD REF TO TABLE}.
 
 %\item Some quadratures define negative weights, which can introduce numerical instabilities when $n$ gets large.
 %\item The nature of the probability measure (i.e., presence of dependence) might restrict the use of methods
@@ -335,30 +335,44 @@ The respective weights are given by the following formula:
 \end{equation}
 This rule guarantees a very precise approximation provided that the integrand is well-approximated by a polynomial of degree $2n-1$ or less on $[-1, 1]$.
 This rule is deterministic but not sequential, meaning that two rules with sizes $n_1$ and $n_2$, $n_1 < n_2$ will not be nested. 
-However, a sequential extension is proposed by the Gauss-Kronrod rule \elias{add ref}, offering lower accuracy. 
+However, a sequential extension is proposed by the Gauss-Kronrod rule \citep{laurie_1997}, offering lower accuracy. 
 
-To overcome this practical drawback, the Fejér-Clenshaw-Curtis is a fully nested rule with mostly equivalent accuracy as Gaussian quadrature.
+To overcome this practical drawback, Fejér then Clenshaw with Curtis proposed a nested rule with mostly equivalent accuracy as Gaussian quadrature.
 This method is usually presented to integrate a function with respect to the uniform measure on $[-1, 1]$ and starts with a change of variables:
 \begin{equation}
     \int_{-1}^{1} g(x) \, \dd x = \int_{0}^{\pi} g(\cos(\theta)) \sin(\theta) \, \dd \theta 
 \end{equation}
 This expression can be written as an expansion of the integrand using cosine series. 
 Moreover, cosine series are closely related to the Chebyshev polynomials of the first kind. 
-Féjer's ``first rule'' \elias{LLOYD N. TREFETHEN 2008} relies on the Chebyshev polynomials roots as nodes $x^{(i)} = \cos(\theta^{(i+1/2)})$, and the following weights:
+Fejér's ``first rule'' \citep{trefethen_2008} relies on the Chebyshev polynomials roots as nodes $x^{(i)} = \cos(\theta^{(i+1/2)})$, and the following weights:
 \begin{equation}
     w_i=\frac{2}{n}\left(1-2\sum_{j=1}^{\lfloor n/2 \rfloor}\frac{1}{4j^2-1}\cos\left(j\theta^{(2i+1)}\right)\right)    
 \end{equation}
 These two univariate integration schemes are both very efficient on a wide panel of functions. 
-Yet, Fejér-Clenshaw-Curtis is sequential and offers easy implementations, benefitting from powerful algorithms such as \textit{fast Fourier transform}. 
+Yet, Fejér-Clenshaw-Curtis is sequential and offers easy implementations, benefitting from powerful algorithms such as the \textit{fast Fourier transform}. 
 
-\elias{add 1D Gaussian nodes and Féjer nodes and show that some are nested and some are not}
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/univariate_gauss_legendre.png}
+        \caption{Gauss-Legendre}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/univariate_clenshaw_curtis.png}
+        \caption{Clenshaw-Curtis}
+    \end{subfigure}
+    \caption{Univariate quadratures nodes ($1 \leq n \leq 15$)}
+    \label{fig:univariate_quads}
+\end{figure}
 
-UQ problems are rarely unidimensional, but one can build a multivariate quadrature rule by defining the tensor product (also called full grids) of univariate rules. 
+
+Uncertainty quantification problems are rarely unidimensional, but one can build a multivariate quadrature rule by defining the tensor product (also called full grids) of univariate rules. 
 This exhaustive approach quickly shows its practical limits as the problem's dimension increases. 
-Alternatively, sparse multivariate quadratures (e.g., Smolyak sparse grid) propose a more efficient exploration of the joint domain (see \elias{add ref} for more details).
+Alternatively, sparse multivariate quadratures (i.e., Smolyak sparse grid) explore the joint domain more efficiently. 
 
-
-%\item Note that when the distribution is not on a closed domain or if the inputs are dependent, it requires a transform.
 
 
 %------------------------------------------------------------%
@@ -369,37 +383,36 @@ Ever since this frequentist techniques have been applied to the resolution of th
 To integrate a function $g$ against a measure $\mu$, it randomly generates points following the input measure. 
 The integral is estimated by taking the uniform arithmetic mean of the images of these nodes obtained by this random process. 
 
-This purely aleatory method requires to be able to generate points following a given distribution. 
+This aleatory method requires to be able to generate points following a given distribution. 
 To do so, the most common approach is to first generate a sequence of random points uniformly on $[0, 1]$. 
-Then, the inverse transform of the CDF is applied on marginals before adding the possible dependence effects using the Sklar theorem \elias{add pointer}.
+Then, the inverse transform of the CDF is applied on marginals before adding the possible dependence effects using the Sklar theorem \eq{thm:sklar}.
 These sequences mimic actual uniform randomness but are in fact generated by deterministic algorithms (also called pseudorandom number generators).
 Pseudorandom algorithms generate a sequence of numbers with a very large, but finite length. 
 This sequence can be exactly repeated by fixing the same initial point, also called \textit{pseudorandom seed}.
-Most programming languages use the Mersenne Twister pseudorandom generator \elias{cite MATSUMOTO}, offering a very long period (around $4.3\times10^{6001}$ iterations).
+Most programming languages use the Mersenne Twister pseudorandom generator \citep{matsumoto_1998}, offering a very long period (around $4.3\times10^{6001}$ iterations).
 
 Formally, the ``Vanilla'' Monte Carlo (sometimes called ``crude'' Monte Carlo) method uses a set of i.i.d samples $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\}$ following the joint distribution of $\mu$. 
-The Monte Carlo estimator of the integral \elias{add ref} is given by: 
+The Monte Carlo estimator of the integral is given by: 
 \begin{equation}
     I_{\mu}(g) \approx \Bar{y}_n^{MC} = \frac1n \sum_{i=1}^{n} g(\bx^{(i)}).
 \end{equation}
 By construction, the law of large numbers makes this estimator unbiased, however, it converges relatively slowly. 
 Considering the images of the sample $\bX_n$, one can also estimate the variance of the output random variable $\what{\sigma}^2_Y$.
-The variance of the Monte Carlo estimator \elias{add ref to above} results from a manipulation of the central tendency theorem:
+The variance of the Monte Carlo estimator results from a manipulation of the central tendency theorem:
 \begin{equation}
-    \var\left(\Bar{y}_n^{MC}\right) = \frac{1}{\sqrt{n}} \var\left(\what{\sigma}^2_Y\right). 
+    \var\left(\Bar{y}_n^{MC}\right) = \frac{1}{\sqrt{n}} \var\left(g(\bX)\right). 
 \end{equation}
 This estimator also comes with theoretical confidence intervals at $\alpha \%$, regardless of the output distribution: 
 \begin{equation}
-    I_{\mu}(g) \in \left[\Bar{y}_n^{MC}  - q_\alpha \frac{\var\left(\what{\sigma}^2_Y\right)}{\sqrt{n}}, \Bar{y}_n^{MC}  + q_\alpha \frac{\var\left(\what{\sigma}^2_Y\right)}{\sqrt{n}} \right],
+    I_{\mu}(g) \in \left[\Bar{y}_n^{MC}  - q_\alpha \frac{\var\left(g(\bX)\right)}{\sqrt{n}}, \Bar{y}_n^{MC}  + q_\alpha \frac{\var\left(g(\bX)\right)}{\sqrt{n}} \right],
 \end{equation}
 where $q_\alpha$ is the $\alpha$-quantile of the standard normal distribution.
 Monte Carlo presents the advantage of being a universal method, with no bias and strong convergence guarantees. 
-Moreover, it is worth noting that its convergence properties do not depend on the dimension of the input domain (i.e., no curse of dimension).
-The main limit of crude Monte Carlo is its convergence speed, more recent methods aim at keeping the interesting properties of this technique while making it more efficient².
-Among them, one can mention two variance-reduction techniques: importance sampling and multi-level Monte Carlo. 
-\elias{Quick definition and references}.
-
-\elias{Remark: when it is hard to sample from the distribution, Markov Chain Monte Carlo is an option for UP.}
+Moreover, it is worth noting that its convergence properties do not depend on the dimension of the input domain. 
+Unlike the previous multivariate deterministic quadrature, Monte Carlo doesn't suffer from the curse of dimensionality. 
+The main limit of crude Monte Carlo is its convergence speed, making it untractable in most practical cases. 
+More recent methods aim at keeping the interesting properties of this technique while making it more efficient.
+Among the \textit{variance reduction} family of methods, let us mention importance sampling, stratified sampling (e.g., latin hypercube sampling), control variates and multi-level Monte Carlo (see Chapters 8, 9 and 10 from \citet{owen_2013} and \citep{giles_2008}).
 
 
 %------------------------------------------------------------%
@@ -407,36 +420,71 @@ Among them, one can mention two variance-reduction techniques: importance sampli
 %------------------------------------------------------------%
 
 Among the methods presented so far, classical deterministic quadratures are subject to the curse of dim while Monte Carlo methods deliver contrasted performances. 
-Quasi-Monte Carlo is a deterministic family of numerical integration schemes over $[0, 1]^p$ with respect to the uniform measure. 
-It offers powerful performances with strong guarantees by choosing nodes respecting \textit{low discrepancy} sequences.
-Quasi-MC combines the good properties from both deterministic and MC integration schemes by selecting nodes following a low discrepancy sequence.
+Quasi-Monte Carlo is a deterministic family of numerical integration schemes over $[0, 1]^d$ with respect to the uniform measure on $[0, 1]$. 
+It offers powerful performances with strong guarantees by choosing nodes respecting \textit{low discrepancy} sequences. 
 
-\begin{definition}{Discrepancy}
-    tets
-\end{definition} 
+The discrepancy of a set of nodes (or a design) can be seen as a metric of its uniformity. 
+The lowest the discrepancy of a design is, the ``closest'' it is to uniformity. 
 
+The Koksma-Hlawka theorem \citep*{morokoff_1995,leobacher_2014} is a fundamental result for understanding the role of the discrepancy in numerical integration. 
+\begin{theorem}[Koksma-Hlawka]
+    If $g:[0, 1]^d\rightarrow\R$ has a bounded variation (i.e., its total variation is finite), then for any design $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \in [0, 1]^d$:
+    \begin{equation}
+        \left| \int_{[0, 1]^d} g(\bx) \ddx - \frac1n \sum_{i=1}^n g\left(\bx^{(i)}\right)\right| \leq  V(g) D^*(\bX_n).
+        \label{eq:KH_inequality}
+    \end{equation}
 
-%============================================================%
-\subsection{Numerical design of experiments}
-%============================================================%
-%------------------------------------------------------------%
-\subsubsection{Space-filling metrics}
-%------------------------------------------------------------%
-\elias{MinMax / PhiP / MaxMin / Discrepancies}
+    Where $D^*(\bX_n)$ is the star discrepancy of the design $\bX_n$, while $V(g)$ quantifies the complexity of the integrand, which is related to its total variation. 
+\end{theorem}
 
-%------------------------------------------------------------%
-\subsubsection{``Good'' properties}
-%------------------------------------------------------------%
-\elias{Curse of dim / Projections in sub-spaces / Sequential / Deterministic}
+Where the function variation $V(g)$ in the \eq{eq:KH_inequality} can formally be defined as the Hardy-Klause variation: 
+\begin{equation}
+    V(g) = \sum_{\mathfrak{u}\subseteq\{1, \dots, p \}} \int_{[0, 1]^\mathfrak{u}} \left| \frac{\partial^{\mathfrak{u}}g}{\partial \bx_{\mathfrak{u}}}(\bx_{\mathfrak{u}}, 1)\right| \dd\bx.
+\end{equation}
 
-%------------------------------------------------------------%
-\subsubsection{Monte Carlo and quasi-Monte Carlo designs}
-%------------------------------------------------------------%
+Where the \textit{$L_p$ star discrepancy} of a design $\bX_n$ defined as the $L_p$-norm of the difference between the empirical CDF of the design $\what{F}_{\bX_n}$ and the CDF of the uniform distribution $F_{\textbf{U}}$:  
+\begin{equation}
+    D^*_p(\bX_n) = \lVert \what{F}_{\bX_n} - F_{\textbf{U}}\rVert _p = \left(\int_{[0, 1]^d} \lvert\what{F}_{\bX_n}(\bx) - F_{\textbf{U}}(\bx)\rvert ^p \, \ddx \right)^{1/p}.
+\end{equation}
+Additionally, the $L_\infty$ star discrepancy can be defined from a geometric point of view. 
+Let us consider the number of a design $\bX_n$, falling in a subdomain $[\mathbf{0}, \bx)$ as $\#(\bX_n \cap [\mathbf{0}, \bx))$. 
+Then, this empirical quantification is compared with the volume of the rectangle $[\mathbf{0}, \bx)$, noted $\mathrm{vol}\left([\mathbf{0}, \bx)\right)$.  
+Finally, this star discrepancy is written:   
+\begin{equation}
+    D^*(\bX_n) = \sup_{\bx \in [0, 1]^d} \left| \frac{\#(\bX_n \cap [\mathbf{0}, \bx))}{n} - \mathrm{vol}\left([\mathbf{0}, \bx)\right)\right|
+\end{equation}
+\elias{Figure xx empirically represents discrepancy concept}
+Let us point out that this star discrepancy is equivalent to the Kolmogorov-Smirnov test verifying whether the design follows a uniform distribution. 
 
-Monte Carlo sampling is the simplest way to propagate uncertainty (either for central tendency or probability estimation). 
-Using a pseudo-random generator, one can generate $n \in \N$ i.i.d realizations $\left\{\bX^{(i)}\right\}_{i=1,...,n}$ of a random vector $\bX$.
+\noindent
+One can notice how the Koksma-Hlawka inequality dissociates the quadrature performance into a contribution from the function complexity and one from the repartition of the quadrature nodes. 
+Knowing that the complexity of the studied integrand is fixed, this property explains the motivation to generate low-discrepancy quadratures in numerical integration.  
 
-\elias{Remark on randomized quasi-Monte Carlo: paper on quantiles}
+Note that the design can also be considered as a discrete distribution (uniform sum of Dirac distributions).
+The discrepancy can then be expressed as a probabilistic distance between this discrete distribution and the uniform distribution. 
+A generalized discrepancy between distributions will be presented in the \elias{Part 2}.
+
+Some famous low-discrepancy sequences (e.g., van der Corput, Halton, Sobol', Faure, etc.) can offer a bounded star discrepancy $D^*(\bX_n) \leq \frac{C \log(n)^d}{n}$, with $C$ a constant depending on the sequence.
+Therefore, using these sequences as a quadrature rule with uniform weights provides the following absolute error upper bound: 
+\begin{equation}
+    \left| \int_{[0, 1]^d} g(\bx) \ddx - \frac1n \sum_{i=1}^n g\left(\bx^{(i)}\right)\right| \leq  \frac{V(g) \log(n)^d}{n}
+\end{equation}
+
+%This bound is qualified as sharp since for any design $\bX_n$, and every $\epsilon > 0$, a function $g$ with variation $V(g)=1$ exists such that:
+%\begin{equation}
+%    \left| \int_{[0, 1]^d} g(\bx) \ddx - \frac1n \sum_{i=1}^n g\left(\bx^{(i)}\right)\right|  > D^*(\bX_n) - \epsilon.
+%\end{equation} 
+
+The generation of these sequences doesn't necessarily require more effort than pseudo-random sampling.
+Chapter 15 in \citet{owen_2013} offers an extended presentation of the ways to generate different low-discrepancy sequences. 
+For example, the van der Corput and Halton sequences rely on congruential generators. 
+%Then, scrambling procedures are sometimes implemented to correct pathologies famously observed on Halton sequences. 
+To overcome the limits of Halton sequences, digital nets such as the famous Sobol' or Faure sequences have been developed.  
+Sobol' sequences are in base two and have the advantage of being extensible in dimension. 
+Note that by construction, these sequences offer significantly lower discrepancies for specific values. 
+Typically designs with sizes equal to powers of two or power of prime numbers will be favorable. 
+To illustrate the different patterns and properties of different methods, \fig{fig:quasi_monte_carlo_designs} represents the three designs of 256 points. 
+Each is split into the first 128 points (in red) and the following 128 points (in black) to show to nested properties of the QMC sequences.
 
 \begin{figure}[ht]
     \centering
@@ -448,57 +496,166 @@ Using a pseudo-random generator, one can generate $n \in \N$ i.i.d realizations 
     \hfill
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/quasi_MonteCarlo_256.png}
-        \caption{Sobol' sequence}
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/quasi_MonteCarlo_Halton_256.png}
+        \caption{Halton sequence}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/quasi_MonteCarlo_Halton_256.png}
-        \caption{Halton sequence}
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/quasi_MonteCarlo_256.png}
+        \caption{Sobol' sequence}
     \end{subfigure}
        \caption{Nested Monte Carlo and quasi-Monte Carlo designs ($n=256$)}
        \label{fig:quasi_monte_carlo_designs}
 \end{figure}
 
+A quantity estimated by crude MC comes with some associated confidence. 
+This complementary information is essential to deliver an end-to-end uncertainty quantification and misses in QMC methods.  
+\textit{Randomized quasi-Monte Carlo} (RQMC) is a method adding some randomness in QMC in order to compute confidence intervals while benefiting from a low variance.
+A specific review of the randomized (also called ``scrambled'') QMC is proposed by \citet{lecuyer_2018}. Various authors recommend the use of RQMC by default instead of QMC as a good practice. 
+Recent works aim at exploring the use of these methods to estimate different quantities of interest (such as an expected value \citep{gobet_2022} or a quantile \citep{tuffin_2019})
+
+Quasi-Monte Carlo methods easily generate powerful integration schemes. 
+The KH inequality associates an upper bound and a convergence rate to most integrals. 
+A randomization overlay fades the deterministic property of these designs to allow confidence interval computation.
+In the following, sampling techniques are presented from the numerical \textit{design of experiments} point of view. 
+Even if the finality might look different from the previous numerical integration, it shares many methods and concepts. 
+
+
+
+%============================================================%
+\subsection{Numerical design of experiments}
+%============================================================%
+The numerical design of experiments aims at exploring uniformly the input domain, e.g., to build the learning set of a regression model, or to initialize a multi-start optimization strategy. 
+A design of experience (also simply called design) is then qualified as \textit{space-filling} when it properly covers a domain. 
+As well as in integration, a design of experiments allows propagating uncertainties through a numerical model (or an actual experiment from a laboratory test bench). 
+However, a difference comes from the fact that this community often works with designs of very limited sizes. 
+Users of designs of experiments might also need to build designs with various properties. 
+\begin{itemize}
+    \item Some might be interested in the sequentiality of a sampling method, to eventually add new points as they get a computational budget extension.
+    \item Some might request a sampling method conserving its properties in any sub-domains. 
+    This second property can be useful to reduce the problem's dimension by dropping a few unimportant marginals.
+\end{itemize}
+
+Different metrics are commonly used to quantify how space-filling a design of experiments is. 
+The previously introduced different types of discrepancies are space-filling metrics.
+Other types of space-filling metrics rely on purely geometrical considerations.  
+
+This section will first define some space-filling metrics.
+Secondly, the \textit{latin hypercube sampling} (LHS) will be introduced as a variance-reduction that became popular in this community. 
+Finally, a general discussion on uncertainty propagation with respect to non-uniform measures will be presented.
+
+%------------------------------------------------------------%
+\subsubsection{Space-filling metrics and properties}
+%------------------------------------------------------------%
+Space-filling criteria are key to evaluating designs and are often used in their construction to optimize their performances. 
+In the previous section, the star discrepancy was introduced as a distance of a finite design to uniformity.
+However, the $L_\infty$ star discrepancy is hard to estimate, fortunately, \citet{warnock_1972} elaborated an explicit expression specific to the $L_2$ star discrepancy: 
+\begin{equation}
+    \left[D^*_2(\bX_n)\right]^2 = \frac19 - \frac2n \sum_{i=1}^{n} \prod_{l=1}^{d} \frac{(1-x_l^{(i)})}{2} + \frac{1}{n^2}\sum_{i,j=1}^{n} \prod_{l=1}^{d} \left[1 - \max(x_l^{(i)}, x_l^{(j)})\right].
+\end{equation}
+One can notice that this expression is similar to the Cramér-von Mises test statistic. 
+Even if this expression is tractable, \citet{fang_liu_2018} detailed its limits. 
+First, the star $L_2$ discrepancy generates designs that are not robust to projections in sub-spaces. 
+Then, this metric is not invariant in rotation and reflection. 
+Finally, by construction, $L_p$ discrepancies give a special role to the point $\mathbf{0}$ by anchoring the box $[\mathbf{0}, \bx)$.
+
+Two improved criteria were proposed by \citet{hickernell_1998} with the \textit{centered $L_2$ discrepancy} and the \textit{wrap-around $L_2$ discrepancy}.
+Those are widely used in practice since they solve the previous limits while satisfying the Koksma-Hlawka inequality with a modification of the total variation.
+Let us introduce the formula of the centered $L_2$ discrepancy:
+\begin{multline} CD^*_2(\bX_n)  = \left(\frac{13}{12}\right)^{d} - \frac{2}{n} \sum_{i=1}^{n} \prod_{l=1}^{d} \left( 1 + \frac{1}{2} |x_l^{(i)} - 0.5| - \frac{1}{2} |x_l^{(i)} - 0.5|^2 \right)\\
+    + \frac{1}{n^2} \sum_{i,j=1}^{n} \prod_{l=1}^{d} \left( 1 + \frac{1}{2} |x_l^{(i)} - 0.5| + \frac{1}{2} |x_l^{(j)} - 0.5| - \frac{1}{2} |x_l^{(i)} - x_l^{(j)}| \right).
+\end{multline}
+
+As an alternative to discrepancies, many geometrical criteria exist to assess a space-filling design.
+The most common way to do so is to maximize the minimal distance among the pairs of Euclidian distances between the points of a design.  
+The criterion to maximize is then simply called the \textit{minimal distance} of a design (denoted $\phi_{min}$). 
+For numerical reasons, the $\phi_p$ criterion is often used instead of the minimal distance. 
+The following $\phi_p$ criterion converges towards the minimum distance as $p$ tends to infinity:
+\begin{equation} 
+    \phi_{\min}(\bX_n) = \min_{i \neq j} ||\bx^{(i)} - \bx^{(j)}||_2\, , \qquad
+    \phi_p(\bX_n) = \sum_{i=1}^{j} \sum_{j=1}^{n} \left( |x^{(i)} - x^{(j)}|^{-p} \right)^{\frac{1}{p}}.
+\end{equation}
+
+
+
 %------------------------------------------------------------%
 \subsubsection{Latin hypercube sampling}
 %------------------------------------------------------------%
-The LHS is a method introduced in 1979 \citep{mckay_beckman_1979}, initially created to compute multivariate numerical integrals. 
-The main idea is that to make sure that the information is not redundant, the distribution of each sub-projection of the domain should be as uniform as possible. 
-To force this concept, each variable's domain is divided into $n$ identical segments creating a square lattice over the domain. 
-This lattice is composed of $n^{p}$ squared elements. 
-Among the $n^{p}$ elements, the LHS samples $n$ points (only one point by element) with the constraint of having one and only one sample for each segment of each variables. 
-This ensures a good distribution over the sub-projections of the domain. 
-Inside each selected element in the square lattice, the points can be placed in the center or randomly.
-\elias{Illustration LHS vs. Monte Carlo}
+The LHS is a method introduced in 1979 \citep{mckay_beckman_1979}, initially for numerical integration.
+This stratified sampling technique forces the distribution of each sub-projection of a bounded domain to be as uniform as possible
+To do so, for a $n$-sized design, each marginal's domain is divided into $n$ identical segments.
+This creates a regular grid of $n^{d}$ squared cells over the domain. 
 
-\elias{Illustration pathological LHS (diagonal design)}
+An LHS design does not allow more than one point within a segment. 
+That way, a new LHS can be built as a permutation of the marginals of an existing LHS.
+Inside each selected cell from the grid, the point can be placed in the center or randomly.
+
+Various contributions provided first a variance, then a central limit theorem to the LHS \citep{owen_1996}.
+Identically to the Monte Carlo variance\elias{add pointer}, LHS variance can be expressed as:
+\begin{equation}
+    \var\left(\Bar{y}_n^{LHS}\right) = \frac{1}{\sqrt{n}} \var\left(g(\bX)\right) - \frac{C}{n} + o\left( \frac1n \right). 
+\end{equation}
+Where $C$ is a positive constant, showing that the LHS usually reduces the variance for numerical integration. 
+Because of its stratified structure, LHS can generate poor designs from a space-filling point of view (see e.g., Figure \elias{add diagonal design}). 
+The following section presents various methods aiming at optimizing these designs.
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/poor_LHS.png}
+        \caption{Poorly space-filling LHS}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/optimized_C2_LHS.png}
+        \caption{$L_2$ centered optimized LHS}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/optimized_phip_LHS.png}
+        \caption{$\phi_p$ optimized LHS}
+    \end{subfigure}
+       \caption{Latin hypercube designs with poor and optimized space-filling properties ($n=8$)}
+       \label{fig:LHS_designs}
+\end{figure}
 
 %------------------------------------------------------------%
 \subsubsection{Optimized Latin hypercube sampling}
 %------------------------------------------------------------%
+To improve the space-filling property of LHD, it is common to add an optimization step. 
+The goal of this optimization is to improve a space-filling criterion by generating LHD from permutations of an initial LHD.
+\citet{damblin_couplet_2013} reviews LHS optimization using different discrepancy criteria and subprojection properties.
+This optimization can be performed by different algorithms, such as the stochastic evolutionary algorithm or simulated annealing.
+The results from this work show that LHD optimized by $L_2$ centered or wrap-around discrepancies offer strong robustness to two-dimensional projections.
+It also shows that these designs keep this property for dimensions larger than 10, while scrambled Sobol' sequences lose it. 
 
-\cite{franco_2008} discusses how LHS can have very poor space-filling properties in some cases, which can be prevented by adding an optimization step. 
-Knowing that an LHS can be permuted to another one, one can find the permutation on an LHS that would optimize a given space-filling criteria. 
-The optimization according to the two following criteria is discussed in \cite{damblin_couplet_2013} and the sub-projections issue is also raised. 
-Note that LHS designs are very efficient at exploring a domain but handle poorly some complex dependency models such as copulas.
+More recent work developed different ways to get optimized LHD. 
+Let us mention the maximum projection designs from \citet{joseph_gul_2015} and the uniform projection designs from \citet{sun_2019}.
+\elias{Add a sentence to explain the concept}
+%Note that LHS designs are very efficient at exploring a domain but handle poorly some complex dependency models such as copulas.
 
-\elias{Present MaxPro, Uniform Projection designs. The way of optimizing is not the topic. It is more about what are the right criteria}
+
 
 %============================================================%
-\subsection{Central tendency estimation}
+\subsection{Summary and discussion}
 %============================================================%
-%------------------------------------------------------------%
-\subsubsection{Iso-probabilistic transformation}
-%------------------------------------------------------------%
 
-%------------------------------------------------------------%
-\subsubsection{Central tendency estimation is a probabilistic integration}
-%------------------------------------------------------------%
+Central tendency is a probabilistic integration. 
+
+\elias{Iso-probabilistic transformation: discuss the Li Kang Hickernell 2020 paper}
+
+\elias{QMC is not suited for acceptance rejection method}
+
+\elias{Markov Chain Monte Carlo: when it is hard to sample from the distribution.}
+
+\elias{Add the summary table with the properties of each methods}
 
 
-
+\newpage
 %============================================================%
 %============================================================%
 \section{Reliability-oriented uncertainty propagation}
