@@ -932,12 +932,16 @@ wish to left align your text}
 %\else
 %\vspace{.25\PHD@titlepagespacing}
 {\usebox{\PHD@crest}}
-\vspace{.17\PHD@titlepagespacing}
+\vspace{.12\PHD@titlepagespacing}
 %\fi
 
 % Title
-{\usebox{\PHD@Title}} % subtitle is defined
-\vspace{.15\PHD@titlepagespacing}
+\rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+\rule{\linewidth}{0.4pt}\\[1em]
+{\usebox{\PHD@Title}}\\[1em] % subtitle is defined
+\rule{\linewidth}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+\rule{\textwidth}{1.6pt}
+\vspace{.12\PHD@titlepagespacing}
 
 % Author
 {\usebox{\PHD@author}}

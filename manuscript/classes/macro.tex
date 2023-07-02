@@ -10,6 +10,7 @@
 \usepackage{array}
 \usepackage{footnote}
 \usepackage[acronym]{glossaries}
+\usepackage{cancel}
 
 
 \usepackage{etoc} %chapter table of contents
@@ -34,18 +35,13 @@
 \newcommand{\contrib}[1]{\textcolor{OliveGreen}{(#1)}}
 \newcommand{\vcn}[1]{\textcolor{magenta}{VCN: [#1]}}
 \newcommand{\ber}[1]{\textcolor{orange}{BER: [#1]}}
+
 \definecolor{midblue}{HTML}{024873}
 % EDF colors
 %oranges
 \definecolor{ofonce}{HTML}{FE5716}
 \definecolor{omoyen}{HTML}{FF861D}
 \definecolor{oclair}{HTML}{FFB210}
-
-\newcommand{\eq}[1]{Eq.~\eqref{#1}}
-\newcommand{\fig}[1]{Fig.~\ref{#1}}
-
-\newcommand*\what[1]{\widehat{#1}}
-\newcommand*\wtilde[1]{\widetilde{#1}}
 
 % See good practice: https://www.overleaf.com/learn/latex/Theorems_and_proofs
 \theoremstyle{remark}
@@ -103,6 +99,7 @@
 \def\bL{{\bf L}}
 \def\bE{{\bf E}}
 \def\btheta{{\boldsymbol{\theta}}}
+\def\balpha{{\boldsymbol{\alpha}}}
 
 \def\R{\mathbb{R}}
 \def\N{\mathbb{N}}
@@ -141,6 +138,14 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator{\Tr}{Tr}
+\def\simiid{\mathop{\sim}\limits^{\mathrm{i.i.d.}}}
+
+\newcommand{\eq}[1]{Eq.~\eqref{#1}}
+\newcommand{\fig}[1]{Fig.~\ref{#1}}
+
+\def\cg{\check{g}}
+\newcommand*\what[1]{\widehat{#1}}
+\newcommand*\wtilde[1]{\widetilde{#1}}
 
 % ******************************************************************************
 % ********************************* Acronyms ***********************************

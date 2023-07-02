@@ -30,7 +30,7 @@ Rare event problems are usually solved in the so-called \emph{standard normal sp
 Additionally, the limit-state function $g$ can be viewed as an input-output ``black-box'' model which can be costly to evaluate (e.g., a complex numerical model), making the failure probability estimation nontrivial. 
 When the limit-state function is a costly computer model, one can build a surrogate model and use specific active learning methods (see, e.g., \citet{moustapha_ss_2022}). 
 However, using surrogate models is not always possible for practical engineering applications as they might introduce another level of approximation, which can be prohibitive from safety auditing. 
-Moreover, their validation as well as their behavior with respect to large input dimension case make also their use quite complex (see, e.g.,  \citep{marrel_iscream_2020}.
+Moreover, their validation as well as their behavior with respect to large input dimension case make also their use quite complex (see, e.g.,  \citep{marrel_iscream_2020}).
 
 Going back to the rare event estimation literature, one can consider two major types of techniques for failure probability calculation \citep{MorioBalesdent2015}: (i) Geometric approaches, such as the \emph{first-/second-order reliability method} (FORM/SORM) whose aim is to approximate the limit-state function by a first-/second-order Taylor expansion at the most probable failure point; (ii) Simulation-based techniques such as the \emph{crude Monte Carlo} method. 
 Unfortunately, FORM/SORM methods do not provide a lot of statistical information as they are purely geometric approaches.

@@ -2,7 +2,7 @@
 %*******************************************************************************
 %*********************************** First Chapter *****************************
 %*******************************************************************************
-\chapter{Treatment of uncertainties in computer experiments}
+\chapter{Uncertainty quantification in computer experiments}
 %*******************************************************************************
 \hfill
 \localtableofcontents
@@ -190,7 +190,8 @@ One can assume that the joint distribution is the composition of the single effe
 An empirical way of isolating the three dependence structures from this example is to transform the samples in the ranked space. 
 Let us consider a $n$-sized sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \in \iD_{\bx}^{n}$. 
 The corresponding ranked sample is defined as: $\bR_n = \left\{\br^{(1)}, \dots, \br^{(n)}\right\}$, 
-where $r^{(l)}_j = \sum_{i=1}^n \1_{\left\{x^{(i)}_j \leq x^{(l)}_j\right\}},$ $\forall j \in \{1, \dots d\}$.
+where\footnote{The \textit{indicator function} is defined such that $\1_{\left\{\mathcal{A}\right\}}(x) = 1$ if $x \in \mathcal{A}$ and is equal to 0 otherwise.} 
+$r^{(l)}_j = \sum_{i=1}^n \1_{\left\{x^{(i)}_j \leq x^{(l)}_j\right\}},$ $\forall j \in \{1, \dots d\}$.
 Ranking a multivariate dataset allows us to isolate the dependence structure witnessed empirically. 
 \fig{fig:ranked_joint_dist_samples} shows the same three samples from \fig{fig:joint_dist_samples} in the ranked space.
 One can first notice that the marginals are uniform since each rank is uniformly distributed. 
@@ -393,17 +394,17 @@ Most programming languages use the Mersenne Twister pseudorandom generator \cite
 Formally, the ``Vanilla'' Monte Carlo (sometimes called ``crude'' Monte Carlo) method uses a set of i.i.d samples $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\}$ following the joint distribution of $\mu$. 
 The Monte Carlo estimator of the integral is given by: 
 \begin{equation}
-    I_{\mu}(g) \approx \Bar{y}_n^{MC} = \frac1n \sum_{i=1}^{n} g(\bx^{(i)}).
+    I_{\mu}(g) \approx \Bar{y}_n^{\textrm{MC}} = \frac1n \sum_{i=1}^{n} g(\bx^{(i)}).
 \end{equation}
 By construction, the law of large numbers makes this estimator unbiased, however, it converges relatively slowly. 
 Considering the images of the sample $\bX_n$, one can also estimate the variance of the output random variable $\what{\sigma}^2_Y$.
 The variance of the Monte Carlo estimator results from a manipulation of the central tendency theorem:
 \begin{equation}
-    \var\left(\Bar{y}_n^{MC}\right) = \frac{1}{\sqrt{n}} \var\left(g(\bX)\right). 
+    \var\left(\Bar{y}_n^{\textrm{MC}}\right) = \frac{1}{\sqrt{n}} \var\left(g(\bX)\right). 
 \end{equation}
 This estimator also comes with theoretical confidence intervals at $\alpha \%$, regardless of the output distribution: 
 \begin{equation}
-    I_{\mu}(g) \in \left[\Bar{y}_n^{MC}  - q_\alpha \frac{\var\left(g(\bX)\right)}{\sqrt{n}}, \Bar{y}_n^{MC}  + q_\alpha \frac{\var\left(g(\bX)\right)}{\sqrt{n}} \right],
+    I_{\mu}(g) \in \left[\Bar{y}_n^{\textrm{MC}}  - q_\alpha \frac{\var\left(g(\bX)\right)}{\sqrt{n}}, \Bar{y}_n^{\textrm{MC}}  + q_\alpha \frac{\var\left(g(\bX)\right)}{\sqrt{n}} \right],
 \end{equation}
 where $q_\alpha$ is the $\alpha$-quantile of the standard normal distribution.
 Monte Carlo presents the advantage of being a universal method, with no bias and strong convergence guarantees. 
@@ -594,7 +595,7 @@ Inside each selected cell from the grid, the point can be placed in the center o
 Various contributions provided first a variance, then a central limit theorem to the LHS \citep{owen_1996}.
 Identically to the Monte Carlo variance\elias{add pointer}, LHS variance can be expressed as:
 \begin{equation}
-    \var\left(\Bar{y}_n^{LHS}\right) = \frac{1}{\sqrt{n}} \var\left(g(\bX)\right) - \frac{C}{n} + o\left( \frac1n \right). 
+    \var\left(\Bar{y}_n^{\textrm{LHS}}\right) = \frac{1}{\sqrt{n}} \var\left(g(\bX)\right) - \frac{C}{n} + o\left( \frac1n \right). 
 \end{equation}
 Where $C$ is a positive constant, showing that the LHS usually reduces the variance for numerical integration. 
 Because of its stratified structure, LHS can generate poor designs from a space-filling point of view (see e.g., Figure \elias{add diagonal design}). 
@@ -649,67 +650,396 @@ However, uncertainty propagation is often performed on complex input distributio
 In uncertainty quantification, this step might be referred to as the estimation of the output random variable's central tendency (i.e., its mean and variance).
 Central tendency estimation is a numerical integration with respect to any input distribution, also named \textit{probabilistic integration} by \citet{briol_oates_2019}.  
 
-To generate i.i.d samples following any distribution, one may use \textit{inverse transform} sampling.
+To generate i.i.d samples following any distribution (i.e., non-uniform), one may use \textit{inverse transform} sampling.
 This method first generates a sample in the unit hypercube, then, the inverse CDF function (i.e., quantile function) is applied on marginals. 
 Finally, possible dependence effects can be added using the Sklar theorem \eq{thm:sklar}.
 
 One may wonder if the properties from the uniform design are conserved after this nonlinear transformation. 
 \citet{hickernell_2020} explores this question from a discrepancy point of view. 
-\elias{add conclusions}
+The authors find correspondences between discrepancies with respect to uniformity and discrepancy with respect to the target distribution. 
+However this result show practical limits, sometimes making the interpretation of the last discrepancy easier. 
+This question will be further discussed using a more general framework in the \elias{Chapter xx}.
 
-Let us also remark that, depending on the distribution, inverse mapping is not always possible.
-\elias{give an example} 
-As an alternative, the \textit{acceptance-rejection} method is more versatile. 
-\elias{pros and cons? QMC is not suited for the acceptance-rejection method}
+Let us also remark that, depending on the distribution, defining the inverse CDF is not always possible.
+For example, samples following truncated distributions or mixture distributions might sometime be generated with a different technique. 
+The \textit{acceptance-rejection} method offers a versatile generation only based on the PDF $f_{\bx}$.
+Assuming that a well-known proposal PDF $f^*_{\bx}$ exists such that $f_{\bx} \leq c \times f^*_{\bx}, c \in [1, +\infty]$. 
+Then, one may generate a sample according to $c \times f^*_{\bx}$ and only retain from this sample the points under the PDF $f_{\bx}$.
+\elias{add illustration with truncated normal and triangular.}
+Note that QMC sampling is not well suited with acceptance-rejection since its structure gets perturbed. 
+
+\begin{itemize}
+    \item \elias{Markov Chain Monte Carlo: when it is hard to sample from the distribution.}
+    \item \elias{Add the summary table with the properties of each methods?}
+\end{itemize}
+
+In this section, many methods were presented to propagate input uncertainties against a deterministic function.
+The propagation with the three following goals and contexts were introduced: 
+\begin{itemize}
+    \item building a quadrature rule for numerical integration against a uniform distribution,
+    \item creating a space-filling design of experiments to uniformly explore the space, often in a small data context (e.g., to build the learning set of a surrogate model),
+    \item generating a design for central-tendency estimation, which is simply a numerical integration against a non uniform density.
+\end{itemize} 
+%Note that some of these methods can also find a use in the context of data compression or quantization.
+These three objectives have been explored in different communities but actually mostly share similar methods. 
+They all have in common the general analysis (i.e., global behavior) of the output random variable. 
+However, some studies require to shift the focus on specific areas of the output random variables.
+When using uncertainty propagation to perform a risk analysis, the events studied are often contained in the tails of the output distribution. 
+In this case, dedicated uncertainty propagation methods will significantly improve the estimation of the associated statistical quantities.
 
 
-\elias{Markov Chain Monte Carlo: when it is hard to sample from the distribution.}
-
-\elias{Add the summary table with the properties of each methods}
-
-
-\newpage
 %============================================================%
 %============================================================%
 \section{Reliability-oriented uncertainty propagation}
 %============================================================%
 %============================================================%
 
+This section aims at presenting another type of uncertainty propagation. 
+In the context of a risk analysis applied to the engineering field, the reliability of a system needs to be assessed. 
+Most often, a risk measure associated with a failure mode of the studied system is estimated. 
+
+Since most systems studied in risk analysis should be highly reliable, the occurrence of such event is qualified as rare. 
+Only an unlikely small amount of extreme input conditions or an unlikely unfavorable combinations of inputs lead to the failure of the system. 
+Hence the usage of the equivalent terms \textit{reliability analysis} and \textit{rare event estimation}. 
+The notion of risk associated with an event is often decomposed as a product of likelihood and impact. 
+The failure of a system might be very rare but its consequences can be severe (e.g., civil engineering structures, nuclear infrastructure, telecommunication networks, electrical grid, railway signalling, etc.).
+
+Different risk measures (i.e., quantities of interest) can be studied depending on the type of risk analysis. 
+Quantiles are a first conservative measure, widely used for risk analysis. 
+The $\alpha$-quantile $q_\alpha$ of the output random variable $Y$ is defined as:
+\begin{equation}
+    q_\alpha = \inf_{y\in\R}{\left\{F_Y(y) \geq \alpha\right\}}, \quad \alpha \in [0, 1].    
+\end{equation}
+\elias{define superquantiles in text?}
+As an alternative, one can define a scalar safety threshold $\yth$ that should not be exceeded to keep the system safe. 
+Then, a second risk measure is probability of exceeding this safety threshold, also called \textit{failure probability}: 
+\begin{equation}
+    \pf = \P\left(Y \geq \yth\right), \quad \yth\in\R.
+\end{equation}
+To illustrate this quantity, \fig{fig:1D_reliability} shows the one-dimensional propagation of a normal distribution (represented by the PDF on the left), throught a function $g(\cdot)$.
+The probability of exceeding a given threshold $\yth$ is represented by the area in red under the output PDF on top.
+An interesting reflection on the use and the interpretation of risk measures
+\footnote{Including measures from the finance domain such as the \textit{conditional value-at-risk} (also called superquantile).} 
+is presented in \citet{rockafellar_2015}. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{../numerical_experiments/chapter1/figures/1D_reliability.png}
+    \caption{One-dimensional reliability analysis example}
+    \label{fig:1D_reliability}
+\end{figure}
+
+In the following, the formalism for reliability analysis problems will be first presented, 
+then the main methods solving this specific problem will be introduced.
+Note that the present work will not address the problems of time-dependent reliability analysis tackled in \citet{hawchar_2017}. 
+
 %============================================================%
 \subsection{Problem formalization}
 %============================================================%
 
-%------------------------------------------------------------%
-\subsubsection{Limit-state function, failure event and domain}
-%------------------------------------------------------------%
+Following to the UQ methodology, the behavior of the system is modeled by $\iM(\cdot)$. 
+Considering the problem of exceeding a safety threshold in \elias{add ref}, the system's performance is commonly defined as the difference between the model's output and a safety threshold $\yth\in\R$. 
+Formally, the \textit{limit-state function} (LSF) is a deterministic function $g:\R\rightarrow\R$ quantifying this performance: 
+\begin{equation}
+    g(\bx) = \yth - \iM(\bx).
+\end{equation}
+Depending on the sign of its images, this function splits the inputs space into two disjoint and complementary domains called  
+the \textit{failure domain} $\iF_{\bx}$, and the \textit{safe domain} $\mathcal{S}_\bx$ which are defined as:
+\begin{equation}
+    \iF_{\bx} = \{\bx \in \iD_\bx \, | \,  g(\bx) \leq \yth\}, \qquad 
+    \mathcal{S}_\bx := \{\bx \in \iD_\bx \, | \, g(\bx) > \yth\}. 
+    %\iD_\bx = \iF_{\bx} \cup \mathcal{S}_\bx 
+\end{equation}
+The border between these two domains is a hypersurface called \textit{limit-state surface} (LLS), defined by $\iF_{\bx}^0 := \{\bx \in \iD_\bx | g(\bx) = 0\}$.
+Similarly to any UQ study around a numerical model, this problem ca require to be resolved using a limited numbers of calls to a black-box simulator.
+The difficulties of a reliability problem might come from the properties of the LSF: nonlinear, costly to evaluate or with a multimodal failure domain. 
+Additionally, note that the reliability problem can be the composition of multiple reliability problems, often modeled as system of problems in series and parallel.
 
-%------------------------------------------------------------%
-\subsubsection{Risk measures \elias{Failure probability, quantile, super-quantile}}
-%------------------------------------------------------------%
+A rare event estimation results from a particular uncertainty propagation through the LSF. 
+Considering the resulting output variable of interest $g(\bX)$, its probability of being negative (i.e., in the failure domain) is a common risk measure \elias{add pointer}.
+The commonly named \textit{failure probability}, denoted $\pf$, will be our quantity of interest in reliability analysis.
+This quantity is formally written\footnote{Note that this probabilistic integration is usually written using the PDF $f_\bX(\cdot)$ 
+but it could identically be expressed in terms of probability measure by taking $f_\bX(\bx) \, \dd\bx = \dd \mu(\bx), \, \forall \bx \in \iD_\bx$.}: 
+\begin{equation}
+    \begin{split}
+        \pf := \P(Y \geq \yth) &= \P(g(\bX) \leq 0)\\
+        &= \int_{\iF_\bx} f_\bX(\bx) \, \dd\bx
+        = \int_{\iD_\bx} \1_{\iF_\bx}(\bx) f_\bX(\bx) \, \dd\bx,
+    \end{split}
+\end{equation}
+were the indicator function applied to the failure domain returns $\1_{\left\{\iF_{\bX}\right\}}(x) = 1$ if $x \in \iF_{\bX}$ and $\1_{\left\{\iF_{\bX}\right\}}(x) = 0$ otherwise.
+Rare event estimation implies both contour finding (i.e., characterizing the LSF) and an estimation strategy targeting the failure domain (often with a limited number of simulations).
+Note that failure event are qualified as rare when its failure probability has an order of magnitude between $10^{-2} \leq \pf \leq 10^{-9}$ \elias{lemaire 2009}.
+
+Instead of directly performing a reliability analysis in the physical space (i.e., $\bx$-space), these problems are usually solved in the \emph{standard normal space} (i.e., $\bu$-space).
+Worsting in the standard space reduces numerical issues potentially caused by unscaled or asymmetric marginals. 
+Moreover, a larger panel of methods can be applied in the standard space since the random inputs are independent.   
+The bijective mapping between these two spaces is called an ``iso-probabilistic transformation'', 
+denoted $T: \iD_{\bx} \subseteq \R^d \rightarrow \R^d, \bx \mapsto T(\bX) = \bu = \left(u_1, \dots, u_d\right)\TT$. 
+When considering any random vector $\bX = \left(X_1, \dots, X_d\right)\TT$ and the independent standard Gaussian vector $\bU = \left(U_1, \dots, u_d\right)\TT$, the following equalities hold:
+\begin{equation}
+    \bU = T(\bX) \Leftrightarrow \bX = T^{-1}(\bU).
+\end{equation} 
+
+A reliability problem can be expressed in the standard normal space. 
+Let us first consider the transformed limit-state function $\check{g}$ defined as: 
+\begin{equation}
+    \cg : \bigg|
+    \begin{array}{rcl}
+        \R^d & \longrightarrow & \R\\
+        \bu & \longmapsto & \check{g}(\bu) = \left(g \circ T^{-1}\right)(\bu).
+    \end{array}
+\end{equation}
+
+Since this transformation is a diffeomorphism\footnote{Considering two manifolds $A$ and $B$, a transformation $T: A \rightarrow B$ is called a diffeomorphism if it is a differentiable bijection with a differentiable inverse $T^{-1} : B \rightarrow A$.}, 
+one can apply the change of variable $\bx = T(\bu)$ to express the realibility problem from \elias{add pointer} in the standard space: 
+\begin{equation}
+    \pf = \P(\cg(\bU) \leq 0) 
+        = \int_{\iF_\bu} \varphi_d(\bu) \, \dd\bu 
+        = \int_{\R^d} \1_{\iF_\bu}(\bu) \varphi_d(\bu) \, \dd\bu,
+\end{equation}
+with the transformed failure domain noted $\iF_\bu = \{\bu \in \R^d \, | \, \cg(\bu) \leq 0\}$, 
+and the $d$-dimensional standard Gaussian PDF $\varphi_d(\bu) = \frac{1}{(2\pi)^{d/2}} \exp\left(-\frac{\lVert\bu\rVert^2_2}{2}\right)$. 
+The fact that the failure probability is invariant by this transformation allows the analyst to estimate this quantity in both spaces.  
+
+Different types of transformations exist, such as the Rosenblatt or the generalized Nataf transformation \citep{Lebrun_PHD_2013}
+In practice, the transformation choice depends on the properties of the input distribution studied. 
+\elias{When should we use what? In this case the distribution is not elliptical so the default method is the Rosenblatt transform.}
+
 
 
 %============================================================%
 \subsection{Rare event estimation methods}
 %============================================================%
-\elias{Why are the previous sampling methods not suited for rare events?}
+%\elias{Why are the previous sampling methods not suited for rare events?}
+%\elias{Surrogate based methods can help the contour finding step.}
+
+The main risk measure chosen for rare event estimation in this work is the previously introduced failure probability.
+Therefore, let us recall that the goal is to build an efficient estimation (or approximation) of the following $d$-dimensional integral: 
+\begin{equation}
+    \pf = \int_{\iD_\bx} \1_{\iF_\bx}(\bx) f_\bX(\bx) \, \dd\bx
+\end{equation}
+
+In the context of rare event estimation using costly to evaluate numerical models, the simulation budget is often limited to $n$ runs with $\pf \ll \frac1n$. 
+Which explains the need for specific methods offering approximations or simulations targeting the unknown failure domain. 
+Two types of rare event estimation methods are classically presented: first, using approximation approaches, second, using sampling techniques. 
+This section introduced the commonly used rare event methods, see \cite{MorioBalesdent2015} for a more exhaustive review.
+
 
 %------------------------------------------------------------%
-\subsubsection{FORM/SORM}
+\subsubsection{First and second order reliability methods (FORM/SORM)}
 %------------------------------------------------------------%
+
+The so-called First and second order reliability methods (FORM and SORM) both rely on a geometric approximation to estimate a failure probability.
+They extrapolate a local approximation of the LSF built in the vicinity of a \textit{most-probable-failure-point} (MPFP), also called \textit{design point}.
+\elias{add some refs}
+
+
+Working in the standard space, the methods first look for this MPFP, denoted $P^*$, with coordonates $\bu^*$, 
+To find it, one can solve the following quadratic optimization problem: 
+\begin{equation}
+    \bu^* = \argmax_{\bu \in \R^d} \left(\1_{\iF_\bu}(\bu) \varphi_d(\bu)\right).
+\end{equation}
+Using the properties of the standard space allows us to rewrite it as: 
+\begin{align}
+    \bu^* &= \argmax_{\bu \in \R^d} \, \frac{1}{(2\pi)^{d/2}} \exp\left(-\frac{\bu\TT \bu }{2} \right) \qquad \mathrm{s.t.} \quad \bu \in \iF_{\bu}\\
+          &= \argmin_{\bu \in \R^d} \, \bu\TT \bu \qquad \mathrm{s.t.} \quad \cg(\bu) \leq 0.
+\end{align}
+This problem becomes a quadratic optimization under nonlinear constraint. 
+It is classically solved by gradient decent algorithms (e.g., AbdoRackwitz algorithm \elias{add ref}) but can also use gradient-free techniques (e.g., Cobyla algorithm \elias{add ref}).
+This point (assuming that it is unique) defines the smallest Euclidian distance between the LSS and the origin of the standard space.
+To understand its role in the reliability problem, let us recall that the density of the standard normal present an exponential decay in its radial and tangential direction.
+Then, $P^*$ is the point with the biggest contribution to the failure probability \elias{pointer}. 
+
+This distance between the origin and $P^*$ is a different risk measure, introduced as the \textit{Hasofer-Lind reliability index} \elias{add ref}, $\beta \in \R$ such that:
+\begin{equation}
+    \beta = \Vert \bu^* \Vert_2 = \balpha \TT \bu^*, \qquad \mathrm{s.t.} \quad
+        \balpha = \frac{\nabla_{\bu} \,  \cg(\bu)}{\Vert \nabla_{\bu} \,  \cg(\bu) \Vert_2}.      
+    %= \min_{\cg(\bu)=0} \left(sqrt{\bu\TT\bu}\right)
+\end{equation}
+The vector $\balpha$ is the unit vector pointing at $P^*$ from the origin point. 
+
+Then, FORM aims at approximating the limit-state function $\cg(\cdot)$ by its first-order Taylor expansion around the MPFP, denoted $\cg_1(\bu^*)$: 
+\begin{equation}
+    \begin{split}
+        \cg(\bu) &= \cg_1(\bu^*) + o\left(\Vert \bu - \bu^* \Vert_2^2\right)\\
+                 &= \cancel{\cg(\bu^*)} + \nabla_{\bu} \,  \cg(\bu^*)\TT \left(\bu -\bu^* \right) + o\left(\Vert \bu - \bu^* \Vert_2^2\right)\\
+                 &= \Vert \nabla_{\bu} \, \cg(\bu) \Vert_2 \left(\balpha\TT \bu^* - \balpha\TT \bu \right) + o\left(\Vert \bu - \bu^* \Vert_2^2\right)
+    \end{split}    
+\end{equation}
+ 
+Using $\cg_1(\cdot)$ as approximation of the LSF, the failure probability can be approximated as: 
+\begin{equation}
+    \pf \approx \pf^{\mathrm{FORM}} = \P\left(- \balpha\TT \bu \leq -\beta\right) = \Phi(-\beta),
+\end{equation} 
+with $\Phi(\cdot)$ the CDF of the standard Gaussian. 
+Depending on the properties of the LFS, this approximation will be more or less accurate. 
+Note that for a linear LFS, $\pf = \pf^{\mathrm{FORM}}$. 
+When the function is nonlinear, adding a quadratic term to the Taylor expansion can help the approximation. 
+The approximation method is then called SORM for \textit{second order reliability method}. 
+However, this added complexity implies the computation of Hessian matrices, which can be complicated (see \elias{Bourinet Chap. 1 for their estimation}).
+
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, draft]{../numerical_experiments/chapter1/figures/independent_copula.png}
+        \caption{FORM approximation}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, draft]{../numerical_experiments/chapter1/figures/normal_copula.png}
+        \caption{SORM approximation}
+    \end{subfigure}
+       \caption{FORM and SORM approximation on a two-dimensional example}
+       \label{fig:FORM_SORM_approx}
+\end{figure}
+
+
+When the MPFP is not unique, the application of these methods might lead to important errors.
+From a geometrical point of view, having more than one MPFP means that more than one failure zones are at the same euclidean distance of the origin.
+Applying a FORM or SORM resolution in this particular case leads to the estimation of only one of the failure zones.
+The \textit{muti-FORM} algorithm developed by \elias{add ref} prevents this situation by applying successive FORM. 
+Once the first MPFP $P^{*^{(1)}}$ found, the LSS is modified by removing a nudge to find to following MPFP $P^{*^{(2)}}$. 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.32\textwidth, draft]{../numerical_experiments/chapter1/figures/independent_copula.png}
+    \caption{Multi-FORM approximation on an example with two MPFPs}
+    \label{fig:multi_FORM}
+\end{figure}
+
+%FORM/SORM first looks for an appropriate approximation of the limit state surface by a simple hypersurface. 
+%Then, working in the standard space allows direct calculation of the failure probability considering the approximated limit state function.
+
+Overall, FORM and SORM methods deliver a very efficient approximation of small probabilities for relatively simple problems (in terms of linearity and dimension). 
+For this reason, they have been widely used in the practical context of limited simulation budget. 
+However, these methods present serious limits as the dimension increases (see the discussion in \elias{Chabridon} Chapt. 1). 
+Additionally, their main drawback is the lack of complementary information concerning the confidence of the results. 
+The example from the \elias{Fig xx} has shown that the method might miss some important areas of the failure domain, leading to poor estimations. 
+As an alternative to approximation methods, simulation-based methods often provide to the analyst an assessment of the estimation's confidence. 
+
+
 
 %------------------------------------------------------------%
 \subsubsection{Monte Carlo}
 %------------------------------------------------------------%
+Crude Monte Carlo sampling is a universal and empirical method for uncertainty propagation. 
+As introduced earlier, it relies on the pseudo-random generation of a i.i.d. sample $\left\{\bx^{(i)}\right\}_{i=1}^n \simiid f_\bX$.   
+Only the estimator is written using the indicator function with the LSF: 
+\begin{equation}
+    \pf \approx \what{\pf}^{\textrm{MC}} = \frac1n \sum_{i=1}^{n} \1_{\iF_\bx}(\bx^{(i)})
+\end{equation} 
 
+Provided that the failure probability is bounded, this estimator converges towards it almost surely according to the LLN. 
+Once again, Monte Carlo offers a nonbaised estimator, regardless of the problem's dimension or regularity of the function $g(\cdot)$  
+Additionally, the variance of this estimator is fully known:
+\begin{equation}
+    \var\left(\what{\pf}^{\textrm{MC}}\right) = \frac1n \pf (1 - pf)
+\end{equation} 
+The variance of this estimator can be used to build its confidence interval according to the TCL \elias{pointer to the previous IC}. 
+Because of the small scale of the quantities manipulated in rare event estimation, the estimator's coefficient of variation is also widely used: 
+\begin{equation}
+    \delta_{\what{\pf}^{\textrm{MC}}} = \frac{\sqrt{\var\left(\what{\pf}^{\textrm{MC}}\right)}}{\E[\what{\pf}^{\textrm{MC}}]}
+                                      = \sqrt{\frac{1 - \pf}{n \pf}}.
+\end{equation}
+
+On paper, Monte Carlo estimator presents multiple advantages for rare event estimation.
+First, this method can be applied directly in the physical space, without transformation (which is practical for complex input distributions).
+Second, it does not suffer from the curse of dimensionality. 
+Thrid, it is qualified as embarrassingly parallel method since each numerical simulations are independent.
+Finally, it offers strong convergence guaranties and complementary information on the estimation confidence.
+\elias{These properties make it the reference method.}
+
+
+However, these advantages of this estimator are shadowed by its slow convergence. 
+To estimate a target failure probability $\pf=10^{-\alpha}$, 
+a Monte Carlo estimation with a convergence level $\delta_{\what{\pf}^{\textrm{MC}}} = 0.1$ famously requires $n=10^{\alpha + 2}$ simulations. 
+
+In the context of rare event estimation, Monte Carlo needs a number of simulation that is often prohibitive in practice. 
+This excessive simulation budget comes from the fact that the vast majority of the samples drawn from the input distribution are not in the failure domain.
+
+
+\newpage
 %------------------------------------------------------------%
 \subsubsection{Importance sampling}
 %------------------------------------------------------------%
 
+Importance sampling (IS) is a variance reduction method, aiming at improving the performances of crude Monte Carlo sampling. 
+In the context of rare event estimation, the main idea is to deliberately introduce a bias in the sampled density, shifting it towards the failure domain. 
+If this shift actually goes towards the failure domain, it allows to draw more points in it, leading to a better estimate of our quantity.
+
+The challenge in importance sampling is to pick a relevant \textit{instrumental} distribution $h_\bX$ (also called \textit{auxiliary} distribution) to replace the distribution $f_\bX$. 
+Then, by introducing the fully known likelihood ratio $w_\bX(\bx) = \frac{f_\bX(\bx)}{h_\bX(\bx)}$, one can rewrite $f_\bX(\bx) = w_\bX(\bx) h_\bX(\bx)$ and inject it in the failure probability expression: 
+\begin{equation}
+    \pf = \int_{\iD_\bx} \1_{\iF_\bx}(\bx) f_\bX(\bx) \, \dd\bx
+        = \int_{\iD_\bx} \1_{\iF_\bx}(\bx) w_\bX(\bx) h_\bX(\bx) \, \dd\bx
+\end{equation}
+This simple writing trick allows us to integrate against the auxiliary distribution. 
+With a Monte Carlo method, this task should be easier than integrating directly against the initial distribution.
+
+The importance sampling estimator of the failure probability is defined for a sample drawn on the auxiliary distribution $\left\{\bx^{(i)}\right\}_{i=1}^n \simiid h_\bX$: 
+\begin{equation}
+    \what{\pf}^{\mathrm{IS}} = \frac1n \sum_{i=1}^{n} \1_{\iF_\bx}(\bx^{(i)}) w_\bX(\bx^{(i)}).
+\end{equation}
+This estimator is unbiased and its variance is defined as: 
+\begin{equation}
+    \var\left( \what{\pf}^{\mathrm{IS}}\right) = \frac1n \left( \E_{h_\bX}\left[\left(\1_{\iF_\bx}(\bX) w_\bX(\bX)\right)^2\right] - \pf^2\right).
+\end{equation}
+The quality of the variance reduction in this method fully depends on the choice of the instrumental distribution. 
+An optimal instrumental distribution $h_{\bX}^*$ theoretically gives the smallest variance by setting it equal to zero in \elias{pointer}: 
+\begin{equation}
+    h_{\bX}^*(\bx) = \frac{\1_{\iF_\bx}(\bx) f_\bX(\bx)}{\pf}. 
+\end{equation}
+This optimal results presented in \elias{add ref} is unfortunately not usable in practice since it uses the targeted quantity $\pf$. 
+Knowing this framework, various techniques try to define instrumental distributions as close as possible to this theoretical result. 
+Three main importance sampling techniques are used in this work. 
+
+\elias{First, FORM-iS}
+
+\elias{Second AIS-CE} 
+
+\elias{Finally, NAIS}
+ 
+Appendix \ref{apx:C} develops an algorithmic presentation of the two last techiniques: NAIS and AIS-CE.
+
+\elias{Discussion on commun advantages and drawback of the IS methods.}
+
 %------------------------------------------------------------%
-\subsubsection{Adaptive sampling (SS/NAIS/IS-CE/Moving particles)}
+\subsubsection{Subset sampling}
 %------------------------------------------------------------%
 
+Subset sampling splits the failure event $\iF_{\bx}$ into an intersection of $k_\#$ intermediary events $\iF_{\bx} = \cap_{k=1}^{k_\#} \iF_{[k]}$.
+Each are nested such that $\iF_{[1]} \supset \dots \supset \iF_{[k_\#]} = \iF_{\bx}$.
+The failure probability is then expressed as a product of conditional probabilities:
+\begin{equation}
+    \pf = \P(\iF_{\bx}) = \P(\cap_{k=1}^{k_\#} \iF_{[k]}) = \prod_{k=1}^{k_\#} \P(\iF_{[k]} | \iF_{[k-1]}).
+\end{equation}
+From a practical point of view, the analyst tunes the algorithm by setting the intermediary probabilities $\P(\iF_{[k]} | \iF_{[k-1]}) = p_0, \forall k \in \{1, \dots, k_\# \}$. 
+Then, the corresponding quantiles $q_{[1]}^{p_0} > \dots > q_{[k_\#]}^{p_0}$ are estimated for each conditional subset samples $\bX_{[k], N}$ of size $N$. 
+Note that the initial quantile is estimated by crude Monte Carlo sampling on the input PDF $f_{\bX}$. 
+Following conditional subset samples are generated by MCMC sampling of $f_{\bX}(\bx |\iF_{[k-1]})$, using as seeds initialisation points the $n= N p_0$ samples given by $\mathbf{A}_{[k], n}=\{\bX_{[k-1]}^{(j)} \subset \bX_{[k-1], N}| g(\bX_{[k-1]}^{(j)}) > \widehat{q}_{[k-1]}^\alpha \}_{j=1}^n$. 
+This process is repeated until an intermediary quantile exceeds the threshold: $\widehat{q}_{[k_\#]}^{p_0} < \yth$. 
+Finally, the failure probability is estimated by:
+\begin{equation}
+    \pf \approx \widehat{\pf}^{\mathrm{SS}} = p_0^{k_\# -1} \frac1N \sum_{j=1}^N \1_{\{g(\bx) \leq \yth\}} (\bX_{[k_\#],N}^{(j)}).
+\end{equation}
 
+In practice, the subset sample size should be large enough to properly estimate intermediary quantiles, which leads \cite{AuBeck2001} to recommend setting $p_0=0.1$. 
+SS efficiency depends on the proper choice and tuning of the MCMC algorithm \citep{Papaioannou_PEM_2015}. 
+%Our work uses the SS implementation from \texttt{OpenTURNS}\footnote{\href{https://openturns.github.io/www/index.html}{https://openturns.github.io/www/index.html}} \citep{baudin_dutfoy_2017} which integrates a component-wise Metropolis-Hastings algorithm. 
+%As an alternative to generating samples on a conditional distribution by MCMC, one could try to fit this conditional distribution.
+
+
+
+
+
+\elias{Mention the appendix Appendix \ref{apx:C} presenting the algorithms of SS}
+
+
+\elias{Discussion: Which strategy to solve these problems?}
 
 
 
