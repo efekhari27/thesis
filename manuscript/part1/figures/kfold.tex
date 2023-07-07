@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+    \matrix (M) [matrix of nodes,
+        nodes={minimum height = 4mm, minimum width = 1.2cm, outer sep=0, anchor=center, draw},
+        column 1/.style={nodes={draw=none}}, column 6/.style={nodes={draw=none}},
+        row sep=1pt, column sep=-\pgflinewidth, nodes in empty cells,
+        e/.style={fill=orange!20}
+      ]
+      {
+        Test-set: 1\textsuperscript{st} fold & |[e]| & & & & $\Rightarrow$ Performance metric 1\\
+        Test-set: 2\textsuperscript{nd} fold & & |[e]| & & & $\Rightarrow$ Performance metric 2\\
+        Test-set: 3\textsuperscript{rd} fold & & & |[e]| & & $\Rightarrow$ Performance metric 3\\
+        Test-set: 4\textsuperscript{th} fold & & & & |[e]| & $\Rightarrow$ Performance metric 4\\
+      };
+      \draw (M-1-2.north west) ++(0,2mm) coordinate (LT) edge[|<->|, >= latex]
+                 node[above]{Total available data} (LT-|M-1-5.north east);
+  \end{tikzpicture}

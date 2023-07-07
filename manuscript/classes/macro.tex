@@ -6,12 +6,12 @@
 \usepackage{algpseudocode}
 \usepackage{tikz}
 \usepackage[many]{tcolorbox}
-\usetikzlibrary{arrows.meta,arrows,calc}
+\usetikzlibrary{arrows.meta, arrows, calc, shapes.geometric, backgrounds, fit, positioning, matrix}
 \usepackage{array}
 \usepackage{footnote}
 \usepackage[acronym]{glossaries}
 \usepackage{cancel}
-
+\usepackage{listings}%including code
 
 \usepackage{etoc} %chapter table of contents
 \usepackage[Lenny]{fncychap} %fancy chapters
@@ -42,36 +42,55 @@
 \definecolor{ofonce}{HTML}{FE5716}
 \definecolor{omoyen}{HTML}{FF861D}
 \definecolor{oclair}{HTML}{FFB210}
+% Listings code colors
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
 % See good practice: https://www.overleaf.com/learn/latex/Theorems_and_proofs
 \theoremstyle{remark}
 \newtheorem{remark}{Remark}
 
 
+%%%%% EXAMPLE ENVIRONMENT %%%%%
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
 \newtheorem{example}{Example}
 \tcolorboxenvironment{example}{
   colback=SpringGreen!10!white,
-  boxrule=0.5pt,
+  boxrule=0.1pt,
   %boxsep=1pt,
   %left=2pt,right=2pt,top=2pt,bottom=2pt,
   %oversize=2pt,
-  sharp corners,
+  rounded corners,
   before skip=\topsep,
   after skip=\topsep,
 }
 
 
+%%%%% OT Implementation ENVIRONMENT %%%%%
+\newtheorem{otexample}{\texttt{OpenTURNS}}
+\tcolorboxenvironment{otexample}{
+  colback=Dandelion!3!white,
+  boxrule=0.1pt,
+  %boxsep=1pt,
+  %left=2pt,right=2pt,top=2pt,bottom=2pt,
+  %oversize=2pt,
+  rounded corners,
+  before skip=\topsep,
+  after skip=\topsep,
+}
+
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
 \tcolorboxenvironment{theorem}{
   colback=gray!2!white,
-  boxrule=0.5pt,
+  boxrule=0.1pt,
   %boxsep=1pt,
   %left=2pt,right=2pt,top=2pt,bottom=2pt,
   %oversize=2pt,
-  sharp corners,
+  rounded corners,
   before skip=\topsep,
   after skip=\topsep,
 }
@@ -100,6 +119,8 @@
 \def\bE{{\bf E}}
 \def\btheta{{\boldsymbol{\theta}}}
 \def\balpha{{\boldsymbol{\alpha}}}
+\def\bbeta{{\boldsymbol{\beta}}}
+
 
 \def\R{\mathbb{R}}
 \def\N{\mathbb{N}}
@@ -142,10 +163,12 @@
 
 \newcommand{\eq}[1]{Eq.~\eqref{#1}}
 \newcommand{\fig}[1]{Fig.~\ref{#1}}
+\newcommand{\ot}{\texttt{OpenTURNS}~}
 
-\def\cg{\check{g}}
 \newcommand*\what[1]{\widehat{#1}}
 \newcommand*\wtilde[1]{\widetilde{#1}}
+\def\cg{\check{g}}
+\def\wg{\what{g}}
 
 % ******************************************************************************
 % ********************************* Acronyms ***********************************
@@ -153,9 +176,47 @@
 \newacronym{OWT}{OWT}{Offshore Wind Turbine}
 \newacronym{FOWT}{FOWT}{Floating Offshore Wind Turbine}
 
-
-
 \makeglossaries
+
+% ******************************************************************************
+% ********************************* Listings ***********************************
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour},   commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+\lstdefinestyle{mystyle_output}{
+  backgroundcolor=\color{backcolour},  commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=none,                    
+  numbersep=5pt,                  
+  showspaces=left,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+
+
 % ******************************************************************************
 % ****************************** Custom Margin *********************************
 

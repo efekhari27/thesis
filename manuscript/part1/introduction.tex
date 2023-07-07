@@ -46,7 +46,7 @@ To deliver rigorous risk assessments, the generic \textit{uncertainty quantifica
 %============================================================%
 
 Uncertainty Quantification (\acrshort{UQ}) aims at modeling and managing uncertainties in complex systems.
-Over the year, generic UQ frameworks were proposed \elias{add ref Deroc.} to quantify and analyze the relations between uncertain input factors and the systems' outcomes. 
+Over the year, generic UQ frameworks were proposed \citep{rocquigny_2008} to quantify and analyze the relations between uncertain input factors and the systems' outcomes. 
 UQ is particularly relevant in situations where experiments or direct observations are costly, time-consuming, or even impossible to conduct.
 
 Computer experiments, also known as numerical experiments or simulations, play an important role in UQ. 
@@ -54,7 +54,7 @@ They involve the use of numerical models to simulate the behavior of a system un
 These virtual experiments provide a cost-effective way to explore the behavior of complex systems and make robust and well-informed decisions.
 They enable researchers and decision-makers to gain a deeper understanding of the system dynamics, optimize designs, assess risk, and make robust predictions. 
 As a result, uncertainty quantification has become an essential tool in wind energy, benefiting from the multiphysics numerical models simulating the behavior of wind farms interacting with their environment.
-Nevertheless, numerical models should be calibrated against measured data and pass validation, and verification processes \elias{add ref} to minimize the residual modeling error.
+Nevertheless, numerical models should be calibrated against measured data and pass validation, and verification processes to minimize the residual modeling error.
 Figure \ref{fig:UQ_methodo} illustrates the UQ methodologies and the standardized usual steps encountered during a study, which are detailed hereafter: 
 \begin{itemize}
     \item \textbf{Step A -- Problem specification}: at this step, it is necessary to establish the system under study and construct a numerical model capable of precisely simulating its behavior.
@@ -84,7 +84,7 @@ Figure \ref{fig:UQ_methodo} illustrates the UQ methodologies and the standardize
 \section*{Problem statement and outline of the thesis}
 %============================================================%
 %============================================================%
-\elias{Rewrite para}
+\elias{Rewrite this paragraph}
 A general topic of research for EDF R\&D is to adapt the UQ methodology to offshore wind turbine industrial cases.  
 However, this problem presents various specificities, raising scientific challenges. 
 First, the numerical model studied is composed of a series of three codes, among which one is intrinsically stochastic 
@@ -106,7 +106,7 @@ The first part gathers an introduction to UQ's state-of-the-art and a specificat
 The second part presents the contributions to uncertainty quantification and propagation while the third part the contributions to rare event estimation.
 This manuscript is divided into seven chapters, which are summarized hereafter: 
 
-\textbf{Chapter 1} introduces the Treatment of uncertainties in computer experiments. Uncertainty quantification 
+\textbf{Chapter 1} Introduction to uncertainty quantification 
 
 \textbf{Chapter 2} Introduction to wind turbine modeling and design
 
@@ -134,7 +134,7 @@ Along this thesis, the contributions to numerical developments are summarized be
 
 
 \begin{center}
-\small
+\footnotesize
 \begin{tabularx}{\textwidth}{c >{\raggedleft\arraybackslash}X}
     \texttt{otkerneldesign\footnote{Documentation: \url{https://efekhari27.github.io/otkerneldesign/master/}}}
     &    
@@ -157,7 +157,7 @@ Along this thesis, the contributions to numerical developments are summarized be
     \texttt{copulogram\footnote{Repository: \url{https://github.com/efekhari27/copulogram}}} &    
     \begin{itemize}[left=0pt]
         \item This Python package proposes an implementation of a synthetic visualization tool for multivariate distributions. 
-        \item This Python package, developed in collaboration with V.Chabridon, is available on the Pypi platform and fully documented.
+        \item This Python package, developed in collaboration with V.Chabridon, is available on the Pypi platform.
     \end{itemize}\\
 \end{tabularx} 
 \end{center}
@@ -173,8 +173,8 @@ Along this thesis, the contributions to numerical developments are summarized be
 
 The research contributions in this manuscript are based on the following publications: 
 
-\begin{table*}[h]
-    \small
+\begin{center}
+    \footnotesize
     \renewcommand*{\arraystretch}{1.4}
     \begin{tabularx}{\textwidth}{l X}
         Book Chap. & \underline{E. Fekhari}, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). 
@@ -184,6 +184,10 @@ The research contributions in this manuscript are based on the following publica
         Jour Pap.   & \underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2023).
                     ``Fast given-data uncertainty propagation in offshore wind turbine simulator using Bayesian quadrature''. 
                     In: \textit{Data-Centric Engineering}.\\
+
+                    & \elias{\underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2023).
+                    ``TO DO: Bernstein adaptive nonparametric conditional sampling''.
+                    In: \textit{Special Issue in Honor of Professor Armen Der Kiureghian. Reliability Engineering \& System Safety}.}\\
         \hline
         Int. Conf   & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022).
                     ``Numerical Studies of Bayesian Quadrature Applied to Offshore Wind Turbine Load Estimation''.
@@ -198,7 +202,7 @@ The research contributions in this manuscript are based on the following publica
                     In: \textit{Proceedings of the 5th International Conference on Renewable Energies Offshore (RENEW 2022)}, Lisbon, Portugal. (Paper \& Talk)\\
         
                     & \underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2023). 
-                    ``Bernstein adaptive nonparametric conditional sampling: a new method for rare event probability estimation''.
+                    ``Bernstein adaptive nonparametric conditional sampling: a new method for rare event probability estimation''\footnote{This contribution was rewarded by the ``CERRA Student Recognition Award''}.
                     In: \textit{Proceedings of the 13th International Conference on Applications of Statistics and Probability in Civil Engineering (ICASP 14)}, Dublin, Ireland. (Paper \& Talk)\\
         
                     & E. Vanem, \underline{E. Fekhari}, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2023). 
@@ -218,5 +222,5 @@ The research contributions in this manuscript are based on the following publica
                     In: \textit{Proceedings of the Mascot-Num 2023 Annual Conference (MASCOT-NUM 2023)}, Le Croisic, France (Talk)\\
                     
         \end{tabularx}    
-\end{table*}
+\end{center}
 

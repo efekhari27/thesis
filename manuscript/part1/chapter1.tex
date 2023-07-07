@@ -19,11 +19,24 @@ This domain often provides a deterministic solution to complex problems dependin
 Associating a UQ analysis with these possibly nonlinear numerical models is a key element to improving the understanding of the phenomena studied. 
 A wide panel of UQ methods has been developed over the years to pursue these studies with a reasonable computational cost. 
 
-This chapter presents the standard tools and methods from the generic UQ framework \elias{add ref to intro}, exploited later in this thesis. 
-It is structured as follows: Section \elias{add ref} describes the context of the model specification step; 
-Section \elias{add ref} presents a classification of the inputs uncertainties and the probabilistic framework to model them; 
-Section \elias{add ref} and xx introduce various methods to propagate the input uncertainties through the numerical model for different purposes;
-finally, Section \elias{add ref} presents the main inverse methods to perform sensitivity analysis in our framework.
+This chapter presents the standard tools and methods from the generic UQ framework \citet{sullivan_2015}, exploited later in this thesis. 
+It is structured as follows: Section \elias{add pointer} describes the context of the model specification step; 
+Section \elias{add pointer} presents a classification of the inputs uncertainties and the probabilistic framework to model them; 
+Section \elias{add pointer} and \elias{add pointer} introduce various methods to propagate the input uncertainties through the numerical model for different purposes;
+finally, Section \elias{add pointer} presents the main inverse methods to perform sensitivity analysis in our framework.
+
+
+\paragraph*{\textbf{\texttt{OpenTURNS}}\footnote{\ot installation guide and documentation are available at \url{https://openturns.github.io/www/}}.} 
+This high-performance Python library is dedicated to UQ \citep{baudin_dutfoy_2017}. 
+\ot (``Open source initiative for the Treatment of Uncertainties, Risks’N Statistics'') is developed by an industrial researchers from  EDF R\&D, Airbus Group, PHIMECA Engineering, IMACS and ONERA.
+It combines high-performance using C++ programming with high-accessibility through a Python API. 
+Overall, this opensource library provides tools for various steps of the UQ framework 
+(e.g., uncertainty quantification, uncertainty propagation, surrogate modeling, reliability, sensitivity analysis and calibration). 
+To guaranty the software quality, the development follows robust processes such as unit testing and multiplatform continuous integration. 
+An active community hosted on a dedicated forum helps new users and discusses areas of improvement.
+Finally, no-code users can benefit from \texttt{OpenTURNS}'s Graphical User Interface software, named \texttt{Persalys}\footnote{\texttt{Persalys} is a free-download software available at \url{https://www.persalys.fr/obtenir.php}}.
+In this chapter, minimal \ot implementations of the methodological concepts will be presented. 
+
 
 
 %============================================================%
@@ -57,7 +70,8 @@ However, numerical simulations often come with an important computational cost.
 Therefore UQ methods should be efficient and require as few simulations as possible. 
 In this context, metamodels (or surrogate models) are statistical approximations of the costly numerical model, that can be used to perform tractable UQ. 
 Metamodels are only built and validated on a limited number of simulations (in a \textit{supervised learning} framework).
-In practice, the model specification step is often associated with the development of a \textit{wrapper} of the code \elias{explain wrapper}, with can be deployed on a \textit{high-perfomance computer}.
+In practice, the model specification step is often associated with the development of a \textit{wrapper} of the code. 
+The wrapper of a numerical model is an overlay of code allowing its execution in a parametric way, which is often associated with a \textit{high-perfomance computer} (HPC) deployment.  
 Once the model is specified, a critical step of uncertainty quantification is enumerating the input uncertainties and building an associated mathematical model.
 
 
@@ -67,15 +81,15 @@ Once the model is specified, a critical step of uncertainty quantification is en
 %============================================================%
 %============================================================%
 
-%------------------------------------------------------------%
+%============================================================%
 \subsection{Sources of the input uncertainties}
-%------------------------------------------------------------%
+%============================================================%
 
 To ensure a complete risk assessment (e.g., associated with the exploitation of a wind turbine throughout its life span), the analyst should construct a list of uncertain inputs as exhaustive as possible. 
 Even if these uncertainties might have different origins, they should all be considered jointly in the UQ study. 
 The authors proposed to classify them for practical purposes into two groups:
 \begin{itemize}
-    \item \textbf{aleatory uncertainty} regroups the uncertainties that arise from natural randomness (e.g., \elias{add example}). 
+    \item \textbf{aleatory uncertainty} regroups the uncertainties that arise from natural randomness (e.g., wind turbulence). 
     From a risk management point of view, these uncertainties are qualified as \textit{irreducible} since the industrials facing them will not be able to acquire additional information to reduce them (e.g., additional measures).     
     \item \textbf{epistemic uncertainty} gathers the uncertainties resulting from a lack of knowledge. 
     Contrarily to the aleatory ones, epistemic uncertainties might be reduced by investigating their origin. 
@@ -84,13 +98,13 @@ The authors proposed to classify them for practical purposes into two groups:
 \citet{kiureghian_2009} offers a discussion on the relevance of this classification. 
 They affirm that this split is practical for decision-makers to identify possible ways to reduce their uncertainties. 
 However, this distinction should not affect the way of modeling or propagating uncertainties. 
-\elias{To illustrate the limits of this split, some uncertainties present both an aleatory and epistemic aspect.}
+\elias{To illustrate the limits of this split, add examples of uncertainties presenting both an aleatory and epistemic aspect.}
 In the following, the probabilistic framework is introduced to deal with uncertainties. 
 
 
-%------------------------------------------------------------%
+%============================================================%
 \subsection{Modeling uncertain inputs with the probabilistic framework}
-%------------------------------------------------------------%
+%============================================================%
 
 Uncertainties are traditionally modeled with objects from the probability theory.
 In this thesis, the \textit{probabilistic framework} is adopted. 
@@ -148,12 +162,12 @@ and a covariance describing their joint variability:
 \end{equation}
 The standard deviation $\sigma_{X_j} = \sqrt{\var(X_j)}$ and coefficient of variation $\delta_{X_j} = \frac{\var(X_j)}{|\E[X_j]|}$ are two quantities directly associated to the two first moments.
 
-\elias{Remark on high dimension: We call high dimension anything higher than $p>10$ and it creates issues.}
+%\elias{Remark on high dimension: We call high dimension anything higher than $p>10$ and it creates issues.}
 
 
-%------------------------------------------------------------%
+%============================================================%
 \subsection{Joint input probability distribution}
-%------------------------------------------------------------%
+%============================================================%
 
 This section aims at presenting various techniques to model and infer a joint probability distribution (or multivariate distribution).
 It will first introduce the \textit{copula}, a universal mathematical tool to model the dependence structure of a joint distribution. 
@@ -190,13 +204,13 @@ One can assume that the joint distribution is the composition of the single effe
 An empirical way of isolating the three dependence structures from this example is to transform the samples in the ranked space. 
 Let us consider a $n$-sized sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \in \iD_{\bx}^{n}$. 
 The corresponding ranked sample is defined as: $\bR_n = \left\{\br^{(1)}, \dots, \br^{(n)}\right\}$, 
-where\footnote{The \textit{indicator function} is defined such that $\1_{\left\{\mathcal{A}\right\}}(x) = 1$ if $x \in \mathcal{A}$ and is equal to 0 otherwise.} 
+where\footnote{The \textit{indicator function} is defined such that $\1_{\left\{\mathcal{A}\right\}}(x) = 1$ if $x \in \mathcal{A}$ and is equal to zero otherwise.} 
 $r^{(l)}_j = \sum_{i=1}^n \1_{\left\{x^{(i)}_j \leq x^{(l)}_j\right\}},$ $\forall j \in \{1, \dots d\}$.
 Ranking a multivariate dataset allows us to isolate the dependence structure witnessed empirically. 
 \fig{fig:ranked_joint_dist_samples} shows the same three samples from \fig{fig:joint_dist_samples} in the ranked space.
 One can first notice that the marginals are uniform since each rank is uniformly distributed. 
 Then, the scatter plot from the distribution with independent copula (left plot) is uniform while the two others present different patterns. 
-\begin{figure}[ht]
+\begin{figure}
     \centering
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
@@ -226,9 +240,14 @@ Second, a function describing the dependence structure between all variables: a 
 \begin{theorem}[Sklar's theorem]
     Let $\mathbf{X} \in \R^d$ be a random vector and its joint CDF $F_{\bX}$ with marginals $\{F_{X_j}\}_{j=1}^d$, there exists a copula $C: [0, 1]^d \rightarrow [0, 1]$, such that:
     \begin{equation}
-        F_{\bX}(x_1, \dots, x_d) = C\left(F_{X_1}(x_1), \dots, F_{X_d}(x_d)\right). 
+        F_{\bX}(x_1, \dots, x_d) = \P\left(X_1\leq x_1,\dots ,X_d\leq x_d\right) = C\left(F_{X_1}(x_1), \dots, F_{X_d}(x_d)\right). 
     \end{equation}
     If the marginals $F_{X_i}$ are continuous, then this copula is unique.
+    If the multivariate distribution has a PDF $f_{\bX}$, it can also be expressed:
+    \begin{equation}
+        f_{\bX}(x_1, \dots, x_d) = c\left(F_{X_1}(x_1), \dots, F_{X_d}(x_d)\right) \times f_{X_1}(x_1) \times \dots \times f_{X_d}(x_d),
+    \end{equation}
+    where $c$ is the density of the copula, sometimes also called copula by misuse of language. 
     \label{thm:sklar}
 \end{theorem}
 
@@ -241,29 +260,45 @@ This equation allows us to extract a copula from a joint distribution by knowing
 Additionally, copulas are invariant under creasing transformations. 
 This property is important to understand the use of rank transformation to display the copula without the marginal effects.     
 
-\elias{define the copula density and address the warning on the confusion.}
-
 Identically to the univariate continuous distributions, a large catalog of families of copulas exists (e.g., independent, Normal, Clayton, Frank, Gumbel copula, etc.).
-
-\elias{define the independent copula, also called a product of marginals.}
-
+Note that the independant copula implies that the distribution fully defined by the product of its marginals.
 To infer a joint distribution, this theorem divides the fitting problem into two independent problems: fitting the marginals and fitting the copula
 Provided a dataset, this framework allows the combination of a parametric (or nonparametric) fit of marginals with a parametric (or nonparametric) fit of the copula. 
 
-Appendix \ref{apx:A} details the main techniques to estimate marginal distributions. 
-Then, Appendix \ref{apx:B} introduces different nonparametric methods to infer a copula, including the empirical Bernstein copula and the Beta copula. 
-The adequation between a fitted probabilistic model and a dataset should be validated, therefore, appendices \ref{apx:A} and \ref{apx:B} respectively present visual and quantitative tools for goodness-if-fit evaluation.
-
 To infer a joint distribution over a dataset, the analyst should determine a fitting strategy.
-Smart data visualization helps to choose the fitting methods susceptible to be relevant to the problem. 
-The following points can be checked at this early stage: 
+Appropriate data visualization helps to choose the fitting methods susceptible to be relevant to the problem. 
+The following points can be checked at this early stage: \elias{formalize bullets} 
 \begin{itemize}
     \item Is the distribution unimodal? If not, mixtures methods or nonparametric models might be required;
     \item Is the validity domain restrictive? If so, specific families of parametric distributions can be chosen or truncations can be applied;
-    \item Is the dimension high? If the dimension is too high: tensorize the distribution as much as possible.
+    \item Is the dimension medium or high? In our context, a problem \elias{with dimension $d>10$} might be qualified as medium dimension problem. If the dimension is too high: tensorize the distribution as much as possible.
     \item Is the dependence structure complex? Graphically, the dataset in the ranked space gives an empirical description but some independence tests exist as well. 
 \end{itemize} 
 
+Appendix \ref{apx:A} details the main techniques to estimate marginal distributions. 
+Then, Appendix \ref{apx:B} introduces different nonparametric methods to infer a copula, including the empirical Bernstein copula and the Beta copula. 
+The adequation between a fitted probabilistic model and a dataset should be validated, therefore, Appendices \ref{apx:A} and \ref{apx:B} respectively present visual and quantitative tools for goodness-if-fit evaluation.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[Bivariate distribution]
+    The following Python code proposes a minimalistic \ot implementation of a probabilistic uncertainty modeling. 
+    \lstset{style=mystyle, language=python}
+\begin{lstlisting}
+import openturns as ot
+# Build multivariate distribution from marginals and copula
+copula=ot.GumbelCopula(2.0)
+marginals=[ot.Uniform(1.0, 2.0), ot.Normal(2.0, 3.0)]
+distribution=ot.ComposedDistribution(marginals, copula)
+# Compute first moments
+mean_vector=distribution.getMean()
+covariance_matrix=distribution.getCovariance()
+# Compute CDF (respectively PDF)
+x_cdf=distribution.computeCDF([1.5, 2.5])# x=[1.5, 2.5]
+a_quantile=distribution.computeQuantile([0.9])# alpha=0.9
+\end{lstlisting}
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %============================================================%
@@ -373,7 +408,25 @@ Yet, Fejér-Clenshaw-Curtis is sequential and offers easy implementations, benef
 Uncertainty quantification problems are rarely unidimensional, but one can build a multivariate quadrature rule by defining the tensor product (also called full grids) of univariate rules. 
 This exhaustive approach quickly shows its practical limits as the problem's dimension increases. 
 Alternatively, sparse multivariate quadratures (i.e., Smolyak sparse grid) explore the joint domain more efficiently. 
+\elias{Introduce the reccurent Smolyak formula?}
 
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/tensorized_gaussian_quadrature.png}
+        \caption{Tensor product (n=49)}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/smolyak_gaussian_quadrature.png}
+        \caption{Smolyak sparse grid (n=53)}
+    \end{subfigure}
+    \caption{Two univariate Gauss-Legendre quadratures combined as a tensor product and a Smolyak sparse grid}
+    \label{fig:bivariate_quads}
+\end{figure}
 
 
 %------------------------------------------------------------%
@@ -522,6 +575,29 @@ In the following, sampling techniques are presented from the numerical \textit{d
 Even if the finality might look different from the previous numerical integration, it shares many methods and concepts. 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[Numerical integration]
+    The following Python code proposes a minimalistic \ot implementation to build a quadrature rule. 
+\lstset{style=mystyle, language=python}
+\begin{lstlisting}
+import openturns as ot
+marginals=[ot.Exponential(1.0), ot.Uniform(-1.0, 1.0)]
+distribution=ot.ComposedDistribution(marginals)
+# Build a 2D Gaussian quadrature
+marginal_size_list=[4, 4] # Number of nodes per marginal
+g_quadrature=ot.GaussProductExperiment(distribution, marginal_size_list)
+g_nodes, weights=g_quadrature.generateWithWeights()
+# Build a Monte Carlo design
+n=16 
+mc_nodes=distribution.getSample(n)
+# Build a quasi-Monte Carlo design
+sequence=ot.HaltonSequence(2) # d=2
+qmc_experiment=ot.LowDiscrepancyExperiment(sequence, distribution, n)
+qmc_nodes=qmc_experiment.generate()
+\end{lstlisting}
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 %============================================================%
 \subsection{Numerical design of experiments}
@@ -614,7 +690,7 @@ It also shows that these designs keep this property for dimensions larger than 1
 
 More recent work developed different ways to get optimized LHD. 
 Let us mention the maximum projection designs from \citet{joseph_gul_2015} and the uniform projection designs from \citet{sun_2019}.
-\elias{Add a sentence to explain the concept}
+\elias{Add a sentence to introduce the papers}
 
 \begin{figure}[ht]
     \centering
@@ -638,6 +714,32 @@ Let us mention the maximum projection designs from \citet{joseph_gul_2015} and t
        \caption{Latin hypercube designs with poor and optimized space-filling properties ($n=8$)}
        \label{fig:LHS_designs}
 \end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[Design of experiments]
+    The following Python code proposes a minimalistic \ot implementation to build a LHS and 
+    a LHS optimized w.r.t. to a space-filling metric (here the L2-centered discrepancy) using the simulated annealing algorithm. 
+    \lstset{style=mystyle, language=python}
+\begin{lstlisting}
+import openturns as ot
+marginals=[ot.Uniform(0.0, 1.0), ot.Uniform(0.0, 1.0)]
+distribution=ot.ComposedDistribution(marginals)
+# Build a LHS
+n=10
+LHS_exp=ot.LHSExperiment(distribution, n)
+LHS_design=LHS_exp.generate()
+# Build an optimized LHS using L2-centered discrepancy
+LHS_exp=ot.LHSExperiment(distribution, n)
+SF_metric=ot.SpaceFillingC2()
+SA_profile=ot.GeometricProfile(10., 0.95, 20000)
+LHS_opt=ot.SimulatedAnnealingLHS(LHS_exp, SF_metric, SA_profile)
+LHS_opt.generate()
+LHS_design=LHS_opt.getResult().getOptimalDesign()
+\end{lstlisting}
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 %============================================================%
 \subsection{Summary and discussion}
@@ -738,7 +840,7 @@ Note that the present work will not address the problems of time-dependent relia
 %============================================================%
 
 Following to the UQ methodology, the behavior of the system is modeled by $\iM(\cdot)$. 
-Considering the problem of exceeding a safety threshold in \elias{add ref}, the system's performance is commonly defined as the difference between the model's output and a safety threshold $\yth\in\R$. 
+Considering the problem of exceeding a safety threshold in \elias{add pointer}, the system's performance is commonly defined as the difference between the model's output and a safety threshold $\yth\in\R$. 
 Formally, the \textit{limit-state function} (LSF) is a deterministic function $g:\R\rightarrow\R$ quantifying this performance: 
 \begin{equation}
     g(\bx) = \yth - \iM(\bx).
@@ -769,7 +871,7 @@ but it could identically be expressed in terms of probability measure by taking 
 \end{equation}
 were the indicator function applied to the failure domain returns $\1_{\left\{\iF_{\bX}\right\}}(x) = 1$ if $x \in \iF_{\bX}$ and $\1_{\left\{\iF_{\bX}\right\}}(x) = 0$ otherwise.
 Rare event estimation implies both contour finding (i.e., characterizing the LSF) and an estimation strategy targeting the failure domain (often with a limited number of simulations).
-Note that failure event are qualified as rare when its failure probability has an order of magnitude between $10^{-2} \leq \pf \leq 10^{-9}$ \elias{lemaire 2009}.
+Note that failure event are qualified as rare when its failure probability has an order of magnitude between $10^{-2} \leq \pf \leq 10^{-9}$ (see e.g., \citet{lemaire_2013}).
 
 Instead of directly performing a reliability analysis in the physical space (i.e., $\bx$-space), these problems are usually solved in the \emph{standard normal space} (i.e., $\bu$-space).
 Worsting in the standard space reduces numerical issues potentially caused by unscaled or asymmetric marginals. 
@@ -804,7 +906,7 @@ The fact that the failure probability is invariant by this transformation allows
 
 Different types of transformations exist, such as the Rosenblatt or the generalized Nataf transformation \citep{Lebrun_PHD_2013}
 In practice, the transformation choice depends on the properties of the input distribution studied. 
-\elias{When should we use what? In this case the distribution is not elliptical so the default method is the Rosenblatt transform.}
+\elias{When should we use what? (see Bourinet (2021), Chapt. 1). In the case of non-elliptical distribution, the default method is the Rosenblatt transform on \ot.}
 
 
 
@@ -877,7 +979,7 @@ Depending on the properties of the LFS, this approximation will be more or less 
 Note that for a linear LFS, $\pf = \pf^{\mathrm{FORM}}$. 
 When the function is nonlinear, adding a quadratic term to the Taylor expansion can help the approximation. 
 The approximation method is then called SORM for \textit{second order reliability method}. 
-However, this added complexity implies the computation of Hessian matrices, which can be complicated (see \elias{Bourinet Chap. 1 for their estimation}).
+However, this added complexity implies the computation of Hessian matrices, which can be complicated (see Chapter 1 from \citet{bourinet_2018} for their estimation).
 
 
 \begin{figure}[ht]
@@ -962,7 +1064,6 @@ In the context of rare event estimation, Monte Carlo needs a number of simulatio
 This excessive simulation budget comes from the fact that the vast majority of the samples drawn from the input distribution are not in the failure domain.
 
 
-\newpage
 %------------------------------------------------------------%
 \subsubsection{Importance sampling}
 %------------------------------------------------------------%
@@ -1020,7 +1121,7 @@ The failure probability is then expressed as a product of conditional probabilit
 From a practical point of view, the analyst tunes the algorithm by setting the intermediary probabilities $\P(\iF_{[k]} | \iF_{[k-1]}) = p_0, \forall k \in \{1, \dots, k_\# \}$. 
 Then, the corresponding quantiles $q_{[1]}^{p_0} > \dots > q_{[k_\#]}^{p_0}$ are estimated for each conditional subset samples $\bX_{[k], N}$ of size $N$. 
 Note that the initial quantile is estimated by crude Monte Carlo sampling on the input PDF $f_{\bX}$. 
-Following conditional subset samples are generated by MCMC sampling of $f_{\bX}(\bx |\iF_{[k-1]})$, using as seeds initialisation points the $n= N p_0$ samples given by $\mathbf{A}_{[k], n}=\{\bX_{[k-1]}^{(j)} \subset \bX_{[k-1], N}| g(\bX_{[k-1]}^{(j)}) > \widehat{q}_{[k-1]}^\alpha \}_{j=1}^n$. 
+Following conditional subset samples are generated by \textit{Monte Carlo Markov Chain} (MCMC) sampling of $f_{\bX}(\bx |\iF_{[k-1]})$, using as seeds initialisation points the $n= N p_0$ samples given by $\mathbf{A}_{[k], n}=\{\bX_{[k-1]}^{(j)} \subset \bX_{[k-1], N}| g(\bX_{[k-1]}^{(j)}) > \widehat{q}_{[k-1]}^\alpha \}_{j=1}^n$. 
 This process is repeated until an intermediary quantile exceeds the threshold: $\widehat{q}_{[k_\#]}^{p_0} < \yth$. 
 Finally, the failure probability is estimated by:
 \begin{equation}
@@ -1028,57 +1129,302 @@ Finally, the failure probability is estimated by:
 \end{equation}
 
 In practice, the subset sample size should be large enough to properly estimate intermediary quantiles, which leads \cite{AuBeck2001} to recommend setting $p_0=0.1$. 
-SS efficiency depends on the proper choice and tuning of the MCMC algorithm \citep{Papaioannou_PEM_2015}. 
+SS efficiency depends on the proper choice and tuning of the MCMC algorithm \citep{Papaioannou_PEM_2015}.
+\elias{introduce the upper bound of the coefficient of variation and its limits.}
+\elias{MCMC implies multiple tuning and looses the independent property of the generated samples.}
+
+
 %Our work uses the SS implementation from \texttt{OpenTURNS}\footnote{\href{https://openturns.github.io/www/index.html}{https://openturns.github.io/www/index.html}} \citep{baudin_dutfoy_2017} which integrates a component-wise Metropolis-Hastings algorithm. 
 %As an alternative to generating samples on a conditional distribution by MCMC, one could try to fit this conditional distribution.
-
-
-
-
 
 \elias{Mention the appendix Appendix \ref{apx:C} presenting the algorithms of SS}
 
 
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/reliability_MC_illustration.png}
+        \caption{Monte Carlo ($n=10^5$)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/reliability_IS_illustration.png}
+        \caption{Importance sampling ($n=10^5$)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../numerical_experiments/chapter1/figures/reliability_SS_illustration.png}
+        \caption{Subset sampling ($n=4\cdot10^4$)}
+    \end{subfigure}
+       \caption{Illustration of a rare event estimation}
+       \label{fig:simulation_reliability}
+\end{figure}
+
+
+
+%============================================================%
+\subsection{Summary and discussion}
+%============================================================%
+
 \elias{Discussion: Which strategy to solve these problems?}
+\elias{The design point does not have the same meaning in high dimension}
+\elias{Nonlinearities of the LSF are the actual challenge in realibility analysis}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[Rare event estimation]
+    The following Python code proposes a minimalistic \ot implementation of rare event estimation algorithms. 
+    \lstset{style=mystyle, language=python}
+\begin{lstlisting}
+import openturns as ot
+marginals=[ot.Normal(0.0, 1.0), ot.Exponential(1.0)]
+distribution=ot.ComposedDistribution(marginals)
+# Build a limit-state function and failure event
+g=ot.SymbolicFunction(["x1", "x2"], ["(x1 - x2) ^ 2"])
+X=ot.RandomVector(distribution)
+Y=ot.CompositeRandomVector(g, X)
+th=0.0
+failure_event=ot.ThresholdEvent(Y, ot.LessOrEqual(), th)
+# Estimate pf using FORM
+starting_p=distribution.getMean()
+FORM_algo=ot.FORM(ot.Cobyla(), failure_event, starting_p)
+FORM_algo.run()
+FORM_results=FORM_algo.getResult()
+design_point=FORM_results.getStandardSpaceDesignPoint()
+FORM_pf=FORM_results.getEventProbability()
+# Estimate pf using Monte Carlo 
+MC_exp=ot.MonteCarloExperiment()
+MC_algo=ot.ProbabilitySimulationAlgorithm(failure_event, MC_exp)
+MC_algo.run()
+MC_results=MC_algo.getResult()
+MC_pf=MC_results.getProbabilityEstimate()
+MC_pf_confidence=MC_results.getConfidenceLength(0.95)
+# Estimate pf using importance sampling
+aux_distribution=ot.Normal(design_point, [1.0, 1.0])
+standard_event=ot.StandardEvent(failure_event)
+IS_exp=ot.ImportanceSamplingExperiment(aux_distribution)
+IS_algo=ot.ProbabilitySimulationAlgorithm(standard_event, IS_exp)
+IS_algo.run()
+IS_results=IS_algo.getResult()
+IS_pf=IS_results.getProbabilityEstimate()
+IS_pf_confidence=IS_results.getConfidenceLength(0.95)
+# Estimate pf using subset sampling
+SS_algo=ot.SubsetSampling(failure_event)
+SS_algo.run()
+SS_results=SS_algo.getResult()
+SS_pf=SS_results.getProbabilityEstimate()
+SS_pf_confidence=SS_results.getConfidenceLength(0.95)
+\end{lstlisting}
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
+
+\newpage
 %============================================================%
 %============================================================%
 \section{Sensitivity analysis}
 %============================================================%
 %============================================================%
 
+\elias{An inversion problem}
+
 %============================================================%
 \subsection{Global sensitivity analysis}
 %============================================================%
+
+\begin{itemize}
+    \item Morris method
+    \item Derivative-based global sensitivity measures
+    \item Sobol indices (based on variance decomposition)
+\end{itemize}
 
 %============================================================%
 \subsection{Reliability-oriented sensitivity analysis}
 %============================================================%
 
+\begin{itemize}
+    \item Importance factors from FORM 
+    \item Sobol on the indicator function (see Chabridon 2018 chapt 4 and 7, see Papaioannou 2023)
+\end{itemize}
 
+
+
+\newpage
+%============================================================%
+%============================================================%
+\section{Surrogate modeling}
+%============================================================%
+%============================================================%
+The aim of \textit{surrogate modeling} (or metamodeling) is to build a cheap-to-call statistical model, denoted $\wg_n(\cdot)$, replacing a costly numerical model $g(\cdot)$ over the input domain $\iD_{\bX}$. 
+To do so, a statistical learning is performed on a finite number of observations of the costly function $g$. 
+When manipulating computationally expensive simulations, its size can be limited (i.e., small-data context). 
+This $n$-sized set is usually called \textit{learning set} denoted: 
+\begin{equation}
+    \left\{\bX_n, \by_n\right\} = \left\{\bx^{(i)}, y^{(i)}\right\}_{i=1}^n
+                                = \left\{\bx^{(i)}, g\left(\bx^{(i)}\right)\right\}_{i=1}^n.    
+\end{equation}
+
+A very large catalogue of regression methods exist, here is a list of the most encountered ones in the field of UQ:
+generalized linear regression, polynomial chaos expansion (PCE) \citep{soize_2004, blatman_2011}, support vector machine (SVM) \citep{vapnik_1995}, 
+Gaussian processes (GP) \citep{rasmussen_2006}, and artifitial neural network (ANN) \elias{add ref}.
+The following section will provide a short focus on Gaussian process regression.
+
+Validating the accuracy and precision of a surrogate model is an important step to guaranty its fidelity with regard to the numerical model. 
+When a $m$-sized input-output set is dedicated to validating the surrogate model, independantly from the learning set, 
+it is called \textit{test set} and denoted $\left\{\bX_m, \by_m\right\} = \left\{\bx^{(i)}, g\left(\bx^{(i)}\right)\right\}_{i=1}^m$. 
+Note that the analyst may work in two different frameworks, affecting the regression and validation method's choice: 
+\begin{itemize}
+    \item Given-data context: only using a fixed input-output dataset to build and validate the surrogate model. 
+    \item Computer experiment context: allowing to generate simualted data points (often at an important cost).
+\end{itemize}
+
+Validating surrogate models in small-data context appears to be an important challenge. 
+Different validation criteria and techniques exist. 
+The \textit{coefficient of validation}, denoted $R^2$, is a first validation metric that can be directly computed on the learning set:
+\begin{equation}
+    R^2(\wg_n) = 1 - \frac{ \sum_{i=1}^n  \left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)^2}{\sum_{i=1}^n \left(y(\bx^{(i)})-\overline{\by}_n\right)^2}\,,
+\end{equation}
+where $\overline{y}_n=(1/n)\,\sum_{i=1}^n y^{(i)}$ denotes the empirical mean of the observations in the test sample. 
+However, theses metrics are not relevant for every regression method (typically, interpolant method have a $R^2=1$). 
+The \textit{predictivity coefficient} is an alternative defined as a normalized \textit{integrated square error} (ISE): 
+\begin{equation}
+    Q^2(\wg_n) = 1 - \frac{\ise(\wg_n)}{\var(\wg_n)}, 
+\end{equation} 
+where 
+\begin{equation}
+    \ise(\wg_n) = \int_{\iD_{\bX}} \left(g(\bx) - \wg(\bx)\right)^2 \, \ddx, \qquad
+    \var(\wg_n) = \int_{\iD_{\bX}} \left(g(\bx) - \wg(\bx)\right)^2 \, \ddx.
+\end{equation}
+This quantity can be estimated on a test set $\left\{\bX_m, \by_m\right\}$: 
+\begin{equation}
+    \what{Q}^2(\wg_n) = 1 - \frac{ \sum_{i=1}^m  \left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)^2}{\sum_{i=1}^m \left(\overline{\by}_m - y(\bx^{(i)})\right)^2}\,.
+\end{equation}
+Note about the interpertation of the two criteria, the higher the value, the better the quality of the fit. 
+
+Validating a surrogate model with an independant test-set is sometimes called \textit{Holdout} validation.
+In a small-data context, dedicating an independant test set to validation might be impossible.
+Then, \textit{cross-validation} is a generic estimation strategy allowing to use only one sample for learning and testing. 
+The most common cross-validation method is the \textit{$k$-fold} validation, illustrated in \fig{fig:kfold}. 
+The idea is first to split the $n$-sized dataset in several equal parts, called folds. 
+A first surrogate can be fitted on all the dataset but the first fold, on which a validation is estimated. 
+The operation is repeated for each fold, providing a virtual validation on the entire dataset. 
+Leave-One-Out validation (LOO) is an extreme case of $k$-fold cross-validation, for which $k=n-1$. 
+Note that multiple variations of these methods exist, adding for example a permutation or shuffling step. 
+
+%\elias{Should we mention bootstrap aggregating (bagging): ensemble meta-algorithm improving the stability and accuracy of machine learning algorithms}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \matrix (M) [matrix of nodes,
+            nodes={minimum height = 4mm, minimum width = 1.2cm, outer sep=0, anchor=center, draw},
+            column 1/.style={nodes={draw=none}}, column 6/.style={nodes={draw=none}},
+            row sep=1pt, column sep=-\pgflinewidth, nodes in empty cells,
+            e/.style={fill=orange!20}
+          ]
+          {
+            \textit{Test set}: 1\textsuperscript{st} fold & |[e]| & & & & $\Rightarrow$ Performance metric 1: $\what{Q}^2_1$\\
+            \textit{Test set}: 2\textsuperscript{nd} fold & & |[e]| & & & $\Rightarrow$ Performance metric 2: $\what{Q}^2_2$\\
+            \textit{Test set}: 3\textsuperscript{rd} fold & & & |[e]| & & $\Rightarrow$ Performance metric 3: $\what{Q}^2_3$\\
+            \textit{Test set}: 4\textsuperscript{th} fold & & & & |[e]| & $\Rightarrow$ Performance metric 4: $\what{Q}^2_4$\\
+          };
+          \draw (M-1-2.north west) ++(0,2mm) coordinate (LT) edge[|<->|, >= latex]
+                     node[above]{Total data available} (LT-|M-1-5.north east);
+      \end{tikzpicture}
+      \caption{Illustration of a $k$-fold cross-validation (with $k=4$)} 
+      \label{fig:kfold}
+\end{figure}
 
 
 
 %============================================================%
-%============================================================%
-\section{Metamodeling}
-%============================================================%
-%============================================================%
-Note that the calibration error is often larger than the metamodeling error.
-
-%============================================================%
-\subsection{Global metamodel}
+\subsection{General purposes surrogate model}
 %============================================================%
 
+In this section, a particular focus is put of Gaussian process (GP) regression (also named kringing after the goestatician D.G. Krige). 
+Gaussian processes are a widely used regression method in UQ for their performance, flexibility and their associated confidence model. 
+In a small-data context, the way of placing the few points forming the surrogate's learing set is critical. 
+Intuitively, to build a versatile surrogate model, it should get information covering the input space as uniformily as possible. 
+Which is why space-filling designs of experiments are commonly used to build learning sets.     
+In practice, QMC and optimized LHS design introduced in \elias{add pointer} are widely used.  
+
+\subsubsection{Gaussian process regression}
+
+Considering a learning set $\bX_n$, Gaussian process regression aims at approximating the function $g(\cdot)$ by a scalar Gaussian process, conditionned on a set of obervations $\by_n = \left\{g\left(\bx^{(i)}\right)\right\}$. 
+Let us first define a Gaussian process prior structure $\xi$ on the function approximated $g(\cdot)$ with a mean function $m(\cdot)$ and covariance function $k(\cdot, \cdot)$:  
+\begin{equation}
+    \xi \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot)),
+\end{equation} 
+with a: 
+\begin{itemize}
+    \item \textit{trend model}: $~m(\bx) = \mathbf{f}(\bx)\TT \bbeta$, composed of a functional basis $\mathbf{f} = \left(f_1, \dots, f_d\right)\TT$ and a vector of coefficients 
+    $\bbeta = \left(\beta_1, \dots, \beta_d\right)\TT$,
+    \item \textit{covariance model}: $~k(\bx, \bx')$, usually taken stationary, such that $k(\bx, \bx') = \sigma^2 k_{\mathrm{s}}(\bx - \bx', \btheta)$ with $\sigma^2>0$ and $\btheta \in \iD_bX$.
+\end{itemize}
+The trend model of a GP defines its general tendency, while the covariance model influences its regularity.
+The method takes different names depending on the knowledge of the trend model. 
+It is called ``simple kriging'' when the trend is fully known, ``ordinary kriging'', when the trend is unknown but supposed constant and ``unversal kriging'' otherwise. 
+Note that \cite{schobi_2015} introduced a hybrid method named PC-Kriging setting a PCE as the trend of a kriging model.   
+
+To ease the presentation, let us first consider the hyperparameters $\sigma, \btheta$ fully known and a zero trend $\bbeta = \textbf{0}$.
+At a given point $\bx \in \iD_bX$ the realization of the GP is a Gaussian random variable $\xi(\bx) \sim \iN(m(\bx), k(\bx, \bx))$. 
+Working with Gaussian variables allows to easily write conditioning formulas between $\xi(\bx)$ and the observations $\by_n$.
+This Gaussian variable $\xi(\bx)$ conditionned on the observations $\by_n$ is sometimes called conditional posterior $\xi_n(\bx) := (\xi(\bx) | \by_n) \sim \iN(\eta_n(\bx), s_n^2(\bx))$. 
+The well-known ``Kriging equations'' (see e.g., \cite{rasmussen_2006}) offer its explicit expression:
+\begin{equation}
+    \left\{
+    \begin{array}{ll}
+        \eta_n(\bx) &:= \bk\TT(\bx) \bK^{-1} \by_n\\
+        s_n^2(\bx) &:= k(\bx, \bx) - \bk\TT(\bx) \bK^{-1} \bk(\bx)
+    \end{array}
+\right.
+\label{eq:kriging}
+\end{equation}
+where $\bk(\bx)$ is the column vector of the covariance kernel evaluations $[k(\bx, \bx^{(1)}), \dots,\allowbreak k(\bx, \bx^{(n)})]$ and $\bK$ is the $(n \times n)$ 
+variance-covariance matrix such that the $(i, j)$-element is $\left\{\bK \right\}_{i, j}=k(\bx^{(i)}, \bx^{(j)})$.
+
+In practice the surrogate model is defined by the \textit{predictor} function $\eta_n(\cdot)$. 
+This regression model provides an important complementary information with the \textit{kriging variance} $s_n^2(\bx)$, reaching zero at the learing points.
+Let us remark that the kriging variance fully depends on the covariance model (defined by its parametric structure and hyperparameters). 
+In practice, the hyperparameters are unknown, therefore, their estimation is a key step in the construction of a kriging model. 
+This estimation can be done using different approaches, most commonly using the maximum likelihood method or a cross-validation.
+
+Associated with kriging models, another validation criterion is relevant to evaluate the kriging variance $s_n^2(\bx)$. 
+The predictive variance adequation (PVA) has been introduced by \citet{bachoc_2013} to confirm that the kriging variance is reliable.
+For a validation performed by holdout, using an independant $m$-sized test set, the PVA is defined as: 
+\begin{equation}
+    \mathrm{PVA} = \left| \log\left( \frac1m \sum_{i=1}^{n} \frac{\left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)}{s_n^2(\bx^{(i)})}\right) \right|.
+\end{equation}
+The smaller this quantity get, the better the quality of the kriging variance. 
+
+Gaussian process regression is an elegant solution, offering a lot of flexibility and an associated error model (i.e., the kriging variance). 
+However, numerical issues appear during the estimation of the hyperparameters, especially as the learning size increases.  
+
+
+\elias{Surrogates can be built depending on their purpose. General one, for a specific optimization problem (constraints) or contour finding for reliability analysis.}
 %============================================================%
-\subsection{Contour finding for rare-event estimation}
+\subsection{Goal-oriented active surrogate model}
 %============================================================%
 
+\elias{in optimization}
+
+\elias{in reliability to build a surrogate of the limit-state function, this step is also called contour finding.}
 
 
+%============================================================%
+\subsection{Summary and discussion}
+%============================================================%
 
+\elias{The overfitting problem}
+
+\elias{What if the data is noisy or the numerical model stochastic?}
+
+\elias{Note that the calibration error is often larger than the metamodeling error.}
 
 
 %============================================================%
@@ -1086,3 +1432,5 @@ Note that the calibration error is often larger than the metamodeling error.
 \section{Conclusion}
 %============================================================%
 %============================================================%
+
+
