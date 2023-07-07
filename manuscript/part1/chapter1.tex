@@ -584,9 +584,9 @@ import openturns as ot
 marginals=[ot.Exponential(1.0), ot.Uniform(-1.0, 1.0)]
 distribution=ot.ComposedDistribution(marginals)
 # Build a 2D Gaussian quadrature
-marginal_size_list=[4, 4] # Number of nodes per marginal
-g_quadrature=ot.GaussProductExperiment(distribution, marginal_size_list)
-g_nodes, weights=g_quadrature.generateWithWeights()
+n_marginal=[4, 4] # Number of nodes per marginal
+g_quad=ot.GaussProductExperiment(distribution, n_marginal)
+g_nodes, weights=g_quad.generateWithWeights()
 # Build a Monte Carlo design
 n=16 
 mc_nodes=distribution.getSample(n)
@@ -1260,6 +1260,11 @@ SS_pf_confidence=SS_results.getConfidenceLength(0.95)
 \section{Surrogate modeling}
 %============================================================%
 %============================================================%
+
+%============================================================%
+\subsection{Common framework}
+%============================================================%
+
 The aim of \textit{surrogate modeling} (or metamodeling) is to build a cheap-to-call statistical model, denoted $\wg_n(\cdot)$, replacing a costly numerical model $g(\cdot)$ over the input domain $\iD_{\bX}$. 
 To do so, a statistical learning is performed on a finite number of observations of the costly function $g$. 
 When manipulating computationally expensive simulations, its size can be limited (i.e., small-data context). 
@@ -1271,7 +1276,7 @@ This $n$-sized set is usually called \textit{learning set} denoted:
 
 A very large catalogue of regression methods exist, here is a list of the most encountered ones in the field of UQ:
 generalized linear regression, polynomial chaos expansion (PCE) \citep{soize_2004, blatman_2011}, support vector machine (SVM) \citep{vapnik_1995}, 
-Gaussian processes (GP) \citep{rasmussen_2006}, and artifitial neural network (ANN) \elias{add ref}.
+Gaussian processes (GP) \citep{rasmussen_2006}, low-rank tensors, and artifitial neural network (ANN) \citep{tibshirani_2009}.
 The following section will provide a short focus on Gaussian process regression.
 
 Validating the accuracy and precision of a surrogate model is an important step to guaranty its fidelity with regard to the numerical model. 
@@ -1394,6 +1399,17 @@ Let us remark that the kriging variance fully depends on the covariance model (d
 In practice, the hyperparameters are unknown, therefore, their estimation is a key step in the construction of a kriging model. 
 This estimation can be done using different approaches, most commonly using the maximum likelihood method or a cross-validation.
 
+\elias{Comment the following figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../numerical_experiments/chapter1/figures/kriging_1D.png}
+    \caption{Illustration of a ordinary kriging model fitted on a limited set of observations ($n=7$)}
+    \label{fig:kriging_1D}
+\end{figure}
+
+
+
 Associated with kriging models, another validation criterion is relevant to evaluate the kriging variance $s_n^2(\bx)$. 
 The predictive variance adequation (PVA) has been introduced by \citet{bachoc_2013} to confirm that the kriging variance is reliable.
 For a validation performed by holdout, using an independant $m$-sized test set, the PVA is defined as: 
@@ -1403,17 +1419,63 @@ For a validation performed by holdout, using an independant $m$-sized test set, 
 The smaller this quantity get, the better the quality of the kriging variance. 
 
 Gaussian process regression is an elegant solution, offering a lot of flexibility and an associated error model (i.e., the kriging variance). 
-However, numerical issues appear during the estimation of the hyperparameters, especially as the learning size increases.  
+However, well know numerical issues appear during the estimation of the hyperparameters, especially as the learning size increases. 
+More specifically, the computation and memory allocation for the variance-covariance matrix a reccurent issue. 
+Multiple techniques resolve this issue by applying compression schemes on this matrix, e.g., based on sparse approximations (e.g., Hierarchical Matrices)
+
+This section introduced a general purpose surrogate model, uniformily approximating a function on a given domain. 
+Most surrogates are designed for a well-defined purpose (e.g., optimization with or without constraint, contour finding for reliability analysis, etc.)
+In these cases, a more efficient approach might be to circumscribe the learning to a given sub-domain, rather than uniformily on the domain. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[Ordinary kriging]
+    The following Python code proposes a minimalistic \ot implementation of an ordinary kriging model fitting. 
+    \lstset{style=mystyle, language=python}
+\begin{lstlisting}
+g=ot.SymbolicFunction(['x'], ['x * sin(x) + sin(6 * x)'])
+x_train=ot.Uniform(0., 12.).getSample(7) # n=7
+y_train=g(x_train)
+basis=ot.ConstantBasisFactory(1).build() # d=1
+cov_model=ot.MaternModel([1.], 1.5)
+algo=ot.KrigingAlgorithm(x_train,y_train,cov_model,basis)
+algo.run()
+kriging_results=algo.getResult()
+kriging_predictor=kriging_results.getMetaModel()
+\end{lstlisting}
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\elias{Surrogates can be built depending on their purpose. General one, for a specific optimization problem (constraints) or contour finding for reliability analysis.}
+
 %============================================================%
 \subsection{Goal-oriented active surrogate model}
 %============================================================%
 
-\elias{in optimization}
+A goal-oriented surrogate model fitted for solving a specific problem, related to an area of interest. 
+\elias{Only in the computer experiment framework}
+For example, to fit a surrogate model for contour finding in reliability analysis, one should concentrate the learning set around the limit-state function. 
+Similarly, to build a surrogate for a global optimization problem, one should concentrate the learning set around the optimum(s).
+However, this type of strategies require enough information to define an area of interest. 
+\textit{Active learning} is a general concept, aiming at iteratively increasing the learning set w.r.t. a \textit{learning criterion} and updating the surrogate. 
 
-\elias{in reliability to build a surrogate of the limit-state function, this step is also called contour finding.}
+\subsubsection{For optimization}
+
+\elias{introduce EGO? Jones (1998)} 
+
+\citet{fau_2021} reviews adaptive sampling methods for Kriging.
+\elias{Cite Petit, Spagnol?}
+
+
+\subsubsection{For reliability analysis}
+
+Rare event estimation often requires larges amounts of calls to the limit-state function (which is possibly a coslty numerical model). 
+Emulating this function by a surrogate model can drastically limit the number of calls to LSF. 
+This surrogate approximates the contour (i.e., border) of the failure domain. 
+However, in most cases, the failure domain represents a very restricted area of the input domain. 
+To build a learning set concentrated around this border, activae methods exist. 
+
+\elias{introduce AK methods}
+
 
 
 %============================================================%
