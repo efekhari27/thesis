@@ -46,7 +46,7 @@ In this chapter, minimal \ot implementations of the methodological concepts will
 %============================================================%
 The uncertainty quantification studies in our framework are performed around an input-output numerical simulation model. 
 This numerical model, or code, is hereafter considered as \textit{black-box} since the knowledge of the underlying physics doesn't inform the UQ methods. 
-Alternatively, one could consider \textit{intrusive} UQ methods, introducing uncertainties within the resolution of computer simulation (see e.g., \elias{add ref}).
+Alternatively, one could consider \textit{intrusive} UQ methods, introducing uncertainties within the resolution of computer simulation (see e.g., \citet{lemaitre_2010}).
 In practice, the numerical model might be a sequence of codes executed in series to obtain a variable of interest.
 
 Moreover, the simulation model is in most cases deterministic, otherwise, it is qualified as intrinsically stochastic (i.e., two runs of the same model taking the same inputs return different outputs).
@@ -55,7 +55,7 @@ In the following, it will be assumed that the numerical models passed a \textit{
 
 Formally, part of the problem specification is the definition of the set of $d$ input variables $\bx = \left(x_1, \dots, x_d\right)\TT$ considered uncertain (e.g., wind speed, wave period, etc.). 
 In this thesis, the models considered will only present scalar outputs. 
-UQ methods dedicated to other types of outputs exist (see e.g., for time series outputs \citet{lataniotis_2019}, \elias{functional Alvaro?}). 
+UQ methods dedicated to other types of outputs exist (see e.g., for time series outputs \citet{lataniotis_2019}, for functional outputs \citet{auder_2012,rollon_2021}). 
 Let us then define the following numerical model:
 \begin{equation}
 \iM : \bigg|
@@ -248,6 +248,7 @@ Second, a function describing the dependence structure between all variables: a 
         f_{\bX}(x_1, \dots, x_d) = c\left(F_{X_1}(x_1), \dots, F_{X_d}(x_d)\right) \times f_{X_1}(x_1) \times \dots \times f_{X_d}(x_d),
     \end{equation}
     where $c$ is the density of the copula, sometimes also called copula by misuse of language. 
+    The reader might refer to \elias{cite proof} for further mathematical proof. 
     \label{thm:sklar}
 \end{theorem}
 
@@ -284,19 +285,6 @@ The adequation between a fitted probabilistic model and a dataset should be vali
 \begin{otexample}[Bivariate distribution]
     The following Python code proposes a minimalistic \ot implementation of a probabilistic uncertainty modeling. 
     \lstset{style=mystyle, language=python}
-\begin{lstlisting}
-import openturns as ot
-# Build multivariate distribution from marginals and copula
-copula=ot.GumbelCopula(2.0)
-marginals=[ot.Uniform(1.0, 2.0), ot.Normal(2.0, 3.0)]
-distribution=ot.ComposedDistribution(marginals, copula)
-# Compute first moments
-mean_vector=distribution.getMean()
-covariance_matrix=distribution.getCovariance()
-# Compute CDF (respectively PDF)
-x_cdf=distribution.computeCDF([1.5, 2.5])# x=[1.5, 2.5]
-a_quantile=distribution.computeQuantile([0.9])# alpha=0.9
-\end{lstlisting}
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -486,8 +474,8 @@ The Koksma-Hlawka theorem \citep*{morokoff_1995,leobacher_2014} is a fundamental
         \left| \int_{[0, 1]^d} g(\bx) \ddx - \frac1n \sum_{i=1}^n g\left(\bx^{(i)}\right)\right| \leq  V(g) D^*(\bX_n).
         \label{eq:KH_inequality}
     \end{equation}
-
     Where $D^*(\bX_n)$ is the star discrepancy of the design $\bX_n$, while $V(g)$ quantifies the complexity of the integrand, which is related to its total variation. 
+    The reader might refer to \elias{cite proof} for further mathematical proof.
 \end{theorem}
 
 Where the function variation $V(g)$ in the \eq{eq:KH_inequality} can formally be defined as the Hardy-Klause variation: 
@@ -565,7 +553,8 @@ Each is split into the first 128 points (in red) and the following 128 points (i
 A quantity estimated by crude MC comes with some associated confidence. 
 This complementary information is essential to deliver an end-to-end uncertainty quantification and misses in QMC methods.  
 \textit{Randomized quasi-Monte Carlo} (RQMC) is a method adding some randomness in QMC in order to compute confidence intervals while benefiting from a low variance.
-A specific review of the randomized (also called ``scrambled'') QMC is proposed by \citet{lecuyer_2018}. Various authors recommend the use of RQMC by default instead of QMC as a good practice. 
+A specific review of the randomized (also called ``scrambled'') QMC is proposed by \citet{lecuyer_2018}. 
+Various authors recommend the use of RQMC by default instead of QMC as a good practice. 
 Recent works aim at exploring the use of these methods to estimate different quantities of interest (such as an expected value \citep{gobet_2022} or a quantile \citep{tuffin_2019})
 
 Quasi-Monte Carlo methods easily generate powerful integration schemes. 
@@ -578,23 +567,6 @@ Even if the finality might look different from the previous numerical integratio
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample}[Numerical integration]
     The following Python code proposes a minimalistic \ot implementation to build a quadrature rule. 
-\lstset{style=mystyle, language=python}
-\begin{lstlisting}
-import openturns as ot
-marginals=[ot.Exponential(1.0), ot.Uniform(-1.0, 1.0)]
-distribution=ot.ComposedDistribution(marginals)
-# Build a 2D Gaussian quadrature
-n_marginal=[4, 4] # Number of nodes per marginal
-g_quad=ot.GaussProductExperiment(distribution, n_marginal)
-g_nodes, weights=g_quad.generateWithWeights()
-# Build a Monte Carlo design
-n=16 
-mc_nodes=distribution.getSample(n)
-# Build a quasi-Monte Carlo design
-sequence=ot.HaltonSequence(2) # d=2
-qmc_experiment=ot.LowDiscrepancyExperiment(sequence, distribution, n)
-qmc_nodes=qmc_experiment.generate()
-\end{lstlisting}
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -653,6 +625,8 @@ The following $\phi_p$ criterion converges towards the minimum distance as $p\ge
     \phi_p(\bX_n) = \sum_{i=1}^{j} \sum_{j=1}^{n} \left( |x^{(i)} - x^{(j)}|^{-p} \right)^{\frac{1}{p}}.
 \end{equation}
 More space-filling criteria are reviewed in \citet{abtini_2018}. 
+\elias{Add reviews from the appendix A in Bertrand's book}
+Further relations between some mathematical objects related to space-filling are developed in \citet{pronzato_2012}.
 These space-filling metrics are widely used to optimize a different sampling technique.
 
 
@@ -720,23 +694,6 @@ Let us mention the maximum projection designs from \citet{joseph_gul_2015} and t
 \begin{otexample}[Design of experiments]
     The following Python code proposes a minimalistic \ot implementation to build a LHS and 
     a LHS optimized w.r.t. to a space-filling metric (here the L2-centered discrepancy) using the simulated annealing algorithm. 
-    \lstset{style=mystyle, language=python}
-\begin{lstlisting}
-import openturns as ot
-marginals=[ot.Uniform(0.0, 1.0), ot.Uniform(0.0, 1.0)]
-distribution=ot.ComposedDistribution(marginals)
-# Build a LHS
-n=10
-LHS_exp=ot.LHSExperiment(distribution, n)
-LHS_design=LHS_exp.generate()
-# Build an optimized LHS using L2-centered discrepancy
-LHS_exp=ot.LHSExperiment(distribution, n)
-SF_metric=ot.SpaceFillingC2()
-SA_profile=ot.GeometricProfile(10., 0.95, 20000)
-LHS_opt=ot.SimulatedAnnealingLHS(LHS_exp, SF_metric, SA_profile)
-LHS_opt.generate()
-LHS_design=LHS_opt.getResult().getOptimalDesign()
-\end{lstlisting}
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1177,47 +1134,6 @@ SS efficiency depends on the proper choice and tuning of the MCMC algorithm \cit
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample}[Rare event estimation]
     The following Python code proposes a minimalistic \ot implementation of rare event estimation algorithms. 
-    \lstset{style=mystyle, language=python}
-\begin{lstlisting}
-import openturns as ot
-marginals=[ot.Normal(0.0, 1.0), ot.Exponential(1.0)]
-distribution=ot.ComposedDistribution(marginals)
-# Build a limit-state function and failure event
-g=ot.SymbolicFunction(["x1", "x2"], ["(x1 - x2) ^ 2"])
-X=ot.RandomVector(distribution)
-Y=ot.CompositeRandomVector(g, X)
-th=0.0
-failure_event=ot.ThresholdEvent(Y, ot.LessOrEqual(), th)
-# Estimate pf using FORM
-starting_p=distribution.getMean()
-FORM_algo=ot.FORM(ot.Cobyla(), failure_event, starting_p)
-FORM_algo.run()
-FORM_results=FORM_algo.getResult()
-design_point=FORM_results.getStandardSpaceDesignPoint()
-FORM_pf=FORM_results.getEventProbability()
-# Estimate pf using Monte Carlo 
-MC_exp=ot.MonteCarloExperiment()
-MC_algo=ot.ProbabilitySimulationAlgorithm(failure_event, MC_exp)
-MC_algo.run()
-MC_results=MC_algo.getResult()
-MC_pf=MC_results.getProbabilityEstimate()
-MC_pf_confidence=MC_results.getConfidenceLength(0.95)
-# Estimate pf using importance sampling
-aux_distribution=ot.Normal(design_point, [1.0, 1.0])
-standard_event=ot.StandardEvent(failure_event)
-IS_exp=ot.ImportanceSamplingExperiment(aux_distribution)
-IS_algo=ot.ProbabilitySimulationAlgorithm(standard_event, IS_exp)
-IS_algo.run()
-IS_results=IS_algo.getResult()
-IS_pf=IS_results.getProbabilityEstimate()
-IS_pf_confidence=IS_results.getConfidenceLength(0.95)
-# Estimate pf using subset sampling
-SS_algo=ot.SubsetSampling(failure_event)
-SS_algo.run()
-SS_results=SS_algo.getResult()
-SS_pf=SS_results.getProbabilityEstimate()
-SS_pf_confidence=SS_results.getConfidenceLength(0.95)
-\end{lstlisting}
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1237,11 +1153,21 @@ SS_pf_confidence=SS_results.getConfidenceLength(0.95)
 \subsection{Global sensitivity analysis}
 %============================================================%
 
+
+\elias{Screening}
 \begin{itemize}
     \item Morris method
     \item Derivative-based global sensitivity measures
-    \item Sobol indices (based on variance decomposition)
+    \item HSIC
 \end{itemize}
+
+
+\elias{Importance measures}
+\begin{itemize}
+    \item Sobol'
+    \item Shapley
+\end{itemize}
+
 
 %============================================================%
 \subsection{Reliability-oriented sensitivity analysis}
@@ -1430,18 +1356,6 @@ In these cases, a more efficient approach might be to circumscribe the learning 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample}[Ordinary kriging]
     The following Python code proposes a minimalistic \ot implementation of an ordinary kriging model fitting. 
-    \lstset{style=mystyle, language=python}
-\begin{lstlisting}
-g=ot.SymbolicFunction(['x'], ['x * sin(x) + sin(6 * x)'])
-x_train=ot.Uniform(0., 12.).getSample(7) # n=7
-y_train=g(x_train)
-basis=ot.ConstantBasisFactory(1).build() # d=1
-cov_model=ot.MaternModel([1.], 1.5)
-algo=ot.KrigingAlgorithm(x_train,y_train,cov_model,basis)
-algo.run()
-kriging_results=algo.getResult()
-kriging_predictor=kriging_results.getMetaModel()
-\end{lstlisting}
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
