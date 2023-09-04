@@ -28,9 +28,9 @@ finally, Section \elias{add pointer} presents the main inverse methods to perfor
 
 \paragraph*{\textbf{\texttt{OpenTURNS}}\footnote{\ot installation guide and documentation are available at \url{https://openturns.github.io/www/}}.} 
 This high-performance Python library is dedicated to UQ \citep{baudin_dutfoy_2017}. 
-\ot (``Open source initiative for the Treatment of Uncertainties, Risks’N Statistics'') is developed by an industrial researchers from  EDF R\&D, Airbus Group, PHIMECA Engineering, IMACS and ONERA.
+\ot (``Open source initiative for the Treatment of Uncertainties, Risks’N Statistics'') is developed by industrial researchers from  EDF R\&D, Airbus Group, PHIMECA Engineering, IMACS and ONERA.
 It combines high-performance using C++ programming with high-accessibility through a Python API. 
-Overall, this opensource library provides tools for various steps of the UQ framework 
+Overall, this open source library provides tools for various steps of the UQ framework 
 (e.g., uncertainty quantification, uncertainty propagation, surrogate modeling, reliability, sensitivity analysis and calibration). 
 To guaranty the software quality, the development follows robust processes such as unit testing and multiplatform continuous integration. 
 An active community hosted on a dedicated forum helps new users and discusses areas of improvement.
@@ -67,7 +67,7 @@ Let us then define the following numerical model:
 
 Unlike the typical machine learning input-output dataset framework, the UQ analyst can simulate the output image of any inputs (in the input domain), using the numerical model. 
 However, numerical simulations often come with an important computational cost. 
-Therefore UQ methods should be efficient and require as few simulations as possible. 
+Therefore, UQ methods should be efficient and require as few simulations as possible. 
 In this context, metamodels (or surrogate models) are statistical approximations of the costly numerical model, that can be used to perform tractable UQ. 
 Metamodels are only built and validated on a limited number of simulations (in a \textit{supervised learning} framework).
 In practice, the model specification step is often associated with the development of a \textit{wrapper} of the code. 
@@ -175,7 +175,7 @@ Then, a few methods to fit a joint distribution over a dataset will be mentioned
 And finally, a panel of tools to evaluate the goodness of fit between a probabilistic model and a dataset will be recalled. 
 
 From a practical point of view, people tend to properly model the single effects of their input uncertainties. 
-However, modeling the dependence structure unlying in a joint distribution is often overlooked.  
+However, modeling the dependence structure underlying in a joint distribution is often overlooked.  
 To illustrate the importance of this step, \fig{fig:joint_dist_samples} represents three i.i.d samples from three bivariate distributions sharing the same single effects (e.g., here two exponential distributions) but different dependence structures.
 One can assume that the joint distribution is the composition of the single effects, also called marginals, and an application governing the dependence between them.
 \begin{figure}[ht]
@@ -271,7 +271,7 @@ Appropriate data visualization helps to choose the fitting methods susceptible t
 The following points can be checked at this early stage: \elias{formalize bullets} 
 \begin{itemize}
     \item Is the distribution unimodal? If not, mixtures methods or nonparametric models might be required;
-    \item Is the validity domain restrictive? If so, specific families of parametric distributions can be chosen or truncations can be applied;
+    \item Is the validity domain restrictive? If so, specific families of parametric distributions can be chosen or truncation can be applied;
     \item Is the dimension medium or high? In our context, a problem \elias{with dimension $d>10$} might be qualified as medium dimension problem. If the dimension is too high: tensorize the distribution as much as possible.
     \item Is the dependence structure complex? Graphically, the dataset in the ranked space gives an empirical description but some independence tests exist as well. 
 \end{itemize} 
@@ -352,7 +352,7 @@ The computed weights are positive, which ensures a numerically stable rule even 
 
 Different variants of rules exist, the most famous being the Gauss-Legendre quadrature. 
 In this case, the function $g$ to be integrated with respect to the uniform measure on $[-1, 1]$ is approximated by Legendre polynomials.
-Considering the Legendre polynomial of order $n$, denoted $l_n$, the quadrature nodes ${x^{(i)}}_{i=1}^n$ are given by the polymonial roots.
+Considering the Legendre polynomial of order $n$, denoted $l_n$, the quadrature nodes ${x^{(i)}}_{i=1}^n$ are given by the polynomial roots.
 The respective weights are given by the following formula: 
 \begin{equation}
     w_{i}={\frac {2}{\left(1-\left(x^{(i)}\right)^{2}\right)\left(l'_{n}(x^{(i)})\right)^{2}}}.
@@ -396,7 +396,7 @@ Yet, Fejér-Clenshaw-Curtis is sequential and offers easy implementations, benef
 Uncertainty quantification problems are rarely unidimensional, but one can build a multivariate quadrature rule by defining the tensor product (also called full grids) of univariate rules. 
 This exhaustive approach quickly shows its practical limits as the problem's dimension increases. 
 Alternatively, sparse multivariate quadratures (i.e., Smolyak sparse grid) explore the joint domain more efficiently. 
-\elias{Introduce the reccurent Smolyak formula?}
+\elias{Introduce the recurrent Smolyak formula?}
 
 
 \begin{figure}[h!]
@@ -451,9 +451,9 @@ where $q_\alpha$ is the $\alpha$-quantile of the standard normal distribution.
 Monte Carlo presents the advantage of being a universal method, with no bias and strong convergence guarantees. 
 Moreover, it is worth noting that its convergence properties do not depend on the dimension of the input domain. 
 Unlike the previous multivariate deterministic quadrature, Monte Carlo doesn't suffer from the curse of dimensionality. 
-The main limit of crude Monte Carlo is its convergence speed, making it untractable in most practical cases. 
+The main limit of crude Monte Carlo is its convergence speed, making it intractable in most practical cases. 
 More recent methods aim at keeping the interesting properties of this technique while making it more efficient.
-Among the \textit{variance reduction} family of methods, let us mention importance sampling, stratified sampling (e.g., latin hypercube sampling), control variates and multi-level Monte Carlo (see Chapters 8, 9 and 10 from \citet{owen_2013} and \citep{giles_2008}).
+Among the \textit{variance reduction} family of methods, let us mention importance sampling, stratified sampling (e.g., Latin hypercube sampling), control variates and multi-level Monte Carlo (see Chapters 8, 9 and 10 from \citet{owen_2013} and \citep{giles_2008}).
 
 
 %------------------------------------------------------------%
@@ -523,7 +523,7 @@ For example, the van der Corput and Halton sequences rely on congruential genera
 To overcome the limits of Halton sequences, digital nets such as the famous Sobol' or Faure sequences have been developed.  
 Sobol' sequences are in base two and have the advantage of being extensible in dimension. 
 Note that by construction, these sequences offer significantly lower discrepancies for specific values. 
-Typically designs with sizes equal to powers of two or power of prime numbers will be favorable. 
+Typically, designs with sizes equal to powers of two or power of prime numbers will be favorable. 
 To illustrate the different patterns and properties of different methods, \fig{fig:quasi_monte_carlo_designs} represents the three designs of 256 points. 
 Each is split into the first 128 points (in red) and the following 128 points (in black) to show to nested properties of the QMC sequences.
 
@@ -559,7 +559,7 @@ Recent works aim at exploring the use of these methods to estimate different qua
 
 Quasi-Monte Carlo methods easily generate powerful integration schemes. 
 The KH inequality associates an upper bound and a convergence rate to most integrals. 
-A randomization overlay fades the deterministic property of these designs to allow confidence interval computation.
+A randomization overlay fades the deterministic property of these designs to allow computing confidence intervals.
 In the following, sampling techniques are presented from the numerical \textit{design of experiments} point of view. 
 Even if the finality might look different from the previous numerical integration, it shares many methods and concepts. 
 
@@ -581,7 +581,7 @@ However, a difference comes from the fact that this community often works with d
 Users of designs of experiments might also need to build designs with various properties. 
 \begin{itemize}
     \item Some might be interested in the sequentiality of a sampling method, to eventually add new points as they get a computational budget extension.
-    \item Some might request a sampling method conserving its properties in any sub-domains. 
+    \item Some might request a sampling method conserving its properties in any subdomains. 
     This second property can be useful to reduce the problem's dimension by dropping a few unimportant marginals.
 \end{itemize}
 
@@ -590,7 +590,7 @@ The previously introduced different types of discrepancies are space-filling met
 Other types of space-filling metrics rely on purely geometrical considerations.  
 
 This section will first define some space-filling metrics.
-Secondly, the \textit{latin hypercube sampling} (LHS) will be introduced as a variance-reduction that became popular in this community. 
+Secondly, the \textit{Latin hypercube sampling} (LHS) will be introduced as a variance-reduction that became popular in this community. 
 Finally, a general discussion on uncertainty propagation with respect to non-uniform measures will be presented.
 
 %------------------------------------------------------------%
@@ -729,7 +729,7 @@ Note that QMC sampling is not well suited with acceptance-rejection since its st
 
 \begin{itemize}
     \item \elias{Markov Chain Monte Carlo: when it is hard to sample from the distribution.}
-    \item \elias{Add the summary table with the properties of each methods?}
+    \item \elias{Add the summary table with the properties of each method?}
 \end{itemize}
 
 In this section, many methods were presented to propagate input uncertainties against a deterministic function.
@@ -737,7 +737,7 @@ The propagation with the three following goals and contexts were introduced:
 \begin{itemize}
     \item building a quadrature rule for numerical integration against a uniform distribution,
     \item creating a space-filling design of experiments to uniformly explore the space, often in a small data context (e.g., to build the learning set of a surrogate model),
-    \item generating a design for central-tendency estimation, which is simply a numerical integration against a non uniform density.
+    \item generating a design for central-tendency estimation, which is simply a numerical integration against a nonuniform density.
 \end{itemize} 
 %Note that some of these methods can also find a use in the context of data compression or quantization.
 These three objectives have been explored in different communities but actually mostly share similar methods. 
@@ -759,9 +759,9 @@ Most often, a risk measure associated with a failure mode of the studied system 
 
 Since most systems studied in risk analysis should be highly reliable, the occurrence of such event is qualified as rare. 
 Only an unlikely small amount of extreme input conditions or an unlikely unfavorable combinations of inputs lead to the failure of the system. 
-Hence the usage of the equivalent terms \textit{reliability analysis} and \textit{rare event estimation}. 
+Hence, the usage of the equivalent terms \textit{reliability analysis} and \textit{rare event estimation}. 
 The notion of risk associated with an event is often decomposed as a product of likelihood and impact. 
-The failure of a system might be very rare but its consequences can be severe (e.g., civil engineering structures, nuclear infrastructure, telecommunication networks, electrical grid, railway signalling, etc.).
+The failure of a system might be very rare, but its consequences can be severe (e.g., civil engineering structures, nuclear infrastructure, telecommunication networks, electrical grid, railway signalling, etc.).
 
 Different risk measures (i.e., quantities of interest) can be studied depending on the type of risk analysis. 
 Quantiles are a first conservative measure, widely used for risk analysis. 
@@ -775,7 +775,7 @@ Then, a second risk measure is probability of exceeding this safety threshold, a
 \begin{equation}
     \pf = \P\left(Y \geq \yth\right), \quad \yth\in\R.
 \end{equation}
-To illustrate this quantity, \fig{fig:1D_reliability} shows the one-dimensional propagation of a normal distribution (represented by the PDF on the left), throught a function $g(\cdot)$.
+To illustrate this quantity, \fig{fig:1D_reliability} shows the one-dimensional propagation of a normal distribution (represented by the PDF on the left), through a function $g(\cdot)$.
 The probability of exceeding a given threshold $\yth$ is represented by the area in red under the output PDF on top.
 An interesting reflection on the use and the interpretation of risk measures
 \footnote{Including measures from the finance domain such as the \textit{conditional value-at-risk} (also called superquantile).} 
@@ -810,15 +810,14 @@ the \textit{failure domain} $\iF_{\bx}$, and the \textit{safe domain} $\mathcal{
     %\iD_\bx = \iF_{\bx} \cup \mathcal{S}_\bx 
 \end{equation}
 The border between these two domains is a hypersurface called \textit{limit-state surface} (LLS), defined by $\iF_{\bx}^0 := \{\bx \in \iD_\bx | g(\bx) = 0\}$.
-Similarly to any UQ study around a numerical model, this problem ca require to be resolved using a limited numbers of calls to a black-box simulator.
+Similarly to any UQ study around a numerical model, this problem ca require to be resolved using a limited number of calls to a black-box simulator.
 The difficulties of a reliability problem might come from the properties of the LSF: nonlinear, costly to evaluate or with a multimodal failure domain. 
 Additionally, note that the reliability problem can be the composition of multiple reliability problems, often modeled as system of problems in series and parallel.
 
 A rare event estimation results from a particular uncertainty propagation through the LSF. 
 Considering the resulting output variable of interest $g(\bX)$, its probability of being negative (i.e., in the failure domain) is a common risk measure \elias{add pointer}.
 The commonly named \textit{failure probability}, denoted $\pf$, will be our quantity of interest in reliability analysis.
-This quantity is formally written\footnote{Note that this probabilistic integration is usually written using the PDF $f_\bX(\cdot)$ 
-but it could identically be expressed in terms of probability measure by taking $f_\bX(\bx) \, \dd\bx = \dd \mu(\bx), \, \forall \bx \in \iD_\bx$.}: 
+This quantity is formally written\footnote{Note that this probabilistic integration is usually written using the PDF $f_\bX(\cdot)$, but it could identically be expressed in terms of probability measure by taking $f_\bX(\bx) \, \dd\bx = \dd \mu(\bx), \, \forall \bx \in \iD_\bx$.}: 
 \begin{equation}
     \begin{split}
         \pf := \P(Y \geq \yth) &= \P(g(\bX) \leq 0)\\
@@ -851,7 +850,7 @@ Let us first consider the transformed limit-state function $\check{g}$ defined a
 \end{equation}
 
 Since this transformation is a diffeomorphism\footnote{Considering two manifolds $A$ and $B$, a transformation $T: A \rightarrow B$ is called a diffeomorphism if it is a differentiable bijection with a differentiable inverse $T^{-1} : B \rightarrow A$.}, 
-one can apply the change of variable $\bx = T(\bu)$ to express the realibility problem from \elias{add pointer} in the standard space: 
+one can apply the change of variable $\bx = T(\bu)$ to express the reliability problem from \elias{add pointer} in the standard space: 
 \begin{equation}
     \pf = \P(\cg(\bU) \leq 0) 
         = \int_{\iF_\bu} \varphi_d(\bu) \, \dd\bu 
@@ -894,7 +893,7 @@ They extrapolate a local approximation of the LSF built in the vicinity of a \te
 \elias{add some refs}
 
 
-Working in the standard space, the methods first look for this MPFP, denoted $P^*$, with coordonates $\bu^*$, 
+Working in the standard space, the methods first look for this MPFP, denoted $P^*$, with coordinates $\bu^*$, 
 To find it, one can solve the following quadratic optimization problem: 
 \begin{equation}
     \bu^* = \argmax_{\bu \in \R^d} \left(\1_{\iF_\bu}(\bu) \varphi_d(\bu)\right).
@@ -1008,7 +1007,7 @@ Because of the small scale of the quantities manipulated in rare event estimatio
 On paper, Monte Carlo estimator presents multiple advantages for rare event estimation.
 First, this method can be applied directly in the physical space, without transformation (which is practical for complex input distributions).
 Second, it does not suffer from the curse of dimensionality. 
-Thrid, it is qualified as embarrassingly parallel method since each numerical simulations are independent.
+Third, it is qualified as embarrassingly parallel method since each of the numerical simulations are independent.
 Finally, it offers strong convergence guaranties and complementary information on the estimation confidence.
 \elias{These properties make it the reference method.}
 
@@ -1027,7 +1026,7 @@ This excessive simulation budget comes from the fact that the vast majority of t
 
 Importance sampling (IS) is a variance reduction method, aiming at improving the performances of crude Monte Carlo sampling. 
 In the context of rare event estimation, the main idea is to deliberately introduce a bias in the sampled density, shifting it towards the failure domain. 
-If this shift actually goes towards the failure domain, it allows to draw more points in it, leading to a better estimate of our quantity.
+If this shift actually goes towards the failure domain, it allows drawing more points in it, leading to a better estimate of our quantity.
 
 The challenge in importance sampling is to pick a relevant \textit{instrumental} distribution $h_\bX$ (also called \textit{auxiliary} distribution) to replace the distribution $f_\bX$. 
 Then, by introducing the fully known likelihood ratio $w_\bX(\bx) = \frac{f_\bX(\bx)}{h_\bX(\bx)}$, one can rewrite $f_\bX(\bx) = w_\bX(\bx) h_\bX(\bx)$ and inject it in the failure probability expression: 
@@ -1061,7 +1060,7 @@ Three main importance sampling techniques are used in this work.
 
 \elias{Finally, NAIS}
  
-Appendix \ref{apx:C} develops an algorithmic presentation of the two last techiniques: NAIS and AIS-CE.
+Appendix \ref{apx:C} develops an algorithmic presentation of the two last techniques: NAIS and AIS-CE.
 
 \elias{Discussion on commun advantages and drawback of the IS methods.}
 
@@ -1078,7 +1077,7 @@ The failure probability is then expressed as a product of conditional probabilit
 From a practical point of view, the analyst tunes the algorithm by setting the intermediary probabilities $\P(\iF_{[k]} | \iF_{[k-1]}) = p_0, \forall k \in \{1, \dots, k_\# \}$. 
 Then, the corresponding quantiles $q_{[1]}^{p_0} > \dots > q_{[k_\#]}^{p_0}$ are estimated for each conditional subset samples $\bX_{[k], N}$ of size $N$. 
 Note that the initial quantile is estimated by crude Monte Carlo sampling on the input PDF $f_{\bX}$. 
-Following conditional subset samples are generated by \textit{Monte Carlo Markov Chain} (MCMC) sampling of $f_{\bX}(\bx |\iF_{[k-1]})$, using as seeds initialisation points the $n= N p_0$ samples given by $\mathbf{A}_{[k], n}=\{\bX_{[k-1]}^{(j)} \subset \bX_{[k-1], N}| g(\bX_{[k-1]}^{(j)}) > \widehat{q}_{[k-1]}^\alpha \}_{j=1}^n$. 
+Following conditional subset samples are generated by \textit{Monte Carlo Markov Chain} (MCMC) sampling of $f_{\bX}(\bx |\iF_{[k-1]})$, using as seeds initialization points the $n= N p_0$ samples given by $\mathbf{A}_{[k], n}=\{\bX_{[k-1]}^{(j)} \subset \bX_{[k-1], N}| g(\bX_{[k-1]}^{(j)}) > \widehat{q}_{[k-1]}^\alpha \}_{j=1}^n$. 
 This process is repeated until an intermediary quantile exceeds the threshold: $\widehat{q}_{[k_\#]}^{p_0} < \yth$. 
 Finally, the failure probability is estimated by:
 \begin{equation}
@@ -1087,7 +1086,7 @@ Finally, the failure probability is estimated by:
 
 In practice, the subset sample size should be large enough to properly estimate intermediary quantiles, which leads \cite{AuBeck2001} to recommend setting $p_0=0.1$. 
 SS efficiency depends on the proper choice and tuning of the MCMC algorithm \citep{Papaioannou_PEM_2015}.
-\elias{introduce the upper bound of the coefficient of variation and its limits.}
+\elias{Introduce the upper bound of the coefficient of variation and its limits.}
 \elias{MCMC implies multiple tuning and looses the independent property of the generated samples.}
 
 
@@ -1128,7 +1127,7 @@ SS efficiency depends on the proper choice and tuning of the MCMC algorithm \cit
 
 \elias{Discussion: Which strategy to solve these problems?}
 \elias{The design point does not have the same meaning in high dimension}
-\elias{Nonlinearities of the LSF are the actual challenge in realibility analysis}
+\elias{Nonlinearities of the LSF are the actual challenge in reliability analysis}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1202,16 +1201,16 @@ This $n$-sized set is usually called \textit{learning set} denoted:
 
 A very large catalogue of regression methods exist, here is a list of the most encountered ones in the field of UQ:
 generalized linear regression, polynomial chaos expansion (PCE) \citep{soize_2004, blatman_2011}, support vector machine (SVM) \citep{vapnik_1995}, 
-Gaussian processes (GP) \citep{rasmussen_2006}, low-rank tensors, and artifitial neural network (ANN) \citep{tibshirani_2009}.
-The following section will provide a short focus on Gaussian process regression.
+Gaussian processes (GP) \citep{rasmussen_2006}, low-rank tensor approximations \elias{add ref}, and artificial neural network (ANN) \citep{tibshirani_2009}.
+The following section will provide a short focus on Gaussian process regression. \elias{Add BST's table including names/shape/parameters/reference?}
 
 Validating the accuracy and precision of a surrogate model is an important step to guaranty its fidelity with regard to the numerical model. 
-When a $m$-sized input-output set is dedicated to validating the surrogate model, independantly from the learning set, 
+When a $m$-sized input-output set is dedicated to validating the surrogate model, independently of the learning set, 
 it is called \textit{test set} and denoted $\left\{\bX_m, \by_m\right\} = \left\{\bx^{(i)}, g\left(\bx^{(i)}\right)\right\}_{i=1}^m$. 
 Note that the analyst may work in two different frameworks, affecting the regression and validation method's choice: 
 \begin{itemize}
     \item Given-data context: only using a fixed input-output dataset to build and validate the surrogate model. 
-    \item Computer experiment context: allowing to generate simualted data points (often at an important cost).
+    \item Computer experiment context: allowing to generate simulated data points (often at an important cost).
 \end{itemize}
 
 Validating surrogate models in small-data context appears to be an important challenge. 
@@ -1235,10 +1234,10 @@ This quantity can be estimated on a test set $\left\{\bX_m, \by_m\right\}$:
 \begin{equation}
     \what{Q}^2(\wg_n) = 1 - \frac{ \sum_{i=1}^m  \left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)^2}{\sum_{i=1}^m \left(\overline{\by}_m - y(\bx^{(i)})\right)^2}\,.
 \end{equation}
-Note about the interpertation of the two criteria, the higher the value, the better the quality of the fit. 
+Note about the interpretation of the two criteria, the higher the value, the better the quality of the fit. 
 
-Validating a surrogate model with an independant test-set is sometimes called \textit{Holdout} validation.
-In a small-data context, dedicating an independant test set to validation might be impossible.
+Validating a surrogate model with an independent test-set is sometimes called \textit{Holdout} validation.
+In a small-data context, dedicating an independent test set to validation might be impossible.
 Then, \textit{cross-validation} is a generic estimation strategy allowing to use only one sample for learning and testing. 
 The most common cross-validation method is the \textit{$k$-fold} validation, illustrated in \fig{fig:kfold}. 
 The idea is first to split the $n$-sized dataset in several equal parts, called folds. 
@@ -1277,16 +1276,18 @@ Note that multiple variations of these methods exist, adding for example a permu
 \subsection{General purposes surrogate model}
 %============================================================%
 
-In this section, a particular focus is put of Gaussian process (GP) regression (also named kringing after the goestatician D.G. Krige). 
+In this section, a particular focus is put of Gaussian process (GP) regression (also named kriging after the goestatician D.G. Krige). 
 Gaussian processes are a widely used regression method in UQ for their performance, flexibility and their associated confidence model. 
-In a small-data context, the way of placing the few points forming the surrogate's learing set is critical. 
-Intuitively, to build a versatile surrogate model, it should get information covering the input space as uniformily as possible. 
+In a small-data context, the way of placing the few points forming the surrogate's learning set is critical. 
+Intuitively, to build a versatile surrogate model, it should get information covering the input space as uniformly as possible. 
 Which is why space-filling designs of experiments are commonly used to build learning sets.     
 In practice, QMC and optimized LHS design introduced in \elias{add pointer} are widely used.  
 
+%------------------------------------------------------------%
 \subsubsection{Gaussian process regression}
+%------------------------------------------------------------%
 
-Considering a learning set $\bX_n$, Gaussian process regression aims at approximating the function $g(\cdot)$ by a scalar Gaussian process, conditionned on a set of obervations $\by_n = \left\{g\left(\bx^{(i)}\right)\right\}$. 
+Considering a learning set $\bX_n$, Gaussian process regression aims at approximating the function $g(\cdot)$ by a scalar Gaussian process, conditioned on a set of observations $\by_n = \left\{g\left(\bx^{(i)}\right)\right\}$. 
 Let us first define a Gaussian process prior structure $\xi$ on the function approximated $g(\cdot)$ with a mean function $m(\cdot)$ and covariance function $k(\cdot, \cdot)$:  
 \begin{equation}
     \xi \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot)),
@@ -1299,13 +1300,13 @@ with a:
 \end{itemize}
 The trend model of a GP defines its general tendency, while the covariance model influences its regularity.
 The method takes different names depending on the knowledge of the trend model. 
-It is called ``simple kriging'' when the trend is fully known, ``ordinary kriging'', when the trend is unknown but supposed constant and ``unversal kriging'' otherwise. 
+It is called ``simple kriging'' when the trend is fully known, ``ordinary kriging'', when the trend is unknown but supposed constant and ``universal kriging'' otherwise. 
 Note that \cite{schobi_2015} introduced a hybrid method named PC-Kriging setting a PCE as the trend of a kriging model.   
 
 To ease the presentation, let us first consider the hyperparameters $\sigma, \btheta$ fully known and a zero trend $\bbeta = \textbf{0}$.
 At a given point $\bx \in \iD_bX$ the realization of the GP is a Gaussian random variable $\xi(\bx) \sim \iN(m(\bx), k(\bx, \bx))$. 
 Working with Gaussian variables allows to easily write conditioning formulas between $\xi(\bx)$ and the observations $\by_n$.
-This Gaussian variable $\xi(\bx)$ conditionned on the observations $\by_n$ is sometimes called conditional posterior $\xi_n(\bx) := (\xi(\bx) | \by_n) \sim \iN(\eta_n(\bx), s_n^2(\bx))$. 
+This Gaussian variable $\xi(\bx)$ conditioned on the observations $\by_n$ is sometimes called conditional posterior $\xi_n(\bx) := (\xi(\bx) | \by_n) \sim \iN(\eta_n(\bx), s_n^2(\bx))$. 
 The well-known ``Kriging equations'' (see e.g., \cite{rasmussen_2006}) offer its explicit expression:
 \begin{equation}
     \left\{
@@ -1320,7 +1321,7 @@ where $\bk(\bx)$ is the column vector of the covariance kernel evaluations $[k(\
 variance-covariance matrix such that the $(i, j)$-element is $\left\{\bK \right\}_{i, j}=k(\bx^{(i)}, \bx^{(j)})$.
 
 In practice the surrogate model is defined by the \textit{predictor} function $\eta_n(\cdot)$. 
-This regression model provides an important complementary information with the \textit{kriging variance} $s_n^2(\bx)$, reaching zero at the learing points.
+This regression model provides an important complementary information with the \textit{kriging variance} $s_n^2(\bx)$, reaching zero at the learning points.
 Let us remark that the kriging variance fully depends on the covariance model (defined by its parametric structure and hyperparameters). 
 In practice, the hyperparameters are unknown, therefore, their estimation is a key step in the construction of a kriging model. 
 This estimation can be done using different approaches, most commonly using the maximum likelihood method or a cross-validation.
@@ -1330,7 +1331,7 @@ This estimation can be done using different approaches, most commonly using the 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\textwidth]{../numerical_experiments/chapter1/figures/kriging_1D.png}
-    \caption{Illustration of a ordinary kriging model fitted on a limited set of observations ($n=7$)}
+    \caption{Illustration of an ordinary kriging model fitted on a limited set of observations ($n=7$)}
     \label{fig:kriging_1D}
 \end{figure}
 
@@ -1338,7 +1339,7 @@ This estimation can be done using different approaches, most commonly using the 
 
 Associated with kriging models, another validation criterion is relevant to evaluate the kriging variance $s_n^2(\bx)$. 
 The predictive variance adequation (PVA) has been introduced by \citet{bachoc_2013} to confirm that the kriging variance is reliable.
-For a validation performed by holdout, using an independant $m$-sized test set, the PVA is defined as: 
+For a validation performed by holdout, using an independent $m$-sized test set, the PVA is defined as: 
 \begin{equation}
     \mathrm{PVA} = \left| \log\left( \frac1m \sum_{i=1}^{n} \frac{\left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)}{s_n^2(\bx^{(i)})}\right) \right|.
 \end{equation}
@@ -1346,12 +1347,11 @@ The smaller this quantity get, the better the quality of the kriging variance.
 
 Gaussian process regression is an elegant solution, offering a lot of flexibility and an associated error model (i.e., the kriging variance). 
 However, well know numerical issues appear during the estimation of the hyperparameters, especially as the learning size increases. 
-More specifically, the computation and memory allocation for the variance-covariance matrix a reccurent issue. 
+More specifically, the computation and memory allocation for the variance-covariance matrix a recurrent issue. 
 Multiple techniques resolve this issue by applying compression schemes on this matrix, e.g., based on sparse approximations (e.g., Hierarchical Matrices)
 
-This section introduced a general purpose surrogate model, uniformily approximating a function on a given domain. 
-Most surrogates are designed for a well-defined purpose (e.g., optimization with or without constraint, contour finding for reliability analysis, etc.)
-In these cases, a more efficient approach might be to circumscribe the learning to a given sub-domain, rather than uniformily on the domain. 
+This section introduced a general purpose surrogate model, uniformly approximating a function on a domain, however surrogates are often used for specific purposes (e.g., contour finding for reliability analysis). 
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample}[Ordinary kriging]
@@ -1365,32 +1365,96 @@ In these cases, a more efficient approach might be to circumscribe the learning 
 \subsection{Goal-oriented active surrogate model}
 %============================================================%
 
-A goal-oriented surrogate model fitted for solving a specific problem, related to an area of interest. 
-\elias{Only in the computer experiment framework}
+Surrogates are often fitted for a specific purpose, requiring an accurate approximation over a limited subdomain only.
+In these cases, a more efficient approach might be to circumscribe the learning to this subdomain (i.e., \textit{goal-oriented learning}), rather than uniformly over the entire domain. 
 For example, to fit a surrogate model for contour finding in reliability analysis, one should concentrate the learning set around the limit-state function. 
-Similarly, to build a surrogate for a global optimization problem, one should concentrate the learning set around the optimum(s).
-However, this type of strategies require enough information to define an area of interest. 
-\textit{Active learning} is a general concept, aiming at iteratively increasing the learning set w.r.t. a \textit{learning criterion} and updating the surrogate. 
+Similarly, to build a surrogate for a global optimization problem, one should focus the learning set around the optimum(s).
+Unfortunately, the area(s) of interest is usually unknown before evaluating the true function. 
+\textit{Active learning} is a general concept, aiming at iteratively increasing the learning set w.r.t. a \textit{learning criterion} (also called acquisition function) depending on the surrogate's goal to enhance the surrogate in area(s) of interest. 
+An exploration/exploitation trade-off arises in active learning, mostly resolved by the learning criterion.
 
+\begin{remark}
+    This section introduces active learning methods in the computer experiment context, where the true function can be evaluated anywhere for a high computational cost. 
+    However, active learning is also used to handle big data frameworks in the machine learning community \elias{add ref}. 
+    When datasets become so large that surrogate methods cannot be applied in practice, the analyst needs to select a subset on which the learning is performed.  
+\end{remark}
+
+%------------------------------------------------------------%
 \subsubsection{For optimization}
+%------------------------------------------------------------%
 
-\elias{introduce EGO? Jones (1998)} 
+In the field of black-box optimization, many methods rely on approximating the function by a surrogate. 
+The use of Gaussian processes as probabilistic surrogates for optimization was popularized by the \textit{efficient global optimization} (EGO) algorithm \elias{Jones (1998)}. 
+Ever since, many related methods were developed under the generic name of \textit{Bayesian optimization}. 
+The main idea is to exploit the uncertainty model from the GP to direct the point selection. 
+Concretely, the learning criterion depends on the gaussian process variance model.  
+Numerous reviews of this field were proposed by \elias{Shahriari 2016, Gramacy book 2020 Chapter 7} and numerical benchmarks presented in \elias{Leriche Picheny 2021}.
 
-\citet{fau_2021} reviews adaptive sampling methods for Kriging.
-\elias{Cite Petit, Spagnol?}
+The generic black-box optimization problem tackled is defined as:
+\begin{equation}
+    \bx^* = \argmin_{\bx \in \iD_{\bX}} g(\bx) \approx \argmin_{\bx \in \iD_{\bX}} \what{g}(\bx)
+\end{equation}
 
+To illustrate Bayesian optimization, let us present the EGO algorithm, defined by its specific learning criterion: the ``expected improvement''. 
+Considering an initial learning set $\left\{\bX_n, \by_n\right\}$ built on a space-filling input design $\bX_n$ to explore the domain. 
+A first surrogate $\xi_n(\bx) \sim \iN(\eta_n(\bx), s_n^2(\bx))$ is fitted using \eq{eq:kriging}. 
+The expected improvement is then written as: 
+\begin{align}
+    \iA^{\textrm{EI}}(\bx; \by_n) &= \E\left[\max\left(g_{\min} - \xi_n(\bx)\right)\right] \\ 
+                                  &=\left(g_{\min} - \eta_n(\bx)\right) \Phi\left( \frac{g_{\min} - \eta_n(\bx)}{s_n(\bx)}\right) + 
+                                    s_n(\bx) \phi\left(\frac{g_{\min} - \eta_n(\bx)}{s_n(\bx)}\right),
+    \label{eq:exp_improvement}
+\end{align}
+where $g_{\min} = \min(\by_n)$, $\phi$ and $\Phi$ respectively stand for the PDF and the CDF of the standard Gaussian distribution.
+This learning criterion is relatively inexpensive and allows to progressively enhance the Gaussian process to solve the optimization problem with a limited number of calls to the true function. 
+Bayesian optimization is an active research field, with different open problems such as constrained Bayesian optimization \elias{S.Petit}, or Bayesian optimization on stochastic functions \elias{Gramacy, M.Binois?, Spagnol?}
 
+%\citet{fau_2021} reviews adaptive sampling methods for Kriging. \elias{Cite Petit, Spagnol?}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.32\textwidth]{../numerical_experiments/chapter1/figures/bayesian_opt_0.png}
+    \includegraphics[width=0.32\textwidth]{../numerical_experiments/chapter1/figures/bayesian_opt_1.png}
+    \includegraphics[width=0.32\textwidth]{../numerical_experiments/chapter1/figures/bayesian_opt_2.png}
+    \caption{Illustration of the expected improvement learning criterion}
+    \label{fig:EGO_1D}
+\end{figure}
+
+%------------------------------------------------------------%
 \subsubsection{For reliability analysis}
+%------------------------------------------------------------%
 
-Rare event estimation often requires larges amounts of calls to the limit-state function (which is possibly a coslty numerical model). 
+Rare event estimation often requires large amounts of calls to the limit-state function (becoming intractable for costly numerical model). 
 Emulating this function by a surrogate model can drastically limit the number of calls to LSF. 
 This surrogate approximates the contour (i.e., border) of the failure domain. 
 However, in most cases, the failure domain represents a very restricted area of the input domain. 
-To build a learning set concentrated around this border, activae methods exist. 
+Active learning were proposed to iteratively concentrate the learning set around this border. 
 
-\elias{introduce AK methods}
+For rare event estimation, the surrogate only needs to be accurate near the limit state function. 
+In other words, it should accurately discriminate the points leading to the safe domain from those leading to the failure domain.
+In fact, this problem can be seen as a two-class classification problem. 
+Note that active learning procedure using SVM classifiers were adapted to this specific goal \elias{cite Bourinet}. 
 
+The following paragraph introduces the most popular kriging-based learning criterion: the deviation number $U$ \elias{Echard 2012}. 
+\elias{Morio et Balesdant 2015} introduce further active learning techniques dedicated to rare event estimation. 
+\elias{Mustapha 2021 and Teixeira 2020} review this topic and present wide numerical benchmarks.
 
+Considering an initial learning set $\left\{\bX_n, \by_n\right\}$ built on a space-filling input design $\bX_n$ to explore the domain. 
+A first Gaussian process $\xi_n(\bx) \sim \iN(\eta_n(\bx), s_n^2(\bx))$ is fitted using \eq{eq:kriging}. 
+Let us introduce the deviation number $U$, looking for points close to the limit-state function and presenting a high kriging variance: 
+\begin{equation}
+    \iA^{\textrm{U}}(\bx; \by_n) = \frac{\left|\yth - \eta_n(\bx)\right|}{s_n^2(\bx)}, 
+    \label{eq:U}
+\end{equation}
+where $\yth \in R$ is a threshold defining the failure domain.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.32\textwidth]{../numerical_experiments/chapter1/figures/contour_find_0.png}
+    \includegraphics[width=0.32\textwidth]{../numerical_experiments/chapter1/figures/contour_find_1.png}
+    \includegraphics[width=0.32\textwidth]{../numerical_experiments/chapter1/figures/contour_find_2.png}
+    \caption{Illustration of the deviation number learning criterion}
+    \label{fig:AK_1D}
+\end{figure}
 
 %============================================================%
 \subsection{Summary and discussion}
@@ -1400,7 +1464,7 @@ To build a learning set concentrated around this border, activae methods exist.
 
 \elias{What if the data is noisy or the numerical model stochastic?}
 
-\elias{Note that the calibration error is often larger than the metamodeling error.}
+\elias{Note that the calibration error is often larger than the surrogate model error.}
 
 
 %============================================================%
