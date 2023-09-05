@@ -1062,7 +1062,7 @@ Three main importance sampling techniques are used in this work.
  
 Appendix \ref{apx:C} develops an algorithmic presentation of the two last techniques: NAIS and AIS-CE.
 
-\elias{Discussion on commun advantages and drawback of the IS methods.}
+\elias{Discussion on common advantages and drawback of the IS methods.}
 
 %------------------------------------------------------------%
 \subsubsection{Subset sampling}
@@ -1093,7 +1093,7 @@ SS efficiency depends on the proper choice and tuning of the MCMC algorithm \cit
 %Our work uses the SS implementation from \texttt{OpenTURNS}\footnote{\href{https://openturns.github.io/www/index.html}{https://openturns.github.io/www/index.html}} \citep{baudin_dutfoy_2017} which integrates a component-wise Metropolis-Hastings algorithm. 
 %As an alternative to generating samples on a conditional distribution by MCMC, one could try to fit this conditional distribution.
 
-\elias{Mention the appendix Appendix \ref{apx:C} presenting the algorithms of SS}
+\elias{Mention the Appendix \ref{apx:C} presenting the algorithms of SS}
 
 
 \begin{figure}[ht]
@@ -1142,40 +1142,176 @@ SS efficiency depends on the proper choice and tuning of the MCMC algorithm \cit
 \newpage
 %============================================================%
 %============================================================%
-\section{Sensitivity analysis}
+\section{Global sensitivity analysis}
 %============================================================%
 %============================================================%
 
-\elias{An inversion problem}
-
-%============================================================%
-\subsection{Global sensitivity analysis}
-%============================================================%
-
-
-\elias{Screening}
+The aim of sensitivity analysis (SA) is to determine the impact of a single random input (or a group of random inputs) on a random output. 
+As described earlier, this step is qualified as an inversion problem in the general UQ framework \elias{add pointer}, in opposition with the forward uncertainty propagation step. 
+In fact, the analyst studies the impact of inputs on a QoI of an output. 
+Depending on the type of QoI, the SA is quialified as ``global'' or ``local''. 
+Global sensitivity analysis (GSA), typically studies the general variability (e.g., the variance) of the output, while local SA can focus on the impact of inputs on a local statistic (e.g., quantile, failure probability). 
+Two types of GSA methods exist in the literature: qualitative and quantitative approaches.  
+Each answer two different questions in UQ: 
 \begin{itemize}
-    \item Morris method
-    \item Derivative-based global sensitivity measures
-    \item HSIC
+    \item \textit{screening}: determine the non-influential variables in a UQ study (qualitative);
+    \item \textit{importance measure}: assess the contribution of input(s) in the global variability of the output (quantitative).
 \end{itemize}
-
-
-\elias{Importance measures}
-\begin{itemize}
-    \item Sobol'
-    \item Shapley
-\end{itemize}
+\elias{Disclaimer: SA on dependent inputs are an open problem and the inputs will be considered as independent in the following.}
 
 
 %============================================================%
-\subsection{Reliability-oriented sensitivity analysis}
+\subsection{Screening methods}
 %============================================================%
 
-\begin{itemize}
-    \item Importance factors from FORM 
-    \item Sobol on the indicator function (see Chabridon 2018 chapt 4 and 7, see Papaioannou 2023)
-\end{itemize}
+Many UQ methods suffer from the curse of dimensionality, thankfully, high-dimensional problems often only depend on a few variables. 
+Screening methods allow to discriminate the non-influential variables, which can be considered afterwards as determinist to simplify the problem.
+
+%------------------------------------------------------------%
+\subsubsection{Morris method}
+%------------------------------------------------------------%
+
+The Morris method \elias{add ref Morris 91} is screening method historically commonly used in engineering applications. 
+It starts by mapping the input domain $\iD_{\bX}$ to a unit hypercube $[0, 1]^d$, which is discretized as a regular grid with step $\Delta \in \R$.
+The algorithm computes local elementary sensitivity by building ``one at a time'' (OAT) local trajectories over the regular grid. 
+Each OAT designs start at a random node $\bx^{(t)} = (x^{(t)}_1, \dots, x^{(t)}_i,\dots, x^{(t)}_d)$ of the grid and move only in one direction by an increment equal to the elementary step such that: $\bx^{(t)} + \Delta_i = (x^{(t)}_1, \dots, x^{(t)}_i + \Delta ,\dots, x^{(t)}_d)$. 
+The elementary effect of an OAT design $t$ in the direction of the variable $i$ is expressed as a finite difference: 
+\begin{equation}
+    \mathrm{EE}_i^{(t)} = \frac{g(\bx^{(t)}) - g(\bx^{(t)} + \Delta_i)}{\Delta}.
+    \label{eq:eeffect}
+\end{equation}
+
+The Morris method generates $T\in\N$ OAT designs and computes theirs respective elementary effects in each direction $i$. 
+To assess the global sensitivity of the function, the mean $\bar{\mathrm{EE}}_i$ and variance $\what{\var}(\mathrm{EE}_i)$ of the elementary effects are computed: 
+\begin{equation}
+    \bar{\mathrm{EE}}_i = \frac1n \sum_{t=1}^{T} |\mathrm{EE}_i^{(t)}|, \qquad 
+    \what{\var}(\mathrm{EE}_i) = \frac{1}{n-1} \sum_{t=1}^{T} \left(\mathrm{EE}_i^{(t)} - \bar{\mathrm{EE}}_i\right)^2.
+\end{equation}  
+
+
+It divides the variables into three categories, regardless of any regularity hypothesis on the function: 
+(i) negligible effects; (ii) linear effects without interaction; and (iii) nonlinear effects with possible interactions. 
+This method is very intuitive but quickly shows its limits as the dimension increases since it relies on a discretization of the space by a regular grid.
+\elias{Impossible to distinguish interactions and nonlinear effects}
+
+
+%------------------------------------------------------------%
+\subsubsection{Derivative-based global sensitivity measures}
+%------------------------------------------------------------%
+
+\elias{Reduced cost for screening. Bounding properties compared to a quantitative approach.}
+\elias{Different rankings between DGSM and Sobol' obtained for nonlinear functions.}
+
+\begin{equation}
+    v_i = \int_{\iD_{\bX}} \left(\frac{\partial g(\bx)}{\partial x_i}\right)^2 f_{\bX}(\bx) = \E\left[\left(\frac{\partial g(\bX)}{\partial X_i}\right)^2\right].
+\end{equation}
+
+
+%------------------------------------------------------------%
+\subsubsection{Hilbert-Schmidt independence criterion}
+%------------------------------------------------------------%
+
+\elias{Many sensitivity indices derive from dissimilarity measures.}
+
+\begin{equation}
+    \mathrm{HSIC} = \MMD(\bX Y, \bX Y |X_i)^2
+\end{equation}
+
+
+%============================================================%
+\subsection{Importance measures}
+%============================================================%
+
+Screening methods determine the non-influential variables in a UQ problem. 
+Beyond this information, importance measures quantify the influence of inputs, allowing to rank the inputs according to their contribution to the output variability.  
+
+%------------------------------------------------------------%
+\subsubsection{Functional variance decomposition and Sobol' indices}
+%------------------------------------------------------------%
+Sobol' indices are the most popular importance measure in GSA. 
+Their universality comes from the functional decomposition of the output's variance, attributing variance share to the inputs. 
+The following presentation is inspired by the paragraph 4.2.3.1 from \elias{Chabridon these}.  
+
+Considering a squared-integrable function $g(\cdot): [0, 1]^d \rightarrow \R$\elias{add footnote for any input domain see Chastaing these} and the independent random vector $\bX$\elias{Add footnote for dependent variables see Chastaing}. 
+The output random variable $Y = g(\bX)$ can be decomposed, according to \elias{Hoffeding 1948}, as: 
+\begin{equation}
+    Y = g(\bX) = g_0 + \sum_{i=1}^{d} g_i(X_i) + \sum_{i<j}^{d} g_ij(X_i, X_j) + \dots + g_{1 \dots d}(\bX),
+    \label{eq:hoeffding}
+\end{equation}
+with the previous terms defined according this recurrence:  
+\begin{align}
+    g_0 &= \E[g(\bX)]\\
+    g_i(X_i) &= \E[g(\bX) | X_i] - g_0\\
+    g_{ij}(X_i, X_j) &= \E[g(\bX) | X_i, X_j] - g_i(X_i) - g_j(X_j) - g_0\\
+    \dots
+\end{align}
+\elias{Sobol 93} proved that this decomposition is unique by exploiting the orthogonality of the terms of the decomposition. 
+Therefore, this decomposition can be transposed in terms of functional decomposition of variance (also called functional analysis of variance or F-ANOVA):
+\begin{equation}
+    \var(Y) = \sum_{i=1}^{d} V_i(Y)  + \sum_{i<j}^{d} V_{ij}(Y) + \dots + V_{1 \dots d}(Y), 
+    \label{eq:fanova}
+\end{equation}
+with the previous terms defined in a recurrent way as $V_i(Y) = \var\left(\E[Y|X_i]\right), V_{ij}(Y) = \var\left(\E[Y|X_i, X_j]\right) - V_i(Y) - V_j(Y)$, and so on for higher order interaction terms. 
+The Sobol' indices of different order are defined as normalized shares of variance. 
+The first-order Sobol' index $S_i$ quantifies the share of variance of the output only explained by the marginal $X_i$ (also called main effect). 
+Second order $S_{ij}$ (or higher order) Sobol' indices quantify the effect of the interactions between a group of marginals. 
+\begin{align}
+    S_i &= \frac{V_i(Y)}{\var(Y)} = \frac{\var\left(\E[Y|X_i]\right)}{\var(Y)}\\
+    S_{ij} &= \frac{V_{ij}(Y)}{\var(Y)} = \frac{\var\left(\E[Y|X_i, X_j]\right) - V_i(Y) - V_j(Y)}{\var(Y)}\\
+    \dots
+    \label{eq:sobol_first}
+\end{align}
+By using the functional decomposition of variance in \eq{eq:fanova}, one can show that the Sobol' indices add up to one: 
+\begin{equation}
+    \sum_{i=1}^{d} S_i + \sum_{i<j}^{d} S_{ij} + \dots + S_{1 \dots d} = 1.
+\end{equation}
+
+Assessing Sobol' indices for every order becomes complex in medium to high dimension. 
+The total Sobol' index $T_i$, see \elias{Saltelli book 2008}, quantifies the share of output variance which is explained by all the interactions of the marginal $X_i$:
+\begin{equation}
+    S_{T_i} = 1 - \frac{\var\left(\E[Y|\bX^{-i}]\right)}{\var(Y)} = \frac{\E\left[\var(Y|\bX^{-i})\right]}{\var(Y)},
+    \label{eq:sobol_total}
+\end{equation}
+where $\bX^{-i}$ represents all the marginals from $\bX$ but $X_i$.
+
+\elias{Note that $\forall i, S_i \leq 1$ and $S_i \leq S_{T_i}$. 
+The total indexes are only equal to the first indexes when the function in purely additive.} 
+
+\elias{The pick-freeze scheme is the historical estimation technique, however, it requires many calls to the function.}
+
+\elias{The use of to polynomial chaos expansion to surrogate a small dataset provides a direct expression of the Sobol' indices, Add Marrel for GP.}
+
+\elias{Advantages of Sobol': good quantification of the global sensitivity of the inputs}
+
+\elias{Warning: the variance is not always a relevant description of the output distribution (e.g. multimodal distributions).}
+
+%------------------------------------------------------------%
+\subsubsection{Shapley effects}
+%------------------------------------------------------------%
+Shapley effects are an adaptation of Shapley values of cooperative games (\elias{Shapley 1953}) to GSA by \elias{Owen 2014}. 
+Unlike Sobol' indices, this measure of importance does not rely on a decomposition of the output's variance. 
+The generic Shapley effect of the variable $X_i$ is given considering the indices $-\{i\}= \{1, \dots, d\} \backslash \{i\}$:
+\begin{equation}
+    Sh_i = \sum_{v \subseteq -\{i\}} \frac{(d - |v| -1)! |v|!}{d!} \left(c(v \cup \{i\} - c(v))\right),
+\end{equation}
+with the cardinality of $v$ denoted $|v|$, and a cost function $c(\cdot)$. 
+Conceptually, this expression compares a performance defined by a cost function with or without the variable $X_i$, and averages it over all the possible combinations of inputs.
+Various contributions connected this measure of importance to the Sobol' indices by defining a cost function based on the output variance. 
+In the case of independent inputs, the Shapley effects are bounded by the Sobol' indices $\forall i \in \{1, \dots, d\}$: 
+\begin{equation}
+    S_i \leq Sh_i \leq S_{T_i}.
+\end{equation} 
+
+\elias{Add analysis in the dependent case from Marouane's paper.}
+
+%%============================================================%
+%\subsection{Reliability-oriented sensitivity analysis}
+%%============================================================%
+%
+%\begin{itemize}
+%    \item Importance factors from FORM 
+%    \item Sobol on the indicator function (see Chabridon 2018 chapt 4 and 7, see Papaioannou 2023)
+%\end{itemize}
 
 
 
@@ -1217,13 +1353,13 @@ Validating surrogate models in small-data context appears to be an important cha
 Different validation criteria and techniques exist. 
 The \textit{coefficient of validation}, denoted $R^2$, is a first validation metric that can be directly computed on the learning set:
 \begin{equation}
-    R^2(\wg_n) = 1 - \frac{ \sum_{i=1}^n  \left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)^2}{\sum_{i=1}^n \left(y(\bx^{(i)})-\overline{\by}_n\right)^2}\,,
+    \mathrm{R}^2(\wg_n) = 1 - \frac{ \sum_{i=1}^n  \left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)^2}{\sum_{i=1}^n \left(y(\bx^{(i)})-\overline{\by}_n\right)^2}\,,
 \end{equation}
 where $\overline{y}_n=(1/n)\,\sum_{i=1}^n y^{(i)}$ denotes the empirical mean of the observations in the test sample. 
 However, theses metrics are not relevant for every regression method (typically, interpolant method have a $R^2=1$). 
 The \textit{predictivity coefficient} is an alternative defined as a normalized \textit{integrated square error} (ISE): 
 \begin{equation}
-    Q^2(\wg_n) = 1 - \frac{\ise(\wg_n)}{\var(\wg_n)}, 
+    \mathrm{Q}^2(\wg_n) = 1 - \frac{\ise(\wg_n)}{\var(\wg_n)}, 
 \end{equation} 
 where 
 \begin{equation}
@@ -1232,7 +1368,7 @@ where
 \end{equation}
 This quantity can be estimated on a test set $\left\{\bX_m, \by_m\right\}$: 
 \begin{equation}
-    \what{Q}^2(\wg_n) = 1 - \frac{ \sum_{i=1}^m  \left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)^2}{\sum_{i=1}^m \left(\overline{\by}_m - y(\bx^{(i)})\right)^2}\,.
+    \what{\mathrm{Q}}^2(\wg_n) = 1 - \frac{ \sum_{i=1}^m  \left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)^2}{\sum_{i=1}^m \left(\overline{\by}_m - y(\bx^{(i)})\right)^2}\,.
 \end{equation}
 Note about the interpretation of the two criteria, the higher the value, the better the quality of the fit. 
 
@@ -1380,7 +1516,7 @@ An exploration/exploitation trade-off arises in active learning, mostly resolved
 \end{remark}
 
 %------------------------------------------------------------%
-\subsubsection{For optimization}
+\subsubsection{Active kriging for optimization}
 %------------------------------------------------------------%
 
 In the field of black-box optimization, many methods rely on approximating the function by a surrogate. 
@@ -1420,7 +1556,7 @@ Bayesian optimization is an active research field, with different open problems 
 \end{figure}
 
 %------------------------------------------------------------%
-\subsubsection{For reliability analysis}
+\subsubsection{Active kriging for reliability analysis}
 %------------------------------------------------------------%
 
 Rare event estimation often requires large amounts of calls to the limit-state function (becoming intractable for costly numerical model). 
