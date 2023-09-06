@@ -1207,19 +1207,8 @@ This method is very intuitive but quickly shows its limits as the dimension incr
 \end{equation}
 
 
-%------------------------------------------------------------%
-\subsubsection{Hilbert-Schmidt independence criterion}
-%------------------------------------------------------------%
-
-\elias{Many sensitivity indices derive from dissimilarity measures.}
-
-\begin{equation}
-    \mathrm{HSIC} = \MMD(\bX Y, \bX Y |X_i)^2
-\end{equation}
-
-
 %============================================================%
-\subsection{Importance measures}
+\subsection{Variance-based importance measures}
 %============================================================%
 
 Screening methods determine the non-influential variables in a UQ problem. 
@@ -1235,7 +1224,7 @@ The following presentation is inspired by the paragraph 4.2.3.1 from \elias{Chab
 Considering a squared-integrable function $g(\cdot): [0, 1]^d \rightarrow \R$\elias{add footnote for any input domain see Chastaing these} and the independent random vector $\bX$\elias{Add footnote for dependent variables see Chastaing}. 
 The output random variable $Y = g(\bX)$ can be decomposed, according to \elias{Hoffeding 1948}, as: 
 \begin{equation}
-    Y = g(\bX) = g_0 + \sum_{i=1}^{d} g_i(X_i) + \sum_{i<j}^{d} g_ij(X_i, X_j) + \dots + g_{1 \dots d}(\bX),
+    Y = g(\bX) = g_0 + \sum_{i=1}^{d} g_i(X_i) + \sum_{i<j}^{d} g_{ij}(X_i, X_j) + \dots + g_{1 \dots d}(\bX),
     \label{eq:hoeffding}
 \end{equation}
 with the previous terms defined according this recurrence:  
@@ -1267,12 +1256,12 @@ By using the functional decomposition of variance in \eq{eq:fanova}, one can sho
 \end{equation}
 
 Assessing Sobol' indices for every order becomes complex in medium to high dimension. 
-The total Sobol' index $T_i$, see \elias{Saltelli book 2008}, quantifies the share of output variance which is explained by all the interactions of the marginal $X_i$:
+The total Sobol' index $S_i^T$, see \elias{Saltelli book 2008}, quantifies the share of output variance which is explained by all the interactions of the marginal $X_i$:
 \begin{equation}
-    S_{T_i} = 1 - \frac{\var\left(\E[Y|\bX^{-i}]\right)}{\var(Y)} = \frac{\E\left[\var(Y|\bX^{-i})\right]}{\var(Y)},
+    S_i^T = 1 - \frac{\var\left(\E[Y|\bX_{-i}]\right)}{\var(Y)} = \frac{\E\left[\var(Y|\bX_{-i})\right]}{\var(Y)},
     \label{eq:sobol_total}
 \end{equation}
-where $\bX^{-i}$ represents all the marginals from $\bX$ but $X_i$.
+where $\bX_{-i}$ represents all the marginals from $\bX$ but $X_i$.
 
 \elias{Note that $\forall i, S_i \leq 1$ and $S_i \leq S_{T_i}$. 
 The total indexes are only equal to the first indexes when the function in purely additive.} 
@@ -1299,15 +1288,83 @@ Conceptually, this expression compares a performance defined by a cost function 
 Various contributions connected this measure of importance to the Sobol' indices by defining a cost function based on the output variance. 
 In the case of independent inputs, the Shapley effects are bounded by the Sobol' indices $\forall i \in \{1, \dots, d\}$: 
 \begin{equation}
-    S_i \leq Sh_i \leq S_{T_i}.
+    S_i \leq Sh_i \leq S_i^T.
 \end{equation} 
 
 \elias{Add analysis in the dependent case from Marouane's paper.}
 
-%%============================================================%
-%\subsection{Reliability-oriented sensitivity analysis}
-%%============================================================%
-%
+
+%============================================================%
+\subsection{Moment-independent importance measures}
+%============================================================%
+Beyond variance-based GSA, many divergences, discrepancies have been used to evaluate the dependence between the input and the output distributions. 
+Considering the probability measures $\P_{X_i}$ and $\P_{Y}$, associated with the random variables $X_i$ and $Y$, two formulations exist:
+\begin{itemize}
+    \item \textit{dissimilarity measures}: comparing $\P_Y$ with $\P_{Y |X_i}$;
+    \item \textit{dependence measures}: comparing $\P_{(X_i, Y)}$ with $\P_{X_i} \otimes \P_Y$.
+\end{itemize}
+These two tools are flexible and allow to plug any divergence, discrepancy between probability distributions. 
+Dissimilarity measure based on f-divergence were studied in \elias{Da veiga 2015, Rahman 2016}, which generalized the dissimilarity measure based on the total-variation distance introduced by \elias{Borgonovo 2007}.
+
+The following section focuses on dependence measures, which are generically defined as:
+\begin{equation}
+    S_i^{DM} = \Delta(\P_{(X_i, Y)}, \P_{X_i} \otimes \P_Y),
+\end{equation}
+where $Delta(\cdot)$ is a distance between two probability distributions. 
+
+In particular, the \textit{Hilbert-Schmidt Independence Criterion} (HSIC) was initially introduced by \elias{Gretton 2006} for dependence testing, and adapted as a dependence measure in GSA by \elias{Da Veiga 2015}. 
+This method relies on a distance between the embeddings of two distributions in a Hilbert space named \textit{maximum mean discrepancy} (MMD).
+
+%------------------------------------------------------------%
+\subsubsection{Maximum mean discrepancy}
+%------------------------------------------------------------%
+
+A metric of discrepancy between distributions is introduced as the \emph{maximum mean discrepancy} (MMD). 
+This distance between two probability distributions $\mu$ and $\zeta$ is defined as the worst-case error for any function within a unit ball of a function space $\iH$:
+\begin{equation}
+    \MMD(\mu, \zeta) := %\\ 
+    \sup_{\lVert g \lVert_{\iH} \leq 1}
+            \left | \int_{\iD_{\bX}} g(\bx) \dd \mu(\bx) - \int_{\iD_{\bX}} g(\bx) \dd \zeta(\bx) \right| = \left\lVert P_{\mu}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH}.
+    \label{eq:mmd}  
+\end{equation}
+
+To ease the calculation of the quantity, this metric was studied for a particular function space, offering specific properties.
+A \emph{reproducing kernel Hilbert space} (RKHS), denoted $\iH(k)$, is an inner product space $\iH(k)$ of functions $g:\iD_{\bX} \rightarrow \R$.
+It verifies the following axioms, considering a symmetric and positive definite function $k: \iD_{\bX} \times \iD_{\bX} \rightarrow \R$, later called a ``reproducing kernel'' or simply a ``kernel'': 
+\begin{itemize}
+    \item The ``feature map'' $\phi : \iD_{\bX} \to \iH(k); \phi(\bx) = k(\cdot, \bx) \in \iH(k), \forall \bx \in \iD_{\bX}$.
+    \item The ``reproducing property'': $\langle g, k(\cdot, \bx) \rangle_{\iH(k)} = g(\bx), \quad \forall \bx \in \iD_{\bX}, \forall g \in \iH(k)$.
+\end{itemize}
+Every positive semi-definite kernel defines a unique RKHS (and vice versa) with a feature map $\phi$, such that $k(\bx, \bx') = \langle \phi(\bx), \phi(\bx') \rangle_{\iH(k)}$.
+Moreover, \cite{sriperumbudur_2010} defines a kernel as ``characteristic kernel'' when the following equivalence is true: $\MMD_k(\mu, \zeta) = 0 \Leftrightarrow \mu = \zeta$. 
+This property makes the MMD a metric on $\iD_{\bX}$.
+
+Then, a probability measure has a representation in the RKHS through its \emph{kernel mean embedding} \citep{sejdinovic_2013}, also called ``potential'' $P_{\mu}(\bx)$ in \cite{pronzato_zhigljavsky_2020}, defined as:
+\begin{equation}
+   P_{\mu}(\bx) := \int_{\iD_{\bX}} k(\bx, \bx') \dd \mu(\bx').
+\end{equation}
+The reproducing property from the RKHS allows to express the squared MMD as expectations of kernels:
+\begin{equation}\label{eq:mmd2}
+    \MMD_k(\mu, \zeta)^2 = \int_{\iD_{\bX}} P_{\mu}(\bx)\, \dd\mu(\bx) - 2 \int_{\iD_{\bX}} P_{\mu}(\bx) \, \dd\zeta(\bx) + \int_{\iD_{\bX}} P_{\zeta}(\bx)\, \dd\zeta(\bx).
+\end{equation}
+
+%------------------------------------------------------------%
+\subsubsection{Hilbert-Schmidt independence criterion}
+%------------------------------------------------------------%
+
+This powerful distance is used in GSA to measure the dependence of inputs and outputs. 
+Considering the pair of random variables $(X_i, Y)$, with probability distributions $\P_{X_i}$ and $\P_Y$ let us define the RKHS $\iH$ 
+induced by the product kernel $k((x_i, y), (x_i', y')) = k_{X_i}(x_i, x_i') k_{Y}(y_i, y_i')$. 
+The HSIC between the variable $X_i$ and $Y$ is defined as the following dependence measure:
+\begin{equation}
+    \mathrm{HSIC}(X_i, Y) = \MMD(\P_{(X_i, Y)}, \P_{X_i} \otimes \P_{Y})^2
+\end{equation}
+
+
+%============================================================%
+\subsection{Summary and discussion}
+%============================================================%
+
 %\begin{itemize}
 %    \item Importance factors from FORM 
 %    \item Sobol on the indicator function (see Chabridon 2018 chapt 4 and 7, see Papaioannou 2023)
