@@ -1,38 +1,69 @@
 %!TEX root = ../thesis.tex
 % ******************************* Thesis Appendix D ****************************
-\chapter{Advanced rare event estimation algorithms}
+\chapter{Dissimilarity measures between probability distributions}
 \label{apx:D}
 %*******************************************************************************
 
+Beyond the discrepancy measure to the uniform distribution, this section introduces different dissimilarity measures between probability distributions. 
 
 %============================================================%
 %============================================================%
-\section{Subset simulation (SS)}
+\section{Csiz\'{a}r $f$-divergences}
 %============================================================%
 %============================================================%
 
+\elias{General definition}
 
+\elias{Numerous examples depending on the function choosen: see the book culte}
 
-
-
-%============================================================%
-%============================================================%
-\section{Nonparametric adaptive importance sampling (NAIS)}
-%============================================================%
-%============================================================%
-
-
-
-
+\elias{Link between KL and mutual information}
+\elias{Further inputs in the review from Rahman, maybe some in the PhD subject from A.Dutfoy.}
+\elias{Problems generated in the estimation}
 
 %============================================================%
 %============================================================%
-\section{Parametric adaptive importance sampling using cross-entropy optimization (AIS-CE)}
+\section{Integral probability metrics}
 %============================================================%
 %============================================================%
 
+\elias{general definition}
+
+\elias{Numerous examples see the book culte}
+
+\elias{No closed form expression unlike the $f$-divergence but the use of RKHS goes around this issue.}
 
 
+%============================================================%
+\subsection*{Maximum discrepancy measure}
+%============================================================%
 
+A metric of discrepancy between distributions is introduced as the \emph{maximum mean discrepancy} (MMD). 
+This distance between two probability distributions $\mu$ and $\zeta$ is defined as the worst-case error for any function within a unit ball of a function space $\iH$:
+\begin{equation}
+    \MMD(\mu, \zeta) := %\\ 
+    \sup_{\lVert g \lVert_{\iH} \leq 1}
+            \left | \int_{\iD_{\bX}} g(\bx) \dd \mu(\bx) - \int_{\iD_{\bX}} g(\bx) \dd \zeta(\bx) \right| = \left\lVert P_{\mu}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH}.
+    \label{eq:mmd}  
+\end{equation}
 
+To ease the calculation of the quantity, this metric was studied for a particular function space, offering specific properties.
+A \emph{reproducing kernel Hilbert space} (RKHS), denoted $\iH(k)$, is an inner product space $\iH(k)$ of functions $g:\iD_{\bX} \rightarrow \R$.
+It verifies the following axioms, considering a symmetric and positive definite function $k: \iD_{\bX} \times \iD_{\bX} \rightarrow \R$, later called a ``reproducing kernel'' or simply a ``kernel'': 
+\begin{itemize}
+    \item The ``feature map'' $\phi : \iD_{\bX} \to \iH(k); \phi(\bx) = k(\cdot, \bx) \in \iH(k), \forall \bx \in \iD_{\bX}$.
+    \item The ``reproducing property'': $\langle g, k(\cdot, \bx) \rangle_{\iH(k)} = g(\bx), \quad \forall \bx \in \iD_{\bX}, \forall g \in \iH(k)$.
+\end{itemize}
+Every positive semi-definite kernel defines a unique RKHS (and vice versa) with a feature map $\phi$, such that $k(\bx, \bx') = \langle \phi(\bx), \phi(\bx') \rangle_{\iH(k)}$.
+Moreover, \cite{sriperumbudur_2010} defines a kernel as ``characteristic kernel'' when the following equivalence is true: $\MMD_k(\mu, \zeta) = 0 \Leftrightarrow \mu = \zeta$. 
+This property makes the MMD a metric on $\iD_{\bX}$.
 
+Then, a probability measure has a representation in the RKHS through its \emph{kernel mean embedding} \citep{sejdinovic_2013}, also called ``potential'' $P_{\mu}(\bx)$ in \cite{pronzato_zhigljavsky_2020}, defined as:
+\begin{equation}
+   P_{\mu}(\bx) := \int_{\iD_{\bX}} k(\bx, \bx') \dd \mu(\bx').
+\end{equation}
+The reproducing property from the RKHS allows to express the squared MMD as expectations of kernels:
+\begin{equation}\label{eq:mmd2}
+    \MMD_k(\mu, \zeta)^2 = \int_{\iD_{\bX}} P_{\mu}(\bx)\, \dd\mu(\bx) - 2 \int_{\iD_{\bX}} P_{\mu}(\bx) \, \dd\zeta(\bx) + \int_{\iD_{\bX}} P_{\zeta}(\bx)\, \dd\zeta(\bx).
+\end{equation}
+
+\elias{Add a sentence on estimation}
