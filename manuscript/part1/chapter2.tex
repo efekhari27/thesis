@@ -23,21 +23,232 @@
 %  publisher={Routledge}
 %}
 
+%============================================================%
+%============================================================%
 \section{Introduction}
+%============================================================%
+%============================================================%
 
-\section{Wind turbine modeling}
-    \subsection{Synthetic wind generation \elias{TurbSim, Kaimal spectrum}}
-    \subsection{Synthetic wave generation}
-    \subsection{Aerodynamic interactions}
-    \subsection{Servo-Hydro-Aero-Elastic wind turbine simulation \elias{DIEGO}}
-    \subsection{Soil modeling}
-    \subsection{Wake modeling \elias{FarmShadow}}
-\section{Recommended design practices}
-    \subsection{Design load cases}
-    \subsection{Dynamic response design}
-    \subsection{Fatigue response design}
-\section{Uncertain inputs}
-    \subsection{Environmental inputs}
-    \subsection{System inputs}
-    \subsection{Probabilistic fatigue assessment}
+Wind energy is a highly competitive industry with increasing regulations regarding its impact on ecosystems, land-use conflicts, landscapes, or air traffic management \citep{eolien_en_mer_2022}. 
+During the long process to win calls for tenders and obtain construction permits or throughout the wind farm exploitation, an advanced technical understanding of such systems might offer a competitive advantage. 
+
+The operation of offshore wind turbines are driven by multiple physics coupled. 
+This behavior results from different external solicitations which are highly turbulent and uncertain. 
+Among them, the \textit{metocean} (abbreviation of meteorological and oceanography) environmental conditions play an important role.
+Other types of solicitations affect the exploitation of offshore wind turbines (e.g., corrosion of the structure, global scour, marine growth, stress concentration factor induced by the manufacturing quality). 
+
+In this context, numerical models have been developed to certify the structural integrity of OWTs with respect to their solicitations.
+A wind farm project planned at given location should pass different validation procedures established by international standards such as the \elias{add full IEC name} \citet{iec_2019}
+As wind turbine structures face a large amount of stress cycles in their lifetime (up to $10^8$ for 25 years of operation), this chapter will particularly focus on fatigue damage assessment.
+
+
+This chapter presents a brief introduction to wind turbine modeling and design, structure as follows: 
+Section \ref{sec:metocean_simulation} presents the methods used for wind and wave generation and wake simulation at a farm scale; 
+Section \ref{sec:owt_modeling} recalls elements of theory associated with wind turbine modeling; 
+Section \ref{sec:owt_design} introduces recommended practices regarding design and operation;
+finally, Section \ref{sec:owt_uncertainties} gives a description of the various sources of uncertainties considered in this thesis. 
+Considering the standard uncertainty quantification diagram presented in \elias{add ref}, the material of this chapter is related to the step A (problem specification) and the step B (uncertainty quantification). 
+%To go further this general introduction, the reader might refer to the following sources on the different topics 
+
+
+
+%============================================================%
+%============================================================%
+\section{Metocean conditions simulation} \label{sec:metocean_simulation}
+%============================================================%
+%============================================================%
+
+
+Heating differences of the surface by the sun
+Differences in atmospheric pressure generate winds.
+Winds generally blow from high-pressure areas to low-pressure areas.
+The Coriolis effect, related to Earth's rotation, causes some winds to travel along the edges of the high-pressure and low-pressure systems.
+
+The wind is a highly variable resource, making its exploitation for energy production uncertain.
+This variability is both expressed in space and time with different behaviors depending on the scales studied. 
+
+
+
+\begin{itemize}
+    \item Why is there wind? It's a complex phenomenon related to many effects such as the rotation of the earth, Coriolis effect \elias{add sources}
+    \item Regarding the large timescale, yearly seasonal fluctuations of wind conditions are well-defined and predictable
+    \item Prediction at a shorter timescale are usually unreliable above a few days ahead. 
+    \item Below a few days, the wind variation can be described the wind power spectral density. (Van der Hoven spectrum plot and explaination)
+    \item We commonly work on 10min intervals to capture the turbulent behavior
+    \item Warning: this spectrum pattern is not guaranteed at any given location. 
+    \item In fact, the wind variations are strongly impacted by the surface roughness, topology, thermal effects 
+    \item Opening: global warming effect on the long term metocean conditions, mostly affecting the frequency and intensity of extreme events.
+\end{itemize}
+
+\elias{Add something general regrading wave modeling}
+
+
+
+
+
+%============================================================%
+\subsection{Turbulent wind generation}
+%============================================================%
+\elias{Check the TurbSim documentation to understand the numerical process}
+\elias{Check the paper on turbulence models for a synthetic introduction of spectral models and coherence functions}
+
+\begin{itemize}
+    \item Vertical wind profile
+    \item Kaimal/Mann spectral methods for generation
+    \item exponential spatial coherance methods
+    \item Sandia method allowing to generate the time series independently
+    \item Wind direction? 
+\end{itemize}
+
+
+\begin{itemize}
+    \item Amazing visual idea: at multiple 10-minutes periods, one can generate different wind speeds  
+\end{itemize}
+
+\elias{Opening: vortex modeling for wind turbines Emmanuel Branlard thesis}
+
+%============================================================%
+\subsection{Irregular wave generation}
+%============================================================%
+\elias{Milano section 1.4}
+
+
+%============================================================%
+\subsection{Wake modeling}
+%============================================================%
+\elias{Read the chapter 9 from Wind Energy handbook + check the paper with IFPEN}
+
+
+
+
+
+%============================================================%
+%============================================================%
+\section{Wind turbine multi-physics modeling} \label{sec:owt_modeling}
+%============================================================%
+%============================================================%
+
+Offshore wind turbine models are coupling multiple physics such as aerodynamics, hydrodynamics, mechanical elasticity, control and mooring dynamics for floating OWT. 
+Similarly to the usual practices from the offshore oil \& gas industry, OWT have been first modeled in the frequency domain. 
+At an early design stage, a study in the frequency domain gives a rough idea of the system's feasibility by computing its natural frequencies.
+An OWT should not have its natural frequencies in the same range as the main frequencies of the wave energy spectra. 
+Otherwise, such systems can be subject to critical dynamic resonance, leading to their failure.
+
+Beyond this preliminary check, frequency-domain approaches present limits for OWT modeling. 
+As they rely on linear assumptions, they are unable to model the non-linearities and transient loading phases \citep{matha_2011_ISOPE}. 
+These aspects happen to be essential in the design of OWT \citep{jonkman_2011_ISOPE}.
+As an alternative, the behavior of OWT systems are also simulated in the time domain. 
+
+\elias{In the time domain, such systems may be models at different fidelities.
+The diagram from Veer, illustrates the increasing complexities two physics involved in OWT modeling (aerodynamics and structural dynamics).
+The model studied in our case is low fidelity, allowing to perform uncertainty quantification around it.} 
+
+\elias{At the wind turbine scale, the numerical model studied in this work is actually a chain of three models executed sequentially.} 
+
+\elias{At the wind farm scale, the wake effect also plays an important role.} 
+
+
+
+%============================================================%
+\subsection{Aerodynamics of horizontal axis wind turbines}
+%============================================================%
+
+
+%============================================================%
+\subsection{Hydrodynamics}
+%============================================================%
+
+
+%============================================================%
+\subsection{Command and control}
+%============================================================%
+
+
+%============================================================%
+\subsection{Structural dynamics}
+%============================================================%
+
+
+%============================================================%
+\subsection{Fatigue damage}
+%============================================================%
+
+
+
+
+
+%============================================================%
+%============================================================%
+\section{Design and operation practices} \label{sec:owt_design}
+%============================================================%
+%============================================================%
+
+Generally speaking, the energy available in the wind is proportional to the cube of the wind speed, given the well-known power production equation:
+\begin{equation}
+    P = \frac12 C_p \rho A U^3,
+\end{equation}  
+where \elias{continue the description}.
+
+
+%============================================================%
+\subsection{Wind turbine design and operation}
+%============================================================%
+    \begin{itemize}
+        \item Different designs : soft-stiff, stiff-stiff 
+        \item Design load cases 
+        \item How does it work : different ranges of function depending on the wind speed (cut-in, cut-off)
+        \item 
+    \end{itemize}
+
+%============================================================%
+\subsection{Further design considerations}
+%============================================================%
+\begin{itemize}
+    \item Soil modeling
+    \item Marine growth
+    \item Global scour
+    \item Port logistics
+    \item Grid impact
+    \item Environmental impact and social acceptance 
+    \item Manufacturing quality inducing stress concentration factor
+\end{itemize}
+
+
+%============================================================%
+\subsection{Maintenance and end-of-life management}
+%============================================================%
+\begin{itemize}
+    \item Operation and management
+    \item Repowering vs. revamping
+    \item Recycling 
+\end{itemize}
+
+
+%============================================================%
+%============================================================%
+\section{Uncertain inputs} \label{sec:owt_uncertainties}
+%============================================================%
+%============================================================%
+
+%============================================================%
+\subsection{Environmental inputs}
+%============================================================%
+
+
+%============================================================%
+\subsection{System inputs}
+%============================================================%
+
+
+%============================================================%
+\subsection{Probabilistic fatigue assessment}
+%============================================================%
+
+
+
+
+%============================================================%
+%============================================================%
 \section{Conclusion}
+%============================================================%
+%============================================================%
