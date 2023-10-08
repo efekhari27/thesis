@@ -874,7 +874,7 @@ wish to left align your text}
 \newcommand{\advisorlinewidth}[1]{\renewcommand{\@advisorlinewidth}{#1}}
 
 % Submission Text
-\newcommand{\submissiontext}{This dissertation is submitted for the degree of }
+\newcommand{\submissiontext}{\normalsize A thesis submitted in partial fullfilment of the requirements for the degree of }
 
 % keywords (These keywords will appear in the PDF meta-information
 % called `pdfkeywords`.)
@@ -961,10 +961,12 @@ wish to left align your text}
 
 % Department and University
 {\usebox{\PHD@dept}}
-\vspace{.15\PHD@titlepagespacing}
+\vspace{.1\PHD@titlepagespacing}
 
 % Submission Text
-{\usebox{\PHD@submission}}
+{\usebox{\PHD@submission}
+\textit{(in Computer Science)}}
+
 
 % College and degree date
 %\vfill
@@ -972,7 +974,7 @@ wish to left align your text}
 
 
 \vfill
-publicly defended on January xx, 2024 in front of the following jury:
+publicly defended on March xx, 2024 in front of the following jury:
 \vspace*{1em}
 
 \begin{tabular}{lll}
