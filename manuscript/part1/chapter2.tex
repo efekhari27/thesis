@@ -87,9 +87,7 @@ Wind resource assessment over decades are made more uncertain by the human-cause
     \label{fig:wind_psd}
 \end{figure}
 
-
-\noindent
-\elias{Add something general regrading wave modeling?}
+%\elias{Add something general regrading wave modeling?}
 
 
 
@@ -169,7 +167,7 @@ In a wind farm, this effect depends on the spacing between turbines, as well as 
 The turbines positioned at the center of the farm are the most impacted by the wake. 
 As a wind farm owner, the consequence of the wake is twofold: a loss of energy production (in the range of 10 to 20 percents depending on the farm), and an increase of fatigue loads (due to the asymmetric loading from the created turbulences).
 
-\begin{figure}
+\begin{figure}%[h!]
     \centering
     \includegraphics[width=0.5\textwidth]{./part1/figures/wake.png}
     \caption{Illustration of the wake created downstream a wind farm (source: \citet{veers_2019_review})} 
@@ -210,18 +208,18 @@ The JONSWAP spectrum is a correction of the Pierson-Moskowitz spectrum, adding t
 Further details regarding the numerical values to choose in \eq{eq:jonswap} are given in \citet{burton_2021_wind_handbook}. 
 An illustration of the two spectra is presented in \fig{fig:jonswap}, revealing the artificial enhancement factor proposed in the JONSWAP model to better fit sea states measurements. 
 
-\elias{Add elements from E.Petrovska p.13 regarding bimodal spectra}
-
-\elias{Add elements in practice: what is done depending on bottom-fixed or floating technology}
-
-\begin{figure}
+\begin{figure}%[h!]
     \centering
-    \includegraphics[width=0.5\textwidth]{./part1/figures/jonswap.png}
+    \includegraphics[width=0.45\textwidth]{./part1/figures/jonswap.png}
     \caption{Peirson-Moskowitz and JONSWAP spectra at significant wave height $H_s = 3$
     m and peak period $T_p = 7$ s (source: \citet{milano_thesis_2021})}
     \label{fig:jonswap}
 \end{figure}
 
+To take into account sea swell, meaning the waves resulting from weather conditions occurring far away, the unimodal wave spectra introduced in \eq{eq:jonswap} was improved. 
+Swell waves usually present long wavelength, allowing them to propagate over long distances with little dissipation. 
+Different methods allow to build a parametric bimodal distribution, with a mode in the low frequencies corresponding to the swell. 
+\citet{guedes_2005_bimodal_jonswap} reviews different bimodal wave spectra, and compares their adequacy with measured sea states. 
 
 
 
@@ -255,9 +253,6 @@ Note that the wake should also be considered at the wind farm scale, as describe
     \label{fig:owt_modeling_fidelities}
 \end{figure}
 
-\paragraph{Equation of motion}
-
-\elias{see the equation 1.3 from Milano and the time integration with Newmark scheme}
 
 
 %============================================================%
@@ -418,74 +413,70 @@ The \textit{soft-stiff} design strategy places the structure's natural frequency
     \label{fig:modal_analysis}
 \end{figure}
 
-Beyond early design, modal analysis does not model transient loading phases and their corresponding non-linearities. 
+Modal analysis does not model transient loading phases and their corresponding non-linearities, which is crucial beyond early design. 
 For a higher fidelity, simulations in the time domain using flexible multibody approaches are commonly used to describe the nonlinear dynamics \citep{holm_2009_multibody,alsolihat_2018_flexible_multibody}.
 DIEGO implements such an approach by combining rigid multibody dynamics with a deflection model based on Lagrangian equations \citep{milano_thesis_2021}. 
+Note that for floating wind turbines modeling, a preliminary step of rigid body dynamics is added to define the coordinate system of the floater. 
 \citet{otter_2022_owt_modeling_review} reviews the state-of-the-art of numerical and experimental modelling techniques for multi-physics OWT systems.
+
 
 %============================================================%
 \subsection{Fatigue damage}
 %============================================================%
-This section discusses the damage assessment defined by the standard \cite{dnv_fatigue_2016}. 
-Damage assessment can be divided into four steps: 
 
-\begin{enumerate}
-    \item Compute the equivalent Von Mises stress time series;
-    \item Identify the stress cycles using rainflow counting;
-    \item Define the Stress - Number of cycles curve corresponding to the material;
-    \item Compute the damage using Miner's rule.
-\end{enumerate}
+Mechanical fatigue damage is an important phenomenon to consider when designing wind turbines. 
+It refers to the progressive weakening of a material when subjected to cyclic or repeated loading, which may be significantly lower than the material's ultimate strength. 
+Understanding the mechanisms behind mechanical fatigue damage is essential for designing durable and reliable structures. 
+To quantify the fatigue damage on offshore wind turbine structures, standards \citep{dnv_fatigue_2016} recommend simulating the stresses in the time domain and identify a series of stress cycles. 
+Then, the \textit{stress-number of cycles curve} of a specific material (S-N curve) gives the number of cycles before failure at a given constant stress amplitude. 
+As the stress cycles identified on the results of the OWT simulation are not constant, an aggregation method called textit{Miner's rule} gathers the elementary damages over the stress time series studied. 
 
-%The rainflow counting is a tool used to identify the stress cycles from a uniaxial stress time series. 
-Since stress is multiaxial in the local coordinate system, the equivalent Von Mises stress is computed, turning a multiaxial stress into an equivalent uniaxial stress. 
-This first step is necessary since fatigue laws are mostly established for uniaxial stresses. 
-The following expression gives the Von Mises stress for a Cauchy stress tensor:
-\begin{equation}
-    \sigma _{\mathrm{VM}}={\sqrt{{\frac {1}{2}}\left[(\sigma _{11}-\sigma _{22})^{2}+(\sigma _{22}-\sigma _{33})^{2}+(\sigma _{33}-\sigma _{11})^{2}\right]+3\left(\sigma _{12}^{2}+\sigma _{23}^{2}+\sigma _{31}^{2}\right)}}.
-\end{equation}
-Note that in the mechanical model, the hypothesis of ``plane strain'' is considered, meaning that the Cauchy stress tensor $\underline{\underline{\sigma}}$ can be written as below:
 
+\paragraph{Stress cycles identification.}
+%------------------------------------------------------------%
+Offshore wind turbine simulators as DIEGO, deliver a time-dependent stress tensor. 
+To ease the manipulation of this tensor, the equivalent Von Mises stress is computed, turning a multiaxial stress into an equivalent uniaxial stress. 
+One can also consider a ``plane strain'' hypothesis on the Cauchy stress tensor $\underline{\underline{\sigma}}$, which is expressed as:
 \begin{equation}
     \underline{\underline{\sigma}} = \begin{pmatrix}
                             \sigma_{11} & \sigma_{12} & 0\\
                             \sigma_{21} & \sigma_{22} & 0\\
                             0 & 0 & \sigma_{33}
-                            \end{pmatrix},
+                            \end{pmatrix}.
 \end{equation}
-which simplifies the expression of the Von Mises stress:
+This assumption simplifies the expression of the equivalent Von Mises stress: 
 \begin{equation}
     \sigma _{\mathrm{VM}}=\sqrt{{\frac {1}{2}}\left[(\sigma _{11}-\sigma _{22})^{2}+(\sigma _{22}-\sigma _{33})^{2}+(\sigma _{33}-\sigma _{11})^{2}\right] + 3 \sigma _{12}^{2}}.
 \end{equation}
 
-After computing the equivalent Von Mises stress time serie, one can identify the fatigue loading cycles. 
-The usual method to identify fatigue stress cycles is rainflow counting \citep{dowling_1972}. 
-Fatigue stress cycles are only defined by their amplitude (also called ``range''), regardless of their mean value or their chronology. 
-Rainflow counting returns a list of stress ranges identified denoted by $s$ in what follows. 
-The ``Stress - Number of cycle'' curve (also called ``W\"ohler curve'') allows one to estimate the number of similar stress cycles necessary to reach a fatigue ruin for a defined stress cycle amplitude. 
-A well admitted simplification of the W\"ohler curve is to consider it as log-linear on two parts. 
-The W\"ohler curve is generally defined as:
-\begin{equation}
-    \log(N_{\mathrm{c}}) = \log(a) - m \log(s).
-\end{equation}
+Stress cycles can now be identified on the equivalent Von Mises stress time series. 
+The usual method to identify fatigue stress cycles is caleld \textit{rainflow counting} \citep{dowling_1972}. 
+Fatigue stress cycles are only defined by their amplitude (also called ``range'') and mean value, regardless of their chronology. 
+Rainflow counting returns a list of stress ranges identified denoted by $s$ in the following. 
 
-\noindent One can therefore introduce the following function for each segment of the W\"ohler curve: 
-\begin{equation*}
-N_{\mathrm{c}} = W(s)= \left\{
+
+\paragraph{S-N curve.}
+%------------------------------------------------------------%
+The S-N curve is also called the ``W\"oler curve'' after the pioneer work of August W\"ohler, who demonstrated that fatigue damage was at the origin of railway accidents in the mid 19\textsuperscript{th} century \citep{schutz_1996_history_fatigue}. 
+As a result of repeated fatigue experiments, this tool determines the number of similar stress cycles necessary to reach a fatigue ruin for a defined stress cycle amplitude. 
+Its values depend on the material studied and on external conditions (i.e., in the offshore industry, the S-N curves distinguish the fatigue in the air vs. underwater). 
+
+A well admitted simplification of the S-N curve is to consider it as log-linear on two segments:
+\begin{equation}
+\log(N_{\mathrm{c}}(s)) = \left\{
     \begin{array}{ll}
-        a_{1} s^{-m_1}, & \mbox{for}~ s \in [s_{\mathrm{min}}, s_{\mathrm{e}}] \\
-        a_{2} s^{-m_2}, & \mbox{for}~ s \in [s_{\mathrm{e}}, s_{\mathrm{max}}]
+        \log(a_1) - m_1 \log(s), & \mbox{for}~ s \in [s_{\mathrm{min}}, s_{\mathrm{e}}] \\
+        \log(a_2) - m_2 \log(s), & \mbox{for}~ s \in [s_{\mathrm{e}}, s_{\mathrm{max}}]
     \end{array}
 \right.
-\end{equation*}
-
-Where $N_{\mathrm{c}}$ is the predicted number of cycles to failure for stress range $s$, $m$ is the negative inverse slope of the W\"ohler curve, $\log(a)$ is the intercept of log N-axis by the W\"ohler curve, $s_{\mathrm{min}}$ is the minimal (resp. maximal) stress range identified by the rainflow counting, and $s_{\mathrm{e}}$ is the stress range axis of the intersection of the two log-lines formed by the W\"ohler curve. 
-Also interpreted as the endurance limit of the material.
-
-Note that, according to the standards \cite{dnv_fatigue_2016}, the W\"ohler curve is altered for welded joints by taking into account the weld plate's thickness. 
-In our case the considered  W\"ohler curve is defined by values given in the second line from Table \ref{tab:sn_table}, i.e.:
-
+\end{equation}
+Where $N_{\mathrm{c}}$ is the predicted number of cycles to failure for stress range $s$, $m$ is the negative inverse slope of the S-N curve, 
+$\log(a)$ is the intercept of log N-axis by the S-N curve, $s_{\mathrm{min}}$ is the minimal (resp. maximal) stress range identified by the rainflow counting, 
+and $s_{\mathrm{e}}$ is the stress range axis of the intersection of the two log-lines formed by the S-N curve. 
+The expression of this curve in two linear segments arise from the concept of endurance limit of a material, $s_{\mathrm{e}}$, under which the effect of fatigue on a material should be considerably smaller. 
+According to \cite{dnv_fatigue_2016}, the S-N curve is altered for welded tubular joints by taking into account the tube's thickness:
 \begin{equation}
-N_{\mathrm{c}} = W(s) = \left\{
+N_{\mathrm{c}}(s) = \left\{
     \begin{array}{ll}
         a_{1} \left(s (\frac{t}{t_{\mathrm{ref}}})^h\right) ^{-m_1}, & \mbox{for}~ s \in [s_{\mathrm{min}}, s_{\mathrm{e}}]\\
         a_{2} \left(s (\frac{t}{t_{\mathrm{ref}}})^h\right)^{-m_2}, & \mbox{for}~ s \in [s_{\mathrm{e}}, s_{\mathrm{max}}]
@@ -493,11 +484,11 @@ N_{\mathrm{c}} = W(s) = \left\{
 \right.
 \end{equation}
 With $t_{\mathrm{ref}}$ the reference thickness (for tubular welded joints $t_{\mathrm{ref}}$ = 25 mm); $t$ the plate thickness, and $h$ the thickness exponent.
-
+The numerical values considered in the present work derive from the Section xx of \citet{dnv_fatigue_2016}, reproduced in the Table \ref*{tab:sn_table}.
 
 \begin{table*}[h]
     \centering
-    \caption{W\"ohler curve numeric values for tubular joints (source: \cite{dnv_fatigue_2016})}
+    \caption{S-N curve numerical values of welded tubular joints in different environmental conditions (source: \cite{dnv_fatigue_2016})}
     \begin{tabular}{l|l|l|l|l|l}
      \hline
      \textit{Environment} & $m_1$ & $log(a_1)$ & $m_2$ & $log(a_2)$ & $h$\\
@@ -508,32 +499,49 @@ With $t_{\mathrm{ref}}$ the reference thickness (for tubular welded joints $t_{\
     \label{tab:sn_table}
 \end{table*}
 
+\paragraph{Non-zero mean correction.}
+%------------------------------------------------------------%
+Most S-N curves are built over zero mean stress cycles, to consider different stress mean $s_m$, different empirical models were developed \citep{suresh_1998_fatigue_book}. 
+The S-N curve becomes a three-dimensional envelope depending on the number of cycles $N_c$, the stress amplitude $s$, and the mean stress $s_m$. 
+The ``Goodman line'' and the ``Gerber parabola'' are two models relating the stress amplitude $s$ to the mean stress $s_m$:  
+\begin{align}
+    \mathrm{Goodman} &:\quad \frac{s}{s_d} + \frac{s_m}{R_m} = 1\\
+    \mathrm{Gerber} &:\quad \frac{s}{s_d} + \left(\frac{s_m}{R_m}\right)^2 = 1
+\end{align}
+Where the material's yield stress is denoted by $R_m$ and the fatigue limit by $s_d$. 
+The Haigh diagram represented in the \fig{fig:haigh_diagram} is a slice of the three-dimensional envelope for fixed values of fatigue endurance (i.e., number of cycles).
+By comparing the two models visually, the Goodman line is more conservative and is mostly used in the literature. 
+Further discussion in the field of wind turbines were reviewed in the early 2000's with a focus on the fatigue endurance of glass fiber materials \citep{sutherland_2000_fatigueWT} 
+In the present, the non-zero correction presented above are not considered as the values of mean stress were found to be negligible compared to the yield stress of the material studied. 
 
-%\begin{figure}[!h]
-%    \centering
-%    \includegraphics[width=0.5\linewidth]{figures/sn_tubular.png}
-%    \caption{W\"ohler curves for tubular joints in different configurations (source: \cite{dnv_fatigue_2016})}
-%    \label{fig:sn_curve}
-%\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{./part1/figures/haigh-diagram.jpg}
+    \caption{Illustration of the Haigh diagram representing the combination of stress mean and amplitude leading to the same fatigue endurance.\elias{Reproduce Haigh and Goodman in 3D}}
+    \label{fig:haigh_diagram}
+\end{figure}
 
-Damage is a physical measure of the structure's fatigue. 
-An approach to compute the damage, is to consider the fatigue contribution of each stress cycle according to the W\"ohler curve. 
-Miner's rule defines a damage by summing the fatigue contributions of the stress cycles:
+
+
+\paragraph{Cumulative damage theory.}
+%------------------------------------------------------------%
+A popular approach to assess the damage cumulated on a stress time series is to consider the fatigue contribution of each stress cycle according to the S-N curve. 
+Palmgren-Miner's rule defines the \textit{cumulative damage} $d_c$ by summing the fatigue contributions of each stress cycle $k$:
 \begin{equation}
-    y = \sum_{j=1}^{k} \frac{1}{N_{\mathrm{c}}^{(j)}} = \sum_{j=1}^{k} \frac{1}{W\left(s^{(j)}\right)}
-    %d = \sum_{i=1}^{k} \frac{n_i}{N_{\mathrm{c}}_i} = \sum_{i=1}^{k} \frac{n_i}{W(s_i)}
-    \label{miner}
+    d_c = \sum_{j=1}^{k} \frac{1}{N_{\mathrm{c}}\left(s^{(j)}\right)}.
+    \label{eq:miner}
 \end{equation}
-
-When using Miner's rule, an alternative is to use bins to classify the stress ranges as an histogram. 
-Our intuition is that choosing a number of bins too small will lead to a poor approximation of the damage. 
-\cite{dnv_fatigue_2016} standards recommend to use at least 20 bins for damage computation. 
-Few tests were performed on a defined simulation model, for a fixed input stress time serie. 
-A reference damage was computed by applying the Miner's rule to all stress range identified by rainflow counting ($\{n_i = 1\}_{i=1}^k$). 
-Then, for various numbers of bins, stress ranges were classified and Miner's rule applied to these classes. 
-The conclusion is that this method leads to a relative error around 1\% for 500 bins. 
+In this theory, the material reaches fatigue ruin when the cumulative damage exceeds one.  
+A common practice when using Palmgren-Miner's rule is to gather the stress cycles in a set of bins. 
+This practice induces an integration error, which becomes significant as the number of bins is reduced. 
+In the following, the cumulative damage is computed without binning, as defined in \eq{eq:miner}.
 
 
+Spectral methods were also introduced to quantify fatigue damage in the late 80's. 
+The main idea is to infer a PDF over the amplitudes of the stress cycles identified by rainflow counting, typically using a mixture of parametric distributions. 
+From this PDF, one can derive the fatigue endurance and therefore a cumulated damage (further details in the review of \citet{dirlik_2021}). 
+In the context of wind turbine fatigue assessment, spectral approaches showed to be unsuited in some cases, such as the fatigue of the blade's bending moments \citep{ragan_2007_dirlik_vs_miner}.  
+Overall, fatigue estimation in the time-domain does not represent important computational effort compared to the simulation of the wind turbine's physics. 
 
 
 %============================================================%
@@ -583,7 +591,7 @@ Various aspects should be taken into consideration during the design and install
 
 \paragraph{Manufacturing quality inducing stress concentration factor}
 %------------------------------------------------------------%
-
+\elias{Stress concentration factors to account for uncertainties in the soldering process}
 
 
 %============================================================%
@@ -603,26 +611,79 @@ Various aspects should be taken into consideration during the design and install
 %============================================================%
 
 
-\elias{Ref: Floating lidar as an advancedoffshore wind speed measurementtechnique: current technologystatus and gap analysis in regardto full maturity}
+\elias{Ref: Floating lidar as an advanced offshore wind speed measurementtechnique: current technologystatus and gap analysis in regardto full maturity}
 %============================================================%
 \subsection{Environmental inputs}
 %============================================================%
 
-\elias{Add table}
+\elias{Origin of the data: met-masts, SCADA, floating LIDARs, mesoscale simulations}
+
 
 \elias{The available data}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ l l l l}
+        \hline
+        {\it Name} & {\it Notation} & {\it Marginal model} & {\it Description}\\
+        \hline
+        Mean wind speed & $U$ & Weibull & 10-min. average horizontal at 10m\\
+        Turbulence & $\sigma_s $ & Log-normal & 10-min.  standard deviation \\
+        Wind direction & $\theta_{wind} $ & non-parametric & Wind directions\\
+        Significant wave height & $H_s $ & Weibull & Significant wave height per hour\\
+        Peak wave period & $T_p $ & Log-normal & Peak 1-hour spectral wave period \\
+        Wave direction & $\theta_{wave} $ & non-parametric & Wave directions\\
+        %Mean shear & $\alpha$ & Normal & 10-min mean shear exponent \\
+        %Air density & $\delta$ & - & -\\
+        \hline
+    \end{tabular}
+    \caption{Marginal distributions of the environmental random variables}
+    \label{tab:envi_variables}
+\end{table}
 
 %============================================================%
 \subsection{System inputs}
 %============================================================%
 
-\elias{Add table}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ l l l l}
+        \hline
+        {\it Name} & {\it Notation} & {\it Marginal model} & {\it Description}\\
+        \hline
+        Soil coefficient & $S$ & Normal ($\mu=1., \sigma=0.3$) & Applied to the soil stiffness matrix\\
+        Yaw misalignment & $\theta_{\mathrm{m}}$ & Normal ($\mu=0., \sigma=0.3$) & [deg.] \\
+        SN curve coefficient & $a$ & Log-normal ($\mu=1, \sigma=0.3$) & See \cite{guede_2007}\\
+        Resistance & $D_{\mathrm{cr}}$ & Log-normal ($\mu=1, \sigma=0.3$) & See \cite{drexler_musculus_2021}\\\hline
+    \end{tabular}
+    \caption{Marginal distributions of the system random variables}
+    \label{tab:sys_variables}
+\end{table}
 
 %============================================================%
 \subsection{Probabilistic fatigue assessment}
 %============================================================%
 
+\begin{align}
+    \log(N(s, \omega)) = \mu(s) + \log(\varepsilon(\omega))\\
+    N(s, \omega) = \exp(\mu(s)) \times \varepsilon(\omega)
+\end{align}
+where $\mu(s) = \log(a) - m \log(s)$, and $\log(\varepsilon(\omega)) \sim \mathcal{N}(0, 0.2)$. 
 
+Probabilistic Miner's rule (without bins):
+\begin{equation}
+    d_c(\omega) = \sum_{j=1}^k \frac{1}{N(s^{(j)}, \omega)}
+            = \sum_{j=1}^k \frac{1}{\exp(\mu(s^{(j)})) \times \varepsilon(\omega)}
+            = \frac{1}{\varepsilon(\omega)} \sum_{j=1}^k \frac{1}{\exp(\mu(s^{(j)}))}
+\end{equation}
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.6\textwidth]{./part1/figures/probabilistic_fatigue.jpg}
+    \caption{Illustration of a probabilistic S-N curve according to the model defined in \citet{guede_2007}.}
+    \label{fig:probabilistic_SN}
+\end{figure}
 
 
 %============================================================%
