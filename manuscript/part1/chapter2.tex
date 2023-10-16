@@ -243,7 +243,7 @@ As an alternative, the behavior of OWT systems are also simulated in the time do
 In the time domain, such systems may be models at different fidelities. 
 The diagram in \fig{fig:owt_modeling_fidelities}, illustrates the increasing complexities for two physics involved in OWT modeling (aerodynamics and structural dynamics). 
 To perform an uncertainty quantification around a wind turbine model, its fidelity is preferably low. 
-At the wind turbine scale, the numerical model studied in this work is actually a chain of three models executed sequentially. 
+At the wind turbine scale, the numerical model studied in this work is actually a chain of three models executed sequentially \elias{add and mention the chained diagram}. 
 Note that the wake should also be considered at the wind farm scale, as described earlier. 
 
 \begin{figure}
@@ -326,12 +326,12 @@ Under these assumptions, the axial thrust and torque exerted on a blade element 
 \begin{figure}[h!]
     \begin{subfigure}[b]{0.5\textwidth}
         \centering
-        \includegraphics[height=0.15\textheight]{./part1/figures/speed_triangle.png}
+        \includegraphics[width=0.9\linewidth]{./part1/figures/speed_triangle.png}
         \caption{Speed triangle}
     \end{subfigure}
     \begin{subfigure}[b]{0.5\textwidth}
         \centering
-        \includegraphics[height=0.15\textheight]{./part1/figures/aerodyn_blade.png}
+        \includegraphics[width=0.9\linewidth]{./part1/figures/aerodyn_blade.png}
         \caption{Aerodynamic forces}
     \end{subfigure}
     \caption{Blade element forces. With the lift and drag forces $L$ and $D$, the flow angle $\phi$, the pitch angle $\beta$ and the angle of attack $\alpha$ (source: \citet{burton_2021_wind_handbook}).}
@@ -419,6 +419,7 @@ DIEGO implements such an approach by combining rigid multibody dynamics with a d
 Note that for floating wind turbines modeling, a preliminary step of rigid body dynamics is added to define the coordinate system of the floater. 
 \citet{otter_2022_owt_modeling_review} reviews the state-of-the-art of numerical and experimental modelling techniques for multi-physics OWT systems.
 
+\elias{Mention the Offshore Code Comparison Collaboration Continuation (OC4) project, for which a benchmark of OWT numerical models was realized around the academic DeepCwind concept proposed by the university of Maine}
 
 %============================================================%
 \subsection{Fatigue damage}
@@ -550,58 +551,192 @@ Overall, fatigue estimation in the time-domain does not represent important comp
 %============================================================%
 %============================================================%
 
+The design and operation of offshore wind turbines is at the intersection of various engineering, environmental and social considerations. 
+Regardless of the different bottom-fixed or floating technologies, OWTs are dynamically excited structures evolving in a harch offshore environment.   
+To operate such assets over up to 25 years of lifespan, multiple aspects should be assessed, from soil modeling, studies of environmental impact, grid integration, manufacturing quality, port logistics, to marine growth management, and maintenance
+This section resumes the main types of OWT technologies, as well as the main design and operation practices.   
 
 %============================================================%
-\subsection{Preliminary design}
+\subsection{Types of technologies and preliminary design}
 %============================================================%
-    \begin{itemize}
-        \item Different parts of the turbine (monopile, transition piece, fundation, tower), different turbine designs
-        \item What are the key steps for a wind farm project in France 
-        \item Pre-installation measures are usually done for a period of 1 to 3 year. This data is often validated against long-term regional datasets \cite{sempreviva_2008_wind_assessment_review}. Note that floating lidars present an opportunity \elias{add ref}
-        \item general design from IEC61400 with part 1 and part 3
-        \item Different designs : soft-stiff, stiff-stiff 
-        \item Design load cases 
-        \item How does it work : different ranges of function depending on the wind speed (cut-in, cut-off)
-        \item 
-    \end{itemize}
+Over the last two decades, multiple technologies of OWTs have been developped, which are generally gathered into two types: bottom-fixed or floating technologies. 
+\fig{fig:FOWT_bottomfixed} and \ref{fig:FOWT_floating} respectively illustrates the diffrent types of bottom-fixed or floating technologies. 
+At this stage, the bottom-fixed solutions present more maturity and the floating technologies are still transitionning from the phase of large demonstrators to large scale wind farms. 
+The current developpement, in France, of offshore wind energy lead to the construction of the two first industrial projects, both managed by EDF Renewables \elias{(add the ADEME map of the offshore French project?)}. 
+In Saint-Nazaire, 80 bottom-fixed wind turbines were built on monopile foundations, alltogether producing up to 480 MW \elias{add ref}. 
+On the mediterannean coast, the first French industrial floating project was recently installed 20km offshore the coast of Marseille. 
+This pilot project, called ``\textit{Provence grand large}'', is composed of three turbines operating on so called ``tension-leg platforms'', delivering 25 MW of nominal power installed.     
+
+In order to lift water depth limitations associated with bottom fixed technologies (around 60 meters), floating pilot projects emerge accross the world. 
+However, the wind energy industry still tests different floating technologies in terms of cost efficiency and durability (as listed in \citet{mackinnon_2022_FOWT_table}). 
+An example of farm projects by type of technology is described hereafter: 
+\begin{itemize}
+    \item \textbf{Semi-submersible}: a pilot project of three 10MW turbines called ``\textit{les éoliennes du Golfe du Lion}'' in the south of France relies on a semi-submersible technology developped by the company Principle Power \citep{cermelli_2018_windfloat}.   
+    \item \textbf{Tension-leg}: a pilot project of three 8MW turbines called ``\textit{Provence grand large}'' exploits tension-leg platforms co-developped between the IFPEN national laboratory and the company SBM \citep{caille_2017_TPL_IFPEN}. 
+    \item \textbf{Barge}: a pilot project of three 10MW turbines called ``EOLMED'' uses the floater developped by the company Ideol \citep{guignier_2016_ideol}. 
+    \item \textbf{Spar}: the Norvegian oil and gas company Equinor chose the spar technology \citep{driscoll_2016_hywind} to equip its floatting wind farm of 88MW, named ``Hywind Tampen''. 
+\end{itemize}
+
+\begin{figure}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./part1/figures/bottom_fixed_techno.png}
+        \caption{Bottom-fixed}
+        \label{fig:FOWT_bottomfixed}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./part1/figures/Floating-wind-platform-categories.png}
+        \caption{Floating}
+        \label{fig:FOWT_floating}
+    \end{subfigure}
+    \caption{Main offshore wind turbine technologies (sources: \citet{ahmed_2015_bottomfixed_image,mei_2021_FOWT_illustration}).}
+\end{figure}
+
+
+
+The turbines installed offshore over bottom-fixed foundations or floating structures present the same properties and components. 
+As described in \fig{fig:owt_diagram}, the structure of a wind turbine is composed of blades made in composite materials, while the tower, teh transition peace and fundation (e.g., monopile) are made out of steel. 
+Inside the nacelle, the gearbox adapts the rotation speed to suit the energy conversion system (i.e., generator). 
+To improve the reliability of the components, manufacturers offer without gearboxes, called ``direct-drive''. 
+This technology is relevant offshore, as the maintenance contraints are higher. 
+However, the corresponding generators used in this situation operate at lower rotation speed. 
+Adapting the generators significantly incease their weigth and requires the use of larger permanent magnets increasing their price.   
+
+\begin{figure}
+    \centering
+    \elias{add diagram}
+    
+    \caption{Diagram of an offshore wind turbine's major components.}
+    \label{fig:owt_diagram}
+\end{figure}
+
+The construction of an offshore wind farm requires several years of project planning, administrative procedures, consultation of the public opinion, and design. 
+Internationals standards define the recommanded practice and requirements realted to the design and operation of OWTs. 
+Among them, the IEC 61400 is subdivided in many parts, incluing the general one \citep{iec_2019} and other parts details specific topics.       
+To validate the structural integrity of an wind turbine design, the standards recommand to simulate the behavior of the OWT (using the methods described in Section \ref{sec:owt_modeling}) for many environmental conditions, called ``design load cases'' (DLC). 
+As the environmental conditions (i.e., the DLC) depend on the site studied, the standards provide generic DLCs depending on a rough classification of the environmental conditions. 
+Advanced sampling methods reling envrionmental data measured on site will be introduced in Chapter 4. 
+Beyond the main sollicitations resulting from environmental loading, various aspects should be considered around offshore wind turbines. 
+
 
 %============================================================%
 \subsection{Further design considerations}
 %============================================================%
-Various aspects should be taken into consideration during the design and installation of an offshore wind farm.
-
+The present section focues on different topics to be adressed ahead or during the design and operation of offshore wind turbines.
 
 \paragraph{Soil modeling}
 %------------------------------------------------------------%
 
+\elias{
+Geotechnical considerations play a pivotal role in the design and stability of offshore wind turbines. 
+The seabed soil properties are far from uniform in a wind farm, with significant variability across different locations. 
+Understanding and characterizing this variability is crucial for ensuring the safe and reliable installation of these massive structures.
+}
+
+\elias{
+Geotechnical surveys and soil testing are conducted to assess parameters such as soil composition, density, strength, and seabed stability. 
+Engineers need to consider factors like soil bearing capacity, which impacts the foundation design, and the potential for scour, which can lead to turbine instability. 
+Variability in soil conditions across a wind farm site can necessitate different foundation types, from monopiles to gravity-based structures or innovative solutions like suction buckets, to ensure the turbines are securely anchored.
+}
+
+\elias{
+In summary, geotechnical considerations are essential for offshore wind turbine design, and the variability of soil properties within a wind farm necessitates a tailored approach to foundation design and installation to ensure the structural integrity and longevity of these renewable energy structures.
+}
+
+
 \paragraph{Marine growth}
 %------------------------------------------------------------%
+
+\elias{
+The impact of marine growth on offshore wind turbine structures and electric cables is a significant concern in the maintenance and operational aspects of these renewable energy systems. 
+As offshore wind turbines are exposed to the harsh marine environment, they become susceptible to the colonization of marine organisms, such as barnacles, mussels, and algae, which can accumulate on various parts of the structure, including the tower, blades, and subsea cables.
+}
+
+\elias{
+The growth of marine organisms can have several adverse effects. 
+Firstly, the added weight can increase loading on the turbine and its foundation, potentially leading to structural integrity issues. 
+Secondly, the altered hydrodynamics can affect the turbine's efficiency by impeding the flow of wind across the blades. 
+Moreover, marine growth on electric cables can increase the risk of electrical faults and decrease the overall reliability of power transmission.
+}
+
+\elias{
+As such, addressing and mitigating the effects of marine growth is an integral part of offshore wind turbine maintenance, with regular cleaning and preventive measures being essential to ensure the continued performance and longevity of these vital renewable energy sources.
+}
+
 
 \paragraph{Global scour}
 %------------------------------------------------------------%
 
+Global scour, the large-scale erosion of seabed sediment around bottom-fixed offshore wind turbine foundations, poses significant risks:
+\begin{itemize}
+    \item Stability: It undermines foundation stability, potentially leading to tilting, settling, or structural damage.
+    \item Load Distribution: Alters load distribution, causing uneven stresses and reducing operational lifespan.
+    \item Cable Exposure: Exposes buried cables, increasing the risk of damage and electrical faults.
+\end{itemize}
+Mitigation measures include installing scour protection, regular monitoring, and robust foundation design that accounts for potential scour conditions. 
+Global scour is a critical consideration for the long-term reliability of offshore wind turbines.
+
+
 \paragraph{Port logistics}
 %------------------------------------------------------------%
+\citep{jiang_2021_owt_installation_review}
+
+Logistics and port logistics play a pivotal role in the successful construction of offshore wind farms, especially when considering the complex supply chain involving various components from different regions. 
+Coordinating the transportation and assembly of massive wind turbine components, foundations, and supporting infrastructure requires meticulous planning and execution.
+
+Key aspects of logistics in offshore wind farm construction include:
+\begin{itemize}
+    \item \textbf{Component Coordination:} Wind turbine components, such as tower sections, blades, nacelles, and foundations, often come from different manufacturing facilities located in diverse regions. 
+    Efficient logistics are essential to synchronize the delivery of these components to the project site. 
+    \item \textbf{Port Selection:} Choosing the right ports for assembly and transportation is crucial. These ports must be equipped to handle oversized and heavy cargo, and they need to be strategically located to minimize transportation distances to the installation site.
+    \item \textbf{Transportation:} Once components arrive at the designated ports, they must be transferred from sea vessels to installation vessels or barges. This process must be seamless and well-orchestrated.
+    \item \textbf{On-Site Assembly:} Components are assembled offshore, often with specialized vessels like installation jack-ups. Timing and synchronization are critical, as weather windows for assembly can be limited.
+    \item \textbf{Supply Chain Efficiency:} Efficient logistics help reduce project lead times and costs, which are essential for the economic viability of offshore wind projects.
+    \item \textbf{Environmental Considerations:} Minimizing the environmental impact of logistics is a growing concern, with efforts made to reduce emissions and protect marine ecosystems.
+\end{itemize}
+
+In summary, the efficient coordination of logistics and port logistics is essential for the timely and cost-effective construction of offshore wind farms. 
+It requires careful planning to ensure that components from various regions are seamlessly integrated into the construction process while considering environmental and sustainability aspects.
+
 
 \paragraph{Grid impact}
 %------------------------------------------------------------%
 
+Decentralized electricity production, exemplified by offshore wind turbines, exerts a profound influence on the electrical grid. 
+These sources, unlike traditional centralized fossil fuel plants, bring both challenges and benefits to the grid. 
+The intermittency of offshore wind generation, driven by variable wind conditions, strains grid stability, necessitating careful matching of supply and demand. 
+Integrating decentralized sources often mandates extensive grid infrastructure upgrades. 
+Grid balancing becomes more complex as variable and distributed sources are introduced, highlighting the need for energy storage and advanced grid management. 
+On the upside, decentralized sources like offshore wind play a pivotal role in reducing carbon emissions and advancing cleaner, renewable energy. 
+They also reduce transmission losses, enhance grid resilience, and promote energy independence by generating power closer to consumption areas. 
+Thus, while offshore wind contributes to a sustainable energy future, effective integration into the grid requires a comprehensive approach that combines renewable energy sources with advanced grid management and energy storage solutions.
+
+
+
 \paragraph{Environmental impact and social acceptance} 
 %------------------------------------------------------------%
+\elias{FOWT lifecycle in the mediterranean \citep{pulselli_2022_FOWT_lifecycle}}
+
+Offshore wind turbines in Europe have played a pivotal role in the region's transition to clean, renewable energy sources, significantly reducing greenhouse gas emissions and contributing to the global effort to combat climate change. 
+However, their deployment is not without environmental and social considerations. 
+On the environmental front, the installation and construction phases can disrupt marine ecosystems, and there are concerns about their impact on avian and marine life. 
+Addressing these concerns necessitates rigorous environmental impact assessments and effective mitigation strategies. 
+Social acceptance of offshore wind projects varies across Europe, with some communities embracing the move to renewable energy and others voicing concerns about the visual impact on coastal landscapes, potential disruption to fishing and tourism industries, and other localized issues. 
+To ensure widespread support, engagement with local communities, addressing their concerns, and sharing economic benefits through job creation and community investment are pivotal steps in the journey towards sustainable offshore wind energy.
+
 
 \paragraph{Manufacturing quality inducing stress concentration factor}
 %------------------------------------------------------------%
 \elias{Stress concentration factors to account for uncertainties in the soldering process}
 
 
-%============================================================%
-\subsection{Maintenance and end-of-life management}
-%============================================================%
-\begin{itemize}
-    \item Operation and maintenance
-    \item Repowering vs. revamping
-    \item Recycling 
-\end{itemize}
+\paragraph{Maintenance and end-of-life management}
+%------------------------------------------------------------%
+Operation and maintenance / Repowering vs. revamping / Recycling
+
+
+
 
 
 %============================================================%
@@ -617,6 +752,10 @@ Various aspects should be taken into consideration during the design and install
 %============================================================%
 
 \elias{Origin of the data: met-masts, SCADA, floating LIDARs, mesoscale simulations}
+
+Pre-installation measures are usually done for a period of 1 to 3 year. 
+This data is often validated against long-term regional datasets \cite{sempreviva_2008_wind_assessment_review}. 
+Note that floating lidars present an opportunity \elias{add ref}
 
 
 \elias{The available data}
