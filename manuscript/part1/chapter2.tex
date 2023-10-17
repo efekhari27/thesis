@@ -41,6 +41,8 @@ In this context, numerical models have been developed to certify the structural 
 A wind farm project planned at given location should pass different validation procedures established by international standards such as the International Electrotechnical Commission \citep{iec_2019}. 
 As wind turbine structures face a large amount of stress cycles in their lifetime (up to $10^8$ for 25 years of operation), this chapter will particularly focus on fatigue damage assessment.
 
+\elias{The present thesis studied uncertainty quantification on two wind farm projects. 
+First the Teesside wind farm, operating since xx in the North sea, second the theoretical wind farm of south Brittany , currently at the stage of calls for tenders.}
 
 This chapter briefly introduces wind turbine modeling and design, in the following layout: 
 Section \ref{sec:metocean_simulation} presents the methods used for wind and wave generation and wake simulation at a farm scale; 
@@ -243,8 +245,21 @@ As an alternative, the behavior of OWT systems are also simulated in the time do
 In the time domain, such systems may be models at different fidelities. 
 The diagram in \fig{fig:owt_modeling_fidelities}, illustrates the increasing complexities for two physics involved in OWT modeling (aerodynamics and structural dynamics). 
 To perform an uncertainty quantification around a wind turbine model, its fidelity is preferably low. 
-At the wind turbine scale, the numerical model studied in this work is actually a chain of three models executed sequentially \elias{add and mention the chained diagram}. 
+At the wind turbine scale, the numerical model studied in this work is actually a chain of three models executed sequentially as illustrated in the diagram in \fig{fig:owt_chained_model}. 
+\begin{itemize}
+    \item \elias{TurbSim}
+    \item \elias{DIEGO}
+    \item \elias{Fatigue assessment}
+\end{itemize}
 Note that the wake should also be considered at the wind farm scale, as described earlier. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{./part1/figures/chained_model.pdf}
+    \caption{Chained numerical model of offshore wind turbine.}
+    \label{fig:owt_chained_model}
+\end{figure}
+
 
 \begin{figure}
     \centering
@@ -343,6 +358,10 @@ Global axial thrust over the blade are then computed by integrating the elementa
 Note that various corrections are applied to the BEMT model, for example to take into account the non-homogeneous loss of momentum over the rotor disk. 
 The BEMT also fails to model non-linear aerodynamic effects, occurring with sudden change of angle of attack. 
 Such effects are sometimes called ``dynamic stall'' and are represented in DIEGO by the Beddoes-Leishman model (see \citet{burton_2021_wind_handbook} for further details).  
+
+\elias{\paragraph{Aerodynamic damping?}}
+%------------------------------------------------------------%
+% See Petrovska p.51 
 
 
 %============================================================%
@@ -596,7 +615,9 @@ An example of farm projects by type of technology is described hereafter:
 
 
 The turbines installed offshore over bottom-fixed foundations or floating structures present the same properties and components. 
-As described in \fig{fig:owt_diagram}, the structure of a wind turbine is composed of blades made in composite materials, while the tower, teh transition peace and fundation (e.g., monopile) are made out of steel. 
+As described in \fig{fig:owt_diagram}, the structure of a wind turbine is composed of blades made in composite materials, while the tower, the transition peace and fundation (e.g., monopile) are made out of steel. 
+\elias{Mention the steel type and the fact that catodic proection against the corrosition is usually used.}
+
 Inside the nacelle, the gearbox adapts the rotation speed to suit the energy conversion system (i.e., generator). 
 To improve the reliability of the components, manufacturers offer without gearboxes, called ``direct-drive''. 
 This technology is relevant offshore, as the maintenance contraints are higher. 
@@ -640,6 +661,8 @@ Generally speaking, monopile foundations for OWT tend to be more rigid than for 
 However, various contributions in wind energy extended the use of $p-y$ curves to the case of multidirectional and irreversible displacements \citep{lovera_2019_thesis}. 
 In summary, geotechnical considerations are essential for offshore wind turbine design, and the variability of soil properties within a wind farm necessitates a tailored approach to foundation design. 
 Finally, the consideration of uncertainties in this field is still an open research topic \citep{reale_2021_OWT_soil_uncertainties}.
+
+\elias{Describe the modeling method in DIEGO called the ``apparent fixity'', and the defined soil stiffness matrix. See Petrovska p.52.}
 
 
 \paragraph{Marine growth.}
@@ -732,33 +755,51 @@ proper decommissioning planning are essential for enssuring cost-effective yet d
 %============================================================%
 %============================================================%
 
+Following the general diagram of uncertainty quantification in \fig{fig:UQ_methodo}, this section focuses on the definition of the uncertain inputs and their corresponding probabilistic model (step B). 
+In our case, the generic term of ``inputs'' refers to the inputs to the wind turbine numerical model illustrated in \fig{fig:owt_chained_model}, which will be considered as random afterwards. 
 
-\elias{Ref: Floating lidar as an advanced offshore wind speed measurementtechnique: current technologystatus and gap analysis in regardto full maturity}
+The random variables studied in this work are split into two groups, assumed independent, which are respectively called \textit{envrionmental variables} and \textit{system variables}. 
+First, the environmental variables are a collection of variables caracterizing the long-term metocean conditions near a wind farm. 
+As illustrated by the environmental dataset representing the conditions of a site located in the south of Brittany, \elias{Fig xx}, the underlying random vector presents a complex dependence structure. 
+However, this source of variability is well known as the wind potential is well studied before and during a wind farm project.   
+
+The second group of uncertain inputs is related to the wind turbine system. 
+A wide range of uncertainties can be taken into account in such systems, such as material properties, manufacturing quality, soil conditions, control error, corrosion, marine growth, aerodynmic damping, etc.  
+Among them, a restricted list of four variables are kept according to sensitivity analysis results from the literature and expert knowledge. 
+The present section defines the two groups of random variables, including a focus on the definition of probabilistic S-N curves. 
+
+
 %============================================================%
 \subsection{Environmental inputs}
 %============================================================%
 
-\elias{Origin of the data: met-masts, SCADA, floating LIDARs, mesoscale simulations}
 
-Pre-installation measures are usually done for a period of 1 to 3 year. 
-This data is often validated against long-term regional datasets \cite{sempreviva_2008_wind_assessment_review}. 
-Note that floating lidars present an opportunity \elias{add ref}
+During the planning and operation of a wind farm project, the metocean conditions are studied using different sources of information. 
+At the early stage, datasets generated by fine mesoscale numerical simulation can be used to assess the wind potential. 
+This was typically the case during the call for tenders\footnote{\url{https://eolbretsud.debatpublic.fr/}} issued by the French government regarding the construction of two floating offshore wind farm in the south coast of Brittany (of respectively 250 and 500 MW of nominal power). 
+Open-access environmental data of the sea-states in this reagion were available, as a result of mesoscale simulations \citep{raoult_2018_anemoc3} realized by EDF R\&D.    
+In a second time, to get a local assessment of the conditions, a meteorological mast with wind speed cup anemometers at different heights and wave boy are generally installed in the vincity of the future farm. 
+As a cheaper alternative to met mast, new measurement technologies such as floating LIDARs (for light detection and ranging) are significantly cheaper \citep{gottschall_2017_floating_LIDAR}. 
+The adequation of the local measures with the data obtained by mesoscale simulations  to imporove wind assessment is reviewed in \citet{sempreviva_2008_wind_assessment_review}.  
+Finally, after the installation of the turbines, the acquisition system (usually called SCADA, for ``Supervisory Control And Data Acquisition'') measure wind conditions with a sampling period of ten minutes. 
 
-
-\elias{The available data}
+In the present work, two wind farms projects are partially studied: the Teesside wind farm, operating in the North Sea, and the south Brittany floatting project, at the stage of tenders call. 
+Table \ref{tab:envi_variables} summarizes the variables considered as random hereafter. 
+The inference of such data will be discussed in the upcoming Section \ref{sec:32_inference}. 
+Note that the environmental data resulting from the SCADA system of the Teesside wind farm is confidential, and will be represented as anonymized data in the following. 
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{ l l l l}
+    \begin{tabular}{ l l l}
         \hline
-        {\it Name} & {\it Notation} & {\it Marginal model} & {\it Description}\\
+        {\it Name} & {\it Notation} & {\it Description}\\
         \hline
-        Mean wind speed & $U$ & Weibull & 10-min. average horizontal at 10m\\
-        Turbulence & $\sigma_s $ & Log-normal & 10-min.  standard deviation \\
-        Wind direction & $\theta_{wind} $ & non-parametric & Wind directions\\
-        Significant wave height & $H_s $ & Weibull & Significant wave height per hour\\
-        Peak wave period & $T_p $ & Log-normal & Peak 1-hour spectral wave period \\
-        Wave direction & $\theta_{wave} $ & non-parametric & Wave directions\\
+        Mean wind speed & $U$ & 10-min. average horizontal at 10m\\
+        Turbulence & $\sigma_s $ & 10-min.  standard deviation \\
+        Wind direction & $\theta_{wind} $ & Wind directions\\
+        Significant wave height & $H_s $  & Significant wave height per hour\\
+        Peak wave period & $T_p $ & Peak 1-hour spectral wave period \\
+        Wave direction & $\theta_{wave} $ & Wave directions\\
         %Mean shear & $\alpha$ & Normal & 10-min mean shear exponent \\
         %Air density & $\delta$ & - & -\\
         \hline
@@ -770,6 +811,16 @@ Note that floating lidars present an opportunity \elias{add ref}
 %============================================================%
 \subsection{System inputs}
 %============================================================%
+As mentionned earlier, multiple parameters in a wind turbine system can be considered as uncertain. 
+Our study focuses on the effects of uncertainties on the fatigue damage over the structure. 
+Therefore, the litterature review of the sensitivity analysis on offshore wind turbine fatigue helped us narrow down a few system variables. 
+Petrovska explored the sensitivity analysis of many variables on the fatigue of a wind turbine in Teesside. 
+Even if the use of the Morris method is questionable, as discussed in \citet{petrovska_2022}, the results allowed to screen some variables. 
+For example, the uncertainties related to the corrosion, the wind shear exponent, or the nacelle mass showed a limited impact on the fatigue.     
+By crossing the conclusions of various research, including \elias{add list}, with the expert knowledge among partners from the HIPERWIND european project, the system variables considered uncertain in the following are summarized in Table \ref{tab:sys_variables}.
+Each of them is assumed independent, with a marginal probabilistic model arising from the literature. 
+
+\elias{explain the resistance}
 
 \begin{table}[h!]
     \centering
@@ -786,25 +837,41 @@ Note that floating lidars present an opportunity \elias{add ref}
     \label{tab:sys_variables}
 \end{table}
 
-%============================================================%
+
+
 \subsection{Probabilistic fatigue assessment}
-%============================================================%
+%------------------------------------------------------------%
+The definition of a fatigue endurance model prime impact on fatigue damage assessment. 
+However, the S-N curves usually describing the endurance of a material are built from repeated laboratory experiments, source of variability. 
+Even if the need for random S-N curves has long been expressed in the field of fatigue experiments \citep{lieurade_1982_essais_fatigue}, their probabilistic description was better formalized in \citep{guede_2007,sudret_2013_fatigue}. 
 
-\begin{align}
-    \log(N(s, \omega)) = \mu(s) + \log(\varepsilon(\omega))\\
-    N(s, \omega) = \exp(\mu(s)) \times \varepsilon(\omega)
-\end{align}
-where $\mu(s) = \log(a) - m \log(s)$, and $\log(\varepsilon(\omega)) \sim \mathcal{N}(0, 0.2)$. 
+The models proposed in \citet{guede_2007} are based on the experimental procedure used to build the S-N curves. 
+For a given steel specimen, a cyclic loading (e.g., pure traction) is repeated with fixed amplitude until fatigue ruin. 
+Because of variations in the material's microstructure, the fatigue endurance for the same cyclic solicitation is random. 
+This variation is commonly assumed to follow a log-normal distribution in the literature. 
+A probabilistic model of the S-N curve naturally comes: 
+\begin{subequations}
+    \begin{align}
+        \log(N_c(s, \omega)) &= \log(a) - m \log(s) + \log(\varepsilon(\omega))\\
+        \Rightarrow N_c(s, \omega) &= a \, s^{-m} \, \varepsilon(\omega),
+    \end{align}
+\end{subequations}
 
-Probabilistic Miner's rule (without bins):
+where $\log(\varepsilon(\omega)) \sim \mathcal{N}(0, 0.2)$. 
+
+This uncertainty can be injected in the Miner-Palmgren rule defined in \eq{eq:miner}: 
 \begin{equation}
-    d_c(\omega) = \sum_{j=1}^k \frac{1}{N(s^{(j)}, \omega)}
-            = \sum_{j=1}^k \frac{1}{\exp(\mu(s^{(j)})) \times \varepsilon(\omega)}
-            = \frac{1}{\varepsilon(\omega)} \sum_{j=1}^k \frac{1}{\exp(\mu(s^{(j)}))}
+    d_c(\omega) = \sum_{j=1}^k \frac{1}{N_c(s^{(j)}, \omega)}
+            = \sum_{j=1}^k \frac{1}{a \, \left(s^{(j)}\right)^{-m} \, \varepsilon(\omega)}
+            = \frac{1}{\varepsilon(\omega)} \sum_{j=1}^k \frac{1}{a \, \left(s^{(j)}\right)^{-m}}
 \end{equation}
+Note that the consideration of this uncertainty can be assessed as a pure post-processing of fatigue damage results computed with a deterministic S-N curve. 
+In the wind energy standards, design S-N curve are actually a conservative envelope of the measured fatigue endurance. 
+For example, the Annex F.7 in \citet{dnv_fatigue_2016} gives recommendations to define a design S-N curve from fatigue measures. 
+Assuming that the fatigue endurance follows a Gaussian distribution (on logarithmic scale), the design S-N curve is the curve as two standard deviations below the mean curve. 
+\fig{fig:probabilistic_SN} illustrates the design curve defined by DNV for tubular joints (in Section 2.4.6) and the reconstructed probabilistic model assuming a standard deviation equal to \elias{check the value use}. 
 
-
-\begin{figure}[h!]
+\begin{figure}
     \centering
     \includegraphics[width=0.6\textwidth]{./part1/figures/probabilistic_fatigue.jpg}
     \caption{Illustration of a probabilistic S-N curve according to the model defined in \citet{guede_2007}.}
@@ -817,3 +884,6 @@ Probabilistic Miner's rule (without bins):
 \section{Conclusion}
 %============================================================%
 %============================================================%
+
+
+
