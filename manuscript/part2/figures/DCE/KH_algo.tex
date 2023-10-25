@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+		\node [style=rect] (0) at (-27, 0) {Candidate set \\$\mathcal{S} \sim \mu$ ($N$-sized)};
+		\node [style=rect] (1) at (-24, 0) {Covariance matrix $\mathbf{K}_N$};
+		\node [style=rect] (2) at (-21, 0) {Target potential $P_\mu(\textbf{x}), \textbf{x} \in \mathcal{S}$};
+		\node [style=rect] (3) at (-18, 0) {Design of experiments $\mathbf{X}_n$};
+		\node [style=rect] (4) at (-15, 0) {Current potential $P_{\zeta_n}(\textbf{x}), x \in \mathcal{S}$};
+		\node [style={diag_rect}] (6) at (-25, 1.1) {Discretize a \\kernel $k$ over $\mathcal{S}$};
+		\node [style={diag_rect}] (7) at (-22, 1.1) {Average $\mathbf{K}_N$ \\over all the rows};
+		\node [style={diag_rect}] (8) at (-19, 1.1) {Initialize \\the design $\mathbf{X}_n$ };
+		\node [style={diag_rect}] (9) at (-16, 1.1) {Average $\mathbf{K}_N$\\over the $\mathbf{X}_n$ rows};
+		\node [style=dot] (10) at (-25.6, 0) {};
+		\node [style=dot] (11) at (-22.6, 0) {};
+		\node [style=dot] (12) at (-19.6, 0) {};
+		\node [style=dot] (13) at (-16.6, 0) {};
+		\node (14) at (-16, -1.4) {};
+		\node (15) at (-17, -1.4) {};
+		\node [style=texte] (16) at (-16.5, -0.9) {Add a point to $\mathbf{X}_n$ \\according to \eq{eq:kh_criterion}};
+		\node [style=dot] (17) at (-16.6, -1.4) {};
+		\draw [style=arrow] (0) to (1);
+		\draw [style=arrow] (1) to (2);
+		\draw [style=arrow] (2) to (3);
+		\draw [style=arrow] (3) to (4);
+		\draw [style=arrow, in=-90, out=-180] (15.center) to (3);
+		\draw [style=line] (15.center) to (14.center);
+		\draw [style=line, in=-90, out=0] (14.center) to (4);
+\end{tikzpicture}

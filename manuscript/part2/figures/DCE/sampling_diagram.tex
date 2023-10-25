@@ -1,0 +1,41 @@
+\begin{tikzpicture}
+    \node [style=rect] (0) at (0, 0) {Environmental \\SCADA data};
+    \node [style=rect] (1) at (3, 0) {Preprocessed \\environmental data};
+    \node [style=rect] (2) at (6, 0) {Input design $\mathbf{X}_n$};
+    \node [style=rect] (3) at (9, 0) {Output damage $\by_n$};
+    \node [style=rect] (4) at (12, 0) {Mean damage};
+    \node [style=rect, text width=1.4cm, draw={orange!70}, fill={orange!5}] (5) at (5, -1.75) {Joint \\distribution};
+    \node [style=rect, text width=1.4cm, draw={orange!70}, fill={orange!5}] (6) at (11, -1.75) {Optimal weights $\mathbf{w}^{\mathrm{BQ}}_n$};
+    \node (9) at (4.25, 0) {};
+    \node (10) at (10.25, 0) {};
+    \node [style={diag_rect}] (12) at (2, 1) {Preprocess \\(detrend and \\filter outliers)};
+    \node [style={diag_rect}] (13) at (5, 1) {Subsample the data (e.g., using kernel herding)};
+    \node [style={diag_rect}] (14) at (8, 1) {Evaluate the \\design};
+    \node [style={diag_rect}] (15) at (11, 1) {Compute \\arithmetic mean};
+
+    \node [style=texte, text width=2.5cm, align=left] at (2.9, -1.2) {Fit a joint distribution (e.g., using EBC)};
+    \node [style=texte, text width=2.5cm, align=left] at (7.5, -1.2) {Draw a sample\\ (e.g., using QMC)};
+    
+    \node [style=texte, text width=2.5cm, align=left] at (10.2, -1.2) {Compute \\optimal\\ weights};
+    \node [style=texte, text width=2.5cm, align=left] at (13.5, -1.2) {Compute \\optimally\\ weighted\\ mean};
+
+    \draw [style=arrow] (0) to (1);
+    \draw [style=arrow] (1) to (2);
+    \draw [style=arrow, in=180, out=-90, {orange!70}] (9.center) to (5);
+    \draw [style=arrow, in=-90, out=0, {orange!70}] (5) to (2);
+    \draw [style=arrow] (2) to (3);
+    \draw [style=arrow] (3) to (4);
+    \draw [style=arrow, in=180, out=-90, {orange!70}] (10.center) to (6);
+    \draw [style=arrow, in=-90, out=0, {orange!70}] (6) to (4);
+
+    \node [style=dot] at (1.5, 0) {};
+    \node [style=dot] at (4.5, 0) {};
+    \node [style=dot] at (7.5, 0) {};
+    \node [style=dot] at (10.5, 0) {};
+
+    \node [style=dot] at (3.92, -1.2) {};
+    \node [style=dot] at (6.15, -1.2) {};
+    \node [style=dot] at (9.92, -1.2) {};
+    \node [style=dot] at (12.15, -1.2) {};
+
+\end{tikzpicture}

@@ -1,7 +1,8 @@
 % ******************************************************************************
 % ********************************* PACKAGES ***********************************
 \usepackage[utf8]{inputenc}
-\usepackage[english,french]{babel}
+\usepackage[french,english]{babel}
+\selectlanguage{english}
 \usepackage[dvipsnames,table]{xcolor}
 \usepackage{bbm}
 \usepackage{algorithm}
@@ -30,6 +31,7 @@
   {20pt}
   {\thispagestyle{epigraph}}
 \makeatother
+
 
 
 
@@ -62,8 +64,8 @@
 \newtheorem{definition}{Definition}
 \newtheorem{example}{Example}
 \tcolorboxenvironment{example}{
-  colback=SpringGreen!10!white,
-  boxrule=0.1pt,
+  colback=Dandelion!3!white,
+  boxrule=0.4pt,
   %boxsep=1pt,
   %left=2pt,right=2pt,top=2pt,bottom=2pt,
   %oversize=2pt,
@@ -71,33 +73,28 @@
   before skip=\topsep,
   after skip=\topsep,
 }
-
 
 %%%%% OT Implementation ENVIRONMENT %%%%%
 \newtheorem{otexample}{\texttt{OpenTURNS}}
 \tcolorboxenvironment{otexample}{
   colback=Dandelion!3!white,
-  boxrule=0.1pt,
-  %boxsep=1pt,
-  %left=2pt,right=2pt,top=2pt,bottom=2pt,
-  %oversize=2pt,
+  boxrule=0.4pt,
   rounded corners,
   before skip=\topsep,
   after skip=\topsep,
-}
-
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}
-\tcolorboxenvironment{theorem}{
-  colback=gray!2!white,
-  boxrule=0.1pt,
-  %boxsep=1pt,
-  %left=2pt,right=2pt,top=2pt,bottom=2pt,
-  %oversize=2pt,
+  }
+  
+  %%%%% THEOREM ENVIRONMENT %%%%%
+  \theoremstyle{plain}
+  \newtheorem{theorem}{Theorem}
+  \tcolorboxenvironment{theorem}{
+    colback=gray!2!white,
+  boxrule=0.4pt,
   rounded corners,
   before skip=\topsep,
   after skip=\topsep,
-}
+  }
+  
 
 
 % ******************************************************************************
@@ -121,10 +118,11 @@
 \def\bh{{\bf h}}
 \def\bL{{\bf L}}
 \def\bE{{\bf E}}
+\def\bH{{\bf H}}
 \def\btheta{{\boldsymbol{\theta}}}
 \def\balpha{{\boldsymbol{\alpha}}}
 \def\bbeta{{\boldsymbol{\beta}}}
-
+\def\blambda{{\boldsymbol{\lambda}}}
 
 \def\R{\mathbb{R}}
 \def\N{\mathbb{N}}
@@ -173,6 +171,22 @@
 \newcommand*\wtilde[1]{\widetilde{#1}}
 \def\cg{\check{g}}
 \def\wg{\what{g}}
+
+
+% ******************************************************************************
+% ********************************** TIKZ **************************************
+
+% Node styles
+\tikzstyle{rect}=[fill={gray!20}, draw=black, shape=rectangle, rounded corners, text width=2cm, text centered, font={\scriptsize}]
+\tikzstyle{dot}=[fill=black, draw=black, shape=circle, inner sep=1pt, outer sep=1pt]
+\tikzstyle{texte}=[shape=rectangle, text width=3cm, text centered, font={\scriptsize}]
+\tikzstyle{diag_rect}=[shape=rectangle, font={\scriptsize}, rotate=45, text width=2.2cm]
+\tikzstyle{grey_rect}=[fill=white, draw={gray!80}, shape=rectangle, text centered, font={\scriptsize}, text width=2cm]
+\tikzstyle{grey_full_rect}=[fill={gray!80}, draw={gray!80}, shape=rectangle, text centered, font={\scriptsize}, text width=2cm]
+
+% Edge styles
+\tikzstyle{line}=[-, thick]
+\tikzstyle{arrow}=[->, thick]
 
 % ******************************************************************************
 % ********************************* Acronyms ***********************************
