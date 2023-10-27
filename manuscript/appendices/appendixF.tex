@@ -7,10 +7,13 @@
 
 \elias{Add short introduction to the motivation}
 
+\elias{Should I print the results?}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[Bivariate distribution]
-    The following Python code proposes a minimalistic \ot implementation of a probabilistic uncertainty modeling. 
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/copulas.ipynb}{Bivariate distribution}]
+    The following Python code proposes a minimalistic \ot example of a probabilistic uncertainty modeling. 
     \lstset{style=mystyle, language=python}
+%
 \begin{lstlisting}
 import openturns as ot
 # Build multivariate distribution from marginals and copula
@@ -24,12 +27,14 @@ covariance_matrix=distribution.getCovariance()
 x_cdf=distribution.computeCDF([1.5, 2.5])# x=[1.5, 2.5]
 a_quantile=distribution.computeQuantile([0.9])# alpha=0.9
 \end{lstlisting}
+%
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[Numerical integration]
-    The following Python code proposes a minimalistic \ot implementation to build a quadrature rule. 
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/integration.ipynb}{Numerical integration}]
+    The following Python code presents a minimalistic \ot example to build multivariate quadrature rules.
+%
 \lstset{style=mystyle, language=python}
 \begin{lstlisting}
 import openturns as ot
@@ -47,15 +52,17 @@ sequence=ot.HaltonSequence(2) # d=2
 qmc_experiment=ot.LowDiscrepancyExperiment(sequence, distribution, n)
 qmc_nodes=qmc_experiment.generate()
 \end{lstlisting}
+%
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[Design of experiments]
-    The following Python code proposes a minimalistic \ot implementation to build a LHS and 
-    a LHS optimized w.r.t. to a space-filling metric (here the L2-centered discrepancy) using the simulated annealing algorithm. 
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/designofexperiments.ipynb}{Design of experiments}]
+    The following Python code is a minimalistic \ot example to build an LHS and 
+    an LHS optimized w.r.t. to a space-filling metric (here the L2-centered discrepancy) using the simulated annealing algorithm. 
     \lstset{style=mystyle, language=python}
+%
 \begin{lstlisting}
 import openturns as ot
 marginals=[ot.Uniform(0.0, 1.0), ot.Uniform(0.0, 1.0)]
@@ -72,14 +79,16 @@ LHS_opt=ot.SimulatedAnnealingLHS(LHS_exp, SF_metric, SA_profile)
 LHS_opt.generate()
 LHS_design=LHS_opt.getResult().getOptimalDesign()
 \end{lstlisting}
+%
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[Rare event estimation]
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/reliability.ipynb}{Rare event estimation}]
     The following Python code proposes a minimalistic \ot implementation of rare event estimation algorithms. 
     \lstset{style=mystyle, language=python}
+%
 \begin{lstlisting}
 import openturns as ot
 marginals=[ot.Normal(0.0, 1.0), ot.Exponential(1.0)]
@@ -120,15 +129,46 @@ SS_results=SS_algo.getResult()
 SS_pf=SS_results.getProbabilityEstimate()
 SS_pf_confidence=SS_results.getConfidenceLength(0.95)
 \end{lstlisting}
+%
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[Ordinary kriging]
-    The following Python code proposes a minimalistic \ot implementation of an ordinary kriging model fitting. 
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/sensitivity_analysis.ipynb}{Sobol' indices}]
+    The following Python code gives a minimalistic \ot implementation of the Sobol' indices to assess global sensitivity analysis on the Ishigami analytical problem. 
     \lstset{style=mystyle, language=python}
+%
 \begin{lstlisting}
+import openturns as ot
+g=ot.SymbolicFunction(
+    ['x1', 'x2', 'x3'], 
+    ['sin(x1) + 7.0 * sin(x2)^2 + 0.1 * x3^4 * sin(x1)']
+    )
+X=ot.ComposedDistribution([ot.Uniform(-3.14, 3.14)] * 3)
+size=1000
+# Generate samples and evaluate their images
+sie=ot.SobolIndicesExperiment(im.distributionX, size)
+input_design=sie.generate()
+output_design=im.model(input_design)
+# Four estimators : Saltelli, Martinez, Jansen, and Mauntz-Kucherenko
+SA=ot.JansenSensitivityAlgorithm(input_design, output_design, size)
+sobol_first_order=SA.getFirstOrderIndices()
+sobol_tolal=SA.getTotalOrderIndices()
+\end{lstlisting}
+%
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/surrogates.ipynb}{Gaussian process regression}]
+    The following Python code gives a minimalistic \ot implementation of an ordinary kriging model fitting. 
+    \lstset{style=mystyle, language=python}
+%
+\begin{lstlisting}
+import openturns as ot
 g=ot.SymbolicFunction(['x'], ['x * sin(x) + sin(6 * x)'])
 x_train=ot.Uniform(0., 12.).getSample(7) # n=7
 y_train=g(x_train)
@@ -139,5 +179,6 @@ algo.run()
 kriging_results=algo.getResult()
 kriging_predictor=kriging_results.getMetaModel()
 \end{lstlisting}
+%
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

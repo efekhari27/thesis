@@ -27,16 +27,18 @@ Section \ref{sec:gsa} presents the main inverse methods to perform sensitivity a
 Finally, \ref{sec:surrogate} introduces the concept of surrogate models to emulate a model by realizing a statistical learning on a limited dataset.
 
 
-\paragraph*{\textbf{\texttt{OpenTURNS}}\footnote{\ot installation guide and documentation are available at \url{https://openturns.github.io/www/}}.} 
+\paragraph*{\href{https://openturns.github.io/www/}{\textbf{\texttt{OpenTURNS}}}\footnotemark.} 
 Is a high-performance Python library dedicated to UQ \citep{baudin_dutfoy_2017}. 
 \ot (``Open source initiative for the Treatment of Uncertainties, Risks’N Statistics'') is developed by industrial researchers from  EDF R\&D, Airbus Group, PHIMECA Engineering, IMACS and ONERA. 
 It combines high-performance using C++ programming with high-accessibility through a Python API. 
 Overall, this open source library provides tools for various steps of the UQ framework (e.g., uncertainty quantification, uncertainty propagation, surrogate modeling, reliability, sensitivity analysis and calibration). 
 To guaranty software quality, the development follows robust processes such as exhaustive unit testing and multiplatform continuous integration. 
 A dedicated forum hosts an active community, which is helping new users and discussing future developments. 
-Finally, no-code users can benefit from \texttt{OpenTURNS}'s free-download Graphical User Interface software, named \texttt{Persalys}\footnote{\texttt{Persalys}, a free-download graphical user interface available at \url{https://www.persalys.fr/obtenir.php}}. 
+Finally, no-code users can benefit from \texttt{OpenTURNS}'s free-download Graphical User Interface software, named \texttt{Persalys}\footnotemark. 
 In this chapter, the methodological concepts introduces are linked to minimal \ot implementations examples, available in the Appendix \ref{apx:F}. 
 
+\footnotetext{\ot installation guide and documentation are available at \url{https://openturns.github.io/www/}}
+\footnotetext{\href{https://www.persalys.fr/obtenir.php}{\texttt{Persalys}}, a free-download graphical user interface available at \url{https://www.persalys.fr/obtenir.php}}
 
 %============================================================%
 %============================================================%
@@ -109,7 +111,7 @@ In the following, the probabilistic framework is introduced to deal with uncerta
 Uncertainties are traditionally modeled with objects from the probability theory. 
 In this thesis, the \textit{probabilistic framework} is adopted. 
 Alternative theories exist to mathematically model uncertainties. 
-For example, imprecise probability theory allows more general modeling of the uncertainties. \elias{add ref}
+For example, imprecise probability theory allows more general modeling of the uncertainties \citep{beer_2013_imprecise_proba,schobi_sudret_2017_pbox}. 
 It becomes useful when dealing with very limited and possibly contradictory information (e.g., expert elicitation). 
 The core probabilistic tools and objects are introduced hereafter. 
 
@@ -282,7 +284,7 @@ The adequation between a fitted probabilistic model and a dataset should be vali
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[Bivariate distribution]
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/copulas.ipynb}{Bivariate distribution}]
     The Python code available in Appendix \ref{apx:F} proposes a minimalistic \ot example of a probabilistic uncertainty modeling. 
     Figures illustrating the present section may be reproduced, using the \ot scripts available on GitHub\footnotemark. 
 \end{otexample}
@@ -569,7 +571,7 @@ Even if the goal might look different from numerical integration, these two topi
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[Numerical integration]
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/integration.ipynb}{Numerical integration}]
     The Python code available in Appendix \ref{apx:F} proposes a minimalistic \ot example to build multivariate quadrature rules. 
     Figures illustrating the present section may be reproduced, using the \ot scripts available on GitHub\footnotemark.  
 \end{otexample}
@@ -653,6 +655,7 @@ Similarly to the Monte Carlo variance in \eq{eq:MC_variance}, LHS variance can b
 \end{equation}
 Where $C$ is a positive constant, showing that the LHS usually reduces the variance for numerical integration. 
 Because of its stratified structure, LHS can generate poor designs from a space-filling point of view (see e.g., the illustration in \fig{fig:poor_LHS}). 
+%Note that LHS was also studied for estimating tail statistics such as quantiles \citep{cannamela_2008_LHS_quantile}.  
 The following section presents various methods aiming at optimizing LHDs.
 
 
@@ -698,7 +701,7 @@ In the same vein, the uniform projection designs from \citet{sun_2019} is also a
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[Design of experiments]
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/designofexperiments.ipynb}{Design of experiments}]
     The Python code available in Appendix \ref{apx:F} proposes a minimalistic \ot example to build an LHS and 
     an LHS optimized w.r.t. to a space-filling metric (here the L2-centered discrepancy) using the simulated annealing algorithm. 
     Figures illustrating the present section may be reproduced, using the \ot scripts available on GitHub\footnotemark.  
@@ -1273,36 +1276,39 @@ Unlike the methods derived from importance sampling, the variance of $\widehat{\
 %============================================================%
 
 This section introduced the generic formulation and the main methods for rare event estimation. 
-Rare event estimation is a generic problem that requires tailored solutions. 
+Even if the problem is generic rare event estimation requires tailored solutions. 
 Depending on the properties of the problem tackled, some methods might outperform others. 
-Many more methods are worth mentioning in the field of reliability analysis, such as the \textit{directional sampling} \citet{bjerager_1988_directional_sampling}, or \textit{line sampling} \citep{koutsourelakis_2004_line_sampling}, \textit{moving particles} \citep{walter_2015_moving_particles}. 
-\citet{MorioBalesdent2015} compares the advantages and drawbacks of the most commonly used one, with a systematic algorithmic description and numerical benchmark. 
+Beyond the one introduced previously, many more methods are worth mentioning in the field of reliability analysis, such as the \textit{directional sampling} \citet{bjerager_1988_directional_sampling}, or \textit{line sampling} \citep{koutsourelakis_2004_line_sampling}, \textit{moving particles} \citep{walter_2015_moving_particles}. 
+\citet{MorioBalesdent2015} compares the advantages and drawbacks of the most commonly used one, with corresponding algorithmic descriptions and numerical benchmarks. 
 
 Overall, the main properties increasing the complexity of reliability problems are related to:
 \begin{itemize}
-    \item the strong nonlinearity of the LSF;
-    \item the rareness of the failure event;
-    \item the computational cost of the evaluation of the numerical model.
+    \item the computational cost of the limit-state function evaluation;
+    \item the strong nonlinearity of the limit-state function;
+    \item the rareness of the failure event.
 \end{itemize} 
 In regard to the methods, the estimation is made easier by algorithms with simple tuning or allowing to work in the physical space (avoiding a possibly complex iso-probabilistic transform).
-Considering all these elements the analyst may set up a sampling strategy, possibly coupled with the use of a surrogate model (see Section \ref{sec:surrogate}). 
+Considering all these elements the analyst may set up a sampling strategy, possibly coupled with the use of a surrogate model (further discussed in Section \ref{sec:surrogate}). 
 
-Nevertheless, the unified formulation of reliability analysis problems (see \ref{eq:pf}) is an opportunity for the community to share standardized benchmark problems  
+Nevertheless, the unified formulation of reliability analysis problems (see \ref{eq:pf}) is an opportunity for the community to share standardized benchmark problems. 
 Following the well-accepted benchmark platform for optimization ``Comparing Continuous Optimizers'' (COCO) \citep{hansen_2021_coco}, an equivalent initiative was proposed for structural reliability. 
-The ``black-box reliability challenge'', was organized as a hackathon in 2019 by the Dutch organization for applied scientific research (TNO) \citep{rozsas_2019_bbrc}. 
-This platform proposed a large catalog of reliability problems and their respective solutions. 
-Most of them were encapsulated as a Python package called \texttt{otbenchmark} \citep{fekhari_baudin_2021}, based on core \ot objects.  
+In 2019, the ``black-box reliability challenge'', was organized as a hackathon by the Dutch organization for applied scientific research (TNO) \citep{rozsas_2019_bbrc}. 
+This platform proposed a large catalog of reliability problems with their respective solutions. 
+Most of them were encapsulated as a Python package called \href{https://github.com/mbaudin47/otbenchmark/}{\texttt{otbenchmark}}\footnotemark$~$ \citep{fekhari_baudin_2021}, based on core \ot objects.  
+
+
+\footnotetext{\url{https://github.com/mbaudin47/otbenchmark/}}
 
 When working with computationally expensive numerical models, the direct use of rare event estimation methods is most often intractable. 
 Many contributions were dedicated to the coupling of surrogate models with sampling methods for rare event estimation. 
 \citet{moustapha_ss_2022} presented the results of a wide benchmark on the challenge from TNO, obtained by using surrogate models for reliability developed in the UQLab software \citep{marelli_2014_uqlab}.  
 
 In any case, risk assessment analysts should favor the methods offering convergence guarantees over ponctual performance demonstrations. 
-Finally, the robustness of the failure probability to the input uncertainty model is a major question, which was studied from probabilistic \citep{lemaitre_2015_PLI} and extra-probabilistic \citep{ajenjo_2022_structural_safety} frameworks  
+Finally, the robustness of the failure probability to the input uncertainty model is a major question, which was studied from probabilistic \citep{lemaitre_2015_PLI} and extra-probabilistic \citep{ajenjo_2022_structural_safety} frameworks. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[Rare event estimation]
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/reliability.ipynb}{Rare event estimation}]
     The Python code available in Appendix \ref{apx:F} proposes a minimalistic \ot example to estimate rare event probabilities. 
     Figures illustrating the present section may be reproduced, using the \ot scripts available on GitHub\footnotemark.  
 \end{otexample}
@@ -1326,14 +1332,13 @@ global sensitivity analysis (GSA), typically studies the general variability (e.
 Two types of GSA methods exist in the literature, either proposing qualitative and quantitative approaches:  
 \begin{itemize}
     \item \textit{screening methods}: determines the non-influential variables in a UQ study (qualitative);
-    \item \textit{importance measures}: assess the contribution of input(s) in the global variability of the output (quantitative).
+    \item \textit{importance measures}: assess the contribution of inputs in the global variability of the output (quantitative).
 \end{itemize}
 
 Screening methods are typically used in a statistical learning process, to drop the irrelevant variables to the learning. 
 In this context, \textit{feature selection} serves the same purpose with a slight difference. 
 Screening methods usually assume the inputs to be independent while feature selection does not. 
-Moreover, feature selection not only looks for the irrelevant features to the learning but also the redundant features.     
-The reader may refer to \elias{add feature selection review} for further insights on this topic.
+Moreover, feature selection not only looks for the irrelevant features to the learning but also the redundant features \citep{fan_2010_feature_selection}.     
 
 The global sensitivity of an output can be explained by different elements: the single variability of the inputs, their dependence, and their interactions. 
 Two variables present interactions when their simultaneous effect on an output is not additive. 
@@ -1345,24 +1350,24 @@ Note that SA on dependent inputs is an active field of research and the inputs w
 %============================================================%
 
 Many UQ methods suffer from the curse of dimensionality, thankfully, high-dimensional problems often only depend on a few variables. 
-This observation was formalized with the concept of \textit{effective dimension} introduced by \citet{owen_2003}.
+This observation was formalized with the concept of \textit{effective dimension} introduced by \citet{owen_2003}. 
 Screening methods allow to discriminate the non-influential variables, which can be considered afterwards as determinist to simplify the problem.
 
 %------------------------------------------------------------%
 \subsubsection{Morris method}
 %------------------------------------------------------------%
 
-The Morris method \citep{morris_1991} is a screening method historically commonly used in engineering applications. 
-It starts by mapping the input domain $\iD_{\bX}$ into a unit hypercube $[0, 1]^d$, which is discretized as a regular grid with step $\Delta \in \R$.
+The Morris method \citep{morris_1991} is a screening method historically used in engineering applications. 
+It starts by mapping the input domain $\iD_{\bX}$ into a unit hypercube $[0, 1]^d$, which is discretized as a regular grid with step $\Delta \in \R$. 
 The algorithm computes local elementary sensitivity by building ``one at a time'' (OAT) local trajectories over the regular grid. 
-Each OAT designs start at a random node $\bx^{(t)} = (x^{(t)}_1, \dots, x^{(t)}_j,\dots, x^{(t)}_d)$ of the grid and move only in one direction by an increment equal to the elementary step such that: $\bx^{(t)} + \Delta_j = (x^{(t)}_1, \dots, x^{(t)}_j + \Delta ,\dots, x^{(t)}_d)$. 
-The elementary effect in the direction of the variable $i$ from an OAT design (also called trajectory) $t$ is expressed as a finite difference: 
+Each OAT design starts at a random node $\bx^{(t)} = (x^{(t)}_1, \dots, x^{(t)}_j,\dots, x^{(t)}_d)$ of the grid, and moves only in one direction by an increment equal to the elementary step such that: $\bx^{(t)} + \Delta_j = (x^{(t)}_1, \dots, x^{(t)}_j + \Delta ,\dots, x^{(t)}_d)$. 
+The elementary effect in the direction of the variable $i$ from a OAT trajectory $t$ is expressed as a finite difference: 
 \begin{equation}
     \mathrm{EE}_j^{(t)} = \frac{g(\bx^{(t)}) - g(\bx^{(t)} + \Delta_j)}{\Delta}.
     \label{eq:eeffect}
 \end{equation}
 
-The Morris method generates $T\in\N$ OAT designs and computes theirs respective elementary effects in each direction $i$. 
+The Morris method generates $T\in\N$ OAT trajectories and computes theirs respective elementary effects in each direction $i$. 
 To assess the global sensitivity of the function, the mean $\overline{\mathrm{EE}}_j$ and variance $\what{\var}(\mathrm{EE}_j)$ of the elementary effects are computed: 
 \begin{equation}
     \overline{\mathrm{EE}}_j = \frac1n \sum_{t=1}^{T} |\mathrm{EE}_j^{(t)}|, \qquad 
@@ -1372,7 +1377,7 @@ To assess the global sensitivity of the function, the mean $\overline{\mathrm{EE
 
 It allows to divide the variables into three categories, regardless of any regularity hypothesis on the function: 
 (i) negligible effects; (ii) linear effects without interaction; and (iii) nonlinear effects with possible interactions. 
-This method is very intuitive but quickly shows its limits as the dimension increases since it relies on a discretization of the space by a regular grid.
+This method is very intuitive but quickly shows its limits as the dimension increases since it relies on a discretization of the space by a regular grid. 
 Another disadvantage of this method is that it does not distinguish interactions and nonlinear effects of inputs.
 
 
@@ -1383,10 +1388,10 @@ Another disadvantage of this method is that it does not distinguish interactions
 The Derivative-based global sensitivity measures (DGSM) are a GSA method introduced in \citet{sobol_1995_DGSM} and further studied in \citet{kucherenko_2009_DGSM}. 
 As the Morris method, they study the mean value of local derivatives of the model output with regard to the inputs: 
 \begin{equation}
-    v_j = \int_{\iD_{\bX}} \left(\frac{\partial g(\bx)}{\partial x_j}\right)^2 f_{\bX}(\bx) \dd \bx = \E\left[\left(\frac{\partial g(\bX)}{\partial X_j}\right)^2\right].
+    v_j = \int_{\iD_{\bX}} \left(\frac{\partial g(\bx)}{\partial x_j}\right)^2 f_{\bX}(\bx) \, \dd \bx = \E\left[\left(\frac{\partial g(\bX)}{\partial X_j}\right)^2\right].
 \end{equation}
-This continuous formulation does not require using OAT designs, which was proven to be more efficient when exploiting designs such as quasi-Monte Carlo. 
-The efficiency of the DGSMs for screening purposes was outlined in many papers, such as \citet{kucherenko_iooss_2017}. 
+This continuous formulation does not require using OAT designs, which was proven to be more efficient when exploiting sampling methods such as quasi-Monte Carlo. 
+The efficiency of the DGSMs for screening purposes was outlined in many papers (e.g., \citet{kucherenko_iooss_2017}). 
 Since their value depends on the probability distribution of the input, a normalized version was developed. 
 The connections between DGSM and variance-based GSA measures (i.e., Sobol' indices introduced hereafter), revealed bounding properties between DGSMs and Sobol' total indices \citep{lamboni_iooss_2013_DGSM}.
 
@@ -1402,36 +1407,43 @@ Beyond this information, importance measures quantify the influence of inputs, a
 %------------------------------------------------------------%
 Sobol' indices are the most popular importance measure in GSA. 
 Their universality comes from the functional decomposition of the output's variance, attributing variance share to the inputs. 
-Considering a squared-integrable and measurable function $g(\cdot)$ and the independent random vector $\bX$. 
+Considering a squared-integrable and measurable function $g(\cdot)$ and an independent random vector $\bX$. 
 The output random variable $Y = g(\bX)$ can be decomposed, according to \citet{hoeffiding_1948}, as: 
 \begin{equation}
     Y = g(\bX) = g_0 + \sum_{j=1}^{d} g_j(X_j) + \sum_{j<l}^{d} g_{jl}(X_j, X_l) + \dots + g_{1 \dots d}(\bX),
     \label{eq:hoeffding}
 \end{equation}
 with the previous terms defined according this recurrence:  
-\begin{align}
-    g_0 &= \E[g(\bX)]\\
-    g_j(X_j) &= \E[g(\bX) | X_j] - g_0\\
-    g_{jl}(X_j, X_l) &= \E[g(\bX) | X_j, X_l] - g_j(X_j) - g_l(X_l) - g_0\\
-    \dots
-\end{align}
-Sobol in \citet{sobol_1993} proved that this decomposition is unique by exploiting the orthogonality of the terms of the decomposition.
+
+\begin{subequations}
+    \begin{align}
+        g_0 &= \E[g(\bX)]\\
+        g_j(X_j) &= \E[g(\bX) | X_j] - g_0\\
+        g_{jl}(X_j, X_l) &= \E[g(\bX) | X_j, X_l] - g_j(X_j) - g_l(X_l) - g_0\\
+        \dots
+    \end{align}
+    \label{eq:hoeffding_terms}
+\end{subequations}
+
+Sobol in \citet{sobol_1993} proved that this decomposition is unique by exploiting the orthogonality of the terms of the decomposition. 
 %\elias{add footnote for any input domain and the dependence see Chastaing these}
-Therefore, this decomposition can be transposed in terms of functional decomposition of variance (also called functional analysis of variance or F-ANOVA):
+Therefore, this decomposition can be transposed in terms of functional decomposition of variance (also called functional analysis of variance or FANOVA):
 \begin{equation}
     \var(Y) = \sum_{j=1}^{d} V_j(Y)  + \sum_{j<l}^{d} V_{jl}(Y) + \dots + V_{1 \dots d}(Y), 
     \label{eq:fanova}
 \end{equation}
-with the previous terms defined in a recurrent way as $V_j(Y) = \var\left(\E[Y|X_j]\right), V_{jl}(Y) = \var\left(\E[Y|X_j, X_l]\right) - V_j(Y) - V_l(Y)$, and so on for higher order interaction terms. 
+where the previous terms are defined in a recurrent way, in the same fashion as \eq{eq:hoeffding_terms}:  $V_j(Y) = \var\left(\E[Y|X_j]\right), V_{jl}(Y) =$ \allowbreak $\var\left(\E[Y|X_j, X_l]\right) - V_j(Y) - V_l(Y)$, and so on for higher order interaction terms. 
 The Sobol' indices of different order are defined as normalized shares of variance. 
 The first-order Sobol' index $S_j$ quantifies the share of variance of the output only explained by the marginal $X_j$ (also called main effect). 
 Second order $S_{jl}$ (or higher order) Sobol' indices quantify the effect of the interactions between a group of marginals. 
-\begin{align}
-    S_j &= \frac{V_j(Y)}{\var(Y)} = \frac{\var\left(\E[Y|X_j]\right)}{\var(Y)}\\
-    S_{jl} &= \frac{V_{jl}(Y)}{\var(Y)} = \frac{\var\left(\E[Y|X_j, X_l]\right) - V_j(Y) - V_l(Y)}{\var(Y)}\\
-    \dots
-    \label{eq:sobol_first}
-\end{align}
+\begin{subequations}
+    \begin{align}
+        S_j &= \frac{V_j(Y)}{\var(Y)} = \frac{\var\left(\E[Y|X_j]\right)}{\var(Y)}\\
+        S_{jl} &= \frac{V_{jl}(Y)}{\var(Y)} = \frac{\var\left(\E[Y|X_j, X_l]\right) - V_j(Y) - V_l(Y)}{\var(Y)}\\
+        \dots
+        \label{eq:sobol_first}
+    \end{align}
+\end{subequations}
 The generic definition of the Sobol' sensitivity indices associated to a subset of inputs $A \in \mathcal{P}_d$, with $\mathcal{P}_d$ the set of all possible subsets of $\{1, \dots, d\}$, is given by:
 \begin{equation}
     S_A = \frac{V_A(Y)}{\var(Y)} = \frac{\sum_{B \subset A} (-1)^{|A| - |B|} \var\left(\E[Y|X_B]\right)}{\var(Y)}.
@@ -1448,54 +1460,62 @@ The total Sobol' index $S_j^T$ associated with the variable $j$, see \citet{salt
     S_j^T = 1 - \frac{\var\left(\E[Y|\bX_{-j}]\right)}{\var(Y)} = \frac{\E\left[\var(Y|\bX_{-j})\right]}{\var(Y)},
     \label{eq:sobol_total}
 \end{equation}
-where $\bX_{-j}$ represents all the marginals from $\bX$ but $X_j$.
+where $\bX_{-j}$ represents all the marginals from $\bX$ but $X_j$. 
 This definition can also be generalized for a subset of inputs $A \in \mathcal{P}_d$, such that:
 \begin{equation}
     S_A^T = 1 - \sum_{A' \subset A} S_{A'} = 1 - \frac{\var\left(\E[Y|\bX_{A}]\right)}{\var(Y)},
 \end{equation}
 where the second term of this expression is called \textit{closed Sobol' index}, $S_A^{\mathrm{clos}} = 1 - S_A^T = \frac{\var\left(\E[Y|\bX_{A}]\right)}{\var(Y)}$.
 
-Jointly analyzing the first and total Sobol' indices offers a quantified decomposition between the marginal and interaction effects. 
+By analyzing jointly the first and total Sobol' indices, on can get an indication on the decomposition between the marginal and interaction effects. 
 Note that the total indexes are only equal to the first indexes when the model does not present interactions (i.e., purely additive model).
 %Moreover, the following inequalities hold: 
 %\begin{equation}
 %    S_j \leq 1, \qquad S_j \leq S_{T_j}, \qquad \forall j \in \{1, \dots, d\}. 
 %\end{equation}
 
-Estimating Sobol' indices can be achieved in various ways. 
-The pick-freeze scheme is the historical estimation technique based on two samples, however, it requires an often prohibitive number of calls to the function. 
-Many estimators using the pick-freeze generic scheme were developed to estimate Sobol' indices (e.g., Saltelli's, Jansen's, Martinez's etc.), see further references are collected in the Chapter 3 of \citet{daveiga_iooss_2021}.
+Estimating Sobol' indices can be achieved in various ways, even if historically the \textit{pick-freeze} scheme was the most popular. 
+This method is based on two samples, but it often requires a prohibitive number of evaluations of the function. 
+Many estimators using the pick-freeze generic scheme were developed to estimate Sobol' indices (e.g., Saltelli's, Jansen's, Martinez's etc.), see further details in the Chapter 3 of \citet{daveiga_iooss_2021}. 
 Alternatively, the surrogate models were exploited to estimate such sensitivity measure. 
-Using a unique input-output dataset, the analyst may build a \textit{polynomial chaos expansion} (PCE) surrogate model, which gives an explicit expression of the Sobol' indices \citep{sudret_2008}.
+Using an input-output dataset, the analyst may build a \textit{polynomial chaos expansion} (PCE) surrogate model, which gives an explicit expression of the Sobol' indices \citep{sudret_2008}. 
 Authors such as \citet{marrel_2009} also studied the use of Gaussian processes for this purpose. 
   
 In the case of independent inputs, the first and total Sobol' indices is a complete tool for GSA. 
-The main advantage of this approach is the quantitative nature of its results, allowing to objectively compare the effect of inputs variables. 
+The main advantage of this approach is the quantitative nature of its results, allowing to objectively compare the effect of input variables. 
 When the inputs present a dependence structure, it becomes complicated to distinguish its effects from possible interactions. 
 However, many authors tried to adapt the Sobol's indices to this context. 
 Chapter 5 of \citet{daveiga_iooss_2021} reviews four of these approaches. 
 For example, \citet{mara_tarantola_2012} proposed two extra Sobol' indices, called ``full indices'', detecting the contributions associated with the inputs' dependence. 
 Note that the interpretation and estimation of this solution becomes complicated. 
-Moreover, unlike the independent case, the four Sobol' indices do not divide the output variance between the inputs.
+Moreover, unlike the independent case, the four Sobol' indices do not divide the output variance between the inputs. 
 Beyond Sobol' indices, another important GSA method was adapted from the theory of Shapley values by \citet{owen_2014_shapley}, allowing to work with dependent inputs.   
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/sensitivity_analysis.ipynb}{Sobol' indices}]
+    The Python code available in Appendix \ref{apx:F} gives a minimalistic \ot implementation of the Sobol' indices to assess global sensitivity analysis on the Ishigami analytical problem.
+    Further scripts are also available on GitHub\footnotemark.  
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnotetext{\url{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/sensitivity_analysis.ipynb}}
 
 %------------------------------------------------------------%
 \subsubsection{Shapley effects}
 %------------------------------------------------------------%
 Shapley effects are an adaptation to GSA by \citet{owen_2014_shapley} of the Shapley values from the cooperative games' theory \citep{shapley_1953}. 
 This method is an alternative to the Sobol' indices in the case of dependent inputs, for which the natural interpretation of single interaction effects no longer holds. 
-In the theory of Shapley values, the Shapley values act as a rule to share the value created by a team between its members (players). 
-The Shapley values allocated to the player $X_j$ is given considering the indices $-\{j\}= \{1, \dots, d\} \backslash \{j\}$:
+In the game theory, Shapley values act as a rule on how to share the value created by a team between its members (players). 
+The Shapley value allocated to the player $X_j$ is given considering the indices $-\{j\}= \{1, \dots, d\} \backslash \{j\}$:
 \begin{equation}
-    \varsigma_j = \sum_{A \subset -\{j\}} \binom{d-1}{|A|}^{-1} \left(\mathrm{val}(A \cup \{j\}) - \mathrm{val}(A)\right),
+    \varsigma_j = \sum_{A \subset -\{j\}} \binom{d-1}{\mathrm{card}(A)}^{-1} \left(\mathrm{val}(A \cup \{j\}) - \mathrm{val}(A)\right),
 \end{equation}
-where the value (or cost) function is denoted $\mathrm{val}(A)$, and $A$ is a subset of $\{1, \dots, d\}$ with cardinality $|A|$. 
+where the value (or cost) function is denoted by $\mathrm{val}(A)$, and $A$ is a subset of $\{1, \dots, d\}$ with cardinality $\mathrm{card}(A)$. 
 The Shapley effects adapted this concept to perform a GSA by considering the variables as players and the closed Sobol' indices for the value function: 
 \begin{equation}
     \label{eq:shapley_effects}
     Sh_j = \sum_{A \subset -\{j\}} \binom{d-1}{|A|}^{-1} \left(S_{A \cup \{j\}}^{\mathrm{clos}} - S_A^{\mathrm{clos}}\right).
 \end{equation}
-Conceptually, this expression compares a performance defined by a cost function with or without the variable $X_j$, and averages it over all the possible combinations of inputs.
+Conceptually, this expression compares a performance defined by a cost function with or without the variable $X_j$, and averages it over all the possible combinations of inputs. 
 This importance measure offers the following decomposition: 
 \begin{equation}
     \sum_{j=1}^{d} Sh_j = 1.
@@ -1503,72 +1523,102 @@ This importance measure offers the following decomposition:
 In the case of independent inputs, the Shapley effects present properties related to the Sobol' indices. 
 The following equation (see proof in \citet{owen_2014_shapley}) reveal that the Shapley effects equally divide the interaction effects between the implicated variable:
 \begin{equation}
-    S_j \leq Sh_j \leq S_j^T, \qquad Sh_j = \sum_{A \in \mathcal{P}_d, j \in A} \frac{S_A}{|A|}.
+    S_j \leq Sh_j \leq S_j^T, \qquad Sh_j = \sum_{A \in \mathcal{P}_d, j \in A} \frac{S_A}{\mathrm{card}(A)}.
 \end{equation}   
 
 Unlike the Sobol' indices, Shapley effects are a nonnegative allocation of output variance with equitable division of the interaction effects.   
-This method presents an interesting alternative in the dependent case, however, estimating Shapley effects creates computational difficulties.
-The reader may refer to the permutation-based algorithm from \citet{song_2016_shapley} and the introduction of surrogate model in \citet{nazben_2019_shapley} for further elements on this topic. 
+This method presents an interesting alternative in the dependent case, however, estimating Shapley effects creates computational difficulties. 
+The reader may refer to the permutation-based algorithm from \citet{song_2016_shapley}. 
+Surrogate models were also coupled to estimate Shapley effects, using Gaussian processes in \citet{nazben_2019_shapley} and random forests in \citet{benard_2022_shaff}. 
 
 Shapley effects are a promising importance measure based on variance allocation. 
 However, in some cases the variance of the output distribution does not represent well its variability (e.g., multimodal distribution). 
 The following section introduces another family of GSA methods based on distances between distributions.
 
+
 %============================================================%
 \subsection{Moment-independent importance measures}
 %============================================================%
-Beyond variance-based GSA, many types of distances between distributions have been used to evaluate the dependence between the input and the output distributions. 
-Comparing the entire distributions instead of their moments might be more robust in some cases (e.g., cases when the variance is a poor indicator of the variability).
+Beyond variance-based GSA, many types of distances between distributions have been used to evaluate the dependence between the input and output distributions. 
+Comparing the entire distributions instead of their moments might be more robust in some cases (e.g., when the variance is a poor indicator of the variability). 
 The tools used to do so are generally called \textit{dissimilarity measures} between distributions.  
-Appendix \ref{apx:D} briefly introduces two families of \textit{dissimilarity measures}: the class of $f$-Csisz\'{a}r divergences (e.g., the Kullback-Leibler divergence, total variation distance) and the class of integral probability metrics (IPM) (e.g., Wasserstein distance, total variation distance, maximum mean discrepancy). 
-This appendix focuses on the \textit{maximum mean discrepancy} (MMD), a kernel-based dissimilarity measure between distributions with interesting estimation properties.  
+Appendix \ref{apx:D} briefly introduces two families of dissimilarity measures: the class of $f$-Csisz\'{a}r divergences (e.g., the Kullback-Leibler divergence, total variation distance) and the class of integral probability metrics (IPM) (e.g., Wasserstein distance, total variation distance, maximum mean discrepancy). 
+%This appendix focuses on the \textit{maximum mean discrepancy} (MMD), a kernel-based dissimilarity measure between distributions with interesting estimation properties.  
 
-Considering the probability measures $\P_{X_j}$ and $\P_{Y}$ (associated with the random variables $X_j$ and $Y$) and a dissimilarity measure $\Delta(\cdot, cdot)$, one can define two formulations to perform a GSA: 
+Considering the probability measures $\P_{X_j}$ and $\P_{Y}$ (associated with the random variables $X_j$ and $Y$) and a dissimilarity measure $\Delta(\cdot, cdot)$, one can define two formulations for GSA: 
 \begin{itemize}
-    \item by directly using a dissimilarity measures to assess $\Delta(\P_Y, \P_{Y |X_j})$;
-    \item by building a \textit{dependence measures} evaluating $\Delta(\P_{(X_j, Y)}, \P_{X_j} \otimes \P_Y)$.
+    \item directly using a dissimilarity measure to assess $\Delta(\P_Y, \P_{Y |X_j})$;
+    \item building a \textit{dependence measures} evaluating $\Delta(\P_{(X_j, Y)}, \P_{X_j} \otimes \P_Y)$.
 \end{itemize}
 
 The first approach was studied in association with $f$-divergences in \citet{daveiga_2015,rahman_2016}. 
-However, these dissimilarity measures introduce estimation issues, which are simplified with kernel-based metrics such as the MMD. 
-The following section presents the \textit{Hilbert-Schmidt Independence Criterion} (HSIC) was initially introduced by \citet{gretton_2006} for dependence testing, and adapted as a dependence measure in GSA by \citet{daveiga_2015}. 
+However, some $f$-divergences introduce estimation issues, and the resulting importance measures do not propose a functional decomposition of variance (also called FANOVA).  
+Using kernel-based IPMs such as the maximum mean discrepancy (MMD), an alternative importance measure was proposed.  
+The following section presents the \textit{Hilbert-Schmidt Independence Criterion} (HSIC), which was initially introduced by \citet{gretton_2006} for dependence testing, and later adapted as a dependence measure in GSA by \citet{daveiga_2015}. 
 
 
 %------------------------------------------------------------%
 \subsubsection{Hilbert-Schmidt independence criterion}
 %------------------------------------------------------------%
 
-Let us first recall the definition of the maximum mean discrepancy, further introduced in Appendix \ref{apx:D}. 
-This distance between two probability distributions $\mu$ and $\zeta$ is defined as the worst-case error for any function within a unit ball of a function space $\iH$:
+Let us first recall the definition of the maximum mean discrepancy (further discussed in Appendix \ref{apx:D}). 
+This distance between two probability distributions $\pi$ and $\zeta$ can be defined as the worst-case error for any function within a unit ball of a function space $\iH$:
 \begin{equation}
-    \MMD(\mu, \zeta) := \sup_{\lVert g \lVert_{\iH(k)} \leq 1} \left | \int_{\iD_{\bX}} g(\bx) \dd \mu(\bx) - \int_{\iD_{\bX}} g(\bx) \dd \zeta(\bx) \right| 
-    = \left\lVert P_{\mu}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH(k)}.
-    \label{eq:mmd}  
+    \MMD(\pi, \zeta) := \sup_{\lVert g \lVert_{\iH(k)} \leq 1} \left | \int_{\iD_{\bX}} g(\bx) \dd \pi(\bx) - \int_{\iD_{\bX}} g(\bx) \dd \zeta(\bx) \right| 
+    %= \left\lVert P_{\pi}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH(k)}.
+    \label{eq:mmd_chapter1}  
+\end{equation}
+This quantity is a distance in the RKHS by taking a characteristic kernel (e.g., the Gaussian or Matérn kernel). 
+After a calculation developed in Appendix \ref{apx:D}, an unbiased one-sample estimator of the squared-MMD was proposed by \citet{gretton_2006}, 
+with a convergence rate of $\mathcal{O}(n^{-1/2})$ in probability. 
+Considering the two-samples $\left\{\pi^{(i)}\right\}_{i=1}^n \sim \pi$ and $\left\{\zeta^{(j)}\right\}_{j=1}^n \sim \zeta$: 
+\begin{equation}
+    \what{\MMD}^2(\pi, \zeta) = \frac{1}{n (n-1)} \sum_{i=1}^{n} \sum_{j \neq i}^{n} 
+                                k(\pi^{(i)}, \pi^{(j)}) - k(\pi^{(i)}, \zeta^{(j)}) - k(\zeta^{(i)}, \pi^{(j)}) + k(\zeta^{(i)}, \zeta^{(j)}) \, , 
+\label{eq:mmd_ustat}
 \end{equation}
 
-This powerful distance is used in GSA to measure the dependence of inputs and outputs. 
-Considering the pair of random variables $(X_j, Y)$, with probability distributions $\P_{X_j}$ and $\P_Y$ let us define the RKHS $\iH$ 
-induced by the product kernel $k((x_j, y), (x_j', y')) = k_{X_j}(x_j, x_j') k_{Y}(y_j, y_j')$. 
-The HSIC between the variable $X_j$ and $Y$ is defined as the following dependence measure:
+In the context of GSA, a first option is to directly use this dissimilarity measure to define the unormalized index: 
 \begin{equation}
-    \mathrm{HSIC}(X_j, Y) = \MMD(\P_{(X_j, Y)}, \P_{X_j} \otimes \P_{Y})^2.
+    S_j^{\MMD} = \MMD(\P_Y, \P_{Y |X_j}). 
+    \label{eq:mmd_gsa}
 \end{equation}
+\citet{daveiga_2021_kernel_ANOVA} remarked that the unormalized first order Sobol' indices are recovered by taking the linear kernel on the output $k_{Y}(y, y')=y\, y'$. 
+Using this non-characteristic kernel (see the definition in Appendix \ref{apx:D}) brings us back to a moment-dependent importance measure. 
 
-\elias{Add analysis about the FANOVA-like decomposition.}
+Alternatively, the second option considers a couple of random variables $(X_j, Y)$, with probability distributions $\P_{X_j}$ and $\P_Y$, and assumes the RKHS $\iH$  
+induced by the tensor product kernel $k((x_j, y), (x_j', y')) = k_{X_j}(x_j, x_j') k_{Y}(y_j, y_j')$. 
+The \textit{Hilbert-Schmidt independence criterion} (HSIC) measures the dependence between $\P_{X_j}$ and $\P_Y$ by expressing the MMD between $\P_{(X_j, Y)}$ and $\P_{X_j} \otimes \P_{Y}$: 
+\begin{equation}
+    \mathrm{HSIC}(X_j, Y) = \MMD^2(\P_{(X_j, Y)}, \P_{X_j} \otimes \P_{Y}).
+    \label{eq:hsic}
+\end{equation}
+This technique showed very good results for screening, and corresponding independence tests were studied for screening in \citet{delozzo_2016_hsic_test}. 
 
-\elias{The simplicity of the estimation.}
+\citet{daveiga_2021_kernel_ANOVA} proposed the functional decomposition of the two indices defined in \eq{eq:mmd_gsa} and \eq{eq:hsic}, allowing to develop their respective normalized versions. 
+Note that the HSIC decomposition requires a specific hypothesis on the structure of the kernel associated to the inputs. 
 
-\elias{Links with Sobol indices for a simple kernel.}
 
 
 %============================================================%
 \subsection{Summary and discussion}
 %============================================================%
 
-%\begin{itemize}
-%    \item Importance factors from FORM 
-%    \item Sobol on the indicator function (see Chabridon 2018 chapt 4 and 7, see Papaioannou 2023)
-%\end{itemize}
+This section introduced the GSA methods commonly used in uncertainty quantification. 
+Either to reduce the dimension of a problem (screening) or to quantify the influence of inputs (with importance measures), GSA improves the understanding of an uncertainty quantification study.   
+As for other steps of the generic UQ methodology, SA is made more complicated for computationally costly simulation models, hence the use of surrogates models.  
+Additionally, the dependence between inputs still represents an important limit to interpret GSA results. 
+
+Alongside rare event estimation, a literature is dedicated to the influence of the random inputs on such tail statistics. 
+The sensitivity is no more qualified as ``global'' but becomes ``goal-oriented''. 
+In the field of structural reliability, an overview of the reliability-oriented sensitivity analysis methods is presented in \citet{chabridon_2018_thesis}. 
+Several techniques derive from rare event estimation (e.g., the FORM importance factors \citet{papaioannou_2021_rosa_form}), or were adapted from GSA, like Sobol' indices \citep{ehre_2020_rosa}, Target-HSIC \citep{marrel_chabridon_2021}, or Shapley effects \citep{demange_2023_ijuq}.  
+
+Finally, sensitivity analysis may describe the effects of random inputs on the variation of the output, however, this study is done considering by assuming a model on the input uncertainties. 
+The role of a regulatory agency auditing an uncertainty quantification approach for certification (i.e., a nuclear safety authority), might be to challenge the way to model the uncertainties on the inputs.  
+In this case, various tools for \textit{robustness analysis} exist to quantify the impact of mispecifying the random inputs on the quantity of interest studied. 
+Among the methods to pertubate uncertainty models, some remain in the probabilistic framework, such as the ``perturbed-law based indices'' (PLI) \citep{lemaitre_2015_PLI}, or on extra-probabilistic methods \citep{ajenjo_2022_structural_safety}. 
+
 
 
 
@@ -1582,37 +1632,38 @@ The HSIC between the variable $X_j$ and $Y$ is defined as the following dependen
 \subsection{Common framework}
 %============================================================%
 
-The aim of \textit{surrogate modeling} (or metamodeling) is to build a cheap-to-call statistical model, denoted $\wg_n(\cdot)$, replacing a costly numerical model $g(\cdot)$ over the input domain $\iD_{\bX}$. 
+The aim of \textit{surrogate modeling} (or metamodeling) is to build a cheap-to-call statistical model, 
+denoted by $\wg_n(\cdot)$, replacing a costly numerical model $g(\cdot)$ over the input domain $\iD_{\bX}$. 
 To do so, a statistical learning is performed on a finite number of observations of the costly function $g$. 
 When manipulating computationally expensive simulations, its size can be limited (i.e., small-data context). 
-This $n$-sized set is usually called \textit{learning set} denoted: 
+This $n$-sized set is usually called \textit{learning set} written: 
 \begin{equation}
     \left\{\bX_n, \by_n\right\} = \left\{\bx^{(i)}, y^{(i)}\right\}_{i=1}^n
                                 = \left\{\bx^{(i)}, g\left(\bx^{(i)}\right)\right\}_{i=1}^n.    
 \end{equation}
 
-A very large catalogue of regression methods exist, here is a list of the most encountered ones in the field of UQ:
+A very large catalog of regression methods exist, here is a list of the most encountered ones in the field of UQ:
 generalized linear regression, polynomial chaos expansion (PCE) \citep{soize_2004, blatman_2011}, support vector machine (SVM) \citep{vapnik_1995}, 
 Gaussian processes (GP) \citep{rasmussen_2006}, low-rank tensor approximations \citep{grasedyck_2013}, and artificial neural network (ANN) \citep{tibshirani_2009}.
 The following section will provide a short focus on Gaussian process regression. %\elias{Add BST's table including names/shape/parameters/reference?}
 
 Validating the accuracy and precision of a surrogate model is an important step to guaranty its fidelity with regard to the numerical model. 
-When a $m$-sized input-output set is dedicated to validating the surrogate model, independently of the learning set, 
-it is called \textit{test set} and denoted $\left\{\bX_m, \by_m\right\} = \left\{\bx^{(i)}, g\left(\bx^{(i)}\right)\right\}_{i=1}^m$. 
+When an $m$-sized input-output set is dedicated to validating the surrogate model, independently of the learning set, 
+it is called \textit{test set} and denoted by $\left\{\bX_m, \by_m\right\} = \left\{\bx^{(i)}, g\left(\bx^{(i)}\right)\right\}_{i=1}^m$. 
 Note that the analyst may work in two different frameworks, affecting the regression and validation method's choice: 
 \begin{itemize}
     \item Given-data context: only using a fixed input-output dataset to build and validate the surrogate model. 
-    \item Computer experiment context: allowing to generate simulated data points (often at an important cost).
+    \item Computer experiment context: allowing to generate simulated data points (often at a certain cost).
 \end{itemize}
 
 Validating surrogate models in small-data context appears to be an important challenge. 
 Different validation criteria and techniques exist. 
-The \textit{coefficient of validation}, denoted $R^2$, is a first validation metric that can be directly computed on the learning set:
+The \textit{coefficient of validation}, denoted by $R^2$, is a first validation metric that can be directly computed on the learning set:
 \begin{equation}
     \mathrm{R}^2(\wg_n) = 1 - \frac{ \sum_{i=1}^n  \left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)^2}{\sum_{i=1}^n \left(y(\bx^{(i)})-\overline{\by}_n\right)^2}\,,
 \end{equation}
 where $\overline{y}_n=(1/n)\,\sum_{i=1}^n y^{(i)}$ denotes the empirical mean of the observations in the test sample. 
-However, theses metrics are not relevant for every regression method (typically, interpolant method have a $R^2=1$). 
+However, such metrics are not relevant for every regression method (typically, interpolant method have an $R^2=1$). 
 The \textit{predictivity coefficient} is an alternative defined as a normalized \textit{integrated square error} (ISE): 
 \begin{equation}
     \mathrm{Q}^2(\wg_n) = 1 - \frac{\ise(\wg_n)}{\var(\wg_n)}, 
@@ -1626,17 +1677,18 @@ This quantity can be estimated on a test set $\left\{\bX_m, \by_m\right\}$:
 \begin{equation}
     \what{\mathrm{Q}}^2(\wg_n) = 1 - \frac{ \sum_{i=1}^m  \left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)^2}{\sum_{i=1}^m \left(\overline{\by}_m - y(\bx^{(i)})\right)^2}\,.
 \end{equation}
-Note about the interpretation of the two criteria, the higher the value, the better the quality of the fit. 
+Note that for either criteria, the higher the value, the better the quality of the fit. 
 
-Validating a surrogate model with an independent test-set is sometimes called \textit{Holdout} validation.
+Validating a surrogate model with an independent test-set is sometimes called \textit{holdout} validation.
 In a small-data context, dedicating an independent test set to validation might be impossible.
 Then, \textit{cross-validation} is a generic estimation strategy allowing to use only one sample for learning and testing. 
 The most common cross-validation method is the \textit{$k$-fold} validation, illustrated in \fig{fig:kfold}. 
 The idea is first to split the $n$-sized dataset in several equal parts, called folds. 
-A first surrogate can be fitted on all the dataset but the first fold, on which a validation is estimated. 
+A first surrogate can be fitted on all the dataset but the first fold, on which a validation criterion is estimated (i.e., performance metric). 
 The operation is repeated for each fold, providing a virtual validation on the entire dataset. 
 Leave-One-Out validation (LOO) is an extreme case of $k$-fold cross-validation, for which $k=n-1$. 
-Note that multiple variations of these methods exist, adding for example a permutation or shuffling step. 
+Note that multiple variations of these methods exist, for example by adding a permutation or shuffling step. 
+The ``bagging'' validation method (for ``bootstrap aggregating'') consists of a shuffled cross-validation repeated many times \citep{breiman_1996_bagging}. 
 
 %\elias{Should we mention bootstrap aggregating (bagging): ensemble meta-algorithm improving the stability and accuracy of machine learning algorithms}
 
@@ -1668,19 +1720,19 @@ Note that multiple variations of these methods exist, adding for example a permu
 \subsection{General purposes surrogate model}
 %============================================================%
 
-In this section, a particular focus is put of Gaussian process (GP) regression (also named kriging after the goestatician D.G. Krige). 
+In this section, a particular focus is dedicated to Gaussian process (GP) regression (also called kriging after the geostatician D.G. Krige). 
 Gaussian processes are a widely used regression method in UQ for their performance, flexibility and their associated confidence model. 
 In a small-data context, the way of placing the few points forming the surrogate's learning set is critical. 
-Intuitively, to build a versatile surrogate model, it should get information covering the input space as uniformly as possible. 
-Which is why space-filling designs of experiments are commonly used to build learning sets.     
+Intuitively, to build a versatile surrogate model, the learning set should collect information over the entire domain uniformly. 
+Which is why space-filling designs of experiments are commonly used to build learning sets. 
 In practice, QMC and optimized LHS design introduced in Section \ref{sec:central_propagation} are widely used.  
 
 %------------------------------------------------------------%
 \subsubsection{Gaussian process regression}
 %------------------------------------------------------------%
 
-Considering a learning set $\bX_n$, Gaussian process regression aims at approximating the function $g(\cdot)$ by a scalar Gaussian process, conditioned on a set of observations $\by_n = \left\{g\left(\bx^{(i)}\right)\right\}$. 
-Let us first define a Gaussian process prior structure $\xi$ on the function approximated $g(\cdot)$ with a mean function $m(\cdot)$ and covariance function $k(\cdot, \cdot)$:  
+Considering a learning set $\bX_n$, the goal is to approximate the function $g(\cdot)$ by a scalar Gaussian process conditioned on a set of observations $\by_n = \left\{g\left(\bx^{(i)}\right)\right\}_{i=1}^n$. 
+Let us first define a prior structure $\xi$ on the function approximated $g(\cdot)$, taken as a Gaussian process with a mean function $m(\cdot)$ and covariance function $k(\cdot, \cdot)$:  
 \begin{equation}
     \xi \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot)),
 \end{equation} 
@@ -1688,12 +1740,12 @@ with a:
 \begin{itemize}
     \item \textit{trend model}: $~m(\bx) = \mathbf{f}(\bx)\TT \bbeta$, composed of a functional basis $\mathbf{f} = \left(f_1, \dots, f_d\right)\TT$ and a vector of coefficients 
     $\bbeta = \left(\beta_1, \dots, \beta_d\right)\TT$,
-    \item \textit{covariance model}: $~k(\bx, \bx')$, usually taken stationary, such that $k(\bx, \bx') = \sigma^2 k_{\mathrm{s}}(\bx - \bx', \btheta)$ with $\sigma^2>0$ and $\btheta \in \iD_bX$.
+    \item \textit{covariance model}: $~k(\bx, \bx')$, usually taken stationary, such that $k(\bx, \bx') = \sigma^2 k_{\mathrm{s}}(\bx - \bx', \btheta)$ with $\sigma^2>0$ and $\btheta \in \iD_\bX$.
 \end{itemize}
 The trend model of a GP defines its general tendency, while the covariance model influences its regularity. 
-The method takes different names depending on the knowledge of the trend model. 
+Gaussian process regression takes different names depending on the knowledge of the trend model. 
 It is called ``simple kriging'' when the trend is fully known, ``ordinary kriging'', when the trend is unknown but supposed constant and ``universal kriging'' otherwise. 
-Note that \cite{schobi_2015} introduced a hybrid method named PC-Kriging setting a PCE as the trend of a kriging model.   
+Note that \cite{schobi_2015} introduced a hybrid method named PC-Kriging setting a PCE as the trend of a kriging model. %\elias{paper PLS-Kriging from Onera 2015.}
 
 To ease the presentation, let us first consider the hyperparameters $\sigma, \btheta$ fully known and a zero trend $\bbeta = \textbf{0}$. 
 At a given point $\bx \in \iD_bX$ the realization of the GP is a Gaussian random variable $\xi(\bx) \sim \iN(m(\bx), k(\bx, \bx))$. 
@@ -1716,7 +1768,7 @@ In practice the surrogate model is defined by the \textit{predictor} function $\
 This regression model provides an important complementary information with the \textit{kriging variance} $s_n^2(\bx)$, reaching zero at the learning points. 
 Let us remark that the kriging variance fully depends on the covariance model (defined by its parametric structure and hyperparameters). 
 In practice, the hyperparameters are unknown, therefore, their estimation is a key step in the construction of a kriging model. 
-This estimation can be done using different approaches, most commonly using the maximum likelihood method or a cross-validation.
+This estimation can be done using different approaches, most commonly using maximum likelihood estimation or a cross-validation.
 
 The illustration in \fig{fig:kriging_1D} is a typical one-dimensional representation of an ordinary kriging model. 
 The mean of the conditioned process is plotted in red while its variability is represented by the many trajectories drawn on the process. 
@@ -1733,7 +1785,7 @@ In the simplest framework, the kriging model exactly interpolate the observation
 
 Associated with kriging models, another validation criterion is relevant to evaluate the kriging variance $s_n^2(\bx)$. 
 The predictive variance adequation (PVA) has been introduced by \citet{bachoc_2013} to confirm that the kriging variance is reliable. 
-For a validation performed by holdout, using an independent $m$-sized test set, the PVA is defined as: 
+For a validation performed by holdout, and using an independent $m$-sized test set, the PVA is defined as: 
 \begin{equation}
     \mathrm{PVA} = \left| \log\left( \frac1m \sum_{i=1}^{n} \frac{\left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)}{s_n^2(\bx^{(i)})}\right) \right|.
 \end{equation}
@@ -1741,21 +1793,21 @@ The smaller this quantity get, the better the quality of the kriging variance.
 
 Gaussian process regression is an elegant solution, offering a lot of flexibility and an associated error model (i.e., the kriging variance). 
 However, well know numerical issues appear during the estimation of the hyperparameters, especially as the learning size increases. 
-More specifically, the computation and memory allocation for the variance-covariance matrix a recurrent issue. 
-Multiple techniques resolve this issue by applying compression schemes on this matrix, e.g., based on sparse approximations (e.g., Hierarchical Matrices \citet{geoga_2020_hmat_gp}). 
+More specifically, the computation and memory allocation for the variance-covariance matrix is a recurrent issue. 
+Multiple techniques solve this issue by applying compression schemes on this matrix, e.g., based on sparse approximations (e.g., Hierarchical Matrices \citet{geoga_2020_hmat_gp}). 
 
 This section introduced a general purpose surrogate model, uniformly approximating a function on a domain, however surrogates are often used for specific purposes (e.g., contour finding for reliability analysis). 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[Ordinary kriging]
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/surrogates.ipynb}{Gaussian process regression}]
     The Python code available in Appendix \ref{apx:F} proposes a minimalistic \ot example to fit an ordinary kriging model and active learning models. 
-    Figures illustrating the present section may be reproduced, using the \ot scripts available on GitHub\footnotemark[10]\textsuperscript{,}\footnotemark[11].  
+    Figures illustrating the present section may be reproduced, using the \ot scripts available on GitHub\footnotemark[13]\textsuperscript{,}\footnotemark[14].  
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\footnotetext[10]{\url{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/surrogates.ipynb}}
+\footnotetext[13]{\url{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/surrogates.ipynb}}
 
-\footnotetext[11]{\url{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/active_learning.ipynb}}
+\footnotetext[14]{\url{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/active_learning.ipynb}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -1768,13 +1820,13 @@ In these cases, a more efficient approach might be to circumscribe the learning 
 For example, to fit a surrogate model for contour finding in reliability analysis, one should concentrate the learning set around the limit-state function. 
 Similarly, to build a surrogate for a global optimization problem, one should focus the learning set around the optimum(s). 
 Unfortunately, the area(s) of interest is usually unknown before evaluating the true function. 
-\textit{Active learning} is a general concept, aiming at iteratively increasing the learning set w.r.t. a \textit{learning criterion} (also called acquisition function) depending on the surrogate's goal to enhance the surrogate in area(s) of interest. 
-An exploration/exploitation trade-off arises in active learning, mostly resolved by the learning criterion.
+\textit{Active learning} is a general concept, aiming at iteratively increasing the learning set w.r.t. a \textit{learning criterion} (also called ``acquisition function'') depending on the surrogate's goal to enhance the surrogate in the area(s) of interest. 
+An exploration--exploitation trade-off arises in active learning, mostly sorted by the learning criterion.
 
 \begin{remark}
     This section introduces active learning methods in the computer experiment context, where the true function can be evaluated anywhere for a high computational cost. 
-    However, active learning is also used to handle big data frameworks in the machine learning community \citep{qiu_2016}. 
-    When datasets become so large that surrogate methods cannot be applied in practice, the analyst needs to select a subset on which the learning is performed.  
+    However, the ``active learning'' term is also used to handle big data frameworks in the machine learning community \citep{qiu_2016}. 
+    When datasets become so large that surrogate methods cannot be applied in practice, the analyst needs to select a relevant subset on which the learning is performed.  
 \end{remark}
 
 %------------------------------------------------------------%
@@ -1785,12 +1837,12 @@ In the field of black-box optimization, many methods rely on approximating the f
 The use of Gaussian processes as probabilistic surrogates for optimization was popularized by the \textit{efficient global optimization} (EGO) algorithm \citep{jones_1998}. 
 Ever since, many related methods were developed under the generic name of \textit{Bayesian optimization}. 
 The main idea is to exploit the uncertainty model from the GP to direct the point selection. 
-Concretely, the learning criterion depends on the gaussian process variance model.  
+Factually, the learning criterion depends on the Gaussian process variance model.  
 Numerous reviews of this field were proposed by \citet{shahriari_2015,gramacy_2020_book} and numerical benchmarks presented in \citet{leriche_2021}.
 
 The generic black-box optimization problem tackled is defined as:
 \begin{equation}
-    \bx^* = \argmin_{\bx \in \iD_{\bX}} g(\bx) \approx \argmin_{\bx \in \iD_{\bX}} \what{g}(\bx)
+    \bx^* = \argmin_{\bx \in \iD_{\bX}} \, g(\bx) \approx \argmin_{\bx \in \iD_{\bX}} \, \what{g}(\bx)
 \end{equation}
 
 To illustrate Bayesian optimization, let us present the EGO algorithm, defined by its specific learning criterion: the ``expected improvement''. 
@@ -1805,6 +1857,9 @@ The expected improvement is then written as:
 \end{align}
 where $g_{\min} = \min(\by_n)$, $\phi$ and $\Phi$ respectively stand for the PDF and the CDF of the standard Gaussian distribution.
 This learning criterion is relatively inexpensive and allows to progressively enhance the Gaussian process to solve the optimization problem with a limited number of calls to the true function. 
+Three illustration of the EGO algorithm is illustrated in \fig{fig:EGO_1D} to minimize a function (dashed line), knowing a few observations (black crosses). 
+After fitting an initial kriging model (red line), the corresponding expected improvement function is represented underneath (green line).  
+This learning criterion decides the location of the observation to be added to the learning set to enhance the surrogate w.r.t. to the optimization problem. 
 Bayesian optimization is an active research field, with different open problems such as constrained Bayesian optimization \citep{petit_2022}, or Bayesian optimization on stochastic functions \citep{gramacy_2020_book}.
 
 \begin{figure}[ht]
@@ -1819,9 +1874,8 @@ Bayesian optimization is an active research field, with different open problems 
 %------------------------------------------------------------%
 \subsubsection{Active kriging for reliability analysis}
 %------------------------------------------------------------%
-
-Rare event estimation often requires large amounts of calls to the limit-state function (becoming intractable for costly numerical model). 
-Emulating this function by a surrogate model can drastically limit the number of calls to LSF. 
+Rare event estimation often requires large amounts of evaluations of the limit-state function (becoming intractable for costly numerical models). 
+Emulating this function by a surrogate model can drastically limit the number of calls to the LSF. 
 This surrogate approximates the contour (i.e., border) of the failure domain. 
 However, in most cases, the failure domain represents a very restricted area of the input domain. 
 Active learning were proposed to iteratively concentrate the learning set around this border. 
@@ -1837,12 +1891,20 @@ The following paragraph introduces the most popular kriging-based learning crite
 
 Considering an initial learning set $\left\{\bX_n, \by_n\right\}$ built on a space-filling input design $\bX_n$ to explore the domain. 
 A first Gaussian process $\xi_n(\bx) \sim \iN(\eta_n(\bx), s_n^2(\bx))$ is fitted using \eq{eq:kriging}. 
-Let us introduce the deviation number $U$, looking for points close to the limit-state function and presenting a high kriging variance: 
+Let us introduce the deviation number $U$, looking for points close to the limit-state function while presenting a high kriging variance: 
 \begin{equation}
     \iA^{\textrm{U}}(\bx; \by_n) = \frac{\left|\yth - \eta_n(\bx)\right|}{s_n^2(\bx)}, 
     \label{eq:U}
 \end{equation}
-where $\yth \in R$ is a threshold defining the failure domain.
+where $\yth \in R$ is a threshold defining the failure domain. 
+
+\elias{Describe the figure}
+
+\elias{Say that this adtive learning method was coupled with many sampling methods. E.g., AK-MCS, AK-IS, AK-SS; etc. }
+
+\elias{This criterion is very understandable but relies on a local approach. Alternatively, SUR approaches were developped but present scaling limits. }
+
+\elias{In practice, the benchmark from Maliki recommends as a naive approach to perform AK-SS with a step of 20pc and the learning function U}
 
 \begin{figure}[ht]
     \centering
