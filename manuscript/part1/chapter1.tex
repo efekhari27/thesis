@@ -506,7 +506,7 @@ Knowing that the complexity of the studied integrand is fixed, this property exp
 
 Note that the design can also be considered as a discrete distribution (uniform sum of Dirac distributions).
 The discrepancy can then be expressed as a probabilistic distance between this discrete distribution and the uniform distribution. 
-A generalized discrepancy between distributions called \textit{maximum mean discrepancy} is introduced in the Appendix \ref{apx:D} and used for efficient sampling in the \elias{Part 2} of this manuscript.
+A generalized discrepancy between distributions called \textit{maximum mean discrepancy} is introduced in the Appendix \ref{apx:D} and used for efficient sampling in Chapter \ref{chpt:4} of this manuscript.
 
 Some famous low-discrepancy sequences (e.g., van der Corput, Halton, Sobol', Faure, etc.) can offer a bounded star discrepancy $D^*(\bX_n) \leq \frac{C \log(n)^d}{n}$, with the constant $C$ depending on the sequence.
 Therefore, using these sequences as a quadrature rule with uniform weights provides the following absolute error upper bound: 
@@ -1346,7 +1346,7 @@ Note that SA on dependent inputs is an active field of research and the inputs w
 
 
 %============================================================%
-\subsection{Screening methods}
+\subsection{Screening methods}\label{sec:screening}
 %============================================================%
 
 Many UQ methods suffer from the curse of dimensionality, thankfully, high-dimensional problems often only depend on a few variables. 
@@ -1434,7 +1434,7 @@ Therefore, this decomposition can be transposed in terms of functional decomposi
 \end{equation}
 where the previous terms are defined in a recurrent way, in the same fashion as \eq{eq:hoeffding_terms}:  $V_j(Y) = \var\left(\E[Y|X_j]\right), V_{jl}(Y) =$ \allowbreak $\var\left(\E[Y|X_j, X_l]\right) - V_j(Y) - V_l(Y)$, and so on for higher order interaction terms. 
 The Sobol' indices of different order are defined as normalized shares of variance. 
-The first-order Sobol' index $S_j$ quantifies the share of variance of the output only explained by the marginal $X_j$ (also called main effect). 
+The \textit{first-order Sobol' index} $S_j$ quantifies the share of variance of the output only explained by the marginal $X_j$ (also called main effect). 
 Second order $S_{jl}$ (or higher order) Sobol' indices quantify the effect of the interactions between a group of marginals. 
 \begin{subequations}
     \begin{align}
@@ -1453,9 +1453,14 @@ By using the functional decomposition of variance in \eq{eq:fanova}, one can sho
 \begin{equation}
     \sum_{A \in \mathcal{P}_d} S_A = 1.
 \end{equation}
+The so-called \textit{closed Sobol' index} associated to a subset of inputs $A \in \mathcal{P}_d$ (equivalent to the first-order Sobol' index of $A$) is defined as: 
+\begin{equation}
+    S_A^{\mathrm{clos}} = \sum_{A' \subset A} S_{A'} = \frac{\var\left(\E[Y|\bX_{A}]\right)}{\var(Y)}.
+    \label{eq:sobol_clos}
+\end{equation}
 
 Assessing Sobol' indices for every order becomes complex in medium to high dimension. 
-The total Sobol' index $S_j^T$ associated with the variable $j$, see \citet{saltelli_2008}, quantifies the share of output variance which is explained by all the interactions of the variable $X_j$:
+The \textit{total Sobol' index} $S_j^T$ associated with the variable $j$, see \citet{saltelli_2008}, quantifies the share of output variance which is explained by all the interactions of the variable $X_j$:
 \begin{equation}
     S_j^T = 1 - \frac{\var\left(\E[Y|\bX_{-j}]\right)}{\var(Y)} = \frac{\E\left[\var(Y|\bX_{-j})\right]}{\var(Y)},
     \label{eq:sobol_total}
@@ -1463,9 +1468,8 @@ The total Sobol' index $S_j^T$ associated with the variable $j$, see \citet{salt
 where $\bX_{-j}$ represents all the marginals from $\bX$ but $X_j$. 
 This definition can also be generalized for a subset of inputs $A \in \mathcal{P}_d$, such that:
 \begin{equation}
-    S_A^T = 1 - \sum_{A' \subset A} S_{A'} = 1 - \frac{\var\left(\E[Y|\bX_{A}]\right)}{\var(Y)},
+    S_A^T = 1 - S_{A^{\complement}}^{\mathrm{clos}} = 1 - \frac{\var\left(\E[Y|\bX_{A^{\complement}}]\right)}{\var(Y)}, \quad A^{\complement}=\mathcal{P}_d \setminus A
 \end{equation}
-where the second term of this expression is called \textit{closed Sobol' index}, $S_A^{\mathrm{clos}} = 1 - S_A^T = \frac{\var\left(\E[Y|\bX_{A}]\right)}{\var(Y)}$.
 
 By analyzing jointly the first and total Sobol' indices, on can get an indication on the decomposition between the marginal and interaction effects. 
 Note that the total indexes are only equal to the first indexes when the model does not present interactions (i.e., purely additive model).
@@ -1824,9 +1828,9 @@ Unfortunately, the area(s) of interest is usually unknown before evaluating the 
 An exploration--exploitation trade-off arises in active learning, mostly sorted by the learning criterion.
 
 \begin{remark}
-    This section introduces active learning methods in the computer experiment context, where the true function can be evaluated anywhere for a high computational cost. 
+    This section introduces active learning methods in the computer experiment context, where the true function can be evaluated anywhere for a given computational cost. 
     However, the ``active learning'' term is also used to handle big data frameworks in the machine learning community \citep{qiu_2016}. 
-    When datasets become so large that surrogate methods cannot be applied in practice, the analyst needs to select a relevant subset on which the learning is performed.  
+    When datasets become so large that learning methods do not scale in practice, the analyst needs to select a relevant subset on which the learning is performed.  
 \end{remark}
 
 %------------------------------------------------------------%
@@ -1842,13 +1846,13 @@ Numerous reviews of this field were proposed by \citet{shahriari_2015,gramacy_20
 
 The generic black-box optimization problem tackled is defined as:
 \begin{equation}
-    \bx^* = \argmin_{\bx \in \iD_{\bX}} \, g(\bx) \approx \argmin_{\bx \in \iD_{\bX}} \, \what{g}(\bx)
+    \bx^* = \argmin_{\bx \in \iD_{\bX}} \, g(\bx) \approx \argmin_{\bx \in \iD_{\bX}} \, \what{g}(\bx).
 \end{equation}
 
 To illustrate Bayesian optimization, let us present the EGO algorithm, defined by its specific learning criterion: the ``expected improvement''. 
 Considering an initial learning set $\left\{\bX_n, \by_n\right\}$ built on a space-filling input design $\bX_n$ to explore the domain. 
 A first surrogate $\xi_n(\bx) \sim \iN(\eta_n(\bx), s_n^2(\bx))$ is fitted using \eq{eq:kriging}. 
-The expected improvement is then written as: 
+The expected improvement, to be maximized, is then written as: 
 \begin{align}
     \iA^{\textrm{EI}}(\bx; \by_n) &= \E\left[\max\left(g_{\min} - \xi_n(\bx)\right)\right] \\ 
                                   &=\left(g_{\min} - \eta_n(\bx)\right) \Phi\left( \frac{g_{\min} - \eta_n(\bx)}{s_n(\bx)}\right) + 
@@ -1857,10 +1861,13 @@ The expected improvement is then written as:
 \end{align}
 where $g_{\min} = \min(\by_n)$, $\phi$ and $\Phi$ respectively stand for the PDF and the CDF of the standard Gaussian distribution.
 This learning criterion is relatively inexpensive and allows to progressively enhance the Gaussian process to solve the optimization problem with a limited number of calls to the true function. 
-Three illustration of the EGO algorithm is illustrated in \fig{fig:EGO_1D} to minimize a function (dashed line), knowing a few observations (black crosses). 
-After fitting an initial kriging model (red line), the corresponding expected improvement function is represented underneath (green line).  
-This learning criterion decides the location of the observation to be added to the learning set to enhance the surrogate w.r.t. to the optimization problem. 
-Bayesian optimization is an active research field, with different open problems such as constrained Bayesian optimization \citep{petit_2022}, or Bayesian optimization on stochastic functions \citep{gramacy_2020_book}.
+
+Three iterations of the EGO algorithm are represented in \fig{fig:EGO_1D} to minimize a function (dashed line), knowing a few observations (black crosses). 
+After fitting an initial kriging model (in red), the corresponding expected improvement function is represented underneath it (green line).  
+This learning criterion determines the location of the observation to be added to the learning set to enhance the surrogate w.r.t. to the optimization problem. 
+
+Bayesian optimization is an active research field, with different open problems such as constrained Bayesian optimization \citep{petit_2022}, or Bayesian optimization on stochastic functions \citep{gramacy_2020_book}. 
+Similarly, active learning was also adapted for structural reliability problems. 
 
 \begin{figure}[ht]
     \centering
@@ -1878,33 +1885,41 @@ Rare event estimation often requires large amounts of evaluations of the limit-s
 Emulating this function by a surrogate model can drastically limit the number of calls to the LSF. 
 This surrogate approximates the contour (i.e., border) of the failure domain. 
 However, in most cases, the failure domain represents a very restricted area of the input domain. 
-Active learning were proposed to iteratively concentrate the learning set around this border. 
+Active learning methods were proposed to iteratively concentrate the learning set around this border. 
 
 For rare event estimation, the surrogate only needs to be accurate near the limit state function. 
 In other words, it should accurately discriminate the points leading to the safe domain from those leading to the failure domain. 
-In fact, this problem can be seen as a two-class classification problem. 
-Note that active learning procedure using SVM classifiers were adapted to this specific goal \citep{bourinet_2018}. 
+In fact, this problem can be seen as a binary classification. 
+For example, active learning procedure using SVM classifiers were adapted to this specific goal \citep{bourinet_2018}. 
 
-The following paragraph introduces the most popular kriging-based learning criterion: the deviation number $U$ \citep{echard_2011}. 
-\citet{MorioBalesdent2015} introduce further active learning techniques dedicated to rare event estimation. 
-\citet{teixeira_2021} and \citet{moustapha_ss_2022} review this topic with the presentation of wide numerical benchmarks.
+The following paragraph introduces the most popular kriging-based learning criterion: the ``deviation number'' $U$ \citep{echard_2011}. 
+The reader may refer to \citet{MorioBalesdent2015} for further active learning techniques dedicated to rare event estimation. 
+More recently, \citet{teixeira_2021} and \citet{moustapha_ss_2022} reviewed this topic with the presentation of wide numerical benchmarks.
 
 Considering an initial learning set $\left\{\bX_n, \by_n\right\}$ built on a space-filling input design $\bX_n$ to explore the domain. 
 A first Gaussian process $\xi_n(\bx) \sim \iN(\eta_n(\bx), s_n^2(\bx))$ is fitted using \eq{eq:kriging}. 
-Let us introduce the deviation number $U$, looking for points close to the limit-state function while presenting a high kriging variance: 
+The deviation number $U$ is looking for points close to the limit-state function while presenting a high kriging variance. 
+This criterion to be minimized, is defined as:   
 \begin{equation}
     \iA^{\textrm{U}}(\bx; \by_n) = \frac{\left|\yth - \eta_n(\bx)\right|}{s_n^2(\bx)}, 
     \label{eq:U}
 \end{equation}
 where $\yth \in R$ is a threshold defining the failure domain. 
 
-\elias{Describe the figure}
+\fig{fig:AK_1D} reuses the same one-dimensional function as in \fig{fig:EGO_1D} to create a rare event problem. 
+In this case, the failure domain is defined for output values below the threshold $\yth$. 
+Once again, three iterations of the AK algorithm are illustrated, with the corresponding learning criterion $U$ (to minimize). 
+In this simple case, the LSF is defined by the two intersections of the function with the threshold. 
+Therefore, the AK method selects points near these intersections. 
 
-\elias{Say that this adtive learning method was coupled with many sampling methods. E.g., AK-MCS, AK-IS, AK-SS; etc. }
 
-\elias{This criterion is very understandable but relies on a local approach. Alternatively, SUR approaches were developped but present scaling limits. }
+Unlike optimization problems, the surrogate is used for uncertainty propagation, meaning that the rare event estimation is the result of the approximation of the LSF (i.e., contour finding) and a sampling techniques. 
+AK methods were coupled with most sampling techniques introduced in Section \ref{sec:reliability} (e.g., AK-MCS, AK-IS, AK-SS, etc. ). 
+As an agnostic strategy, \citet{moustapha_ss_2022} recommend to start by applying an AK method (using the learning function $U$) paired with a subset sampling (taking an intermediary probability $p_0 =0.2$). 
 
-\elias{In practice, the benchmark from Maliki recommends as a naive approach to perform AK-SS with a step of 20pc and the learning function U}
+The AK methods present the advantages to be easily implemented and interpreted, however, their learning criterion rely on a local approach. 
+Alternatively, the \textit{stepwise uncertainty reduction} (SUR) chooses iterative points by reducing the future expected uncertainty related to the quantity of interest \citep{bect_ginsbourger_2012}. 
+If this method was proven to be theoretically more consistent \citep{bect_ginsbourger_2019}, its scaling ability is still a bottleneck.  
 
 \begin{figure}[ht]
     \centering
@@ -1919,11 +1934,21 @@ where $\yth \in R$ is a threshold defining the failure domain.
 \subsection{Summary and discussion}
 %============================================================%
 
-\elias{The overfitting problem}
+This section brought the attention on surrogate modeling in the context of computer experiments. 
+Statistical learning in this framework is made specific by the capacity of the analyst to choose the repartition of the learning set and the small data constraint (mostly due to the costly numerical models manipulated). 
+In this context, many methods are used, however Gaussian processes became popular in UQ as they consider a prior structure of uncertainty that is conditioned by observations (at the edge between a Bayesian and a frequentist approach). 
+To enhance the learning for specific purposes (e.g., optimization or contour finding), active learning methods iteratively add learning points in the subdomain of interest. 
+For some applications, the system studied might be modeled for different fidelities (each presenting different computational costs). 
+Multi-fidelity surrogate modeling is an active field of research, associating observations from different fidelities to improve the learning \citep{fernandez_2016_review_multifi}. 
+Such methods are relevant for models with a very high computational cost (typically in computer fluid dynamics).  
 
-\elias{What if the data is noisy or the numerical model stochastic?}
+In UQ, surrogate models are used for uncertainty propagation (step C) and inverse analysis (step C'). 
+Surrogate modeling is made difficult when the functions present discontinuities (or strong nonlinearities), high dimension, stochasticity, or nonscalar inputs or outputs. 
+To deal with high dimensional problems, unimportant inputs can be screened using sensitivity analysis (see Section \ref{sec:screening}), otherwise, model order reduction methods might be used \elias{ref ?}. 
+When the function is stochastic, different approaches allow to fit the function and its intrinsic variability \citep{binois_2019_replication,baker_2020_stochastic_surrogates_review,zhu_2023_stochastic_pce}. 
 
-\elias{Note that the calibration error is often larger than the surrogate model error.}
+Provided a strict validation process, surrogate models are a great opportunity for uncertainty quantification. 
+However, many regulatory authorities are still reluctant to the use of surrogates, although their error is often much smaller that the modeling error (i.e., the error between the actual physical behavior and its numerical modeling). 
 
 
 %============================================================%
@@ -1931,5 +1956,19 @@ where $\yth \in R$ is a threshold defining the failure domain.
 \section{Conclusion}
 %============================================================%
 %============================================================%
+
+This section gives a literature overview of the main steps in uncertainty quantification. 
+From uncertainty modeling, uncertainty propagation, sensitivity analysis to surrogate modeling. 
+To ease the methodological presentation, all the illustrations from this section are reproducible using the Python/OpenTURNS scripts available on the GitHub repository mentioned earlier. 
+
+Finally this work, the numerical models exploited are supposed to be accurate, but they obviously carry some modeling uncertainty \citep{oberkampf_2010_VVUQ}. 
+In fact, prior to uncertainty quantification the model should be calibrated to make it match some physical information (e.g., measurements). 
+Numerical model calibration is also called data assimilation when a stream of measured data is available. 
+
+The aim of this work is to apply the tools presented in this chapter to offshore wind turbine models, therefore the next chapter introduces the numerical models manipulated in this thesis.  
+
+
+
+
 
 

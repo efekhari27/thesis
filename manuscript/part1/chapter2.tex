@@ -3,6 +3,7 @@
 %*********************************** Second Chapter *****************************
 %*******************************************************************************
 \chapter{Introduction to wind turbine modeling and design}
+\label{chpt:2}
 %*******************************************************************************
 \hfill
 \localtableofcontents
@@ -377,6 +378,8 @@ Standard values for the drag and inertial coefficients are often considered \cit
 DIEGO uses Morison’s equation together with first order potential solution to perform hydrodynamical simulations in the time domain.
 An extended introduction to hydrodynamics of fixed slender structures, as well as large floating structures is given in the Chapter 1 from \citep{milano_thesis_2021}.  
 
+\elias{https://www.sciencedirect.com/science/article/pii/S0029801823024484}
+
 %============================================================%
 \subsection{Control}
 %============================================================%
@@ -449,7 +452,7 @@ It refers to the progressive weakening of a material when subjected to cyclic or
 Understanding the mechanisms behind mechanical fatigue damage is essential for designing durable and reliable structures. 
 To quantify the fatigue damage on offshore wind turbine structures, standards \citep{dnv_fatigue_2016} recommend simulating the stresses in the time domain and identify a series of stress cycles. 
 Then, the \textit{stress-number of cycles curve} of a specific material (S-N curve) gives the number of cycles before failure at a given constant stress amplitude. 
-As the stress cycles identified on the results of the OWT simulation are not constant, an aggregation method called textit{Miner's rule} gathers the elementary damages over the stress time series studied. 
+As the stress cycles identified on the results of the OWT simulation are not constant, an aggregation method called \textit{Miner's rule} gathers the elementary damages over the stress time series studied. 
 
 
 \paragraph{Stress cycles identification.}
@@ -470,7 +473,7 @@ This assumption simplifies the expression of the equivalent Von Mises stress:
 \end{equation}
 
 Stress cycles can now be identified on the equivalent Von Mises stress time series. 
-The usual method to identify fatigue stress cycles is caleld \textit{rainflow counting} \citep{dowling_1972}. 
+The usual method to identify fatigue stress cycles is called \textit{rainflow counting} \citep{dowling_1972}. 
 Fatigue stress cycles are only defined by their amplitude (also called ``range'') and mean value, regardless of their chronology. 
 Rainflow counting returns a list of stress ranges identified denoted by $s$ in the following. 
 
@@ -531,13 +534,13 @@ The ``Goodman line'' and the ``Gerber parabola'' are two models relating the str
 Where the material's yield stress is denoted by $R_m$ and the fatigue limit by $s_d$. 
 The Haigh diagram represented in the \fig{fig:haigh_diagram} is a slice of the three-dimensional envelope for fixed values of fatigue endurance (i.e., number of cycles).
 By comparing the two models visually, the Goodman line is more conservative and is mostly used in the literature. 
-Further discussion in the field of wind turbines were reviewed in the early 2000's with a focus on the fatigue endurance of glass fiber materials \citep{sutherland_2000_fatigueWT} 
+Further discussion in the field of wind turbines were reviewed in the early 2000s with a focus on the fatigue endurance of glass fiber materials \citep{sutherland_2000_fatigueWT} 
 In the present, the non-zero correction presented above are not considered as the values of mean stress were found to be negligible compared to the yield stress of the material studied. 
 
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{./part1/figures/haigh-diagram.jpg}
-    \caption{Illustration of the Haigh diagram representing the combination of stress mean and amplitude leading to the same fatigue endurance.\elias{Reproduce Haigh and Goodman in 3D}}
+    \caption{Illustration of the Haigh diagram representing the combination of stress mean and amplitude leading to the same fatigue endurance.\elias{ Reproduce Haigh and Goodman in 3D}}
     \label{fig:haigh_diagram}
 \end{figure}
 
@@ -546,7 +549,7 @@ In the present, the non-zero correction presented above are not considered as th
 \paragraph{Cumulative damage theory.}
 %------------------------------------------------------------%
 A popular approach to assess the damage cumulated on a stress time series is to consider the fatigue contribution of each stress cycle according to the S-N curve. 
-Palmgren-Miner's rule defines the \textit{cumulative damage} $d_c$ by summing the fatigue contributions of each stress cycle $k$:
+Palmgren-Miner's rule defines the \textit{cumulative damage} $d_c$ by summing the fatigue contributions of each stress cycle $k$, regardless of their order of appearence:
 \begin{equation}
     d_c = \sum_{j=1}^{k} \frac{1}{N_{\mathrm{c}}\left(s^{(j)}\right)}.
     \label{eq:miner}
@@ -557,11 +560,17 @@ This practice induces an integration error, which becomes significant as the num
 In the following, the cumulative damage is computed without binning, as defined in \eq{eq:miner}.
 
 
-Spectral methods were also introduced to quantify fatigue damage in the late 80's. 
+Spectral methods were also introduced to quantify fatigue damage in the late 80s. 
 The main idea is to infer a PDF over the amplitudes of the stress cycles identified by rainflow counting, typically using a mixture of parametric distributions. 
 From this PDF, one can derive the fatigue endurance and therefore a cumulated damage (further details in the review of \citet{dirlik_2021}). 
 In the context of wind turbine fatigue assessment, spectral approaches showed to be unsuited in some cases, such as the fatigue of the blade's bending moments \citep{ragan_2007_dirlik_vs_miner}.  
 Overall, fatigue estimation in the time-domain does not represent important computational effort compared to the simulation of the wind turbine's physics. 
+
+\elias{MEntion the work of F.Schoefs on nonlinear fatigue, the }
+
+https://www.sciencedirect.com/science/article/pii/S0141029623012683
+
+https://www.sciencedirect.com/science/article/pii/S0142112320301511
 
 
 %============================================================%
@@ -571,29 +580,29 @@ Overall, fatigue estimation in the time-domain does not represent important comp
 %============================================================%
 
 The design and operation of offshore wind turbines is at the intersection of various engineering, environmental and social considerations. 
-Regardless of the different bottom-fixed or floating technologies, OWTs are dynamically excited structures evolving in a harch offshore environment.   
+Regardless of the different bottom-fixed or floating technologies, OWTs are dynamically excited structures evolving in a harsh offshore environment.   
 To operate such assets over up to 25 years of lifespan, multiple aspects should be assessed, from soil modeling, studies of environmental impact, grid integration, manufacturing quality, port logistics, to marine growth management, and maintenance
 This section resumes the main types of OWT technologies, as well as the main design and operation practices.   
 
 %============================================================%
 \subsection{Types of technologies and preliminary design}
 %============================================================%
-Over the last two decades, multiple technologies of OWTs have been developped, which are generally gathered into two types: bottom-fixed or floating technologies. 
-\fig{fig:FOWT_bottomfixed} and \ref{fig:FOWT_floating} respectively illustrates the diffrent types of bottom-fixed or floating technologies. 
-At this stage, the bottom-fixed solutions present more maturity and the floating technologies are still transitionning from the phase of large demonstrators to large scale wind farms. 
-The current developpement, in France, of offshore wind energy lead to the construction of the two first industrial projects, both managed by EDF Renewables \elias{(add the ADEME map of the offshore French project?)}. 
-In Saint-Nazaire, 80 bottom-fixed wind turbines were built on monopile foundations, alltogether producing up to 480 MW \elias{add ref}. 
-On the mediterannean coast, the first French industrial floating project was recently installed 20km offshore the coast of Marseille. 
+Over the last two decades, multiple technologies of OWTs have been developed, which are generally gathered into two types: bottom-fixed or floating technologies. 
+\fig{fig:FOWT_bottomfixed} and \ref{fig:FOWT_floating} respectively illustrates the different types of bottom-fixed or floating technologies. 
+At this stage, the bottom-fixed solutions present more maturity and the floating technologies are still transitioning from the phase of large demonstrators to large scale wind farms. 
+The current development, in France, of offshore wind energy lead to the construction of the two first industrial projects, both managed by EDF Renewables \elias{(add the ADEME map of the offshore French project?)}. 
+In Saint-Nazaire, 80 bottom-fixed wind turbines were built on monopile foundations, altogether producing up to 480 MW \elias{add ref}. 
+On the Mediterranean coast, the first French industrial floating project was recently installed 20 km offshore the coast of Marseille. 
 This pilot project, called ``\textit{Provence grand large}'', is composed of three turbines operating on so called ``tension-leg platforms'', delivering 25 MW of nominal power installed.     
 
-In order to lift water depth limitations associated with bottom fixed technologies (around 60 meters), floating pilot projects emerge accross the world. 
+In order to lift water depth limitations associated with bottom fixed technologies (around 60 meters), floating pilot projects emerge across the world. 
 However, the wind energy industry still tests different floating technologies in terms of cost efficiency and durability (as listed in \citet{mackinnon_2022_FOWT_table}). 
 An example of farm projects by type of technology is described hereafter: 
 \begin{itemize}
     \item \textbf{Semi-submersible}: a pilot project of three 10MW turbines called ``\textit{les éoliennes du Golfe du Lion}'' in the south of France relies on a semi-submersible technology developped by the company Principle Power \citep{cermelli_2018_windfloat}.   
     \item \textbf{Tension-leg}: a pilot project of three 8MW turbines called ``\textit{Provence grand large}'' exploits tension-leg platforms co-developped between the IFPEN national laboratory and the company SBM \citep{caille_2017_TPL_IFPEN}. 
     \item \textbf{Barge}: a pilot project of three 10MW turbines called ``EOLMED'' uses the floater developped by the company Ideol \citep{guignier_2016_ideol}. 
-    \item \textbf{Spar}: the Norvegian oil and gas company Equinor chose the spar technology \citep{driscoll_2016_hywind} to equip its floatting wind farm of 88MW, named ``Hywind Tampen''. 
+    \item \textbf{Spar}: the Norwegian oil and gas company Equinor chose the spar technology \citep{driscoll_2016_hywind} to equip its floating wind farm of 88MW, named ``Hywind Tampen''. 
 \end{itemize}
 
 \begin{figure}
@@ -616,30 +625,29 @@ An example of farm projects by type of technology is described hereafter:
 
 The turbines installed offshore over bottom-fixed foundations or floating structures present the same properties and components. 
 As described in \fig{fig:owt_diagram}, the structure of a wind turbine is composed of blades made in composite materials, while the tower, the transition peace and fundation (e.g., monopile) are made out of steel. 
-\elias{Mention the steel type and the fact that catodic proection against the corrosition is usually used.}
+\elias{Mention the steel type and the fact that cathodic protection against the composition is usually used.}
 
 Inside the nacelle, the gearbox adapts the rotation speed to suit the energy conversion system (i.e., generator). 
 To improve the reliability of the components, manufacturers offer without gearboxes, called ``direct-drive''. 
-This technology is relevant offshore, as the maintenance contraints are higher. 
+This technology is relevant offshore, as the maintenance constraints are higher. 
 However, the corresponding generators used in this situation operate at lower rotation speed. 
-Adapting the generators significantly incease their weigth and requires the use of larger permanent magnets increasing their price.   
+Adapting the generators significantly increase their weight and requires the use of larger permanent magnets increasing their price.   
 
 \begin{figure}
     \centering
     \elias{add diagram}
-    
     \caption{Diagram of an offshore wind turbine's major components.}
     \label{fig:owt_diagram}
 \end{figure}
 
 The construction of an offshore wind farm requires several years of project planning, administrative procedures, consultation of the public opinion, and design. 
-Internationals standards define the recommanded practice and requirements realted to the design and operation of OWTs. 
-Among them, the IEC 61400 is subdivided in many parts, incluing the general one \citep{iec_2019} and other parts details specific topics.       
-To validate the structural integrity of an wind turbine design, the standards recommand to simulate the behavior of the OWT (using the methods described in Section \ref{sec:owt_modeling}) for many environmental conditions, called ``design load cases'' (DLC). 
+Internationals standards define the recommended practice and requirements related to the design and operation of OWTs. 
+Among them, the IEC 61400 is subdivided in many parts, including the general one \citep{iec_2019} and other parts details specific topics.       
+To validate the structural integrity of a wind turbine design, the standards recommend simulating the behavior of the OWT (using the methods described in Section \ref{sec:owt_modeling}) for many environmental conditions, called ``design load cases'' (DLC). 
 As the environmental conditions (i.e., the DLC) depend on the site studied, the standards provide generic DLCs depending on a rough classification of the environmental conditions. 
 \elias{concepts of ULS and FLS + the standards provide a DLC for each of the main situations: parked / in prod etc.}
-Advanced sampling methods reling envrionmental data measured on site will be introduced in Chapter 4. 
-Beyond the main sollicitations resulting from environmental loading, various aspects should be considered around offshore wind turbines. 
+Advanced sampling methods reling environmental data measured on site will be introduced in Chapter 4. 
+Beyond the main solicitations resulting from environmental loading, various aspects should be considered around offshore wind turbines. 
 
 
 %============================================================%
