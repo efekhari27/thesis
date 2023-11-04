@@ -1,8 +1,9 @@
 %!TEX root = ../thesis.tex
 %*******************************************************************************
-%*********************************** Fourth Chapter *****************************
+%*********************************** Fourth Chapter ****************************
 %*******************************************************************************
 %*******************************************************************************
+\cleardoublepage
 \chapter{Kernel-based central tendency estimation}
 \label{chpt:4}
 %*******************************************************************************
@@ -100,7 +101,8 @@ In the present paper, the considered use case consists of a chain of three numer
 As illustrated in \fig{fig:bloc_diagram}, a simulation over a time period is the sequence of, first, a turbulent wind speed field generation, then a wind turbine simulation (computing various outputs including mechanical stress), and finally, a post-processing phase to assess the fatigue damage of the structure.
 \begin{figure}[h!]
 \begin{center}
-    \includegraphics[width=0.8\linewidth]{part2/figures/DCE/simulator_blocs.pdf}    
+    \input{./part2/figures/DCE/simulator_bloc}
+    %\includegraphics[width=0.8\linewidth]{part2/figures/DCE/simulator_blocs.pdf}    
 \end{center}
 \caption{Diagram of the chained OWT simulation model.}
 \label{fig:bloc_diagram}

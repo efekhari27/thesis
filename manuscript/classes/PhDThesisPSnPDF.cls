@@ -461,13 +461,13 @@ supported!}
 
 % ******************************* Bibliography *********************************
 \ifPHD@authoryear
-  \ifPHD@biblatex
-    \RequirePackage[backend=biber, style=authoryear, citestyle=alphabetic, 
-      sorting=nty, natbib=true]{biblatex}
-    \setBiBLaTeXtrue
-  \else
-    \RequirePackage[round, sort, numbers, authoryear]{natbib} %author year
-  \fi
+  %\ifPHD@biblatex
+  %  \RequirePackage[backend=biber, style=authoryear, citestyle=alphabetic, 
+  %    sorting=nty, natbib=true]{biblatex}
+  %  \setBiBLaTeXtrue
+  %\else
+    \RequirePackage[round, numbers, authoryear]{natbib} %author year
+  %\fi
 \else
   \ifPHD@numbered
     \ifPHD@biblatex

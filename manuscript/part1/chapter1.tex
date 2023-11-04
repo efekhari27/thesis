@@ -2,6 +2,7 @@
 %*******************************************************************************
 %*********************************** First Chapter *****************************
 %*******************************************************************************
+\cleardoublepage
 \chapter{Uncertainty quantification in computer experiments}
 %*******************************************************************************
 \vspace{-5pt}
@@ -47,7 +48,7 @@ In this chapter, the methodological concepts introduces are linked to minimal \o
 %============================================================%
 In our computer experiments context, uncertainty quantification is performed around an input-output numerical simulation model. 
 This numerical model, or code, is hereafter considered as \textit{black-box} since the knowledge of the underlying physics doesn't inform the UQ methods. 
-Alternatively, one could consider \textit{intrusive} UQ methods, introducing uncertainties within the resolution of the equations of the physics (see e.g., \citet{lemaitre_2010}). 
+Alternatively, one could consider \textit{intrusive} UQ methods, introducing uncertainties within the resolution of the equations of the physics (see e.g., \citealt{lemaitre_2010}). 
 In practice, numerical models might be a sequence of codes executed in series to obtain a variable of interest.
 
 While simulation models are in most cases deterministic, they may also be qualified as intrinsically stochastic (i.e., two runs of the same model taking the same inputs return different outputs).
@@ -56,7 +57,7 @@ In the following, it will be assumed that the numerical models passed a \textit{
 
 Formally, part of the problem specification is the definition of the set of $d$ input variables $\bx = \left(x_1, \dots, x_d\right)\TT$ considered as uncertain (e.g., wind speed, wave period, etc.). 
 The outputs studied are also defined at this stage, which will only be of scalar type in the present work.  
-UQ methods suited to other types of outputs exist (see e.g., for time series outputs \citet{lataniotis_2019}, for functional outputs \citet{auder_2012,rollon_2021}). 
+UQ methods suited to other types of outputs exist (see e.g., for time series outputs \citealt{lataniotis_2019}, for functional outputs \citealt{auder_2012,rollon_2021}). 
 Let us then define the following numerical model:
 \begin{equation}
 \iM : \bigg|
@@ -344,7 +345,7 @@ some are victims of the curse of dimensionality and some are not.
 %------------------------------------------------------------%
 
 Historically, quadrature methods have been developed for univariate integrals. 
-The Gaussian rule and the Fejér-Clenshaw-Curtis rule are two univariate deterministic quadratures that will be briefly introduced (see \cite{sullivan_2015} for further elements). 
+The Gaussian rule and the Fejér-Clenshaw-Curtis rule are two univariate deterministic quadratures that will be briefly introduced (see \citealt{sullivan_2015} for further elements). 
 
 %Let us first mention the Newton-Cotes quadratures, generalizing multiple rules (e.g., the trapezoidal rule, Simpson's rule, etc.).
 Gaussian quadrature is a powerful univariate quadrature building together a set of irregular nodes and a set of weights. 
@@ -398,7 +399,7 @@ Uncertainty quantification problems are rarely unidimensional, but one can direc
 This exhaustive approach quickly shows its practical limits as the problem's dimension increases. 
 In \fig{fig:bivariate_quads}, the left plot represents a two-dimensional tensor product of identical Gauss-Legendre quadratures. 
 Alternatively, sparse multivariate quadratures (i.e., Smolyak sparse grid) explore the joint domain more efficiently. 
-Using the Smolyak reccurent formula (se e.g., \citet{sullivan_2015}), two univariate quadratures can be combined as illustrated on the right of \fig{fig:bivariate_quads}. 
+Using the Smolyak reccurent formula (se e.g., \citealt{sullivan_2015}), two univariate quadratures can be combined as illustrated on the right of \fig{fig:bivariate_quads}. 
 %\elias{Introduce the recurrent Smolyak formula?}
 
 \begin{figure}[h!]
@@ -829,7 +830,7 @@ This quantity is formally written\footnote{Note that this probabilistic integrat
 \end{equation}
 were the indicator function applied to the failure domain returns $\1_{\left\{\iF_{\bX}\right\}}(x) = 1$ if $x \in \iF_{\bX}$ and $\1_{\left\{\iF_{\bX}\right\}}(x) = 0$ otherwise. 
 Rare event estimation implies both contour finding (i.e., characterizing the LSF) and an estimation strategy targeting the failure domain (often with a limited number of simulations). 
-Note that failure events are qualified as rare when their failure probability has an order of magnitude between $10^{-2} \leq \pf \leq 10^{-9}$ (see e.g., \citet{lemaire_2013}). 
+Note that failure events are qualified as rare when their failure probability has an order of magnitude between $10^{-2} \leq \pf \leq 10^{-9}$ (see e.g., \citealt{lemaire_2013}). 
 
 Instead of directly performing a reliability analysis in the physical space (i.e., $\bx$-space), these problems are usually solved in the \emph{standard normal space} (i.e., $\bu$-space). 
 Working in the standard space reduces numerical issues caused by potentially unscaled or asymmetric marginals. 
@@ -908,7 +909,7 @@ Using the properties of the standard space allows us to rewrite it as:
           &= \argmin_{\bu \in \R^d} \, \bu\TT \bu \qquad \mathrm{s.t.} \quad \cg(\bu) \leq 0.
 \end{align}
 This problem then becomes a quadratic optimization under nonlinear constraint. 
-It is classically solved by gradient decent algorithms (e.g., Abdo-Rackwitz algorithm \citep{abdo_rack_1991}) but can also use gradient-free techniques (e.g., Cobyla algorithm \citep{powell_1994}). 
+It is classically solved by gradient decent algorithms (e.g., Abdo-Rackwitz algorithm \citealp{abdo_rack_1991}) but can also use gradient-free techniques (e.g., Cobyla algorithm \citealp{powell_1994}). 
 This point defines the smallest Euclidian distance between the LSS and the origin of the standard space. 
 To understand its role in the reliability problem, let us recall that the density of the standard normal present an exponential decay in its radial and tangential direction. 
 Then, $P^*$ is the point with the biggest contribution to the failure probability (see the illustration in \fig{fig:FORM_SORM_approx}). 
@@ -939,7 +940,7 @@ Depending on the properties of the LFS, this approximation will be more or less 
 Note that for a purely linear LFS, $\pf = \pf^{\mathrm{FORM}}$. 
 When the function is nonlinear, adding a quadratic term to the Taylor expansion can help the approximation. 
 The approximation method is then called SORM for \textit{second order reliability method}. 
-However, this added complexity implies the computation of Hessian matrices, which can be complicated (see the Chapter 1 from \citet{bourinet_2018} for their estimation).
+However, this added complexity implies the computation of Hessian matrices, which can be complicated (see the Chapter 1 from \citealt{bourinet_2018} for their estimation).
 
 
 \begin{figure}[ht]
@@ -979,7 +980,7 @@ Once the first MPFP $P^{*^{(1)}}$ found, the LSS is modified by removing a nudge
 Overall, FORM and SORM methods deliver a very efficient approximation of small probabilities for relatively simple problems (in terms of linearity and dimension). 
 For this reason, they have been widely used in the practical context of limited simulation budget. 
 \citet{straub_2014_fatigue_form} illustrates the efficiency of FORM approaches on industrial cases such as probabilistic fatigue damage. 
-However, these methods present serious limits as the dimension increases (see the discussion in the Chapter 1 from \citet{chabridon_2018_thesis}). 
+However, these methods present serious limits as the dimension increases (see the discussion in the Chapter 1 from \citealt{chabridon_2018_thesis}). 
 Additionally, their main drawback is the lack of complementary information concerning the confidence of the results. 
 The textbook example illustrated in \fig{fig:multi_FORM} shows that the method might miss some important areas of the failure domain, leading to poor estimations. 
 As an alternative to approximation methods, simulation-based methods often provide to the analyst an assessment of the estimation's confidence. 
@@ -1568,7 +1569,7 @@ The following section presents the \textit{Hilbert-Schmidt Independence Criterio
 Let us first recall the definition of the maximum mean discrepancy (further discussed in Appendix \ref{apx:D}). 
 This distance between two probability distributions $\pi$ and $\zeta$ can be defined as the worst-case error for any function within a unit ball of a function space $\iH$:
 \begin{equation}
-    \MMD(\pi, \zeta) := \sup_{\lVert g \lVert_{\iH(k)} \leq 1} \left | \int_{\iD_{\bX}} g(\bx) \dd \pi(\bx) - \int_{\iD_{\bX}} g(\bx) \dd \zeta(\bx) \right| 
+    \MMD(\pi, \zeta) := \sup_{\lVert g \lVert_{\iH(k)} \leq 1} \left | \int_{\iD_{\bX}} g(\bx) \dd \pi(\bx) - \int_{\iD_{\bX}} g(\bx) \dd \zeta(\bx) \right | 
     %= \left\lVert P_{\pi}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH(k)}.
     \label{eq:mmd_chapter1}  
 \end{equation}
@@ -1755,7 +1756,7 @@ To ease the presentation, let us first consider the hyperparameters $\sigma, \bt
 At a given point $\bx \in \iD_bX$ the realization of the GP is a Gaussian random variable $\xi(\bx) \sim \iN(m(\bx), k(\bx, \bx))$. 
 Working with Gaussian variables allows to easily write conditioning formulas between $\xi(\bx)$ and the observations $\by_n$. 
 This Gaussian variable $\xi(\bx)$ conditioned on the observations $\by_n$ is sometimes called conditional posterior $\xi_n(\bx) := (\xi(\bx) | \by_n) \sim \iN(\eta_n(\bx), s_n^2(\bx))$. 
-The well-known ``Kriging equations'' (see e.g., \cite{rasmussen_2006}) offer its explicit expression:
+The well-known ``Kriging equations'' (see e.g., \citealt{rasmussen_2006}) offer its explicit expression:
 \begin{equation}
     \left\{
     \begin{array}{ll}
@@ -1798,7 +1799,7 @@ The smaller this quantity get, the better the quality of the kriging variance.
 Gaussian process regression is an elegant solution, offering a lot of flexibility and an associated error model (i.e., the kriging variance). 
 However, well know numerical issues appear during the estimation of the hyperparameters, especially as the learning size increases. 
 More specifically, the computation and memory allocation for the variance-covariance matrix is a recurrent issue. 
-Multiple techniques solve this issue by applying compression schemes on this matrix, e.g., based on sparse approximations (e.g., Hierarchical Matrices \citet{geoga_2020_hmat_gp}). 
+Multiple techniques solve this issue by applying compression schemes on this matrix, e.g., based on sparse approximations (e.g., Hierarchical Matrices \citealt{geoga_2020_hmat_gp}). 
 
 This section introduced a general purpose surrogate model, uniformly approximating a function on a domain, however surrogates are often used for specific purposes (e.g., contour finding for reliability analysis). 
 
@@ -1966,9 +1967,4 @@ In fact, prior to uncertainty quantification the model should be calibrated to m
 Numerical model calibration is also called data assimilation when a stream of measured data is available. 
 
 The aim of this work is to apply the tools presented in this chapter to offshore wind turbine models, therefore the next chapter introduces the numerical models manipulated in this thesis.  
-
-
-
-
-
 

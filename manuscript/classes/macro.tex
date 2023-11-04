@@ -9,7 +9,7 @@
 \usepackage{algpseudocode}
 \usepackage{tikz}
 \usepackage[many]{tcolorbox}
-\usetikzlibrary{arrows.meta, arrows, calc, shapes.geometric, backgrounds, fit, positioning, matrix}
+\usetikzlibrary{arrows.meta, arrows, calc, shapes.geometric, backgrounds, fit, positioning, matrix, scopes}
 \usepackage{array}
 \usepackage{footnote}
 \usepackage[acronym]{glossaries}
@@ -183,12 +183,13 @@
 \tikzstyle{dot}=[fill=black, draw=black, shape=circle, inner sep=1pt, outer sep=1pt]
 \tikzstyle{texte}=[shape=rectangle, text width=3cm, text centered, font={\scriptsize}]
 \tikzstyle{diag_rect}=[shape=rectangle, font={\scriptsize}, rotate=45, text width=2.2cm]
-\tikzstyle{grey_rect}=[fill=white, draw={gray!80}, shape=rectangle, text centered, font={\scriptsize}, text width=2cm]
-\tikzstyle{grey_full_rect}=[fill={gray!80}, draw={gray!80}, shape=rectangle, text centered, font={\scriptsize}, text width=2cm]
+\tikzstyle{grey_rect}=[fill=white, draw={gray!20}, shape=rectangle, text centered, font={\scriptsize}, text width=2cm]
+\tikzstyle{grey_full_rect}=[fill={gray!20}, draw={gray!20}, shape=rectangle, text centered, font={\scriptsize}, text width=2cm]
 
 % Edge styles
 \tikzstyle{line}=[-, thick]
 \tikzstyle{arrow}=[->, thick]
+
 
 % ******************************************************************************
 % ********************************* Acronyms ***********************************
@@ -364,15 +365,15 @@
 %\usepackage{cleveref} %Referencing without need to explicitly state fig /table
 
 % Add `custombib' in the document class option to use this section
-\ifuseCustomBib
-   \RequirePackage[square, sort, numbers, authoryear]{natbib} % CustomBib
+%\ifuseCustomBib
+%   \RequirePackage[square, sort, numbers, authoryear]{natbib} % CustomBib
 
 % If you would like to use biblatex for your reference management, as opposed to the default `natbibpackage` pass the option `custombib` in the document class. Comment out the previous line to make sure you don't load the natbib package. Uncomment the following lines and specify the location of references.bib file
 
-%\RequirePackage[backend=biber, style=numeric-comp, citestyle=numeric, sorting=nty, natbib=true]{biblatex}
+%\RequirePackage[backend=biber, style=numeric-comp, citestyle=numeric, sorting=ynt, natbib=true]{biblatex}
 %\addbibresource{References/references} %Location of references.bib only for biblatex, Do not omit the .bib extension from the filename.
 
-\fi
+%\fi
 
 % changes the default name `Bibliography` -> `References'
 \renewcommand{\bibname}{References}
