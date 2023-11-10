@@ -1,5 +1,6 @@
 %!TEX root = ../thesis.tex
 % ******************************* Thesis Appendix A ****************************
+\cleardoublepage
 \chapter{Univariate distribution fitting}
 \label{apx:A}
 %*******************************************************************************
@@ -74,7 +75,7 @@ Remark that the quick analytical results from the moment method can be used as a
 %============================================================%
 The empirical CDF is a cumulative stair-shaped representation of the sorted sample $X_n$:
 \begin{equation}
-    \what{F}_X(x) = \frac1n \sum_{i=1}^{n} \1_{\left\{x\geq x^{(i)}\right\}}.
+    \what{F}_X(x) = \frac1n \sum_{i=1}^{n} \1_{\left\{x^{(i)} \leq x\right\}}.
 \end{equation}
 
 A histogram consists in sorting and gathering the observations in a sample $X_n$ into a finite number of categories. 

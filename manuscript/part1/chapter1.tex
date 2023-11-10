@@ -4,6 +4,7 @@
 %*******************************************************************************
 \cleardoublepage
 \chapter{Uncertainty quantification in computer experiments}
+\label{chpt:1}
 %*******************************************************************************
 \vspace{-5pt}
 \localtableofcontents
@@ -36,7 +37,7 @@ Overall, this open source library provides tools for various steps of the UQ fra
 To guaranty software quality, the development follows robust processes such as exhaustive unit testing and multiplatform continuous integration. 
 A dedicated forum hosts an active community, which is helping new users and discussing future developments. 
 Finally, no-code users can benefit from \texttt{OpenTURNS}'s free-download Graphical User Interface software, named \texttt{Persalys}\footnotemark. 
-In this chapter, the methodological concepts introduces are linked to minimal \ot implementations examples, available in the Appendix \ref{apx:F}. 
+In this chapter, the methodological concepts introduces are linked to minimal \ot implementations examples, available in the Appendix \ref{apx:D}. 
 
 \footnotetext{\ot installation guide and documentation are available at \url{https://openturns.github.io/www/}}
 \footnotetext{\href{https://www.persalys.fr/obtenir.php}{\texttt{Persalys}}, a free-download graphical user interface available at \url{https://www.persalys.fr/obtenir.php}}
@@ -208,7 +209,7 @@ An empirical way of isolating the dependence structures from this example is to 
 Let us consider an $n$-sized sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \in \iD_{\bx}^{n}$. 
 The corresponding ranked sample is defined as: $\bR_n = \left\{\br^{(1)}, \dots, \br^{(n)}\right\}$, 
 where\footnote{The \textit{indicator function} is defined such that $\1_{\left\{\mathcal{A}\right\}}(x) = 1$ if $x \in \mathcal{A}$ and is equal to zero otherwise.} 
-$r^{(l)}_j = \sum_{i=1}^n \1_{\left\{x^{(i)}_j \leq x^{(l)}_j\right\}},$ $\forall j \in \{1, \dots d\}$. 
+$r^{(i)}_j = \sum_{l=1}^n \1_{\left\{x^{(l)}_j \leq x^{(i)}_j\right\}},$ $\forall j \in \{1, \dots d\}, i \in \{1, \dots n\}$. 
 Ranking a multivariate dataset allows us to isolate the dependence structure witnessed empirically \citep{saporta_2006}. 
 \fig{fig:ranked_joint_dist_samples} shows the same three samples from \fig{fig:joint_dist_samples} in the ranked space. 
 One can first notice that the marginals are uniform since each rank is uniformly distributed. 
@@ -251,7 +252,7 @@ Second, a function describing the dependence structure between all variables: a 
         f_{\bX}(x_1, \dots, x_d) = c\left(F_{X_1}(x_1), \dots, F_{X_d}(x_d)\right) \times f_{X_1}(x_1) \times \dots \times f_{X_d}(x_d),
     \end{equation}
     where $c$ is the density of the copula, sometimes also called copula by misuse of language. 
-    The reader might refer to \cite{joe_2014} for further mathematical proof. 
+    The reader might refer to \cite{durante_2015_copula} for three different mathematical proofs. 
     \label{thm:sklar}
 \end{theorem}
 
@@ -265,7 +266,7 @@ Additionally, copulas are invariant under creasing transformations.
 This property is important to understand the use of rank transformation to display the copula without the marginal effects.     
 
 Identically to the univariate continuous distributions, a large catalog of families of copulas exists (e.g., independent, Normal, Clayton, Frank, Gumbel copula, etc.). 
-Note that the independent copula implies that the distribution is defined as the product of its marginals. 
+Note that the independent copula $\Pi$ implies that the distribution is defined as the product of its marginals $\Pi = \prod_{j=1}^d u_j$. 
 In an inference context, this theorem divides the fitting problem into two independent problems: fitting the marginals and fitting the copula. 
 Provided a dataset, this framework allows the potential combination of a parametric (or nonparametric) fit of marginals with a parametric (or nonparametric) fit of the copula. 
 
@@ -280,13 +281,13 @@ In practice, the following points can be asked at this early stage:
 \end{itemize} 
 
 To ease the reading, a few techniques for estimating marginal distributions are available in Appendix \ref{apx:A}. 
-In addition, Appendix \ref{apx:B} introduces two nonparametric methods to infer a copula, named the ``empirical Bernstein copula'' and the ``Beta copula''. 
-The adequation between a fitted probabilistic model and a dataset should be validated, therefore, Appendices \ref{apx:A} and \ref{apx:B} respectively present visual and quantitative tools for goodness-if-fit evaluation.
+In addition, two nonparametric methods are introduced in Chapter \ref{chpt:3} to infer a copula: the ``empirical Bernstein copula'' and the ``Beta copula''. 
+The adequation between a fitted probabilistic model and a dataset should be validated, therefore, Appendices \ref{apx:A} recall visual and quantitative tools for univariate goodness-if-fit evaluation.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/copulas.ipynb}{Bivariate distribution}]
-    The Python code available in Appendix \ref{apx:F} proposes a minimalistic \ot example of a probabilistic uncertainty modeling. 
+    The Python code available in Appendix \ref{apx:D} proposes a minimalistic \ot example of a probabilistic uncertainty modeling. 
     Figures illustrating the present section may be reproduced, using the \ot scripts available on GitHub\footnotemark. 
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -573,7 +574,7 @@ Even if the goal might look different from numerical integration, these two topi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/integration.ipynb}{Numerical integration}]
-    The Python code available in Appendix \ref{apx:F} proposes a minimalistic \ot example to build multivariate quadrature rules. 
+    The Python code available in Appendix \ref{apx:D} proposes a minimalistic \ot example to build multivariate quadrature rules. 
     Figures illustrating the present section may be reproduced, using the \ot scripts available on GitHub\footnotemark.  
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -703,7 +704,7 @@ In the same vein, the uniform projection designs from \citet{sun_2019} is also a
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/designofexperiments.ipynb}{Design of experiments}]
-    The Python code available in Appendix \ref{apx:F} proposes a minimalistic \ot example to build an LHS and 
+    The Python code available in Appendix \ref{apx:D} proposes a minimalistic \ot example to build an LHS and 
     an LHS optimized w.r.t. to a space-filling metric (here the L2-centered discrepancy) using the simulated annealing algorithm. 
     Figures illustrating the present section may be reproduced, using the \ot scripts available on GitHub\footnotemark.  
 \end{otexample}
@@ -1310,7 +1311,7 @@ Finally, the robustness of the failure probability to the input uncertainty mode
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/reliability.ipynb}{Rare event estimation}]
-    The Python code available in Appendix \ref{apx:F} proposes a minimalistic \ot example to estimate rare event probabilities. 
+    The Python code available in Appendix \ref{apx:D} proposes a minimalistic \ot example to estimate rare event probabilities. 
     Figures illustrating the present section may be reproduced, using the \ot scripts available on GitHub\footnotemark.  
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1498,7 +1499,7 @@ Beyond Sobol' indices, another important GSA method was adapted from the theory 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/sensitivity_analysis.ipynb}{Sobol' indices}]
-    The Python code available in Appendix \ref{apx:F} gives a minimalistic \ot implementation of the Sobol' indices to assess global sensitivity analysis on the Ishigami analytical problem.
+    The Python code available in Appendix \ref{apx:D} gives a minimalistic \ot implementation of the Sobol' indices to assess global sensitivity analysis on the Ishigami analytical problem.
     Further scripts are also available on GitHub\footnotemark.  
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1806,7 +1807,7 @@ This section introduced a general purpose surrogate model, uniformly approximati
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/surrogates.ipynb}{Gaussian process regression}]
-    The Python code available in Appendix \ref{apx:F} proposes a minimalistic \ot example to fit an ordinary kriging model and active learning models. 
+    The Python code available in Appendix \ref{apx:D} proposes a minimalistic \ot example to fit an ordinary kriging model and active learning models. 
     Figures illustrating the present section may be reproduced, using the \ot scripts available on GitHub\footnotemark[13]\textsuperscript{,}\footnotemark[14].  
 \end{otexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1946,7 +1947,7 @@ Such methods are relevant for models with a very high computational cost (typica
 In UQ, surrogate models are used for uncertainty propagation (step C) and inverse analysis (step C'). 
 Surrogate modeling is made difficult when the functions present discontinuities (or strong nonlinearities), high dimension, stochasticity, or nonscalar inputs or outputs. 
 To deal with high dimensional problems, unimportant inputs can be screened using sensitivity analysis (see Section \ref{sec:screening}), otherwise, model order reduction methods might be used \elias{ref ?}. 
-When the function is stochastic, different approaches allow to fit the function and its intrinsic variability \citep{binois_2019_replication,baker_2020_stochastic_surrogates_review,zhu_2023_stochastic_pce}. 
+When the function is stochastic, different approaches allow to fit the function and its intrinsic variability \citep{binois_2019_replication,baker_2020_stochastic_surrogates_review,zhu_2023_thesis}. 
 
 Provided a strict validation process, surrogate models are a great opportunity for uncertainty quantification. 
 However, many regulatory authorities are still reluctant to the use of surrogates, although their error is often much smaller that the modeling error (i.e., the error between the actual physical behavior and its numerical modeling). 

@@ -1,69 +1,185 @@
 %!TEX root = ../thesis.tex
 % ******************************* Thesis Appendix D ****************************
-\chapter{Dissimilarity measures between probability distributions}
+\cleardoublepage
+\chapter{Uncertainty quantification practice with \ot}
 \label{apx:D}
 %*******************************************************************************
 
-Beyond the discrepancy measure to the uniform distribution, this section introduces different dissimilarity measures between probability distributions. 
 
-%============================================================%
-%============================================================%
-\section{Csiz\'{a}r $f$-divergences}
-%============================================================%
-%============================================================%
+\elias{Add short introduction to the motivation}
 
-\elias{General definition}
+\elias{Should I print the results?}
 
-\elias{Numerous examples depending on the function choosen: see the book culte}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/copulas.ipynb}{Bivariate distribution}]
+    The following Python code proposes a minimalistic \ot example of a probabilistic uncertainty modeling. 
+    \lstset{style=mystyle, language=python}
+%
+\begin{lstlisting}
+import openturns as ot
+# Build multivariate distribution from marginals and copula
+copula=ot.GumbelCopula(2.0)
+marginals=[ot.Uniform(1.0, 2.0), ot.Normal(2.0, 3.0)]
+distribution=ot.ComposedDistribution(marginals, copula)
+# Compute first moments
+mean_vector=distribution.getMean()
+covariance_matrix=distribution.getCovariance()
+# Compute CDF (respectively PDF)
+x_cdf=distribution.computeCDF([1.5, 2.5])# x=[1.5, 2.5]
+a_quantile=distribution.computeQuantile([0.9])# alpha=0.9
+\end{lstlisting}
+%
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\elias{Link between KL and mutual information}
-\elias{Further inputs in the review from Rahman, maybe some in the PhD subject from A.Dutfoy.}
-\elias{Problems generated in the estimation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/integration.ipynb}{Numerical integration}]
+    The following Python code presents a minimalistic \ot example to build multivariate quadrature rules.
+%
+\lstset{style=mystyle, language=python}
+\begin{lstlisting}
+import openturns as ot
+marginals=[ot.Exponential(1.0), ot.Uniform(-1.0, 1.0)]
+distribution=ot.ComposedDistribution(marginals)
+# Build a 2D Gaussian quadrature
+n_marginal=[4, 4] # Number of nodes per marginal
+g_quad=ot.GaussProductExperiment(distribution, n_marginal)
+g_nodes, weights=g_quad.generateWithWeights()
+# Build a Monte Carlo design
+n=16 
+mc_nodes=distribution.getSample(n)
+# Build a quasi-Monte Carlo design
+sequence=ot.HaltonSequence(2) # d=2
+qmc_experiment=ot.LowDiscrepancyExperiment(sequence, distribution, n)
+qmc_nodes=qmc_experiment.generate()
+\end{lstlisting}
+%
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%============================================================%
-%============================================================%
-\section{Integral probability metrics}
-%============================================================%
-%============================================================%
 
-\elias{general definition}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/designofexperiments.ipynb}{Design of experiments}]
+    The following Python code is a minimalistic \ot example to build an LHS and 
+    an LHS optimized w.r.t. to a space-filling metric (here the L2-centered discrepancy) using the simulated annealing algorithm. 
+    \lstset{style=mystyle, language=python}
+%
+\begin{lstlisting}
+import openturns as ot
+marginals=[ot.Uniform(0.0, 1.0), ot.Uniform(0.0, 1.0)]
+distribution=ot.ComposedDistribution(marginals)
+# Build a LHS
+n=10
+LHS_exp=ot.LHSExperiment(distribution, n)
+LHS_design=LHS_exp.generate()
+# Build an optimized LHS using L2-centered discrepancy
+LHS_exp=ot.LHSExperiment(distribution, n)
+SF_metric=ot.SpaceFillingC2()
+SA_profile=ot.GeometricProfile(10., 0.95, 20000)
+LHS_opt=ot.SimulatedAnnealingLHS(LHS_exp, SF_metric, SA_profile)
+LHS_opt.generate()
+LHS_design=LHS_opt.getResult().getOptimalDesign()
+\end{lstlisting}
+%
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\elias{Numerous examples see the book culte}
 
-\elias{No closed form expression unlike the $f$-divergence but the use of RKHS goes around this issue.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/reliability.ipynb}{Rare event estimation}]
+    The following Python code proposes a minimalistic \ot implementation of rare event estimation algorithms. 
+    \lstset{style=mystyle, language=python}
+%
+\begin{lstlisting}
+import openturns as ot
+marginals=[ot.Normal(0.0, 1.0), ot.Exponential(1.0)]
+distribution=ot.ComposedDistribution(marginals)
+# Build a limit-state function and failure event
+g=ot.SymbolicFunction(["x1", "x2"], ["(x1 - x2) ^ 2"])
+X=ot.RandomVector(distribution)
+Y=ot.CompositeRandomVector(g, X)
+th=0.0
+failure_event=ot.ThresholdEvent(Y, ot.LessOrEqual(), th)
+# Estimate pf using FORM
+starting_p=distribution.getMean()
+FORM_algo=ot.FORM(ot.Cobyla(), failure_event, starting_p)
+FORM_algo.run()
+FORM_results=FORM_algo.getResult()
+design_point=FORM_results.getStandardSpaceDesignPoint()
+FORM_pf=FORM_results.getEventProbability()
+# Estimate pf using Monte Carlo 
+MC_exp=ot.MonteCarloExperiment()
+MC_algo=ot.ProbabilitySimulationAlgorithm(failure_event, MC_exp)
+MC_algo.run()
+MC_results=MC_algo.getResult()
+MC_pf=MC_results.getProbabilityEstimate()
+MC_pf_confidence=MC_results.getConfidenceLength(0.95)
+# Estimate pf using importance sampling
+aux_distribution=ot.Normal(design_point, [1.0, 1.0])
+standard_event=ot.StandardEvent(failure_event)
+IS_exp=ot.ImportanceSamplingExperiment(aux_distribution)
+IS_algo=ot.ProbabilitySimulationAlgorithm(standard_event, IS_exp)
+IS_algo.run()
+IS_results=IS_algo.getResult()
+IS_pf=IS_results.getProbabilityEstimate()
+IS_pf_confidence=IS_results.getConfidenceLength(0.95)
+# Estimate pf using subset sampling
+SS_algo=ot.SubsetSampling(failure_event)
+SS_algo.run()
+SS_results=SS_algo.getResult()
+SS_pf=SS_results.getProbabilityEstimate()
+SS_pf_confidence=SS_results.getConfidenceLength(0.95)
+\end{lstlisting}
+%
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%============================================================%
-\subsection*{Maximum discrepancy measure}
-%============================================================%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/sensitivity_analysis.ipynb}{Sobol' indices}]
+    The following Python code gives a minimalistic \ot implementation of the Sobol' indices to assess global sensitivity analysis on the Ishigami analytical problem. 
+    \lstset{style=mystyle, language=python}
+%
+\begin{lstlisting}
+import openturns as ot
+g=ot.SymbolicFunction(
+    ['x1', 'x2', 'x3'], 
+    ['sin(x1) + 7.0 * sin(x2)^2 + 0.1 * x3^4 * sin(x1)']
+    )
+X=ot.ComposedDistribution([ot.Uniform(-3.14, 3.14)] * 3)
+size=1000
+# Generate samples and evaluate their images
+sie=ot.SobolIndicesExperiment(im.distributionX, size)
+input_design=sie.generate()
+output_design=im.model(input_design)
+# Four estimators : Saltelli, Martinez, Jansen, and Mauntz-Kucherenko
+SA=ot.JansenSensitivityAlgorithm(input_design, output_design, size)
+sobol_first_order=SA.getFirstOrderIndices()
+sobol_tolal=SA.getTotalOrderIndices()
+\end{lstlisting}
+%
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-A metric of discrepancy between distributions is introduced as the \emph{maximum mean discrepancy} (MMD). 
-This distance between two probability distributions $\mu$ and $\zeta$ is defined as the worst-case error for any function within a unit ball of a function space $\iH$:
-\begin{equation}
-    \MMD(\mu, \zeta) := %\\ 
-    \sup_{\lVert g \lVert_{\iH} \leq 1}
-            \left | \int_{\iD_{\bX}} g(\bx) \dd \mu(\bx) - \int_{\iD_{\bX}} g(\bx) \dd \zeta(\bx) \right| = \left\lVert P_{\mu}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH}.
-    \label{eq:mmd}  
-\end{equation}
 
-To ease the calculation of the quantity, this metric was studied for a particular function space, offering specific properties.
-A \emph{reproducing kernel Hilbert space} (RKHS), denoted $\iH(k)$, is an inner product space $\iH(k)$ of functions $g:\iD_{\bX} \rightarrow \R$.
-It verifies the following axioms, considering a symmetric and positive definite function $k: \iD_{\bX} \times \iD_{\bX} \rightarrow \R$, later called a ``reproducing kernel'' or simply a ``kernel'': 
-\begin{itemize}
-    \item The ``feature map'' $\phi : \iD_{\bX} \to \iH(k); \phi(\bx) = k(\cdot, \bx) \in \iH(k), \forall \bx \in \iD_{\bX}$.
-    \item The ``reproducing property'': $\langle g, k(\cdot, \bx) \rangle_{\iH(k)} = g(\bx), \quad \forall \bx \in \iD_{\bX}, \forall g \in \iH(k)$.
-\end{itemize}
-Every positive semi-definite kernel defines a unique RKHS (and vice versa) with a feature map $\phi$, such that $k(\bx, \bx') = \langle \phi(\bx), \phi(\bx') \rangle_{\iH(k)}$.
-Moreover, \cite{sriperumbudur_2010} defines a kernel as ``characteristic kernel'' when the following equivalence is true: $\MMD_k(\mu, \zeta) = 0 \Leftrightarrow \mu = \zeta$. 
-This property makes the MMD a metric on $\iD_{\bX}$.
 
-Then, a probability measure has a representation in the RKHS through its \emph{kernel mean embedding} \citep{sejdinovic_2013}, also called ``potential'' $P_{\mu}(\bx)$ in \cite{pronzato_zhigljavsky_2020}, defined as:
-\begin{equation}
-   P_{\mu}(\bx) := \int_{\iD_{\bX}} k(\bx, \bx') \dd \mu(\bx').
-\end{equation}
-The reproducing property from the RKHS allows to express the squared MMD as expectations of kernels:
-\begin{equation}\label{eq:mmd2}
-    \MMD_k(\mu, \zeta)^2 = \int_{\iD_{\bX}} P_{\mu}(\bx)\, \dd\mu(\bx) - 2 \int_{\iD_{\bX}} P_{\mu}(\bx) \, \dd\zeta(\bx) + \int_{\iD_{\bX}} P_{\zeta}(\bx)\, \dd\zeta(\bx).
-\end{equation}
-
-\elias{Add a sentence on estimation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/surrogates.ipynb}{Gaussian process regression}]
+    The following Python code gives a minimalistic \ot implementation of an ordinary kriging model fitting. 
+    \lstset{style=mystyle, language=python}
+%
+\begin{lstlisting}
+import openturns as ot
+g=ot.SymbolicFunction(['x'], ['x * sin(x) + sin(6 * x)'])
+x_train=ot.Uniform(0., 12.).getSample(7) # n=7
+y_train=g(x_train)
+basis=ot.ConstantBasisFactory(1).build() # d=1
+cov_model=ot.MaternModel([1.], 1.5)
+algo=ot.KrigingAlgorithm(x_train,y_train,cov_model,basis)
+algo.run()
+kriging_results=algo.getResult()
+kriging_predictor=kriging_results.getMetaModel()
+\end{lstlisting}
+%
+\end{otexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
