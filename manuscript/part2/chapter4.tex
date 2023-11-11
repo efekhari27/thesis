@@ -87,7 +87,7 @@ Such a property can be crucial in practice when the analyst is asked to include 
 The paper is organized as follows. 
 Section~\ref{sec:sec42} will present the industrial use case related to a wind farm operating in Teesside, UK. 
 Then, Section~\ref{sec:sec43} will introduce various kernel-based methods for central tendency estimation. 
-Section \ref{sec:sec44} will analyze the results of numerical experiments obtained on both analytical and industrial cases. 
+Section~\ref{sec:sec44} will analyze the results of numerical experiments obtained on both analytical and industrial cases. 
 Finally, the last section will present some discussions and draw some conclusions.
 
 
@@ -210,7 +210,7 @@ It gives a synthetic and empirical decomposition of the dataset that was impleme
 \end{figure}
 
 On \fig{fig:envi_pairplot}, a large sample $\iS \subset \iD_{\bX}$ (with size $N=10^4$) is randomly drawn from the entire Teesside data (with size $N_{\mathrm{Teesside}} = 2\times 10^5$), and plotted in grey. 
-In the same figure, the orange matrix plot is a subsample of the sample $\iS$, selected by kernel herding, a method minimizing some discrepancy measure with the sample $\iS$ that will be presented in Section \ref{sec:sec43}). 
+In the same figure, the orange matrix plot is a subsample of the sample $\iS$, selected by kernel herding, a method minimizing some discrepancy measure with the sample $\iS$ that will be presented in Section~\ref{sec:sec43}). 
 For this example, generating the kernel herding subsample takes under one minute, which is negligible compared with the simulation time of OWT models. 
 Visually, this orange subsample seems to be representative of the original sample both in terms of marginal distributions and dependence structure. 
 In the following study, the large samples $\iS$ will be considered as an empirical representation of the distribution of the random vector $\bX \in \iD_{\bX}$, with probability density function $f_{\bX}$, and called \textit{candidate set}. 
@@ -219,7 +219,7 @@ Indeed, fitting a joint distribution would introduce an additional source of err
 Note that a proper parametric model fit would be challenging for complex dependence structures such as the one plotted on \fig{fig:envi_pairplot}. 
 As examples of works that followed this path, one can mention the work of \citet{li_zhan_2020} who built a parametric model of a similar multivariate distribution using vine copulas. 
 
-For a similar purpose and to avoid some limits imposed by the parametric framework, a nonparametric approach coupling empirical Bernstein copula fitting with kernel density estimation of the marginals is proposed in subsection \ref{sec:4ebc}.
+For a similar purpose and to avoid some limits imposed by the parametric framework, a nonparametric approach coupling empirical Bernstein copula fitting with kernel density estimation of the marginals is proposed in subSection~\ref{sec:4ebc}.
 
 
 %------------------------------------------------------------%
@@ -769,7 +769,7 @@ The respective BQ estimators of the means are plotted in dashed lines.
 \medskip
 \begin{remark}
     Different kernels are used in these numerical experiments. 
-    First, the generation kernel, used by the kernel herding algorithm to generate designs (with the heuristic tuning defined in Section \ref{sec:4khsubsec}). 
+    First, the generation kernel, used by the kernel herding algorithm to generate designs (with the heuristic tuning defined in Section~\ref{sec:4khsubsec}). 
     Second, the BQ kernel allows computation of the optimal weights (arbitrarily set up as a Matérn $5/2$ with the heuristic tuning). 
     Third, the evaluation kernel, which must be common to allow a fair comparison of the computed MMD results (same as the BQ kernel).
 \end{remark}
@@ -826,7 +826,7 @@ This workflow simply estimates the mean damage by computing an arithmetic averag
 Alternatively, one can respectively fit a joint distribution and sample from it. 
 In our case, this distribution is only known empirically via the candidate set. 
 Since its dependence structure is complex (see \fig{fig:envi_pairplot}), a parametric method might fit the distribution poorly (and therefore lead to a poor estimation of the quantity). 
-Then, a nonparametric fit using the empirical Bernstein copula (introduced in Section \ref{sec:4ebc}) coupled with a kernel density estimation on each marginal is applied to the candidate set (with the EBC parameter $m=100 > m_{\mbox{MISE}}$ to avoid bias, see \citet{lasserre_2022} p.117). 
+Then, a nonparametric fit using the empirical Bernstein copula (introduced in Section~\ref{sec:4ebc}) coupled with a kernel density estimation on each marginal is applied to the candidate set (with the EBC parameter $m=100 > m_{\mbox{MISE}}$ to avoid bias, see \citet{lasserre_2022} p.117). 
 The sampling on this hybrid joint distribution is realized with a quasi-Monte Carlo method. 
 A Sobol' low-discrepancy sequence generates a uniform sample in the unit hypercube, which can then be transformed according to a target distribution. 
 Remember that quasi-Monte Carlo sampling is also sensitive to the choice of a low-discrepancy sequence, each presenting different properties (e.g., Sobol', Halton, Faure, etc.). 

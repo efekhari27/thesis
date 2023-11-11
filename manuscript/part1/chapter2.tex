@@ -48,10 +48,10 @@ First the Teesside wind farm, operating since 2014 in the North Sea, second the 
 
 Considering the standard uncertainty quantification diagram presented in \fig{fig:UQ_methodo}, the material of this chapter is related to the step A (problem specification) and the step B (uncertainty quantification). 
 It briefly introduces wind turbine modeling and design, in the following layout: 
-Section \ref{sec:metocean_simulation} presents the methods used for wind and wave generation and wake simulation at a farm scale; 
-Section \ref{sec:owt_modeling} recalls elements of theory associated with wind turbine modeling; 
-Section \ref{sec:owt_design} introduces recommended practices regarding design and operation; 
-finally, Section \ref{sec:owt_uncertainties} gives a description of the various sources of uncertainties considered in this thesis. 
+Section~\ref{sec:metocean_simulation} presents the methods used for wind and wave generation and wake simulation at a farm scale; 
+Section~\ref{sec:owt_modeling} recalls elements of theory associated with wind turbine modeling; 
+Section~\ref{sec:owt_design} introduces recommended practices regarding design and operation; 
+finally, Section~\ref{sec:owt_uncertainties} gives a description of the various sources of uncertainties considered in this thesis. 
 %To go further this general introduction, the reader might refer to the following sources on the different topics 
 
 
@@ -253,9 +253,9 @@ The diagram in \fig{fig:owt_modeling_fidelities} illustrates the increasing comp
 Generally, the computational cost increases with the model fidelity, making uncertainty quantification intractable at some point. 
 In the present work, the numerical model of an OWT studied is actually a chain of three models executed sequentially (as illustrated in \fig{fig:owt_chained_model}): 
 \begin{itemize}
-    \item \textbf{TurbSim}: a turbulent wind generator (see Section \ref{sec:221});
-    \item \textbf{DIEGO}: a multiphysics wind turbine model in the time domain (see Section \ref{sec:owt_modeling}); 
-    \item \textbf{Fatigue assessment}: a post-precessing computing fatigue damage (see Section \ref{sec:235}). 
+    \item \textbf{TurbSim}: a turbulent wind generator (see Section~\ref{sec:221});
+    \item \textbf{DIEGO}: a multiphysics wind turbine model in the time domain (see Section~\ref{sec:owt_modeling}); 
+    \item \textbf{Fatigue assessment}: a post-precessing computing fatigue damage (see Section~\ref{sec:235}). 
 \end{itemize}
 DIEGO is a numerical model developed by EDF R\&D to simulate the aero-hydro-servo-elastic behavior of OWTs in the time domain. 
 Different extensive code-to-code comparisons between DIEGO and other aero-hydro-servo-elastic models showed close results. 
@@ -648,7 +648,7 @@ Adapting the generators significantly increase their weight and requires the use
 The construction of an offshore wind farm requires several years of project planning, administrative procedures, consultation of the public opinion, and design. 
 Internationals standards define the recommended practices and requirements related to the design and operation of OWTs. 
 Among them, the IEC 61400 is subdivided in many parts, including the general one \citep{iec_2019} and other parts detailing specific topics.       
-To validate the structural integrity of a wind turbine design, the standards recommend simulating the behavior of the OWT (using the methods described in Section \ref{sec:owt_modeling}) for many environmental conditions, called ``design load cases'' (DLC). 
+To validate the structural integrity of a wind turbine design, the standards recommend simulating the behavior of the OWT (using the methods described in Section~\ref{sec:owt_modeling}) for many environmental conditions, called ``design load cases'' (DLC). 
 As the environmental conditions depend on the site studied, the standards provide generic DLCs depending on a rough classification of the environmental conditions. 
 Following the terminology in civil engineering, the structure is designed for ``fatigue limit states'' (FLS) and ``ultimate limit states'' (ULS) with respect to the environmental conditions. 
 For fatigue, advanced sampling methods relying on environmental data measured on site will be introduced in Chapter 4. 

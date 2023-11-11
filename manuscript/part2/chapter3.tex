@@ -25,7 +25,7 @@
 The main sources of solicitation in offshore design reside in the metocean conditions. 
 To accurately verify a structural design against the joint wind and wave conditions, these random excitations must be carefully modelled. 
 Offshore structures are usually certified against ultimate limit states (related to the occurrence of extreme metocean conditions) and fatigue limit states (related the average fatigue over the metocean conditions). 
-In this context, the probabilistic framework is typically used to model the joint distribution of random variables describing the metocean conditions (listed in Section \ref{sec:owt_uncertainties}). 
+In this context, the probabilistic framework is typically used to model the joint distribution of random variables describing the metocean conditions (listed in Section~\ref{sec:owt_uncertainties}). 
 
 Note that a given probabilistic model might describe well the central behavior of the environmental distribution but not its tail behavior (and vice-versa).   
 Extreme value theory develops specific methods to model the far tails of distributions \citep{beirlant_2006_extreme_values}. 
@@ -41,7 +41,7 @@ A semiparametric approach is applied on the South Brittany data, mixing parametr
 To visually analyze multivariate distributions, the \textit{copulogram} is a new tool that decomposes the marginal effects and the dependence structure of a joint distribution. 
 
 At the scale of a wind farm, each turbine perceives different metocean conditions as the wake of other turbines creates wind perturbations. 
-To study this perturbation, an engineering wake model (see Section \ref{sec:222}) was used to obtain one perturbed environmental distribution per turbine. 
+To study this perturbation, an engineering wake model (see Section~\ref{sec:222}) was used to obtain one perturbed environmental distribution per turbine. 
 This work applies a kernel-based discrepancy (the maximum mean discrepancy) to compare wake induced perturbations. 
 In a second time, this discrepancy is used to gather wind turbines perceiving similar perturbations. 
 This clustering can be used to perform uncertainty propagation at the farm scale by considering a few turbines with are representative of a cluster. 
@@ -85,7 +85,7 @@ The notions related to the copula theory are further introduced in the monograph
 
 
 %============================================================%
-\subsection{Preliminary definitions and properties}
+\subsection{Preliminary definitions and properties}\label{sec:copula_prelims}
 %============================================================%
 %Soit X = (X 1 , . . . , X n ) T un vecteur aléatoire de dimension n défini sur l’espace
 %n
@@ -299,6 +299,7 @@ As the order increases, the bias between the EBC and the copula $C$ tends to be 
 Note that the second EBC in \fig{fig:ebc_illustration} (c) where $(m_1=m_2=n)$ is equivalent to the Beta copula. 
 Moreover, increasing the order beyond the sample size definitely overfits of the copula. 
 
+%\elias{possible alternative: 2D plots in two rows. Row 1: empirical copula/EBCn=5/EBCn=10. Row 2: empirical density copula/EBCn=5/EBCn=10.}
 
 \begin{figure}
     \begin{subfigure}[b]{0.49\textwidth}
@@ -333,14 +334,106 @@ Moreover, increasing the order beyond the sample size definitely overfits of the
 \section{\textit{Copulogram}: a tool for multivariate data visualization}\label{sec:copulogram}
 %============================================================%
 %============================================================%
+In statistics, data visualization offers a wide set of tools to analyze data. 
+Multivariate data visualization is of great help to apprehend problems with dimension higher than two. 
+In the context of continuous variables, let us consider the $n$-sized sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \sim \bX \in \iD_{\bx}\subseteq\R^d$. 
+The marginal samples of $\bX_n$ are denoted by $X_{n, j} = \{x_j^{(1)}, \dots, x_j^{(n)}\}, j\in \{1, \dots, d\}$.
 
-Considering a sample from F, the componentwise ranks of the original sample looks like a sample from the copula density of F. 
+Various techniques exist to represent multivariate data, such as the ``parallel coordinate plot'', also called ``cobweb plot'' (see e.g., \citep{heinrich_2013_cobweb}). 
+For each sample $\bx^{(i)} \in \bX_n$, this plot draws a line passing by the values of $\bx^{(i)} = [x_1^{(i)}, \dots, x_d^{(i)}]$. 
+This representation was used in sensitivity analysis to illustrate the connections between a set of inputs and an output, however, it does not provide a good representation of the dependence structure between the inputs. 
 
-\begin{itemize}
-    \item Use the cancer dataset as an illustration?
-    \item Use the wind turbine with the pitch equal to 0? to illustrate the control ?
-\end{itemize}
+%============================================================%
+\subsection{From pairwise plot to copulogram}
+%============================================================%
+Alternatively, the ``pairwise plot'', also named ``generalized draftsman plot'', was initially introduced by \citet{hartigan_1975_splom} to draw a matrix of scatter-plots between all the pairs of marginal samples $\{X_{n, i}, X_{n, j}\}, i \ne j \in \{1, \dots, d\}^2$. 
+Because of the symmetry, the pairwise plot is usually represented on the lower triangle of the matrix. 
+Later on, statisticians improved the pairwise plot by adding a histogram (or KDE) of the marginal samples $X_{n, j} j \in \{1, \dots, d\}$ on the diagonal. 
+Additionally, the upper triangle was completed with the values of linear correlation for each pairs of marginal sample $\{X_{n, i}, X_{n, j}\}, i \ne j$. 
+This matrix of correlation coefficients is also know as ``correlogram''. 
+Altogether, this matrix plot became known as the ``scatter plot of matrices'' (SPLOM). 
 
+However, the linear correlation coefficient is known to give a poor description of the dependence in nonlinear cases. 
+When analysis a continuous sample $\bX_n \sim \bX$, the Sklar theorem states that the dependence structure within the random vector $\bX$ has a unique expression with its $d$-copula $C$. 
+As mentioned in Section~\ref{sec:copula_prelims}, the component wise normalized ranks of the original sample $\bX_n$ define the empirical copula density $c_n$ (converging towards $C$ as $n$ increases).
+
+To the best of our knowledge, the \textit{copulogram} is a new multivariate data visualization tool improving the SPLOM by representing the empirical copula density $c_n$ on the upper triangle of the matrix plot. 
+This plot is an empirical decomposition of a multivariate sample in the vein of the Sklar theorem between marginals on the diagonal and copula on the upper triangle.
+
+%============================================================%
+\subsection{Implementation in a Python package}
+%============================================================%
+
+An open-source implementation is proposed in the python package \href{https://github.com/efekhari27/copulogram}{\texttt{copulogram}}. 
+This code mostly relies on the Python package for data visualization \href{https://seaborn.pydata.org/}{\texttt{seaborn}} \citep{waskom_2021_seaborn}. 
+The developments are tracked and archived in a GitHub repository\footnotemark and the package can be installed from the package-management system ``PyPI''. 
+
+Multiple visual options are offered by the \texttt{copulogram} package, as illustrated in the GitHub repository. 
+For example, the user can represent the univariate samples on the diagonal, or the bivariate samples in the triangles with kernel density estimation.  
+Categorical variables can be used to assign different colors depending on the data class. 
+The colors can also vary depending on a continuous variable after defining a mapping between the values of this variable and a set of color (also called colorbar).
+
+
+\footnotetext{GitHub repository: \url{https://github.com/efekhari27/copulogram}}
+
+
+
+
+\subsubsection{Example \#1: Iris flower dataset}
+%------------------------------------------------------------%
+
+The first example illustrates the copulogram on a widely used dataset in the machine learning community. 
+The iris flower dataset was first introduced by Fisher and became a reference dataset for classification techniques. 
+In the following lines of Python code, the dataset is loaded and the copulogram package is used to draw the new plot. 
+The resulting copulogram applied to the iris flower data is represented in \fig{fig:iris_copulogram}. 
+\lstset{style=mystyle, language=python}
+%
+\begin{lstlisting}
+>>> import seaborn as sns
+>>> import copulogram as cp
+
+>>> data = sns.load_dataset("iris")
+>>> copulogram = cp.Copulogram(data)
+>>> copulogram.draw(hue="species")
+\end{lstlisting}
+%
+Since this data mostly presents linear dependencies, the copulogram is not very instructive. 
+In other cases, the role of the dependence in the joint distribution is more important.
+
+
+
+\subsubsection{Example \#2: Ishigami function}
+%------------------------------------------------------------%
+
+The Ishigami function is commonly used as a benchmark problem for global sensitivity analysis (GSA): 
+\begin{equation}
+    y = g(x_1, x_2, x_3) = \sin(x_1) + 7 \, \sin(x_2)^2 + 0.1 \, x_3^4 * \sin(x_1).
+\end{equation}
+This uncertainty quantification problem considers an independent random input vector $\bX=\prod_{j=1}^{3} X_j$. 
+While the marginals in GSA benchmarks are usually assumed to be uniform, they will be considered Gaussian hereafter to distinguish the different elements of the joint distribution. 
+Therefore, let us define $X_j\sim \iN(0, 1) \forall j \in \{1, 2, 3\}$. 
+In this setup, the random inputs are independent but they each present interesting dependencies with the random output $Y=g(\bX)$.
+
+A Monte Carlo sample with size $n=10^3$ is generated, $\bX_n \simiid \bX$, and evaluated such that $Y_n=g(\bx_n)$.  
+The copulogram of the input-output sample $(\bX_n, Y_n)$ is represented in \fig{fig:ishigami_copulogram}. 
+As expected, the scatter-plots between the inputs in the upper triangle are uniform (representing an independent density copula). 
+
+In GSA, the work of \citet{poczos_2012_copulaMMD} studied the discrepancy between the empirical density copula $c_n(X_j, Y), j \in \{1, \dots, d\}$ and the independent copula to qualitatively assess the importance of $X_j$.  
+In the same vein, the paper of \citet{plischke_2019_copulaGSA} attempted to formalize a link between different GSA approaches based on copulas and to quantitative approaches as the Sobol' indices. 
+
+\begin{figure}
+    \centering
+    \quad\qquad\qquad\includegraphics[width=0.82\textwidth]{../numerical_experiments/chapter3/figures/iris_copulogram.png}
+    \caption{Copulogram of the iris flower dataset with colors assigned by the iris species.}
+    \label{fig:iris_copulogram}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{../numerical_experiments/chapter3/figures/ishigami_copluogram.png}
+    \caption{Copulogram of Monte Carlo sample (with size $n=10^3$) of the inputs and outputs of the modified Ishigami problem.}
+    \label{fig:ishigami_copulogram}
+\end{figure}
 
 
 

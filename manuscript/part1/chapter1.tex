@@ -22,10 +22,10 @@ Associating an uncertainty quantification (UQ) analysis with these numerical mod
 A wide panel of UQ methods has been developed over the years to pursue these studies for a reasonable computational cost. 
 
 This chapter presents the essential tools and methods from the generic UQ framework, including elements partially inspired from \citet{sullivan_2015} and \citet{chabridon_2018_thesis}. 
-It is structured as follows: Section \ref{sec:model_spec} describes the context of the model specification step; 
-Section \ref{sec:uq} presents a classification of the inputs uncertainties and the probabilistic framework to model them; 
-Section \ref{sec:central_propagation} and \ref{sec:reliability} introduce various methods to propagate the input uncertainties through the numerical model for different purposes; 
-Section \ref{sec:gsa} presents the main inverse methods to perform sensitivity analysis in our framework; 
+It is structured as follows: Section~\ref{sec:model_spec} describes the context of the model specification step; 
+Section~\ref{sec:uq} presents a classification of the inputs uncertainties and the probabilistic framework to model them; 
+Section~\ref{sec:central_propagation} and \ref{sec:reliability} introduce various methods to propagate the input uncertainties through the numerical model for different purposes; 
+Section~\ref{sec:gsa} presents the main inverse methods to perform sensitivity analysis in our framework; 
 Finally, \ref{sec:surrogate} introduces the concept of surrogate models to emulate a model by realizing a statistical learning on a limited dataset.
 
 
@@ -301,7 +301,7 @@ The adequation between a fitted probabilistic model and a dataset should be vali
 The previous section aimed at building a probabilistic model of the uncertainties considering the knowledge available. 
 This one introduces diverse methods for forward propagation of the input uncertainties through a numerical model. 
 In the present section, uncertainty propagation is dedicated to the ``central tendency'' as its goal is to study the mean and variance of the output distribution. 
-This approach contrasts with the uncertainty propagation committed to rare event probability estimation, which will be introduced in Section \ref{sec:reliability} (e.g., used to assess reliability). 
+This approach contrasts with the uncertainty propagation committed to rare event probability estimation, which will be introduced in Section~\ref{sec:reliability} (e.g., used to assess reliability). 
 
 The difficulties related to any uncertainty propagation mostly arise from the practical properties of the numerical model. 
 Its potential high dimension, irregularity and nonlinearity each represent a challenge. 
@@ -591,7 +591,7 @@ Users of designs of experiments also consider various properties.
 \begin{itemize}
     \item Some might be interested in the sequentiality of a sampling method, to eventually add new points as they get their computational budget extended. 
     \item Some might request a sampling method conserving its properties in any subdomains. 
-    This second property can be useful to reduce the problem's dimension by dropping a few unimportant variables (see the following Section \ref{sec:gsa} on global sensitivity analysis).
+    This second property can be useful to reduce the problem's dimension by dropping a few unimportant variables (see the following Section~\ref{sec:gsa} on global sensitivity analysis).
 \end{itemize}
 
 Different metrics are commonly used to quantify how space-filling a design of experiments is. 
@@ -1290,7 +1290,7 @@ Overall, the main properties increasing the complexity of reliability problems a
     \item the rareness of the failure event.
 \end{itemize} 
 In regard to the methods, the estimation is made easier by algorithms with simple tuning or allowing to work in the physical space (avoiding a possibly complex iso-probabilistic transform).
-Considering all these elements the analyst may set up a sampling strategy, possibly coupled with the use of a surrogate model (further discussed in Section \ref{sec:surrogate}). 
+Considering all these elements the analyst may set up a sampling strategy, possibly coupled with the use of a surrogate model (further discussed in Section~\ref{sec:surrogate}). 
 
 Nevertheless, the unified formulation of reliability analysis problems (see \ref{eq:pf}) is an opportunity for the community to share standardized benchmark problems. 
 Following the well-accepted benchmark platform for optimization ``Comparing Continuous Optimizers'' (COCO) \citep{hansen_2021_coco}, an equivalent initiative was proposed for structural reliability. 
@@ -1731,7 +1731,7 @@ Gaussian processes are a widely used regression method in UQ for their performan
 In a small-data context, the way of placing the few points forming the surrogate's learning set is critical. 
 Intuitively, to build a versatile surrogate model, the learning set should collect information over the entire domain uniformly. 
 Which is why space-filling designs of experiments are commonly used to build learning sets. 
-In practice, QMC and optimized LHS design introduced in Section \ref{sec:central_propagation} are widely used.  
+In practice, QMC and optimized LHS design introduced in Section~\ref{sec:central_propagation} are widely used.  
 
 %------------------------------------------------------------%
 \subsubsection{Gaussian process regression}
@@ -1916,7 +1916,7 @@ Therefore, the AK method selects points near these intersections.
 
 
 Unlike optimization problems, the surrogate is used for uncertainty propagation, meaning that the rare event estimation is the result of the approximation of the LSF (i.e., contour finding) and a sampling techniques. 
-AK methods were coupled with most sampling techniques introduced in Section \ref{sec:reliability} (e.g., AK-MCS, AK-IS, AK-SS, etc. ). 
+AK methods were coupled with most sampling techniques introduced in Section~\ref{sec:reliability} (e.g., AK-MCS, AK-IS, AK-SS, etc. ). 
 As an agnostic strategy, \citet{moustapha_ss_2022} recommend to start by applying an AK method (using the learning function $U$) paired with a subset sampling (taking an intermediary probability $p_0 =0.2$). 
 
 The AK methods present the advantages to be easily implemented and interpreted, however, their learning criterion rely on a local approach. 
@@ -1946,7 +1946,7 @@ Such methods are relevant for models with a very high computational cost (typica
 
 In UQ, surrogate models are used for uncertainty propagation (step C) and inverse analysis (step C'). 
 Surrogate modeling is made difficult when the functions present discontinuities (or strong nonlinearities), high dimension, stochasticity, or nonscalar inputs or outputs. 
-To deal with high dimensional problems, unimportant inputs can be screened using sensitivity analysis (see Section \ref{sec:screening}), otherwise, model order reduction methods might be used \elias{ref ?}. 
+To deal with high dimensional problems, unimportant inputs can be screened using sensitivity analysis (see Section~\ref{sec:screening}), otherwise, model order reduction methods might be used \elias{ref ?}. 
 When the function is stochastic, different approaches allow to fit the function and its intrinsic variability \citep{binois_2019_replication,baker_2020_stochastic_surrogates_review,zhu_2023_thesis}. 
 
 Provided a strict validation process, surrogate models are a great opportunity for uncertainty quantification. 
