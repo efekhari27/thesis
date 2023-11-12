@@ -344,7 +344,7 @@ For each sample $\bx^{(i)} \in \bX_n$, this plot draws a line passing by the val
 This representation was used in sensitivity analysis to illustrate the connections between a set of inputs and an output, however, it does not provide a good representation of the dependence structure between the inputs. 
 
 %============================================================%
-\subsection{From pairwise plot to copulogram}
+\subsection{From the pairwise plot to the copulogram}
 %============================================================%
 Alternatively, the ``pairwise plot'', also named ``generalized draftsman plot'', was initially introduced by \citet{hartigan_1975_splom} to draw a matrix of scatter-plots between all the pairs of marginal samples $\{X_{n, i}, X_{n, j}\}, i \ne j \in \{1, \dots, d\}^2$. 
 Because of the symmetry, the pairwise plot is usually represented on the lower triangle of the matrix. 
@@ -460,7 +460,7 @@ A subset of $10^4$ points is randomly selected among the ANEMOC data, which will
 
 
 %============================================================%
-\subsection{Inference of the marginals}
+\subsection{Inference of the marginals}\label{sec:marginal_inference}
 %============================================================%
 
 The variables studied to describe the environmental conditions match the ones defined in Table~\ref{tab:envi_variables}. 
@@ -476,15 +476,15 @@ Considering these marginals, a study of the copula inference can be developed.
 
 \begin{table}
     \centering
-    \begin{tabular}{lll}
+    \begin{tabular}{llll}
         \hline
-        {\it Name} & {\it Notation} & {\it Fitted model}\\
+        {\it Name}              & {\it Notation}            & {\it Fitted model}                            & \textit{KS p-value ($\alpha$= 5\%)} \\
         \hline
-        Wind speed              & $U$                       & Weibull ($\beta=11.4, \alpha=2.2, \gamma=0$) \\
-        Wind direction          & $\theta_{\mathrm{wind}}$  & KDE\\
-        Significant wave height & $H_s$                     & Weibull ($\beta=2.1, \alpha=1.5, \gamma=0.5$)\\
-        Wave period             & $T_p$                     & Inverse Normal ($\mu=8, \lambda=140$)\\
-        Wave direction          & $\theta_{\mathrm{wave}}$  & KDE\\
+        Wind speed              & $U$                       & Weibull ($\beta=11.4, \alpha=2.2, \gamma=0$)  & 0.238     \\
+        Wind direction          & $\theta_{\mathrm{wind}}$  & KDE                                           & --        \\ 
+        Significant wave height & $H_s$                     & Inverse Normal ($\mu=2.3, \lambda=6.8$)       & 0.533     \\
+        Wave period             & $T_p$                     & Weibull ($\beta=9.3, \alpha=3.3, \gamma=2$)  & 0.00021   \\
+        Wave direction          & $\theta_{\mathrm{wave}}$  & KDE                                           & --        \\
         \hline
     \end{tabular}
     \caption{Marginal inference results of the South Brittany metocean data.}
@@ -526,32 +526,77 @@ Considering these marginals, a study of the copula inference can be developed.
 
 
 
-
+\newpage
 %============================================================%
 \subsection{Nonparametric inference of the dependence}
 %============================================================%
 
+The aim of this section is to complete the set of marginals fitted previously by the inference of a copula. 
+A nonparametric estimation using the empirical Bernstein copula is studied in this section. 
+To validate the goodness-of-fit of the EBC, the ANEMOC dataset (with size $N=10^4$) is randomly split into two:
+a learning set $\bX_n$ and a validation set $\bX_n'$. 
+A joint distribution $\what{F_\bX}$ is then build using $\bX_n$, by combining the marginals fitted earlier with an empirical copula $B_{\bm}(C_n)$, such that: 
+\begin{equation}
+    \what{F_\bX}(\bx) = B_{\bm}(C_n)\left(\what{F_{X_1}}(x_1), \dots, \what{F_{X_d}}(x_d)\right).
+\end{equation}
+Where $\what{F_{X_j}}$ stand for the model of the marginal $j$, just inferred in Section~\ref{sec:marginal_inference}. 
+While $C_n$ is the empirical copula associated with the sample $\bX_n$, and all the polynomial orders of the EBC are equal, $\bm = \{m, \dots, m\}, m\in\N$.
+
+Then, one could compare a sample $\what{\bX_n}$, generated from the fitted joint distribution $\what{F_\bX}$, with the learning set $\bX_n$. 
+However, to prevent an overfit from the semiparametric model, the comparison is rather done between $\bX_n$ and the independent validation set $\bX_n'$. 
+The statistic used is the maximum mean discrepancy, $\MMD(\what{\bX_n}, \, \bX_n')$, initially introduced for multivariate two-sample testing (a specific presentation of the MMD and its estimation is developed in Appendix~\ref{apx:B}). 
+For a given fitted joint distribution, this procedure is repeated 100 times to take into account the sampling variability. 
+
+In \fig{fig:sb_ebc_mmd}, MMD distributions are represented for different values of the EBC polynomial order, with $m\in\{5, 10, 20, 50, 100, 1000\}$. 
+The smallest the values of this dissimilarity measure, the closer the samples should be. 
+Even if further developments could be implemented to improve the MMD estimation, these results are sufficient to set the EBC tuning at $m=100$. 
+Considering this setup, \fig{fig:sb_copulograms} represents the copulogram of a sample $\what{\bX_n}$ (in red), side by side with the copulogram of the learning set $\bX_n$ (in blue).  
+This semiparametric approach offers a lot of flexibility, which is essential when inferring such complete dependence structures. 
+As any nonparametric method, it should be used with caution when inferring distributions' tails.  
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../numerical_experiments/chapter3/figures/SB_MMD_goodness.png}
+    \caption{Empirical distributions of the maximum mean discrepancy between the validation sample $\bX'$ and the sample $\what{\bX_n} \simiid \what{F_\bX}$ (repeated for 100 samples $\what{\bX_n}$).}
+    \label{fig:sb_ebc_mmd}
+\end{figure}
+
+
+\begin{landscape}
+    \begin{figure}
+        \begin{subfigure}[b]{0.49\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../numerical_experiments/chapter3/figures/SB_data_copulogram.png}
+            \vspace*{2pt}
+            \caption{South Brittany ANEMOC data (size $n=5000$).}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.49\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../numerical_experiments/chapter3/figures/SB_EBC_copulogram.png}
+            \caption{Monte Carlo sample (size $n=5000$), generated from the semiparamertic model fitted on the ANEMOC data (EBC $B_{\bm}(C_n)$ with $ \{m_j=100\}_{j=1}^d$).}
+        \end{subfigure}
+        \vspace*{5pt} 
+        \caption{Copulogram of the South Brittany metocean data.}
+        \label{fig:sb_copulograms}
+    \end{figure}
+\end{landscape}
+
 
 
 
 %============================================================%
-\subsection{Goodness-of-fit and discussion}
+\subsection{Summary and discussion}
 %============================================================%
 
+In this section, a semiparametric inference strategy was illustrated on a metocean dataset from a site off the coast of South Brittany, France. 
+This approach is pragmatic and offers a lot of flexibility. 
+In our case, the unimodal marginals are fitted by MLE while the multimodal ones are fitted by KDE. 
+Considering the complexity of the dependence, the EBC showed interesting results for large size samples. 
+It scapacity to extrapolate in the tails could be further studied \citep{heredia_2022_nonparam_copula} but this tool is an appropriate solution for general inference (for example needed for fatigue assessment). 
 
-
-
-% CONCLUSION USING JOE
-\elias{When should we use nonparametric copula inference?}
-
-\citet{joe_2014}, p.250 discusses the use of nonparametric methods for multivariate inference. 
-According to the author, 
-
-``Non-parametric estimation of a copula is desirable if univariate margins are well-behaved and can be fit with parametric families, 
-and the multivariate dependence structure is more complex than monotone relations among variables. 
-If the univariate margins are also not simple, then multivariate non-parametric estimation approaches can be applied to the multivariate distribution directly, 
-rather than estimation of non-parametric univariate margins with a non-parametric copula.
-''
+In the monograph of \citet{joe2011dependence}, the use of nonparametric methods is briefly discussed p.250. 
+The author recommends using nonparametric copulas when the marginals are well-behaved, but the dependence structure is nonlinear. 
 
 
 \newpage
