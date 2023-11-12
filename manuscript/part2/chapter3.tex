@@ -389,12 +389,12 @@ The resulting copulogram applied to the iris flower data is represented in \fig{
 \lstset{style=mystyle, language=python}
 %
 \begin{lstlisting}
->>> import seaborn as sns
->>> import copulogram as cp
-
->>> data = sns.load_dataset("iris")
->>> copulogram = cp.Copulogram(data)
->>> copulogram.draw(hue="species")
+    #!/usr/bin/python3        
+    import seaborn as sns
+    import copulogram as cp
+    data = sns.load_dataset("iris")
+    copulogram = cp.Copulogram(data)
+    copulogram.draw(hue="species")
 \end{lstlisting}
 %
 Since this data mostly presents linear dependencies, the copulogram is not very instructive. 
@@ -443,8 +443,106 @@ In the same vein, the paper of \citet{plischke_2019_copulaGSA} attempted to form
 \section{Semiparametric inference of the South Brittany metocean conditions} \label{sec:32_inference}
 %============================================================%
 %============================================================%
+Metocean conditions have been long studied in costal and offshore engineering. 
+Inferring multivariate probabilistic models on metocean data became essential in wind energy. 
 
-\elias{When should we use nonparametric copula inference? }
+Numerous approaches are proposed in the literature to fit a model on environmental data. 
+Among them, let us mention the use of parametric methods as the conditional modeling (e.g., \citealt{bitner_2015_joint,vanem_fekhari_2023}), or the construction of vine copulas (e.g., \citealt{vanem_2016,montes_2016_cvines_metocean,lin_2019_cvines_waves,lin_2019_cvines_waves}). 
+Nonparametric methods as the KDE were also applied in this context (e.g., \citealt{han_2018_kde_metocean}). 
+The nonparametric techniques generally struggle to model the distributions' tails, even if the tails are essential to qualify structures for ultimate events. 
+However, they are highly flexible and often easier to implement than parametric methods.
+
+In this section, a semiparamertic inference strategy is presented, composing some well-known parametric models for the marginals (e.g., Weibull distribution for the wind speed), with a highly flexible dependence modeling by the EBC. 
+A metocean dataset is used to showcase the empirical Bernstein copula and its representation by the copulogram. 
+This dataset from the ANEMOC (Digital Atlas of Ocean and Coastal Sea States atlas, \citealp{raoult_2018_anemoc3}) gathers 32 years of preprocessed data 
+(at an hourly resolution) from a location off the coast of South Brittany, France. 
+A subset of $10^4$ points is randomly selected among the ANEMOC data, which will be used to realize the semiparametric inference.
+
+
+%============================================================%
+\subsection{Inference of the marginals}
+%============================================================%
+
+The variables studied to describe the environmental conditions match the ones defined in Table~\ref{tab:envi_variables}. 
+Unfortunately, the turbulence is provided by the ANEMOC database and is therefore not fitted. 
+A straightforward inference is performed on the data, resulting in the models presented in Table~\ref{tab:sb_marginal_fit}.
+The wind and wave directions are fitted by KDE to catch their multimodal behavior while the other variables by MLE on various parametric models. 
+Note that some variations of KDE with kernels specific to circular data could be interesting to ensure the continuity of the model at the bounds \citep{bai_1989_directional_kde}. 
+
+The results of the marginals' inferences, plotted in \fig{fig:marginals_sb} against histograms, are visually satisfying. 
+Statistical testing is not necessary in our case since the actual topic of discussion is related to the inference of the dependence. 
+Considering these marginals, a study of the copula inference can be developed. 
+
+
+\begin{table}
+    \centering
+    \begin{tabular}{lll}
+        \hline
+        {\it Name} & {\it Notation} & {\it Fitted model}\\
+        \hline
+        Wind speed              & $U$                       & Weibull ($\beta=11.4, \alpha=2.2, \gamma=0$) \\
+        Wind direction          & $\theta_{\mathrm{wind}}$  & KDE\\
+        Significant wave height & $H_s$                     & Weibull ($\beta=2.1, \alpha=1.5, \gamma=0.5$)\\
+        Wave period             & $T_p$                     & Inverse Normal ($\mu=8, \lambda=140$)\\
+        Wave direction          & $\theta_{\mathrm{wave}}$  & KDE\\
+        \hline
+    \end{tabular}
+    \caption{Marginal inference results of the South Brittany metocean data.}
+    \label{tab:sb_marginal_fit}
+\end{table}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../numerical_experiments/chapter3/figures/free_wsp_distribution_SB.png}
+        \caption{Wind speed $U$.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../numerical_experiments/chapter3/figures/wind_dir_distribution_SB.png}
+        \caption{Wind direction $\theta_{\mathrm{wind}}$.}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../numerical_experiments/chapter3/figures/Hs_distribution_SB.png}
+        \caption{Significant wave height $H_s$.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../numerical_experiments/chapter3/figures/Tp_distribution_SB.png}
+        \caption{Wave period $T_p$.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../numerical_experiments/chapter3/figures/wave_dir_distribution_SB.png}
+        \caption{Wave direction $\theta_{\mathrm{wave}}$.}
+    \end{subfigure}
+    \caption{Marginal inference results of the South Brittany metocean data.}
+    \label{fig:marginals_sb}
+\end{figure}
+
+
+
+
+
+%============================================================%
+\subsection{Nonparametric inference of the dependence}
+%============================================================%
+
+
+
+
+%============================================================%
+\subsection{Goodness-of-fit and discussion}
+%============================================================%
+
+
+
+
+% CONCLUSION USING JOE
+\elias{When should we use nonparametric copula inference?}
 
 \citet{joe_2014}, p.250 discusses the use of nonparametric methods for multivariate inference. 
 According to the author, 
@@ -454,34 +552,6 @@ and the multivariate dependence structure is more complex than monotone relation
 If the univariate margins are also not simple, then multivariate non-parametric estimation approaches can be applied to the multivariate distribution directly, 
 rather than estimation of non-parametric univariate margins with a non-parametric copula.
 ''
-
-\begin{itemize}
-    \item There is a difference between inference for central tendency study or extreme value theory. 
-    \item In the present work, the focus is on complex dependence modelling
-    \item 
-\end{itemize}
-
-\elias{Conditional model to infer the dependence: present how it looks and the difficulty to define it.}
-
-\elias{If Alexis scripts work: compare the adequancy between the two strategies using the MMD for increasing sample sizes. }
-
-
-%============================================================%
-\subsection{Parametric marginal inference}
-%============================================================%
-
-
-
-%============================================================%
-\subsection{Nonparametric Bernstein copula inference}
-%============================================================%
-
-
-
-%============================================================%
-\subsection{Goodness-of-fit and discussion}
-%============================================================%
-
 
 
 \newpage
