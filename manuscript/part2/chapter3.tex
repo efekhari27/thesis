@@ -339,7 +339,7 @@ Multivariate data visualization is of great help to apprehend problems with dime
 In the context of continuous variables, let us consider the $n$-sized sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \sim \bX \in \iD_{\bx}\subseteq\R^d$. 
 The marginal samples of $\bX_n$ are denoted by $X_{n, j} = \{x_j^{(1)}, \dots, x_j^{(n)}\}, j\in \{1, \dots, d\}$.
 
-Various techniques exist to represent multivariate data, such as the ``parallel coordinate plot'', also called ``cobweb plot'' (see e.g., \citep{heinrich_2013_cobweb}). 
+Various techniques exist to represent multivariate data, such as the ``parallel coordinate plot'', also called ``cobweb plot'' (see e.g., \citealp{heinrich_2013_cobweb}). 
 For each sample $\bx^{(i)} \in \bX_n$, this plot draws a line passing by the values of $\bx^{(i)} = [x_1^{(i)}, \dots, x_d^{(i)}]$. 
 This representation was used in sensitivity analysis to illustrate the connections between a set of inputs and an output, however, it does not provide a good representation of the dependence structure between the inputs. 
 
@@ -407,7 +407,7 @@ In other cases, the role of the dependence in the joint distribution is more imp
 
 The Ishigami function is commonly used as a benchmark problem for global sensitivity analysis (GSA): 
 \begin{equation}
-    y = g(x_1, x_2, x_3) = \sin(x_1) + 7 \, \sin(x_2)^2 + 0.1 \, x_3^4 * \sin(x_1).
+    y = g(x_1, x_2, x_3) = \sin(x_1) + 7 \, \sin(x_2)^2 + \frac{x_3^4 \, \sin(x_1)}{10}.
 \end{equation}
 This uncertainty quantification problem considers an independent random input vector $\bX=\prod_{j=1}^{3} X_j$. 
 While the marginals in GSA benchmarks are usually assumed to be uniform, they will be considered Gaussian hereafter to distinguish the different elements of the joint distribution. 
@@ -447,7 +447,7 @@ Metocean conditions have been long studied in costal and offshore engineering.
 Inferring multivariate probabilistic models on metocean data became essential in wind energy. 
 
 Numerous approaches are proposed in the literature to fit a model on environmental data. 
-Among them, let us mention the use of parametric methods as the conditional modeling (e.g., \citealt{bitner_2015_joint,vanem_fekhari_2023}), or the construction of vine copulas (e.g., \citealt{vanem_2016,montes_2016_cvines_metocean,lin_2019_cvines_waves,lin_2019_cvines_waves}). 
+Among them, let us mention the use of parametric methods as the conditional modeling (e.g., \citealt{bitner_2015_joint,vanem_fekhari_2023}), or the construction of vine copulas (e.g., \citealt{vanem_2016,montes_2016_cvines_metocean,lin_2019_cvines_waves}). 
 Nonparametric methods as the KDE were also applied in this context (e.g., \citealt{han_2018_kde_metocean}). 
 The nonparametric techniques generally struggle to model the distributions' tails, even if the tails are essential to qualify structures for ultimate events. 
 However, they are highly flexible and often easier to implement than parametric methods.
@@ -458,6 +458,7 @@ This dataset from the ANEMOC (Digital Atlas of Ocean and Coastal Sea States atla
 (at an hourly resolution) from a location off the coast of South Brittany, France. 
 A subset of $10^4$ points is randomly selected among the ANEMOC data, which will be used to realize the semiparametric inference.
 
+\elias{add the repo for the study}
 
 %============================================================%
 \subsection{Inference of the marginals}\label{sec:marginal_inference}
@@ -522,9 +523,6 @@ Considering these marginals, a study of the copula inference can be developed.
     \caption{Marginal inference results of the South Brittany metocean data.}
     \label{fig:marginals_sb}
 \end{figure}
-
-
-
 
 \newpage
 %============================================================%
@@ -599,49 +597,64 @@ In the monograph of \citet{joe2011dependence}, the use of nonparametric methods 
 The author recommends using nonparametric copulas when the marginals are well-behaved, but the dependence structure is nonlinear. 
 
 
-\newpage
 %============================================================%
 %============================================================%
 \section{Quantifying and clustering the wake-induced perturbations within a wind farm}
 %============================================================%
 %============================================================%
-\elias{add ref: ``Difference in load predictions obtained with effective
-turbulence vs. a dynamic wake meandering
-modeling approach''}
+\elias{add ref: ``Difference in load predictions obtained with effective turbulence vs. a dynamic wake meandering modeling approach''}
+
+After defining a probabilistic model based on ambient metocean data, the present section studies the impact of the wake on the wind conditions within a farm. 
+The wake arises from extracting kinetic energy from the wind, leading to a decrease in wind speed and an increase in turbulence downstream of the turbines. 
+Within a wind farm, the wake mostly depends on the turbines' layout, ambient wind speed, and ambient turbulence intensity. 
+The resulting heterogeneous wind field in a wind farm can be simulated by numerical models with different fidelities (as discussed in Section~\ref{sec:222}). 
+
+In our case, simplified wake models (sometimes called ``engineering'' models, see e.g., \citealp{doubrawa_2020_benchmark}) are used to simulate the wind speed deficit and the wake added turbulence at each turbine.
+To recover a wake perturbed wind distribution at each turbine, the ambient wind distribution is propagated thought a wake model. 
+Having different wind distributions naturally impacts the loading and should be considered during fatigue assessment at a farm scale. 
+Such heterogeneity is currently not considered by the design load cases from internation standards, deriving from ambient environmental conditions. 
+
+In practice, fatigue assessment on a turbine represents a computational effort. 
+Considering a particular wind distribution per turbine (due to the wake) implies to repeat this assessment for every turbine. 
+To make the wake consideration tractable at a farm scale, the present section aims at building clusters of turbines similarly affected by the wake. 
+Then, fatigue assessment of the farm can be computed on a few turbines, each representing a cluster of turbines facing similar wake-modified wind loading. 
+The maximum mean discrepancy (MMD) is used as a statistical dissimilarity measure to compare the perturbed distributions induced by the wake. 
+
+This new approach is applied on a theoretical wind farm representing the recent call for tenders off the coast of South Brittany, France. 
+The turbines considered are a modified version of the floating offshore wind turbine (FOWT) IEA-15MW (described in \citealp{kim_natarajan_2022}). 
+Figure~\ref{fig:SB-farm} illustrates the layout of the 25 FOWTs modeled in the following, the coordinates are normalized by the rotor's diameter $D$. 
+The spacing between turbines in this regular layout is equivalent to seven rotor diameters in the dominant wind direction and five rotor diameters in the orthogonal direction (i.e., crosswind). 
 
 
-In the offshore wind industry, the wake effect is considered crucial for electricity production and structural fatigue of turbine components. 
-For instance, the standards developed by the International Electrotechnical Commission (see appendix E in \cite{IEC61400-1}) review some analytical \cite{Frandsen2007}, and numerical models (e.g., the dynamic wake meandering approach by \cite{Larsen2008}) to simulate the wind speed deficit and the wake added turbulence. 
-Since the pioneering work of \cite{Jensen1983}, several wake models were developed and compared in a benchmark by \cite{Doubrawa2020}. 
-This work takes advantage of the low computational cost of steady-state wake models to propagate the uncertainty from ambient to wake-induced wind conditions seen on a farm. 
-It is worth noting that the wake creates a heterogeneous wind field in a wind farm, resulting in different loading conditions which should be considered at the stage of reliability based design (RBD). 
-Such heterogeneity is not taken into account by the design load cases of international standards (see e.g., \cite{IEC61400-1,DNV-OS-J103}) where wind and wave conditions are derived from scenarios occurring over long-term periods. 
-Wake models allow us to simulate the wind conditions' distribution at each turbine, however, the RBD step is too costly to be performed for each turbine. 
-For further details regarding the RBD, one may refer to the work of \cite{huchet_2019, slot_sorensen_2020, stieng_muskulus_2020, wilkie_galasso_2021}, proposing several approaches to reduce the computational cost of this step. 
-In order to speed up the RBD at the scale of a wind farm, the present work aims at building clusters of WT similarly affected by the wake. 
-Then, the RBD over a wind farm can be computed only on a few WT, each representing a cluster of turbines enduring similar wake-modified wind loading. This clustering is done on two wind parameters, following the conclusions of the global sensitivity analysis of \cite{McWilliam2022}. 
-In order to discriminate the wake-perturbed distributions of wind parameters, the maximum mean discrepancy (MMD) is used as a statistical metric between multivariate distributions (as reviewed by \cite{Sriperumbudur2010}). 
-To illustrate this novel approach, a theoretical wind farm for the ongoing tenders off the coast of South Brittany in France is studied, with a modified version of the floating offshore wind turbine (FOWT) IEA-15MW (initially proposed in \cite{Allen2020,Gaertner2020}). 
-Figure~\ref{fig:SB-farm} illustrates the layout of the 25 FOWT considered in the following. 
-This layout is regular with an inter-turbine distance of seven times the rotor diameter in the dominant wind direction and five times the rotor diameter in the orthogonal (crosswind) direction. 
-More details regarding the FOWT modifications and theoretical wind farm can be found in \cite{Capaldo2021,Peyrard2022}.
+To xxxxx, the present section is structured as follows: 
+first the wake model and the corresponding uncertainty propagation are presented, then the MMD is estimated between the resulting empirical distributions, and finally a simple clustering method defines the final clusters and their representative turbines. 
+The main conclusion suggests four clusters among the 25 FOWT which can then be used for fatigue assessment of the farm.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=15pc]{part2/figures/WAKE/SB1.png}
-\includegraphics[width=13pc]{part2/figures/WAKE/SB2.png}\hspace{2pc}
-\caption{\label{fig:SB-farm} 
-South Brittany wind farm layout (left). South Brittany wind rose from the ANEMOC data (right, source: \cite{Ardillon2023}).}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.48\textwidth]{part2/figures/WAKE/SB1.png}
+    \includegraphics[width=0.4\textwidth]{../numerical_experiments/chapter3/figures/SB_wind_rose.png}
+    \caption{South Brittany wind farm layout \elias{redo in high res} (left). South Brittany wind rose from the ANEMOC data (right).}
+    \label{fig:SB-farm}
 \end{figure}
 
-Based on the results of previous numerical studies, with either dynamic wake meandering \cite{Wise2020} or LES \cite{Johlas2021}, we retain the time-averaged floater position (translation and rotation) as the main effect of the floater motion on the far wake. It was shown that this effect is small, both on the wake-added turbulence and on the wind speed deficit. However, noticeable uplift of the wake may influence the fatigue design. 
-
-The key idea in this paper to reduce the number of cases for RBD is to employ clustering techniques on the wake-induced wind parameters, to constitute groups of WT that are exposed to similar design load conditions. To do so, the present work is divided into four sections. First, the wake model used in this work is presented in section~\ref{sec:farmshadow}. Then, section~\ref{sec:UQ-wake} describes the uncertainty propagation through the wake model, from the probabilistic distribution of ambient wind parameters to the wake-modified wind parameters distribution within the farm. In order to regroup the similar wake-modified distributions, an adapted statistical metric on multivariate distributions is introduced in section~\ref{sec:metric}. Finally, the application of several clustering methods to the South Brittany case study is compared in section~\ref{sec:clustering}. The main conclusion suggests four clusters among the 25 FOWT which can then be used for RBD analysis of the farm.
-
 
 %============================================================%
-\subsection{Uncertainty propagation in a wake model}\label{sec:UQ-wake}
+\subsection{Uncertainty propagation on a wake model}\label{sec:UQ-wake}
 %============================================================%
+
+%------------------------------------------------------------%
+\paragraph{Wake model definition}
+%------------------------------------------------------------%
+Based on the results of previous numerical studies, with either dynamic wake meandering \cite{Wise2020} or LES \cite{Johlas2021}, 
+we retain the time-averaged floater position (translation and rotation) as the main effect of the floater motion on the far wake. 
+It was shown that this effect is small, both on the wake-added turbulence and on the wind speed deficit. 
+However, noticeable uplift of the wake may influence the fatigue design. 
+
+
+%------------------------------------------------------------%
+\paragraph{Monte Carlo uncertainty propagation}
+%------------------------------------------------------------%
 The wake model described in section~\ref{sec:farmshadow} takes as input a set of variables describing the ambient wind conditions $\bx \in \mathbb{R}^3$ and computes the perturbed wind conditions at each WT represented by the vector $\bx _l', l \in (1,..,n_{WT})$, where $n_{WT}$ is the total number of turbines in the farm:
 \begin{align}
     g:\mathbb{R}^3 &\rightarrow \mathbb{R}^{3 n_{WT}} \\
