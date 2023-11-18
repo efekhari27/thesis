@@ -602,22 +602,22 @@ The author recommends using nonparametric copulas when the marginals are well-be
 \section{Quantifying and clustering the wake-induced perturbations within a wind farm}
 %============================================================%
 %============================================================%
-\elias{add ref: ``Difference in load predictions obtained with effective turbulence vs. a dynamic wake meandering modeling approach''}
 
 After defining a probabilistic model based on ambient metocean data, the present section studies the impact of the wake on the wind conditions within a farm. 
 The wake arises from extracting kinetic energy from the wind, leading to a decrease in wind speed and an increase in turbulence downstream of the turbines. 
-Within a wind farm, the wake mostly depends on the turbines' layout, ambient wind speed, and ambient turbulence intensity. 
+In a wind farm, the wake mostly depends on the turbines' layout, the ambient wind speed, and the ambient turbulence intensity. 
 The resulting heterogeneous wind field in a wind farm can be simulated by numerical models with different fidelities (as discussed in Section~\ref{sec:222}). 
 
-In our case, simplified wake models (sometimes called ``engineering'' models, see e.g., \citealp{doubrawa_2020_benchmark}) are used to simulate the wind speed deficit and the wake added turbulence at each turbine.
-To recover a wake perturbed wind distribution at each turbine, the ambient wind distribution is propagated thought a wake model. 
+In our case, simplified wake models (sometimes called ``dynamic wake meandering'', or ``engineering'' models, see e.g., \citealp{doubrawa_2020_benchmark}) are used to simulate the wind speed deficit and the added turbulence at each turbine.
+To recover a wake-perturbed wind distribution at each turbine, the ambient wind distribution is propagated thought a wake model. 
 Having different wind distributions naturally impacts the loading and should be considered during fatigue assessment at a farm scale. 
-Such heterogeneity is currently not considered by the design load cases from internation standards, deriving from ambient environmental conditions. 
+Such heterogeneity is mostly considered by internation standards via empirical coefficients (also called ``effective turbulence''). 
+\citet{doubrawa_2023} compares the effective turbulence approach with dynamic wake meandering models and studies their impact on loading. 
 
 In practice, fatigue assessment on a turbine represents a computational effort. 
-Considering a particular wind distribution per turbine (due to the wake) implies to repeat this assessment for every turbine. 
-To make the wake consideration tractable at a farm scale, the present section aims at building clusters of turbines similarly affected by the wake. 
-Then, fatigue assessment of the farm can be computed on a few turbines, each representing a cluster of turbines facing similar wake-modified wind loading. 
+As a consequence of wake modeling, each turbine present a different wind distribution, which implies repeating a fatigue assessment for every turbine. 
+To make this computation tractable at a farm scale, the present section aims at building clusters of turbines similarly affected by the wake. 
+Then, fatigue assessment can be computed on a few turbines, each representing a cluster of turbines facing similar wake-modified wind loading. 
 The maximum mean discrepancy (MMD) is used as a statistical dissimilarity measure to compare the perturbed distributions induced by the wake. 
 
 This new approach is applied on a theoretical wind farm representing the recent call for tenders off the coast of South Brittany, France. 
@@ -625,14 +625,15 @@ The turbines considered are a modified version of the floating offshore wind tur
 Figure~\ref{fig:SB-farm} illustrates the layout of the 25 FOWTs modeled in the following, the coordinates are normalized by the rotor's diameter $D$. 
 The spacing between turbines in this regular layout is equivalent to seven rotor diameters in the dominant wind direction and five rotor diameters in the orthogonal direction (i.e., crosswind). 
 
-
-To xxxxx, the present section is structured as follows: 
-first the wake model and the corresponding uncertainty propagation are presented, then the MMD is estimated between the resulting empirical distributions, and finally a simple clustering method defines the final clusters and their representative turbines. 
-The main conclusion suggests four clusters among the 25 FOWT which can then be used for fatigue assessment of the farm.
+To develop this approach on the South Brittany farm, the present section is structured as follows: 
+first the wake model and its corresponding uncertainty propagation are presented, 
+then MMDs are estimated between the resulting empirical joint wind distributions, 
+and finally a simple clustering gathers turbines perceiving similar wake and set their representative turbines. 
+In the end, the 25 FOWT are split into four groups, whose representant can be used for fatigue assessment of the hole group. 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.48\textwidth]{part2/figures/WAKE/SB1.png}
+    \includegraphics[width=0.48\textwidth]{part2/figures/WAKE/layout_SB.png}
     \includegraphics[width=0.4\textwidth]{../numerical_experiments/chapter3/figures/SB_wind_rose.png}
     \caption{South Brittany wind farm layout \elias{redo in high res} (left). South Brittany wind rose from the ANEMOC data (right).}
     \label{fig:SB-farm}
@@ -646,48 +647,49 @@ The main conclusion suggests four clusters among the 25 FOWT which can then be u
 %------------------------------------------------------------%
 \paragraph{Wake model definition}
 %------------------------------------------------------------%
-Based on the results of previous numerical studies, with either dynamic wake meandering \cite{Wise2020} or LES \cite{Johlas2021}, 
-we retain the time-averaged floater position (translation and rotation) as the main effect of the floater motion on the far wake. 
-It was shown that this effect is small, both on the wake-added turbulence and on the wind speed deficit. 
-However, noticeable uplift of the wake may influence the fatigue design. 
+When simulating the wake effect of floating wind turbines, different studies (either using dynamic wake meandering \cite{wise_2020} or LES \cite{johlas_2020_wake_LES}), showed the importance of modeling the floaters' position (translation and rotation). 
+Therefore, an engineering wake model based on the Farmshadow™ software (developed by IFPEN) was coupled with a hydro-static calculation to predict the floater's position, as well as the wind speed and turbulence intensity. 
+In this model, the floaters are considered to be rigid, and all degrees of freedom are considered (surge, sway and heave for the three translations and roll, pitch and yaw for the three rotations). 
+
+FarmShadow™ uses engineering wake models to simulate the wind field throughout the whole farm, starting from the most upstream WT and working downwards. 
+More precisely, the model used includes the ``super-gaussian'' approach for speed deficit \citep{blondel_2020}, a waked-induced turbulence according to \citet{quian_2018}, and superimposition following the linear sum approach defined by \citet{zong_2020}.    
+Further assumptions regarding the hydro-statics loading, the effect of the mooring lines, and the wake model are defined in \citet{lovera_fekhari_2023}.
 
 
 %------------------------------------------------------------%
 \paragraph{Monte Carlo uncertainty propagation}
 %------------------------------------------------------------%
-The wake model described in section~\ref{sec:farmshadow} takes as input a set of variables describing the ambient wind conditions $\bx \in \mathbb{R}^3$ and computes the perturbed wind conditions at each WT represented by the vector $\bx _l', l \in (1,..,n_{WT})$, where $n_{WT}$ is the total number of turbines in the farm:
+
+The wake model described earlier takes as input a set of variables describing the ambient wind conditions $\bx \in \mathbb{R}^3$ and computes the perturbed wind conditions at each WT represented by the vector $\bx _l', l \in (1,..,n_{WT})$, where $n_{WT} \in \N$ is the total number of turbines in the farm:
 \begin{align}
     g:\mathbb{R}^3 &\rightarrow \mathbb{R}^{3 n_{WT}} \\
     \bx &\longmapsto g(\bx) = (\bx_1',..,\bx_{n_{WT}}')
 \end{align}
-The uncertainties associated with the ambient wind conditions are represented by a random vector $\bX$ following the distribution $p_0$. 
-Note that the index 0 is a reference to the fact that these conditions are not perturbed by the wake. 
-A parametric model has been fitted in \cite{vanem_fekhari_2023} using conditional probability density functions to capture the dependence structure, with an approach similar to the one presented in~\cite{kelly_2022}. 
-The random vector $\bX$ is described by the following input random variables:
+The uncertainties associated with the ambient wind conditions are represented by a random vector $\bX$ following the distribution $f_0$. 
+A parametric model has been fitted in \cite{vanem_fekhari_2023} using conditional probability density functions to capture the dependence structure, 
+but the semi-parametric inference proposed in Section~\elias{xxx} could have been an alternative. 
+Note that the missing turbulence intensity in the ANEMOC data from South Brittany were assumed to follow a lognormal distribution.   
+The random vector $\bX$ gathers the following random variables:
 \begin{itemize}
-    \item Mean wind speed ($u$) is the 10-min average horizontal wind speed at hub height.
+    \item Mean wind speed ($U$) is the 10-min average horizontal wind speed at hub height.
     \item Wind turbulence intensity ($TI$) is the 10-min wind speed turbulence intensity at hub height.
-    \item Wind direction ($\theta$) is the 10-min average wind direction.
+    \item Wind direction ($\theta_{\mathrm{wind}}$) is the 10-min average wind direction.
 \end{itemize}
-In the following, we assume the wind orientation variable $\theta$ to be unaffected by the wake. 
-When perturbed by the wake of the wind farm, the WT~$l$ sees a wind flow represented by the random vector $\bX_l',l \in (1,..,n_{WT})$, following the distribution $p_l'$. 
-Then, the two remaining parameters are $u_{rotor}$ and $TI_{rotor}$ to represent this modified wind flow on a vertical plane located at each WT. 
-These two quantities of interest are averaged over the rotor while the input parameters are given at hub height. For the sake of simplicity, we will neglect this difference in what follows in order to consider the transformation $\bX'=g(\bX)$ as a simple perturbation of $\bX$. We will abusively denote $u$ and $TI$ both the input and output quantities. 
-The output of the uncertainty propagation is a set of perturbed environmental distributions $p_l',l \in (1,..,n_{WT})$.
-A Monte-Carlo sample $\bX_n={\bx^{(1)},..,\bx^{(n)}}$ of the three random input variables is generated. 
-Then, considering the farm layout illustrated in Figure~\ref{fig:SB-farm} and a constant wind shear exponent of 0.1 like in section~\ref{sec:farmshadow}, a wake simulation is run for every wind condition of the Monte Carlo design of experiments. 
-The code output consists in a multivariate joint distribution of modified $u$ and $TI$ for each WT. As the Monte Carlo procedure is known to converge slowly but surely, it was chosen to perform this uncertainty propagation with a number of simulations of size $n=6~000$ because of its simplicity and the low computational cost of the simulations.
 
- We can plot a preview of the wake perturbations on the joint distribution for given WT in the two dimensions $u$ and $TI$. 
- Figure~\ref{fig:FIGJointPerturbationSB} illustrates this perturbation for three WT differently affected by the wake depending on their position in the farm (cf. Figure~\ref{fig:SB-farm}). 
- One can notice that the WT~25 distribution (in orange) is very close to the ambient distribution (in black), as expected, this WT being located on the edge of the farm and facing the dominant wind direction. 
- Meanwhile, the WT~13 distribution (in red) seems more affected by the wake, by getting a higher wind turbulence with lower wind speed. 
- This analysis can be completed with the two marginals in Figure~\ref{FIGMarginalWSP} and Figure~\ref{FIGMarginalTI}, both describing the ambient marginal distributions (in black) and wake-disturbed distributions. 
- In general, a small wind speed deficit is noticed as indicated by the small shifts of the probability density functions to the left on Figure~\ref{FIGMarginalWSP}. 
- Also, a small added turbulence is indicated by the small shifts of the curves to the right on Figure~\ref{FIGMarginalTI}. 
- Ideally, a tool should allow us to quantify the perturbation between the ambient and perturbed distributions.
+In the following, the wind orientation $\theta_{\mathrm{wind}}$ is supposed to be unaffected by the wake. 
+The uncertainty propagation through the wake models provides a set of perturbed environmental distributions $f_l', l \in (1,..,n_{WT})$. 
+In practice, a Monte Carlo sample $\bX_n={\bx^{(1)},..,\bx^{(n)}} \sim \bX$ (with size n=6000) is generated and evaluated by the wake model. 
+Since the model has a low computational cost, Monte Carlo sampling was affordable while giving strong convergence guarantees. 
 
-\begin{figure}
+\fig{fig:FIGJointPerturbationSB} illustrates the perturbation of the wind distributions for three WT differently affected by the wake depending on their position in the farm (see Figure~\ref{fig:SB-farm}). 
+One can notice that the distribution of WT~25 (in orange) is very close to the ambient distribution (in black), as expected since this WT being located on the edge of the farm and facing the dominant wind direction. 
+Meanwhile, the distribution of WT~13 (in red) seems more affected by the wake, by getting a higher wind turbulence with lower wind speed. 
+This analysis can be completed with the two marginals in \fig{fig:FIGMarginalWSP} and \fig{fig:FIGMarginalTI}, both describing the ambient marginal distributions (in black) and wake-disturbed distributions. 
+In general, a small wind speed deficit is indicated by the small shifts of the probability density functions to the left on \fig{fig:FIGMarginalWSP}. 
+Also, a small added turbulence is noticeable with shifts of the PDFs to the right on \fig{fig:FIGMarginalTI}. 
+A tool is needed to quantify the wind perturbations induced by the wake.
+
+\begin{figure}[h]
     \centering
     \begin{subfigure}[b]{0.3\textwidth}
         \includegraphics[width=\textwidth]{part2/figures/WAKE/joint_perturbation_SB_WT13.png}
@@ -698,22 +700,22 @@ The code output consists in a multivariate joint distribution of modified $u$ an
     \begin{subfigure}[b]{0.3\textwidth}
         \includegraphics[width=\textwidth]{part2/figures/WAKE/joint_perturbation_SB_WT25.png}
     \end{subfigure}
-    \caption{Joint perturbation at WT 13, 19, and 25}
-\label{fig:FIGJointPerturbationSB}
+    \caption{Joint distributions of the wake-perturbed wind conditions at WT 13, 19, and 25 (in color) compared with the ambient wind conditions (in black).}
+    \label{fig:FIGJointPerturbationSB}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{part2/figures/WAKE/perturbed_wsp_distribution_SB.png}
-    \caption{Ambient and wake-disturbed distributions of the wind speed}
-\label{FIGMarginalWSP}
+    \caption{Ambient (in black) and wake-perturbed (in color) distributions of the wind speed}
+    \label{fig:FIGMarginalWSP}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{part2/figures/WAKE/perturbed_ti_distribution_SB.png}
-    \caption{Ambient and wake-disturbed distributions of the turbulence intensity}
-\label{FIGMarginalTI}
+    \caption{Ambient (in black) and wake-perturbed (in color) distributions of the turbulence intensity}
+    \label{fig:FIGMarginalTI}
 \end{figure}
 
 
@@ -723,86 +725,82 @@ The code output consists in a multivariate joint distribution of modified $u$ an
 \subsection{Statistical metric of wake-induced perturbations}\label{sec:metric}
 %============================================================%
 
-%------------------------------------------------------------%
-\paragraph{Maximum mean discrepancy: a distance between distributions}
-%------------------------------------------------------------%
-In the literature, the maximum mean discrepancy was introduced by \cite{gretton_2006} as a statistical test to discriminate two distinct distributions. 
+
+The maximum mean discrepancy was introduced by \cite{gretton_2006} as a statistic for two-sample testing. 
 After further work on this tool, authors such as \cite{sriperumbudur_2010} showed that the MMD is a distance between two distributions embedded in a specific function space. 
-Therefore, this concept relies on the embedding of distributions in a convenient Hilbert space.
-Considering a positive-definite kernel $k:\mathbb{R}^d \times \mathbb{R}^d \xrightarrow{} \mathbb{R},d \in \mathbb{N}$ 
-generating a unique Hilbert space $\iH_k$ of functions equipped with inner products $ <\cdot,\cdot >_{\iH_k}$ and norms $\| \cdot \| _{\iH_k}$ (also called Reproducing Kernel Hilbert 
-Space (RKHS) when the function $k(\bx,\cdot )$ satisfies the reproducing property). 
-Then, let us define the kernel mean embedding of the distribution $P$ in the function space $\iH_k$:
-\begin{equation}
-\mu_P (\bx):=\int_{\mathbb{R}^d}{k(\bx, \by) \mathrm{d}P(\by) } \approx \frac{1}{n} \sum_{i=1}^{n}{k(\bx,\bx^{(i)})},\, \bx^{(i)} \in \bX_n.
-\end{equation}
-The kernel mean embedding is approximated on sample $\bX_n=(\bx^{(1)},..,\bx^{(n)})$ following the distribution $P$.
-Figure \ref{fig:kernel_embedding} illustrates the kernel mean embedding of two distributions in the function space $\iH_k$ defined previously. 
-Notice that this procedure allows us to embed continuous distributions (such as $P$) as well as discrete distributions (such as $Q$).
-
-\begin{figure}[h]
-    \centering
-    \input{part2/figures/WAKE/kernel_embedding}
-    \caption{Kernel mean embedding of two probability distributions $P$ and $Q$ mapped in the $RKHS$  $H_k$}
-    \label{fig:kernel_embedding}
-\end{figure}
-
-The distance between the two kernel mean embeddings $\mu_P$  and $\mu_Q$ is called the maximum mean discrepancy (MMD). 
-This distance between two distributions $P$ and $Q$ is initially defined by the worst-case error for any function within a unit ball of a Hilbert space $\iH_k$, generated by the kernel $k$:
-
-\begin{equation}
-\mathrm{MMD}_k(P,Q):=\underset{\| g \|_{\iH_k} \leq 1}{\mathrm{sup}} 
-\left\lvert \int_{\mathbb{R}^d}{g(\bx) \mathrm{d}P(\bx)}
-- \int_{\mathbb{R}^d}{g(\bx) \mathrm{d}Q(\bx)} \right\rvert
-= \|\mu_P(\bx) - \mu_Q(\bx) \| _ {\iH_k}.
-\end{equation}
-The MMD fully relies on the difference of kernel mean embeddings. 
-Moreover, according to \cite{sriperumbudur_2010}, a kernel is called “characteristic kernel” when the following equivalence is true, $MMD_k (P,Q)=0 \iff P=Q$, making the MMD a metric on $\mathbb{R}^d$. 
-For its good convergence behavior, the squared MMD has been used for multiple other purposes than numerical integration: statistical testing \cite{gretton_2006}, sensitivity analysis \cite{daveiga_2015}. 
-When elevated to the square, it can be estimated using one $n$-sized representative sample of $P$ denoted $\left\{ \bx^{(i)} \right\}_{i \in (1,..,n)}$
-(and respectively one $m$-sized sample of $Q$ denoted $\left\{ \by^{(i)} \right\} _{i \in (1,..,m)}$:
-
-\begin{equation}
-\widehat{\mathrm{MMD}_k}(P,Q) ^ 2 = \frac{1}{n^2} 
-\sum_{i,j=1}^{n}{k(\bx^{(i)}, \bx^{(j)})} - \frac{2}{n m} \sum_{i=1}^{n}{ } \sum_{j=1}^{m}{k(\bx^{(i)},\by^{(j)})} + \frac{1}{m^2}  \sum_{i,j=1}^{m}{k(\by^{(i)},\by^{(j)})}.
-\end{equation}
-In the following, the idea is to compare the ambient wind distribution $p_0$ to the wake-perturbed wind conditions $p_l'$ at the WT~$l$ using the previously defined squared MMD.
+The MMD becomes a metric for specific kernels called “characteristic kernels”, which offer the following property: $\MMD(\pi, \zeta)=0 \iff \pi = \zeta$. 
+The squared MMD has been used for multiple purposes and is further presented in Appendix~\ref{apx:B}
+In the following, the idea is to compare the ambient wind distribution $f_0$ to the wake-perturbed wind conditions $f_l'$ at the WT~$l$ using the squared MMD.
 
 %------------------------------------------------------------%
 \paragraph{Application to the South Brittany wind farm project}
-\label{SecApplicationSB}
 %------------------------------------------------------------%
-Once the joint perturbed distributions of each WT are estimated by a large Monte Carlo sample (cf. section~\ref{sec:UQ-wake}), the MMD with the ambient wind conditions can be computed. 
-Figure~\ref{FIGWakeEffect} illustrates for each WT the squared MMD value computed to measure the wake-induced perturbation. 
-Let us remind that MMD is a distance between the joint perturbed distribution at a WT computed for all wind orientations with the ambient wind distribution. 
-Despite the wake obviously depend on the wind direction, our final goal is to define a small number of WT for RBD thus independently of the wind orientation. 
-The lower this metric gets, the closer to the ambient wind distribution. 
-Quite logically, the WT in the center of the farm are more affected by the wake since they are subject to the wake regardless of the wind direction.
-
-The values of squared MMD given in the previous figure are estimated between two samples:
-\begin{itemize}
-    \item the Monte Carlo sample of the free environmental distribution: $\bX_n$,
-    \item the wake-perturbed Monte Carlo sample at the WT $l: \bX'_{n,l}$ (output of the steady-state wake numerical model).
-\end{itemize}
-
-To ensure that the Monte-Carlo estimation converged, Figure~\ref{FIGConvergenceMMD} plots the squared MMD between the sample $\bX_n$ and the increasing samples $\bX'_{i,l},i \in {400,..,6000}$. 
-After a few thousands of simulations, the MMD of each WT tends to converge towards a stable value, as expected. 
-The design of experiment with $n=6~000$ is thus considered as sufficient. 
+Once the joint perturbed distributions of each WT evaluated on a large Monte Carlo sample, their squared MMD with the ambient wind conditions can be computed. 
+\fig{fig:FIGWakeEffect} represents the squared MMD for each WT to quantify the wake-induced perturbation. 
+The values of squared MMD presented in this figure are estimated between two Monte Carlo samples with size $n=6000$. 
+A verification of their convergence is realized in terms of coefficient of variation. 
 
 \begin{figure}
     \centering
     \includegraphics[width=0.6\textwidth]{part2/figures/WAKE/wake_perturbation_SB.png}
     \caption{South Brittany layout and wake effects measured by the squared MMD on wind conditions. 
     Note that the vertical direction on this plot does not represent the north direction.}
-\label{FIGWakeEffect}
+    \label{fig:FIGWakeEffect}
 \end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.7\textwidth]{part2/figures/WAKE/convergence_MC_SB.png}
-    \caption{Convergence of the squared MMD estimation}
-\label{FIGConvergenceMMD}
+%============================================================%
+\subsection{Clustering the wake-induced perturbations}
+%============================================================%
+
+\begin{itemize}
+    \item  
+\end{itemize}
+The aim of this section is to use the MMD as a metric to define clusters of turbines getting similar wind conditions. 
+Instead of comparing the wake-perturbed distributions with the ambient one, let us compare all the pairs of wake-perturbed distributions. 
+Considering all the WT $\{1, \dots, n_{WT}\}$ in the farm, and their respective wake-perturbed distributions $\{f_l'\}_{l=1}^{n_{WT}}$, let us define the symmetric matrix $D$ of MMD between every pair of perturbed distributions such that $D_{i, j} = \what{\mathrm{MMD}}^2_k(f_i', f_j')$. 
+Among the clustering methods compatible with this type of data, a centroids based technique called the ``k-medoids'' was used. 
+The k-medoids \citep{park_2009} are a version of the famously known k-means that selects actual data points as centers (i.e., medoids). 
+
+\begin{itemize}
+    \item 
+\end{itemize}
+
+A drawback of those methods is that their results are highly dependent of the initial conditions. 
+This is why, they were applied 5~000 times with random initial conditions. 
+
+An example of clustering obtained by the k-medoid method for four clusters is illustrated in Figure \ref{fig:kmedoids4}. 
+
+In the end, the solutions with the minimal inertial were kept. 
+In order to perform the RBD on a few WT among the farm, one representative WT per cluster is choosen, defined as the medoid of the cluster. 
+Note that the numerical experiments on the previously introduced clustering methods were all made using the Python package Scikit-learn \cite{scikit-learn}. 
+The wind turbines indexes containing the indication $r$ are the representative of their clusters. 
+The four clusters represented by colors in Figure~\ref{fig:kmedoids4} then define groups of WTs which minimize their MMD with respect to their representative turbine. 
+Attention should be paid that in Figure~\ref{FIGWakeEffect} the MMD is computed for each turbine against the ambient distributions while in the clustering analysis we are considering the MMD between each pair of turbines. 
+As a result, two turbines (e.g. 5 and 21) with similar MMD with regards to ambient wind distributions are not necessarily close to one another leading them being in different clusters (1~and~4). 
+In the meantime, two turbines (e.g. 7 and 8) that are close to one another can belong to different clusters because the clustering process is a global process with optimisation considerations over the whole wind farm.
+
+
+
+
+
+
+is applied to the matrix $D$ (a version of k-means using medoids). 
+The medoid of a given group is an existing element which minimizes the sum of the distances as follows:
+\begin{equation}
+\label{EQ:medoid}
+T_r = \mathrm{arg} \left\{ \mathrm{min}_{T \in C} \sum_{i=1}^n d(T,T_i) \right\}
+\end{equation}
+where $d$ refers to the MMD defined in section~\ref{sec:metric}, $T$ corresponds to a turbine in a given cluster $C$ and $T_r$ the representative turbine of that given cluster.
+
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.5\textwidth]{part2/figures/WAKE/sol_kmedoids4.png}
+\caption{Clustering solution obtained with k-medoids for N=4, the four cluster representative WTs are indicated by a ($r$) in their indices.}
+\label{fig:kmedoids4}
 \end{figure}
+
+
 
 %============================================================%
 \subsection{Summary and discussion}
@@ -824,6 +822,8 @@ Depending on the definition of a wind farm failure (series system: one WT fails 
 These considerations need to be further explored to improve RBD at the farm scale. 
 
 
+
+\newpage
 %============================================================%
 %============================================================%
 \section{Conclusion}
