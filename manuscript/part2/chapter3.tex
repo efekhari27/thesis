@@ -457,8 +457,9 @@ A metocean dataset is used to showcase the empirical Bernstein copula and its re
 This dataset from the ANEMOC (Digital Atlas of Ocean and Coastal Sea States atlas, \citealp{raoult_2018_anemoc3}) gathers 32 years of preprocessed data 
 (at an hourly resolution) from a location off the coast of South Brittany, France. 
 A subset of $10^4$ points is randomly selected among the ANEMOC data, which will be used to realize the semiparametric inference.
+The full code developed for this inference study is available on a GitHub repository\footnotemark. 
 
-\elias{add the repo for the study}
+\footnotetext{GitHub repository: \url{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter3/south_brittany_inference.ipynb}}
 
 %============================================================%
 \subsection{Inference of the marginals}\label{sec:marginal_inference}
@@ -635,7 +636,7 @@ In the end, the 25 FOWT are split into four groups, whose representant can be us
     \centering
     \includegraphics[width=0.48\textwidth]{part2/figures/WAKE/layout_SB.png}
     \includegraphics[width=0.4\textwidth]{../numerical_experiments/chapter3/figures/SB_wind_rose.png}
-    \caption{South Brittany wind farm layout \elias{redo in high res} (left). South Brittany wind rose from the ANEMOC data (right).}
+    \caption{South Brittany wind farm layout, the vertical direction does not represent the exact north (left). South Brittany wind rose from the ANEMOC data (right).}
     \label{fig:SB-farm}
 \end{figure}
 
@@ -667,7 +668,7 @@ The wake model described earlier takes as input a set of variables describing th
 \end{align}
 The uncertainties associated with the ambient wind conditions are represented by a random vector $\bX$ following the distribution $f_0$. 
 A parametric model has been fitted in \cite{vanem_fekhari_2023} using conditional probability density functions to capture the dependence structure, 
-but the semi-parametric inference proposed in Section~\elias{xxx} could have been an alternative. 
+but the semi-parametric inference proposed in Section~\ref{sec:32_inference} could have been an alternative. 
 Note that the missing turbulence intensity in the ANEMOC data from South Brittany were assumed to follow a lognormal distribution.   
 The random vector $\bX$ gathers the following random variables:
 \begin{itemize}
@@ -689,34 +690,37 @@ In general, a small wind speed deficit is indicated by the small shifts of the p
 Also, a small added turbulence is noticeable with shifts of the PDFs to the right on \fig{fig:FIGMarginalTI}. 
 A tool is needed to quantify the wind perturbations induced by the wake.
 
-\begin{figure}[h]
+\begin{figure}
     \centering
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{part2/figures/WAKE/joint_perturbation_SB_WT13.png}
     \end{subfigure}
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{part2/figures/WAKE/joint_perturbation_SB_WT19.png}
     \end{subfigure}
-    \begin{subfigure}[b]{0.3\textwidth}
+    \\
+    \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{part2/figures/WAKE/joint_perturbation_SB_WT25.png}
     \end{subfigure}
     \caption{Joint distributions of the wake-perturbed wind conditions at WT 13, 19, and 25 (in color) compared with the ambient wind conditions (in black).}
     \label{fig:FIGJointPerturbationSB}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}
     \centering
-    \includegraphics[width=0.7\textwidth]{part2/figures/WAKE/perturbed_wsp_distribution_SB.png}
-    \caption{Ambient (in black) and wake-perturbed (in color) distributions of the wind speed}
-    \label{fig:FIGMarginalWSP}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{part2/figures/WAKE/perturbed_wsp_distribution_SB.png}
+        \caption{Wind speed.}
+        \label{fig:FIGMarginalWSP}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{part2/figures/WAKE/perturbed_ti_distribution_SB.png}
+        \caption{Turbulence intensity.}
+        \label{fig:FIGMarginalTI}
+    \end{subfigure}
+    \caption{Ambient (in black) and wake-perturbed (in color) distributions of wind distributions.}
 \end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.7\textwidth]{part2/figures/WAKE/perturbed_ti_distribution_SB.png}
-    \caption{Ambient (in black) and wake-perturbed (in color) distributions of the turbulence intensity}
-    \label{fig:FIGMarginalTI}
-\end{figure}
 
 
 
@@ -744,7 +748,7 @@ A verification of their convergence is realized in terms of coefficient of varia
     \centering
     \includegraphics[width=0.6\textwidth]{part2/figures/WAKE/wake_perturbation_SB.png}
     \caption{South Brittany layout and wake effects measured by the squared MMD on wind conditions. 
-    Note that the vertical direction on this plot does not represent the north direction.}
+    Note that the vertical direction does not represent the north direction.}
     \label{fig:FIGWakeEffect}
 \end{figure}
 
@@ -752,52 +756,25 @@ A verification of their convergence is realized in terms of coefficient of varia
 \subsection{Clustering the wake-induced perturbations}
 %============================================================%
 
-\begin{itemize}
-    \item  
-\end{itemize}
 The aim of this section is to use the MMD as a metric to define clusters of turbines getting similar wind conditions. 
 Instead of comparing the wake-perturbed distributions with the ambient one, let us compare all the pairs of wake-perturbed distributions. 
-Considering all the WT $\{1, \dots, n_{WT}\}$ in the farm, and their respective wake-perturbed distributions $\{f_l'\}_{l=1}^{n_{WT}}$, let us define the symmetric matrix $D$ of MMD between every pair of perturbed distributions such that $D_{i, j} = \what{\mathrm{MMD}}^2_k(f_i', f_j')$. 
-Among the clustering methods compatible with this type of data, a centroids based technique called the ``k-medoids'' was used. 
-The k-medoids \citep{park_2009} are a version of the famously known k-means that selects actual data points as centers (i.e., medoids). 
+Considering all the WT $\{1, \dots, n_{WT}\}$ in the farm, and their respective wake-perturbed distributions $\{f_l'\}_{l=1}^{n_{WT}}$, let us define the symmetric matrix $D$ of MMD between every pair of perturbed distributions such that $D_{i, j} = \what{\mathrm{MMD}}^2(f_i', f_j')$. 
 
-\begin{itemize}
-    \item 
-\end{itemize}
+Different unsupervised clustering techniques, such as hierarchical or centroid based methods were compared in \citet{lovera_fekhari_2023}. 
+The ``k-medoids'' \citep{park_2009} are a variation of the well known k-means that selects actual data points as centers (i.e., medoids). 
+In our case, this method not only gathers turbines with the same wind conditions, but it also determines a representative turbine for each cluster. 
 
-A drawback of those methods is that their results are highly dependent of the initial conditions. 
-This is why, they were applied 5~000 times with random initial conditions. 
-
-An example of clustering obtained by the k-medoid method for four clusters is illustrated in Figure \ref{fig:kmedoids4}. 
-
-In the end, the solutions with the minimal inertial were kept. 
-In order to perform the RBD on a few WT among the farm, one representative WT per cluster is choosen, defined as the medoid of the cluster. 
-Note that the numerical experiments on the previously introduced clustering methods were all made using the Python package Scikit-learn \cite{scikit-learn}. 
-The wind turbines indexes containing the indication $r$ are the representative of their clusters. 
-The four clusters represented by colors in Figure~\ref{fig:kmedoids4} then define groups of WTs which minimize their MMD with respect to their representative turbine. 
-Attention should be paid that in Figure~\ref{FIGWakeEffect} the MMD is computed for each turbine against the ambient distributions while in the clustering analysis we are considering the MMD between each pair of turbines. 
-As a result, two turbines (e.g. 5 and 21) with similar MMD with regards to ambient wind distributions are not necessarily close to one another leading them being in different clusters (1~and~4). 
-In the meantime, two turbines (e.g. 7 and 8) that are close to one another can belong to different clusters because the clustering process is a global process with optimisation considerations over the whole wind farm.
+Assuming a final number of clusters equal to five, \fig{fig:kmedoids} represents the clusters defined by the k-medoid method applied to the matrix $D$. 
+Let us notice that the results are rather coherent with the main wind orientation illustrated in the wind rose (see \fig{fig:SB-farm}). 
+Interestingly, the conclusion that emerged from comparing the wake-perturbed distributions to the ambient one (see \fig{fig:FIGWakeEffect}) are different from the ones obtained by comparing pairs of wake-pertubed distributions. 
+Finally, the representative turbines are tagged with the mention ``r'' and could be used to perform a fatigue analysis. 
 
 
-
-
-
-
-is applied to the matrix $D$ (a version of k-means using medoids). 
-The medoid of a given group is an existing element which minimizes the sum of the distances as follows:
-\begin{equation}
-\label{EQ:medoid}
-T_r = \mathrm{arg} \left\{ \mathrm{min}_{T \in C} \sum_{i=1}^n d(T,T_i) \right\}
-\end{equation}
-where $d$ refers to the MMD defined in section~\ref{sec:metric}, $T$ corresponds to a turbine in a given cluster $C$ and $T_r$ the representative turbine of that given cluster.
-
-
-\begin{figure}[!h]
-\centering
-\includegraphics[width=0.5\textwidth]{part2/figures/WAKE/sol_kmedoids4.png}
-\caption{Clustering solution obtained with k-medoids for N=4, the four cluster representative WTs are indicated by a ($r$) in their indices.}
-\label{fig:kmedoids4}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{part2/figures/WAKE/clusters_SB.png}
+    \caption{K-medoids clustering solution for five clusters. The representative elements of the clusters are tagged with the mention ``r''.}
+    \label{fig:kmedoids}
 \end{figure}
 
 
@@ -805,27 +782,31 @@ where $d$ refers to the MMD defined in section~\ref{sec:metric}, $T$ corresponds
 %============================================================%
 \subsection{Summary and discussion}
 %============================================================%
-A steady-state engineering wake model is coupled with a hydrostatic solver to take into account the effect of the floaters position in the wake computation of a floating offshore wind farm
-The main impact of the floater's position is the increased rotor tilt, which leads to a larger vertical deflection of the wake. 
-In the South-Brittany farm, the elevation of wake center is significant and could modify the fatigue loads on the downstream WT. 
-This low-fidelity, or engineering model is very fast (about 3 minutes on a regular computer), while higher fidelity models can simulate the wake in a wind farm more accurately, but with much higher computational cost (several days for LES Meso-NH solver, with intensive parallelisation). 
-In this paper, we consider that the modelling error made by the engineering wake model as reasonable. 
-Further investigations should be done on the integration of the different fidelity levels in the uncertainty propagation. 
-In this work, the uncertainty propagation is performed for to random inputs: the wind speed and the turbulence intensity, leading to a wake perturbed distribution per WT. 
-A metric was then defined to measure the distance between distributions in order to build clusters of WT seeing similar wind conditions. 
-After applying the metric to the South Brittany case, a clustering approach is used to determine a limited number of WTs representing the farm for RBD. 
-Several clustering methods are compared and provide similar results for the current case study. In this case, a solution with 4 clusters is a good compromise between low relative error with clusters and low number of clusters. 
-Getting a low number of clusters allows us to reduce the number of representative WT on which a RBD study can be done to assess the RBD over the whole farm. 
-The differences among a cluster and between clusters have to be studied when looking directly to the output of interest for ultimate or fatigue reliability. 
-However the difference on load output quantities may be reduced when compared to that on wake output quantities thanks to the damping of the WT. 
-Depending on the definition of a wind farm failure (series system: one WT fails or parallel system: all WT fail or intermediate system), the probability of failure can be estimated from the probability of failure of the representative WT. 
-These considerations need to be further explored to improve RBD at the farm scale. 
+This section studied the impact of the wake on the wind conditions in a farm. 
+The ambient wind conditions were propagated on a low-fidelity wake model of a floating wind farm. 
+Even if higher-fidelity models could simulate this phenomenon more accurately, their huge computational cost would not allow uncertainty propagation (e.g., several days for LES certain solver, with intensive parallelization). 
+The present model has a reasonable error and has a short execution (i.e., about a few minutes on a regular computer). 
+The resulting wake-perturbed distributions at each turbine were compared to each other using a kernel-based dissimilarity measure for distributions. 
+Using this scalar metric of perturbations created by the wake, clusters were built.  
+In a context of fatigue assessment at the farm scale, the computed clusters may reduce the computational effort by assessing one turbine per cluster.    
 
 
-
-\newpage
 %============================================================%
 %============================================================%
 \section{Conclusion}
 %============================================================%
 %============================================================%
+
+In this chapter, different aspects of uncertainty quantification were applied to define the metocean conditions in a wind farm. 
+First, to infer a joint environmental distribution, a semiparamertic approach was applied to a large dataset from a site in South Brittany, France. 
+This semiparamertic approach combines parametric models of the marginals with nonparametric models of the copula such as the highly flexible empirical Bernstein copula.  
+Second, to take into account the heterogeneous wind conditions inside a farm, a dynamic wake meandering model was developed for the South Brittany farm. 
+Then, the ambient joint environmental distribution was propagated through this model to recover a wake-perturbed environmental distribution per turbine.  
+
+The copulogram is a new data visualization tool based on the empirical copula, aiming at improving the description of nonlinear dependencies in datasets.  
+
+The maximum mean discrepancy is a kernel-based dissimilarity measure between multivariate distributions which was used throughout this chapter. 
+Either for testing the goodness-of-fit of the semiparamertic model fitted using the EBC, or as a measure of the perturbation occasioned by the wake on the wind conditions. 
+In this context, the MMD allowed building clusters of turbines witnessing the same wind conditions. 
+As perspectives, the robustness of this metric to the choice of kernel could be further investigated as well as the goodness-of-fit of the EBC over distributions' tails. 
+After defining the probabilistic model of the environmental conditions, this uncertainty is ready to be propagated in a multiphysics wind turbine model as DIEGO. 

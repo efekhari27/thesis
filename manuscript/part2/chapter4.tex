@@ -11,12 +11,6 @@
 \localtableofcontents
 \newpage
 
-%\section{Kernel discrepancy}
-%\section{Quantization with kernel herding \elias{SIAM UQ talk 2022, RENEW cpaper 2022}}
-%\section{Bayesian quadrature \elias{otkerneldesign package}}
-%\section{Numerical experiments \elias{ctbenchmark package}}
-%\section{Application to wind turbine mean fatigue estimation \contrib{DCE paper}}
-
 
 \begin{tcolorbox}[colback=gray!5!white, colframe=gray!5!white, coltitle=gray!70!white, coltext=gray!60!white, title=\textbf{This chapter is adapted from the following reference:}]
     E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2023). ``Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature''. In: \textit{Data-Centric Engineering}, In press.
@@ -31,60 +25,52 @@ However, to be more cost-effective, wind farm projects tend to move further from
 Going further offshore, wind turbines are subject to more severe and uncertain environmental conditions (i.e., wind and waves). 
 In such conditions, their structural integrity should be certified. 
 To do so, numerical simulation and probabilistic tools have to be used. 
-In fact, according to \cite{graf_2016}, for new environmental conditions or new turbine models, international standards such as \cite{iec_2019} from the International Electrotechnical Commission and \cite{dnv_loads_2016} from Det Norske Veritas recommend performing over $2 \times 10^5$ simulations distributed over a grid. 
+In fact, according to \citet{graf_2016}, for new environmental conditions or new turbine models, international standards such as \citet{iec_2019} from the International Electrotechnical Commission and \citet{dnv_loads_2016} from Det Norske Veritas recommend performing over $2 \times 10^5$ simulations distributed over a grid. 
 However, numerical simulations are computed by a costly hydro-servo-aero-elastic wind turbine model, making the design process time-consuming. 
 In the following, the simulated output cyclic loads studied are aggregated over the simulation period to assess the mechanical fatigue damage at hot spots of the structure. 
-To compute the risks associated with wind turbines throughout their lifespan, one can follow the steps of the universal framework for the treatment of uncertainties \citep{rocquigny_2008} presented in \fig{fig:UQ}. 
-After specifying the problem (Step A), one can quantify the uncertainties related to site-specific environmental conditions represented by the random vector $\bX \in \iD_{\bX} \subset \R^p, p\in \N^{*}$ (Step B). 
+To compute the risks associated with wind turbines throughout their lifespan, one can follow the steps of the universal framework for the treatment of uncertainties presented in the introduction of this manuscript \fig{fig:UQ_methodo}. 
+After specifying the problem (Step A), one can quantify the uncertainties related to site-specific environmental conditions represented by the random vector $\bX \in \iD_{\bX} \subset \R^d, d\in \N^{*}$ (Step B). 
 Then, one can propagate them through the OWT simulation model (Step C) denoted by $g: \iD_{\bX}\rightarrow \R, \bX \mapsto Y = g(\bX)$, and estimate a relevant quantity of interest $\psi(Y) = \psi(g(\bX))$ (e.g., a mean, a quantile, a failure probability). 
 An accurate estimation of the quantity of interest $\psi(Y)$ relies on both a relevant quantification of the input uncertainty and an efficient sampling method.
-
-\begin{figure}[!h]
-    \centering
-    \input{part2/figures/DCE/ABC_diagram.tex}
-    \caption{General framework for uncertainty quantification (scheme adapted from the one proposed by \cite{ajenjo_2023}, originally introduced in \cite{rocquigny_2008}).}
-    \label{fig:UQ}
-\end{figure}
 
 Regarding Step B, when dealing with uncertain environmental conditions, a specific difficulty 
 often arises from the complex dependence structure such variables may exhibit. 
 Here, two cases may occur: either measured data are directly available (i.e., the ``given-data'' context) or a theoretical parametric form for the joint input probability distribution can be postulated.
 Such existing parametric joint distributions often rely on prior data fitting combined with expert knowledge. 
-For example, several parametric approaches have been proposed in the literature to derive such formulations, ranging from fitting conditional distributions \citep{vanem_fekhari_2023}) to using vine copulas \citep{li_zhan_2020}. 
-However, when a considerable amount of environmental data is available, nonparametric approaches may be useful, even if fitting a joint probability distribution with a complex dependence structure may be a challenging task. 
-In this case, the idea is to directly use the data as an empirical representation of input uncertainties in order to avoid a parametric fit that might be too restrictive in terms of dependence structure.
-
+For example, several parametric approaches have been proposed in the literature to derive such formulations, ranging from fitting conditional distributions \citealp{vanem_fekhari_2023}) to using vine copulas \citep{li_zhan_2020}. 
+When a considerable amount of environmental data is available, nonparametric approaches as the empirical Bernstein copula were studied in the Chapter~\ref{chpt:3} to capture complex dependence structures. 
+Alternatively, an idea is to directly use the data as an empirical representation of input uncertainties in order to avoid an additional inference error. 
 
 Step C usually focuses on propagating the input uncertainties in order to estimate the quantity of interest. 
 Depending on the nature of $\psi(Y)$, one often distinguishes between two types of uncertainty propagation: a central tendency estimation (e.g., focusing on the output mean value or the variance) and a tail estimation (e.g., focusing on a high-order quantile or a failure probability). 
 When uncertainty propagation aims at central tendency estimation, the usual methods can be split into two groups. 
 First, those relying on sampling, i.e., mainly Monte Carlo sampling \citep{graf_2016}, quasi-Monte Carlo sampling \citep{muller_cheng_2018}, geometrical subsampling \citep{kanner_2018_OMAE}, or deterministic quadrature rules \citep{bos_2020}. 
 All these methods estimate the quantity directly on the numerical simulator's outputs. 
-Second, those that rely on the use of surrogate models (or metamodels, see \fig{fig:UQ}) to emulate the costly numerical model by a statistical model. 
+Second, those that rely on the use of surrogate models (or metamodels, see \fig{fig:UQ_methodo}) to emulate the costly numerical model by a statistical model. 
 Among a large panel of surrogates, one can mention, regarding wind energy applications, the use of polynomial chaos expansions \citep{dimitrov_kelly_2018, murcia_dimitrov_2018}, Gaussian process regression \citep{huchet_2019,teixeira_gp_2019,slot_sorensen_2020,wilkie_galasso_2021}, or artificial neural networks \citep{aoues_2023}. 
 When uncertainty propagation aims at studying the tail of the output distribution such as in risk or reliability assessment, one usually desires to estimate a quantile or a failure probability. 
 In the wind energy literature, failure probability estimation has been largely studied, e.g., in time-independent reliability assessment \citep{zwick_muskulus_2015,slot_sorensen_2020,wilkie_galasso_2021} or regarding time-dependent problems \citep{abdallah_lataniotis_2019,lataniotis_2019}.
 
-During the overall process described in \fig{fig:UQ}, modelers and analysts often need to determine whether inputs are influential or not in order to prioritize their effort (in terms of experimental data collecting, simulation budget, or expert elicitation). 
+During the overall process described in \fig{fig:UQ_methodo}, modelers and analysts often need to determine whether inputs are influential or not in order to prioritize their effort (in terms of experimental data collecting, simulation budget, or expert elicitation). 
 Sometimes, they want to get a better understanding of the OWT numerical models' behavior or to enhance the input uncertainty modeling. 
-All these questions are intimately related to the topic of sensitivity analysis \citep{saltelli_2008,daveiga_iooss_2021} and can be seen as an ``inverse analysis'' denoted by Step C' in \fig{fig:UQ}. 
+All these questions are intimately related to the topic of sensitivity analysis \citep{saltelli_2008,daveiga_iooss_2021} and can be seen as an ``inverse analysis'' denoted by Step C' in \fig{fig:UQ_methodo}. 
 In the wind energy literature, one can mention, among others, some works related to Spearman's rank correlation analysis and the use of the Morris method in \cite{verlade_kramhoft_2019,petrovska_2022}. 
-Going to variance-based analysis, the direct calculation of Sobol' indices after fitting a polynomial chaos surrogate model has been proposed in many works (e.g., in \cite{murcia_dimitrov_2018}) while the use of distributional indices (e.g., based on the Kullback–Leibler divergence) has been investigated by \cite{teixeira_2019}. 
+Going to variance-based analysis, the direct calculation of Sobol' indices after fitting a polynomial chaos surrogate model has been proposed in many works (e.g., in \citealp{murcia_dimitrov_2018}) while the use of distributional indices (e.g., based on the Kullback–Leibler divergence) has been investigated by \citet{teixeira_2019}. 
  
-The present paper focuses on the problem of uncertainty propagation, and more specifically, on the mean fatigue damage estimation (i.e., $\psi(Y) = \E[g(\bX)]$). 
+The present chapter focuses on the problem of uncertainty propagation, and more specifically, on the mean fatigue damage estimation (i.e., $\psi(Y) = \E[g(\bX)]$). 
 Such a problem is usually encountered, by engineers, during the design phase. 
 Most of the time, current standards as well as common engineering practices make them use regular grids \citep{huchet_2019}. 
 Altogether, one can describe three alternative strategies: (i) direct sampling on the numerical model (e.g., using Monte Carlo), (ii) sampling on a static surrogate model (e.g., using Gaussian process regression), or (iii) using an ``active learning'' strategy (i.e., progressively adding evaluations of the numerical model to enhance the surrogate model fitting process). 
 In practice, fitting a surrogate model in the context of OWT fatigue damage can be challenging due to the nonlinearity of the code. 
 Moreover, the surrogate model validation procedure complexifies the process. 
 Finally, active learning strategies restrict the potential number of parallel simulations, which limits the use of HPC facilities. 
-Thus, the main contribution of this paper is to explore different ways to propagate uncertainties by directly evaluating the numerical model (i.e., without any surrogate model) with a relevant tradeoff between computational cost and accuracy. 
+Thus, the main contribution of this chapter is to explore different ways to propagate uncertainties by directly evaluating the numerical model (i.e., without any surrogate model) with a relevant tradeoff between computational cost and accuracy. 
 In the specific context of wind turbine fatigue damage, this work shows how to propagate uncertainties arising from a complex input distribution through a costly wind turbine simulator. 
 The proposed work consists of evaluating the advantages and limits of kernel herding as a tool for given-data, fast, and fully-distributable uncertainty propagation in OWT simulators. 
 Additionally, this sampling method is highly flexible, allowing one to complete an existing design of experiments. 
-Such a property can be crucial in practice when the analyst is asked to include some specific points to the design (e.g., characteristic points describing the system's behavior required by experts or by standards, see \cite{huchet_2019}). 
+Such a property can be crucial in practice when the analyst is asked to include some specific points to the design (e.g., characteristic points describing the system's behavior required by experts or by standards, see \citealp{huchet_2019}). 
 
-The paper is organized as follows. 
+The present chapter is organized as follows. 
 Section~\ref{sec:sec42} will present the industrial use case related to a wind farm operating in Teesside, UK. 
 Then, Section~\ref{sec:sec43} will introduce various kernel-based methods for central tendency estimation. 
 Section~\ref{sec:sec44} will analyze the results of numerical experiments obtained on both analytical and industrial cases. 
@@ -97,12 +83,11 @@ Finally, the last section will present some discussions and draw some conclusion
 
 An OWT is a complex system interacting with its environment. 
 To simulate the response of this system against a set of environmental solicitations, multi-physics numerical models are developed. 
-In the present paper, the considered use case consists of a chain of three numerical codes executed sequentially. 
+In the present chapter, the considered use case consists of a chain of three numerical codes executed sequentially. 
 As illustrated in \fig{fig:bloc_diagram}, a simulation over a time period is the sequence of, first, a turbulent wind speed field generation, then a wind turbine simulation (computing various outputs including mechanical stress), and finally, a post-processing phase to assess the fatigue damage of the structure.
-\begin{figure}[h!]
+\begin{figure}
 \begin{center}
     \input{./part2/figures/DCE/simulator_bloc}
-    %\includegraphics[width=0.8\linewidth]{part2/figures/DCE/simulator_blocs.pdf}    
 \end{center}
 \caption{Diagram of the chained OWT simulation model.}
 \label{fig:bloc_diagram}
@@ -112,24 +97,26 @@ As illustrated in \fig{fig:bloc_diagram}, a simulation over a time period is the
 %------------------------------------------------------------%
 \subsection{Numerical simulation model}
 %------------------------------------------------------------%
-This subsection describes more precisely the modeling hypotheses considered in the industrial use case. 
-The first block of the chain consists of a turbulent wind field simulator called ``TurbSim'' (developed by \cite{turbsim_2009} from the National Renewable Energy Laboratory, USA) that uses, as a turbulence model, a Kaimal spectrum \citep{kaimal_1972} (as recommended by the \citet{iec_2019}). 
+This subsection generally describes the modeling hypotheses considered in the industrial use case, further details regarding wind turbines modeling a provided in Chapter~\ref{chpt:2} of this manuscript. 
+The first block of the chain consists of a turbulent wind field simulator called ``TurbSim'' (developed by \citealp{turbsim_2009} from the National Renewable Energy Laboratory, USA) that uses, as a turbulence model, a Kaimal spectrum \citep{kaimal_1972} (as recommended by the \citealp{iec_2019}). 
 Moreover, to extrapolate the wind speed vertically, the shear is modeled by a power law. 
 Since the wind field generation shows inherent stochasticity, each 10-minute long simulation is repeated with different pseudo-random seeds and one averages the estimated damage over these repetitions. 
-This question has been widely studied by some authors, (e.g., \cite{slot_sorensen_2020}), who concluded that the six repetitions recommended by the \citet{iec_2019} may be insufficient to properly average this stochasticity. 
+This question has been widely studied by some authors, (e.g., \citealp{slot_sorensen_2020}), who concluded that the six repetitions recommended by the \citet{iec_2019} may be insufficient to properly average this stochasticity. 
 Thus, in the following, the simulations are repeated eleven times (picking an odd number also directly provides the median value over the repetitions). 
 This number of repetitions was chosen to suit the maximum number of simulations and the storage capacity of the generated simulations.
 
-As a second block, one finds the ``DIEGO'' software (for ``Dynamique Intégrée des Éoliennes et Génératrices Offshore\footnote{In English, ``Integrated Dynamics of Wind Turbines and Offshore Generators''.}'') which is developed by EDF R\&D \citep{kim_natarajan_2022} to simulate the aero-hydro-servo-elastic behavior of OWTs. 
+As a second block, one finds the ``DIEGO'' software (for ``Dynamique Intégrée des Éoliennes et Génératrices Offshore''\footnotemark) which is developed by EDF R\&D \citep{kim_natarajan_2022} to simulate the aero-hydro-servo-elastic behavior of OWTs. 
 It takes the turbulent wind speed field generated by TurbSim as input and computes the dynamical behavior of the system (including the multiaxial mechanical stress at different nodes of the structure). 
 For the application of interest here, the control system is modeled by the open-source DTU controller \citep{dtu_controler_2013}, and no misalignment between the wind and the OWT is assumed. 
 As for the waves, they are modeled in DIEGO using a JONSWAP spectrum (named after the 1975 Joint North Sea Wave Project). 
-he considered use case here consists of a DIEGO model of a Siemens SWT 2.3MW bottom-fixed turbine on a monopile foundation (see the datasheet in Table \ref{tab:owt_datasheet}), currently operating in Teesside, UK (see the wind farm layout and wind turbine diagram in \fig{fig:teesside_layout}). 
-Although wind farms are subject to the wake effect, affecting the behavior and performance of some turbines in the farm, this phenomenon is not considered in this paper. 
+The considered use case here consists of a DIEGO model of a Siemens SWT 2.3MW bottom-fixed turbine on a monopile foundation (see the datasheet in Table \ref{tab:owt_datasheet}), currently operating in Teesside, UK (see the wind farm layout and wind turbine diagram in \fig{fig:teesside_layout}). 
+Although wind farms are subject to the wake effect, affecting the behavior and performance of some turbines in the farm, this phenomenon is not considered in this chapter. 
 To avoid numerical perturbations and reach the stability of the dynamical system, our simulation period is extended to 1000 seconds and the first 400 seconds are cropped in the post-processing step. 
 This chained OWT numerical simulation model has been deployed on an EDF R\&D HPC facility to benefit from parallel computing speed up (a single simulation on one CPU takes around 20 minutes).
 
-\begin{table*}[h]
+\footnotetext{In English, ``Integrated Dynamics of Wind Turbines and Offshore Generators''.}
+
+\begin{table*}
     \centering
     \caption{Teesside Offshore Wind turbine datasheet}
     \begin{tabular}{ll}
@@ -143,7 +130,7 @@ This chained OWT numerical simulation model has been deployed on an EDF R\&D HPC
     \label{tab:owt_datasheet}
 \end{table*}
 
-\begin{figure}[h!]
+\begin{figure}
 \begin{center}
     \includegraphics[width=0.6\linewidth]{part2/figures/DCE/teesside/map_teesside_layout.pdf}
     \includegraphics[width=0.25\linewidth]{part2/figures/DCE/teesside/owt_diagram.pdf}
@@ -161,10 +148,10 @@ After its construction, each wind turbine is equipped with monitoring instrument
 In total, five years of wind data have been collected on the turbines which are not affected by the wake on this site. 
 Their acquisition system (usually called ``SCADA'' for ``Supervisory Control And Data Acquisition'') has a sampling period of ten minutes. 
 The wave data arise from a buoy placed in the middle of the farm. 
-These data describe the physical features listed in Table \ref{tab:envi_variables}. 
+These data describe the physical features listed in Table \ref{tab:envi_variables_c4}. 
 A limitation of the present study is that it controller-induced uncertainty (like wind misalignment) is not considered. 
 
-\begin{table*}[h!] \caption{Description of the environmental data.}
+\begin{table*} 
     \begin{center}
     \begin{tabularx}{\textwidth}{@{\extracolsep\fill}llll@{}}
     \hline
@@ -172,15 +159,18 @@ A limitation of the present study is that it controller-induced uncertainty (lik
     \hline
     Mean wind speed & $U$ & $\mathrm{m.s^{-1}}$ & 10-min. average horizontal wind speed\\
     Wind turbulence & $\sigma_U $ & $\mathrm{m.s^{-1}}$ & 10-min. wind speed standard deviation\\
-    Wind direction\footnote{Note that the two directional variables could be replaced by a wind-wave misalignment variable for a bottom-fixed technology, however, our framework can be directly transposed to floating models.} & $\theta_{wind} $ & deg. &  10-min. average wind direction\\
+    Wind direction\footnotemark & $\theta_{\mathrm{wind}} $ & deg. &  10-min. average wind direction\\
     Significant wave height & $H_s $ & m & Significant wave height\\
     Peak wave period & $T_p $  & $\mathrm{s}$ & Peak 1-hour spectral wave period \\
-    Wave direction & $\theta_{wave} $ & deg. &  10-min. average wave direction\\
+    Wave direction & $\theta_{\mathrm{wave}} $ & deg. &  10-min. average wave direction\\
     \hline
     \end{tabularx}
-    \label{tab:envi_variables}
+    \caption{Description of the environmental data.}
+    \label{tab:envi_variables_c4}
     \end{center}
 \end{table*}
+
+\footnotetext{Note that the two directional variables could be replaced by a wind-wave misalignment variable for a bottom-fixed technology, however, our framework can be directly transposed to floating models.}
 
 The Teesside farm is located close to the coast, making the environmental conditions very different depending on the direction (see the wind farm layout in \fig{fig:teesside_layout}). 
 Since measures are also subject to uncertainties, a few checks were made to ensure that the data were physically consistent. 
@@ -189,15 +179,14 @@ In practice, this truncation only removes extreme data points (associated with s
 In addition, a simple trigonometric transform is applied to each directional feature to take into account their cyclic structure. 
 Finally, the remaining features are rescaled (i.e., using a min-max normalization). 
 
-The matrix plot of the transformed data presented in \fig{fig:envi_pairplot} is (to the best of the authors' knowledge) a new kind of plot named \emph{copulogram}. 
-A copulogram is a graphical tool that enables the analysis of the probabilistic data structure into two parts: the marginal distributions (in the diagonal, in a similar fashion as a usual matrix plot) and the dependence structure between features. 
-To do so, it represents the marginals with univariate kernel density estimation plots (in the diagonal), and the dependence structure with scatter plots in the rank space (in the upper triangle). 
+Teesside's environmental data is illustrated by its copulogram in \fig{fig:envi_pairplot}, a graphical tool presented in Section~\ref{sec:copulogram} to visualize multivariate data. 
+The copulogram exhibits the marginals with univariate kernel density estimation plots (in the diagonal), and the dependence structure with scatter plots in the normalized rank space (in the upper triangle). 
 Looking at data in the rank space instead of the initial space allows one to observe the ordinal associations between variables. 
-The common practice is to normalize the ranks of each marginal between zero and one. 
+The scatter plots of normalized ranks are actually a representation of the empirical copula density.
 Two independent variables will present a uniformly distributed scatter plot in the rank space. 
 In the lower triangular matrix, the scatter plots are set in the physical space, merging the effects of the marginals and the dependencies (as in the usual visualization offered by the matrix plot). 
 Since the dependence structure is theoretically modeled by an underlying copula, this plot is called \emph{copulogram}, generalizing the well-known ``correlogram'' to nonlinear dependencies. 
-It gives a synthetic and empirical decomposition of the dataset that was implemented in a new open-source Python package named \texttt{\href{https://github.com/efekhari27/copulogram}{copulogram}}\footnote{\url{https://github.com/efekhari27/copulogram}}.
+It gives a synthetic and empirical decomposition of the dataset that was implemented in a new open-source Python package named \texttt{\href{https://github.com/efekhari27/copulogram}{copulogram}}\footnote{GitHub repository: \url{https://github.com/efekhari27/copulogram}}.
 
 \begin{figure}[!h]
     \begin{center}
@@ -205,7 +194,7 @@ It gives a synthetic and empirical decomposition of the dataset that was impleme
     \end{center}
     \caption{Copulogram of the Teesside measured data ($N=10^4$ in grey), kernel herding subsample ($n=500$ in orange). 
     Marginals are represented by univariate kernel density estimation plots (diagonal), the dependence structure with scatter plots in the rank space (upper triangle). 
-    Scatter plots on the bottom triangle are set in the physical space. \elias{Legend is cropped}}
+    Scatter plots on the bottom triangle are set in the physical space.}
     \label{fig:envi_pairplot}
 \end{figure}
 
@@ -219,7 +208,9 @@ Indeed, fitting a joint distribution would introduce an additional source of err
 Note that a proper parametric model fit would be challenging for complex dependence structures such as the one plotted on \fig{fig:envi_pairplot}. 
 As examples of works that followed this path, one can mention the work of \citet{li_zhan_2020} who built a parametric model of a similar multivariate distribution using vine copulas. 
 
-For a similar purpose and to avoid some limits imposed by the parametric framework, a nonparametric approach coupling empirical Bernstein copula fitting with kernel density estimation of the marginals is proposed in subSection~\ref{sec:4ebc}.
+
+For a similar purpose and to avoid some limits imposed by the parametric framework, 
+a nonparametric approach coupling empirical Bernstein copula fitting with kernel density estimation of the marginals is proposed in subSection~\ref{sec:4ebc}.
 
 
 %------------------------------------------------------------%
@@ -229,41 +220,21 @@ Instead of directly subsampling from a dataset such as the one from \fig{fig:env
 However, accurately fitting such complex multivariate distributions is challenging. 
 The amount of available data is large enough to make nonparametric inference a viable option.
 
-The  Sklar theorem \citep{joe_1997} states that the multivariate distribution of any random vector $\mathbf{X} \in \R^p, p \in \N^*$ can be broken down into two objects:
+The Sklar theorem \citep{durante_2015_copula} states that the multivariate distribution of any random vector $\mathbf{X} \in \R^d, d \in \N^*$ can be broken down into two objects:
 \begin{enumerate}
     \item A set of univariate marginal distributions to describe the behavior of the individual variables;
     \item A function describing the dependence structure between all variables, called a \textit{copula}.
 \end{enumerate}
-This theorem states that considering a random vector $\mathbf{X} \in \R^p$, with its cumulative distribution function $F$ and its marginals $\{F_i\}_{i=1}^p$, there exists a copula $C: [0, 1]^p \rightarrow [0, 1]$, such that:
+This theorem states that considering a random vector $\mathbf{X} \in \R^d$, with its cumulative distribution function $F$ and its marginals $\{F_i\}_{i=1}^d$, there exists a copula $C: [0, 1]^d \rightarrow [0, 1]$, such that:
 \begin{equation}
-    F(x_1, \dots, x_p) = C\left(F_1(x_1), \dots, F_p(x_p)\right). 
+    F(x_1, \dots, x_d) = C\left(F_1(x_1), \dots, F_d(x_d)\right). 
 \end{equation}
 
 It allows us to divide the problem of fitting a joint distribution into two independent problems: fitting the marginals and fitting the copula. 
-Note that, when the joint distribution is continuous, this copula is unique. 
-Copulas are continuous and bounded functions defined on a compact set (the unit hypercube). 
-Bernstein polynomials allow uniform approximation as closely as desired any continuous and real-valued function defined on a compact set (Weierstrass approximation theorem). 
-Therefore, they are good candidates to approximate unknown copulas. 
-This concept was introduced as \textit{empirical Bernstein copula} (EBC) by \cite{sancetta_satchell_2004} for applications in economics and risk management. 
-Later on, \cite{segers_2017} offered further asymptotic studies. Formally, the multivariate Bernstein polynomial for a function $C: [0, 1]^p \rightarrow \R$ on a grid over the unit hypercube $G:=\left\{\frac{0}{h_1}, \dots, \frac{h_1}{h_1}\right\} \times \dots \times \left\{\frac{0}{h_p}, \dots, \frac{h_p}{h_p}\right\}, \mathbf{h} = (h_1, \dots, h_p) \in \N^p$, is written as follows: 
-
-\begin{equation}
-    B_{\mathbf{h}}(C)(\bu) := \sum_{t_1=0}^{h_1} \dots \sum_{t_p=0}^{h_p} C\left(\frac{t_1}{h_1}, \dots, \frac{t_p}{h_p}\right) \prod_{j=1}^p b_{h_j, t_j}(u_j),\label{eq:ebc}
-\end{equation}
-with $\bu = (u_1, \dots, u_p) \in [0, 1]^p$, and the Bernstein polynomial $b_{h, t}(u):= \frac{t!}{h!(t-h)!}u^h(1-u)^{t-h}$. 
-When $C$ is a copula, then $B_{\mathbf{h}}(C)$ is called ``Bernstein copula''. 
-Therefore, the empirical Bernstein copula is an application of the Bernstein polynomial in \eq{eq:ebc} to the so-called ``empirical copula''. 
-In practice, considering a sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \in \R^{np}$ and the associated ranked sample $\bR_n = \left\{\br^{(1)}, \dots, \br^{(n)}\right\}$, the corresponding empirical copula is written: 
-
-\begin{equation}
-    C_n(\bu) := \frac1n \sum_{i=0}^{n} \prod_{j=1}^{p} \1 \left\{ \frac{r_j^{(i)}}{n} \leq u_j \right\}, \bu = (u_1, \dots, u_p) \in [0, 1]^p.
-\end{equation}
-
+The empirical Bernstein copula is a nonparametric copula approximation method introduced and applied on similar data in Chapter~\ref{chpt:3}. 
 Provided a large enough learning set $\bX_n$ (over five years in the present case), the EBC combined with kernel density estimation for the marginals enable to fit well the environmental joint distribution related to the dataset in \fig{fig:envi_pairplot}. 
 Moreover, the densities of the EBC are available in an explicit form, making Monte Carlo or quasi-Monte Carlo generation easy. 
-Nevertheless, this method is sensitive to the chosen polynomial orders $\{h_j\}_{j=1}^p$ and the learning set size. 
-For a thorough presentation of this method, practical recommendations and theoretical results regarding EBC tuning, see the manuscript of \cite{lasserre_2022}. 
-Further discussions and numerical experiments on the estimation of nonparametric copula models are presented in \cite{nagler_2017}. 
+As discussed in Chapter~\ref{chpt:3}, this method is sensitive to the chosen polynomial orders $\{m_j\}_{j=1}^d$ and the learning set size. 
 
 
 %------------------------------------------------------------%
@@ -271,9 +242,11 @@ Further discussions and numerical experiments on the estimation of nonparametric
 %------------------------------------------------------------%
 As described in \fig{fig:bloc_diagram}, a typical DIEGO simulation returns a 10-minute multiaxial stress time series at each node $i \in \N$ of the 1D meshed structure. 
 Since classical fatigue laws are established for uniaxial stresses, the first step is to compute one equivalent Von Mises stress time series at each structural node.
+The present section recalls the main concepts but fatigue assessment is further discussed in Section~\ref{sec:235}. 
 
 The foundation and the tower of an OWT are a succession of tubes with various sections connected by bolted or welded joints. 
-Our work focuses on the welded joints at the mudline level, identified as a critical area for the structure. This hypothesis is confirmed in the literature by different contributions, see e.g., the results of \citet{muller_cheng_2018} in Figure 12, or \citet{katsikogiannis_2021_owt_fatigue}. 
+Our work focuses on the welded joints at the mudline level, identified as a critical area for the structure. 
+This hypothesis is confirmed in the literature by different contributions, see e.g., the results of \citet{muller_cheng_2018} in Figure 12, or \citet{katsikogiannis_2021_owt_fatigue}. 
 At the top of the turbine, the fatigue is commonly studied at the blade root, which was not studied here since the blades in composite material have different properties (see e.g., \cite{dimitrov_2013}). 
 Note that the OWT simulations provide outputs allowing us to similarly study any node along the structure (without any additional computational effort).
 
@@ -286,7 +259,7 @@ To assess fatigue damage, rainflow counting \citep{dowling_1972} first identifie
 For each identified stress cycle of amplitude $s \in \R_+$, the so-called ``Stress vs. Number of cycles'' curve (also called the ``SN curve'' or ``W\"ohler curve'') allows one to estimate the number $N_{\mathrm{c}}$ of similar stress cycles necessary to reach fatigue ruin. 
 The SN curve, denoted by $W(\cdot)$ is an affine function in the log-log scale with slope $-m$ and y-intercept $a$:
 \begin{equation}
-    N_{\mathrm{c}} := W(s) = a s^{-m}, \, a\in\R_+, \, m\in\R_+.
+    N_{\mathrm{c}}(s) = a s^{-m}, \, a\in\R_+, \, m\in\R_+.
     \label{eq:wohler}
 \end{equation}
 
@@ -296,13 +269,13 @@ More details regarding damage assessment and the W\"ohler curve used are availab
 For a realization $\bx \in \iD_{\bX}$ of environmental conditions, at a structural node $i$, an azimuth angle $\theta$; $k \in \N$ stress cycles of respective amplitude $\{s_{i, \theta}^{(j)}(\bx)\}_{j=1}^k$ are identified. 
 Then, Miner's rule \citep{fatemi_1998} defines the damage function $g_{i, \theta}(\bx): \iD_{\bX} \rightarrow \R_+$ by:
 \begin{equation}
-    g_{i, \theta}(\bx) = \sum_{j=1}^{k} \frac{1}{N_{\mathrm{c}}^{(j)}} = \sum_{j=1}^{k} \frac{1}{W\left(s_{i, \theta}^{(j)}(\bx)\right)}.
+    g_{i, \theta}(\bx) = \sum_{j=1}^{k} \frac{1}{N_{\mathrm{c}}\left(s_{i, \theta}^{(j)}(\bx)\right)}.
     \label{miner1}
 \end{equation}
 
-As defined by the DNV standards for OWT fatigue design \citep{dnv_fatigue_2016}, the quantity of interest in the present paper is the ``mean damage'' $d_{i, \theta}$ (also called ``expected damage''), computed at a node $i$, for an azimuth angle $\theta$:
+As defined by the DNV standards for OWT fatigue design \citep{dnv_fatigue_2016}, the quantity of interest in the present chapter is the ``mean damage'' $d_{\mathrm{c}}^{i, \theta}$ (also called ``cumulative damage''), computed at a node $i$, for an azimuth angle $\theta$:
 \begin{equation}
-    d_{i, \theta} = \E[g_{i, \theta}(\bX)] = \int_{\iD_\bX} g_{i, \theta}(\bx) f_{\bX}(\bx)\, \dd \bx \,.
+    d_{\mathrm{c}}^{i, \theta} = \E[g_{i, \theta}(\bX)] = \int_{\iD_\bX} g_{i, \theta}(\bx) f_{\bX}(\bx)\, \dd \bx \,.
     \label{eq:mean_integral}
 \end{equation}
 
@@ -334,7 +307,7 @@ Red crosses represent the discretized azimuths for which the fatigue is computed
 The present section explores different methods aiming at approximating the integral of a function against a probability measure. 
 In the case of OWT mean damage estimation, these methods can be used for defining efficient design load cases. 
 This problem is equivalent to the central tendency estimation of $\bY = g(\bX)$, the image of the environmental random variable $\bX$ by the damage function $g(\cdot): \iD_\bX \to \R$ (see e.g., \eq{eq:mean_integral}). 
-Considering a measurable space $\iD_\bX \subset \R^p, p \in \N^*$, associated with a known probability measure $\mu$, this section studies the approximation of integrals of the form $\int_{\iD_\bX} g(\bx) \dd\mu(\bx)$. 
+Considering a measurable space $\iD_\bX \subset \R^d, d \in \N^*$, associated with a known probability measure $\pi$, this section studies the approximation of integrals of the form $\int_{\iD_\bX} g(\bx) \dd\pi(\bx)$. 
 %------------------------------------------------------------%
 \subsection{Quadrature rules and quasi-Monte Carlo methods}
 %------------------------------------------------------------%
@@ -342,7 +315,7 @@ Numerical integration authors may call this generic problem \emph{probabilistic 
 In practice, this quantity of interest is estimated on an $n$-sized set of damage realizations $\by_n = \left\{g(\bx^{(1)}), \dots, g(\bx^{(n)})\right\}$ of an input sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\}$. 
 A weighted arithmetic mean of the realizations $\left\{g(\bx^{(1)}), \dots, g(\bx^{(n)})\right\}$ is called a \emph{quadrature rule} with a set of unconstrained weights $\bw_n = \{w_1, \dots, w_n\} \in \R^n$:
 \begin{equation}
-    I_{\mu}(g) := \int_{\iD_\bX} g(\bx) \dd\mu(\bx) \approx \sum_{i=1}^n w_i g(\bx^{(i)}).
+    I_{\pi}(g) := \int_{\iD_\bX} g(\bx) \dd\pi(\bx) \approx \sum_{i=1}^n w_i g(\bx^{(i)}).
     \label{eq:quadrature_rule}
 \end{equation}
 Our numerical experiment framework often implies that the function $g$ is costly to evaluate, making the realization number limited. 
@@ -353,130 +326,43 @@ For example, \cite{bos_2020} recently developed a quadrature rule based on arbit
 Alternatively, sampling methods rely on generating a set of points $\bX_n$ drawn from the input distribution to compute the arithmetic mean of their realizations (i.e., uniform weights $\left\{w_i = \frac1n \right\}_{i=1}^n$). 
 Among them, low-discrepancy sequences, also called ``quasi-Monte Carlo'' sampling (e.g., Sobol', Halton, Faure sequences) are known to improve the standard Monte Carlo convergence rate and will be used as a deterministic reference method in the following numerical experiments \citep{leobacher_2014}.
 
-%------------------------------------------------------------%
-\subsection{Kernel discrepancy}
-%------------------------------------------------------------%
-Quasi-Monte Carlo sampling methods widely rely on a uniformity metric, called \textit{discrepancy}. 
-This section first presents the link between discrepancy and numerical integration. 
-Then it introduces a kernel-based discrepancy, generalizing the concept to non-uniform measures. 
-This tool is eventually used to build a sequential quadrature rule by subsampling from a finite dataset.
-
 \paragraph{Quantization of probability measures and quadrature}
 %------------------------------------------------------------%
-When dealing with probabilistic integration such as \eq{eq:quadrature_rule}, a quadrature rule is a finite representation of a continuous measure $\mu$ by a discrete measure $\zeta_n = \sum_{i=1}^n w_i \delta(\bx^{(i)})$ (weighted sum of Dirac distributions at the design points $\bX_n$).
-In the literature, this procedure is also called \emph{quantization} of a continuous measure $\mu$. 
+When dealing with probabilistic integration such as \eq{eq:quadrature_rule}, a quadrature rule is a finite representation of a continuous measure $\pi$ by a discrete measure $\zeta_n = \sum_{i=1}^n w_i \delta(\bx^{(i)})$ (weighted sum of Dirac distributions at the design points $\bX_n$).
+In the literature, this procedure is also called \emph{quantization} of a continuous measure $\pi$. 
 Overall, numerical integration is a particular case of probabilistic integration against a uniform input measure. 
 For uniform measures, the Koksma-Hlawka inequality \citep{morokoff_1995} provides a useful upper bound on the absolute error of a quadrature rule: 
 \begin{equation}
-    \left| \int_{[0, 1]^p} g(\bx) \dd \bx - \frac1n \sum_{i=1}^n g(\bx^{(i)})\right| \leq  V(g) D_n^*(\bX_n).
+    \left| \int_{[0, 1]^d} g(\bx) \dd \bx - \frac1n \sum_{i=1}^n g(\bx^{(i)})\right| \leq  V(g) D_n^*(\bX_n).
     \label{eq:KH_inequality}
 \end{equation}
 As presented in \cite{oates_21}, $V(g) = \sum_{\mathfrak{u}\subseteq\{1, \dots, p \}} \int_{[0, 1]^\mathfrak{u}} \left| \frac{\partial^{\mathfrak{u}}g}{\partial \bx_{\mathfrak{u}}}(\bx_{\mathfrak{u}}, 1)\right| \dd\bx$, quantifies the complexity of the integrand, 
 while $D_n^*(\bX_n)$ evaluates the discrepancy to uniformity of the design $\bX_n$. 
-Therefore, the Koksma-Hlawka inequality shows that the quadrature rule's accuracy relies on the good quantization of $\mu$ by $\bX_n$. 
-For a uniform measure $\mu$, the star discrepancy $D_n^*(\bX_n)$ is a metric assessing how far from uniformity a sample $\bX_n$ is. 
-When generalizing to a non-uniform measure, a good quantization of $\mu$ should also lead to a good approximation of the quantity. 
+Therefore, the Koksma-Hlawka inequality shows that the quadrature rule's accuracy relies on the good quantization of $\pi$ by $\bX_n$. 
+For a uniform measure $\pi$, the star discrepancy $D_n^*(\bX_n)$ is a metric assessing how far from uniformity a sample $\bX_n$ is. 
+When generalizing to a non-uniform measure, a good quantization of $\pi$ should also lead to a good approximation of the quantity. 
 
-
-\paragraph{Reproducing kernel Hilbert space and kernel mean embedding}
-%------------------------------------------------------------%
-To generalize the Koksma-Hlawka inequality to any probability measure, let us assume that the integrand $g$ lives in a specific function space $\iH(k)$. $\iH(k)$ is a \emph{reproducing kernel Hilbert space} (RKHS), which is an inner product space of functions $g:\iD_{\bX} \rightarrow \R$. 
-Considering a symmetric and positive definite function $k: \iD_{\bX} \times \iD_{\bX} \rightarrow \R$, later called a ``reproducing kernel'' or simply a ``kernel'', an RKHS verifies the following axioms: 
-\begin{itemize}
-    \item The ``feature map'' $\phi : \iD_{\bX} \to \iH(k); \phi(\bx) = k(\cdot, \bx)$ belongs to the RKHS: $k(\cdot, \bx) \in \iH(k), \forall \bx \in \iD_{\bX}$;
-    \item The ``reproducing property'': $\langle g, k(\cdot, \bx) \rangle_{\iH(k)} = g(\bx), \quad \forall \bx \in \iD_{\bX}, \forall g \in \iH(k)$.
-\end{itemize}
-Note that it can be shown that every positive semi-definite kernel defines a unique RKHS (and vice versa) with a feature map $\phi$, such that $k(\bx, \bx') = \langle \phi(\bx), \phi(\bx') \rangle_{\iH(k)}$.
-This framework allows us to embed a continuous or discrete probability measure in an RKHS, as illustrated in \fig{fig:kernel_mean_embedding}. 
-For any measure $\mu$, let us define its \emph{kernel mean embedding} \citep{sejdinovic_2013}, also called ``potential'' $P_{\mu}(\bx)$ in \cite{pronzato_zhigljavsky_2020}, associated with the kernel $k$ as:
-
-\begin{equation}
-   P_{\mu}(\bx) := \int_{\iD_{\bX}} k(\bx, \bx') \dd \mu(\bx').
-\end{equation}
-
-Respectively, the potential $P_{\zeta_n}(\bx)$ of a discrete distribution $\zeta_n = \sum_{i=1}^{n} w_i \delta(\bx^{(i)}), w_i \in \R$ associated with the kernel $k$ can be written as:
-\begin{equation}\label{eq:potential}
-    %P_{\mu}(\bx) := \int_{\iD_{\bX}} k(\bx, \bx') \d \mu(\bx'), \qquad 
-    P_{\zeta_n}(\bx) =  \int_{\iD_{\bX}} k(\bx, \bx') \dd \zeta_n(\bx') = \sum_{i=1}^{n} w_i k(\bx, \bx^{(i)}).
-\end{equation}
-The potential $P_{\mu}(\bx)$ of the targeted measure $\mu$ will be referred to as ``target potential'' and the potential $P_{\zeta_n}(\bx)$ associated with the discrete distribution $\zeta_n$ called ``current potential'' when its support is the current design $\bX_n$. 
-When $P_{\zeta_n}(\bx)$ is close to $P_{\mu}(\bx)$, it can be interpreted as $\zeta_n$ being an adequate quantization or representation of $\mu$ (which leads to a good estimation of a quantity such as $I_{\mu}(g)$ from \eq{eq:quadrature_rule}). 
-Potentials can be computed in closed forms for specific pairs of distribution and associated kernel. Summary tables of some of these cases are detailed in \cite{briol_phd_2019} (section 3.4), \cite{pronzato_zhigljavsky_2020} (section 4), and extended in \cite{fekhari_iooss_2023}. 
-However, in most cases, the target potentials must be estimated on a large and representative sample, typically a large quasi-Monte Carlo sample of $\mu$.
-
-\medskip
-\begin{definition}
-The \emph{energy} of a measure $\mu$ is defined as the integral of the potential $P_\mu$ against the measure, which leads to the following scalar quantity:
-\begin{equation}
-    \varepsilon_\mu:= \int_{\iD_{\bX}} P_{\mu}(\bx) \dd \mu(\bx) = \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\mu(\bx) \dd\mu(\bx').
-\end{equation}
-\label{eq:target_energy}
-\end{definition}
-
-\begin{figure}[!h]
-    \centering
-    \input{part2/figures/DCE/MMD_diagram}
-    \caption{Kernel mean embedding of a continuous and discrete probability distribution}
-    \label{fig:kernel_mean_embedding}
-\end{figure}
-Finally, using the reproducing property and writing the Cauchy-Schwarz inequality on the absolute quadrature error leads to the following inequality, similar to the Koksma-Hlawka inequality \eq{eq:KH_inequality} (see \cite{briol_oates_2019}): 
-
-\begin{subequations}
-\begin{align}
-    \left| \sum_{i=1}^{n} w_i g(\bx^{(i)}) - \int_{\iD_{\bX}} g(\bx) \dd \mu(\bx) \right| &= \left| \left\langle g, P_{\zeta_n}(\bx) \right\rangle_{\iH(k)} - \left\langle g, P_{\mu}(\bx) \right\rangle_{\iH(k)} \right| \\
-    &= \left| \left\langle g, \left(P_{\zeta_n}(\bx) - P_{\mu}(\bx)\right) \right\rangle_{\iH(k)} \right|\\
-    &\leq \lVert g \lVert_{\iH(k)}  \left\lVert P_{\mu}(\bx) - P_{\zeta_n}(\bx) \right\lVert_{\iH(k)}.
-    \label{eq:quad_error}
-\end{align}
-\end{subequations}
-
-\paragraph{Maximum mean discrepancy}
-%------------------------------------------------------------%
-A metric of discrepancy and quadrature error is offered by the \emph{maximum mean discrepancy} (MMD). 
-This distance between two probability distributions $\mu$ and $\zeta$ is given by the worst-case error for any function within a unit ball of the Hilbert space $\iH(k)$, associated with the kernel $k$:
-\begin{equation}
-    \MMD_k(\mu, \zeta) := %\\ 
-    \sup_{\lVert g \lVert_{\iH(k)} \leq 1}
-            \left | \int_{\iD_{\bX}} g(\bx) \dd \mu(\bx) - \int_{\iD_{\bX}} g(\bx) \dd \zeta(\bx) \right| %= \left\lVert P_{\mu}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH(k)}.
-    \label{eq:mmd}  
-\end{equation}
-
-According to the inequality in \eq{eq:quad_error}, $\MMD_k(\mu, \zeta) = \left\lVert P_{\mu} - P_{\zeta} \right\lVert_{\iH(k)}$, meaning that the MMD fully relies on the difference of potentials. 
-Moreover, \cite{sriperumbudur_2010} defines a kernel as ``characteristic kernel'' when the following equivalence is true: $\MMD_k(\mu, \zeta) = 0 \Leftrightarrow \mu = \zeta$. 
-This property makes the MMD a metric on $\iD_{\bX}$. 
-The squared MMD has been used for other purposes than numerical integration: e.g., statistical testing \citep{gretton_2006}, and global sensitivity analysis \citep{daveiga_2015}. 
-It can be written as follows:
-
-\begin{subequations}
-\begin{align}\label{eq:mmd2}
-    \MMD_k(\mu, \zeta)^2 &= \left\lVert P_{\mu}(\bx) - P_{\zeta}(\bx) \right\lVert^2_{\iH(k)}\\
-        &= \left\langle \left(P_{\mu}(\bx) - P_{\zeta}(\bx) \right), \left(P_{\mu}(\bx) - P_{\zeta}(\bx) \right) \right\rangle_{\iH(k)}\\
-        &= \left\langle P_{\mu}(\bx), P_{\mu}(\bx) \right\rangle_{\iH(k)} - 2 \left\langle P_{\mu}(\bx), P_{\zeta}(\bx) \right\rangle_{\iH(k)} + \left\langle P_{\zeta}(\bx), P_{\zeta}(\bx) \right\rangle_{\iH(k)}\\
-        &= \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\mu(\bx) \dd\mu(\bx') - 2 \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\mu(\bx) \dd\zeta(\bx') + \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\zeta(\bx) \dd\zeta(\bx').
-\end{align}
-\end{subequations}
-Taking a discrete distribution with uniform weights $\zeta_n= \frac{1}{n} \sum_{i=1}^{n} \delta(\bx^{(i)})$, the squared MMD reduces to: 
-\begin{equation}\label{eq:mmd_design}
-    \MMD_k(\mu, \zeta_n)^2 = \varepsilon_\mu - \frac{2}{n} \sum_{i=1}^n P_{\mu}\left(\bx^{(i)}\right) + \frac{1}{n^2} \sum_{i, j=1}^n k\left(\bx^{(i)}, \bx^{(j)}\right).
-\end{equation}
-%\begin{remark}
-% Should we compare MMD to other divergences (see Sriperumbudur 2010)?
-%A strong link exists between numerical integration and space-filling design of experiments. The MMD yields an upper bound over a geometric space-filling metric called the ``covering radius'' (see section 4.1.2 in \cite{pronzato_zhigljavsky_2020}). 
-%\end{remark}
 
 %------------------------------------------------------------%
 \subsection{Kernel herding sampling}\label{sec:4khsubsec}
 %------------------------------------------------------------%
-Herein, the MMD is used to quantize the known target measure $\mu$ by a design sample $\bX_n$. 
+
+Quasi-Monte Carlo sampling methods widely rely on a metric of uniformity, called \textit{discrepancy}. 
+To go beyond uniform measures, Appendix~\ref{apx:B} introduces a kernel-based discrepancy, generalizing the discrepancy concept to non-uniform measures. 
+This tool, name the maximum mean discrepancy (MMD) allows comparing multivariate distributions by embedding them in a specific function space. 
+In this manuscript, the MMD was employed as a tool for statistical testing and quantifying the perturbations of distributions in Chapter~\ref{chpt:3}, and for sensitivity analysis in Section~\ref{sec:gsa}.
+
+Herin, the MMD is used to build a quadrature rule by sampling from a know measure. 
+In other words, to quantize a known target measure $\pi$ by a design sample $\bX_n$. 
 For practical reasons, the design construction is done sequentially. 
 Sequential strategies have also been used to learn and validate regression models for statistical learning (see \cite{fekhari_iooss_2023}). 
 Moreover, since each realization is supposed to be obtained at the same unitary cost, the quadrature weights are first fixed as uniform during the construction of the design $\bX_n$.
 
-\emph{Kernel herding} (KH), proposed by \cite{chen_welling_2010}, is a sampling method that offers a quantization of the measure $\mu$ by minimizing a squared MMD when adding points iteratively. 
+\emph{Kernel herding} (KH), proposed by \cite{chen_welling_2010}, is a sampling method that offers a quantization of the measure $\pi$ by minimizing a squared MMD when adding points iteratively. 
 With a current design $\bX_n$ and its corresponding discrete distribution with uniform weights $\zeta_n= \frac{1}{n} \sum_{i=1}^{n} \delta(\bx^{(i)})$, a KH iteration is as an optimization of the following criterion, selecting the point $\bx^{(n+1)} \in \iD_{\bX}$:
 \begin{align}
-   \bx^{(n+1)} \in \argmin_{\bx \in \iD_{\bX}} \left\{\MMD_k\left(\mu, \frac{1}{n+1} \left(\delta(\bx) + \sum_{i=1}^{n} \delta(\bx^{(i)})\right)\right)^2\right\}.
-   % = \argmin_{\bx \in \iD_{\bX}} \MMD_k\left(\mu, \frac{1}{n+1} \left(n \zeta_n  + \delta(\bx)\right)\right)
+   \bx^{(n+1)} \in \argmin_{\bx \in \iD_{\bX}} \left\{\MMD\left(\pi, \frac{1}{n+1} \left(\delta(\bx) + \sum_{i=1}^{n} \delta(\bx^{(i)})\right)\right)^2\right\}.
+   % = \argmin_{\bx \in \iD_{\bX}} \MMD\left(\pi, \frac{1}{n+1} \left(n \zeta_n  + \delta(\bx)\right)\right)
    \label{eq:mmd_criterion}
 \end{align}
 
@@ -486,15 +372,15 @@ The second one is a straightforward greedy optimization. Due to the combinatoria
 Let us develop the MMD criterion from \eq{eq:mmd_design}:
 \begin{subequations}
 \begin{align}
-    \MMD_k\left(\mu, \frac{1}{n+1} \left(\delta(\bx) + \sum_{i=1}^{n} \delta(\bx^{(i)})\right)\right)^2
-    &= \varepsilon_\mu - \frac{2}{n+1} \sum_{i=1}^{n+1} P_{\mu}\left(\bx^{(i)}\right) + \frac{1}{(n+1)^2} \sum_{i,j=1}^{n+1} k\left(\bx^{(i)}, \bx^{(j)}\right)\\
-    &= \varepsilon_\mu - \frac{2}{n+1} \left(P_\mu(\bx) + \sum_{i=1}^n P_{\mu}\left(\bx^{(i)}\right)\right)\\ &+ \frac{1}{(n+1)^2} \left(\sum_{i,j=1}^n k\left(\bx^{(i)}, \bx^{(j)}\right) + 2\sum_{i=1}^n k\left(\bx^{(i)}, \bx\right) - k(\bx, \bx) \right).
+    \MMD\left(\pi, \frac{1}{n+1} \left(\delta(\bx) + \sum_{i=1}^{n} \delta(\bx^{(i)})\right)\right)^2
+    &= \varepsilon_\pi - \frac{2}{n+1} \sum_{i=1}^{n+1} P_{\pi}\left(\bx^{(i)}\right) + \frac{1}{(n+1)^2} \sum_{i,j=1}^{n+1} k\left(\bx^{(i)}, \bx^{(j)}\right)\\
+    &= \varepsilon_\pi - \frac{2}{n+1} \left(P_\pi(\bx) + \sum_{i=1}^n P_{\pi}\left(\bx^{(i)}\right)\right)\\ &+ \frac{1}{(n+1)^2} \left(\sum_{i,j=1}^n k\left(\bx^{(i)}, \bx^{(j)}\right) + 2\sum_{i=1}^n k\left(\bx^{(i)}, \bx\right) - k(\bx, \bx) \right).
 \end{align}
 \end{subequations}
-In the previously developed expression, only a few terms actually depend on the next optimal point $\bx^{(n+1)}$ since the target energy, denoted by $\varepsilon_\mu$, and $k(\bx, \bx)=\sigma^2$ are constant (by taking a stationary kernel). 
+In the previously developed expression, only a few terms actually depend on the next optimal point $\bx^{(n+1)}$ since the target energy, denoted by $\varepsilon_\pi$, and $k(\bx, \bx)=\sigma^2$ are constant (by taking a stationary kernel). 
 Therefore, the greedy minimization of the MMD can be equivalently written as: 
 \begin{equation}
-    \bx^{(n+1)} \in \argmin_{\bx \in \iD_{\bX}} \left\{ \frac{1}{n+1} \sum_{i=1}^n k\left(\bx^{(i)}, \bx\right) - P_\mu(\bx) \right\} = \argmin_{\bx \in \iD_{\bX}} \left\{ \frac{n}{n+1} P_{\zeta_n}(\bx) - P_{\mu}(\bx)\right\}.
+    \bx^{(n+1)} \in \argmin_{\bx \in \iD_{\bX}} \left\{ \frac{1}{n+1} \sum_{i=1}^n k\left(\bx^{(i)}, \bx\right) - P_\pi(\bx) \right\} = \argmin_{\bx \in \iD_{\bX}} \left\{ \frac{n}{n+1} P_{\zeta_n}(\bx) - P_{\pi}(\bx)\right\}.
     \label{eq:greedy_formulation}
 \end{equation}
 
@@ -504,7 +390,7 @@ For the sequential and uniformly weighted case, the formulation in \eq{eq:greedy
 Our numerical experiments showed that these two versions generate very close designs, especially as $n$ becomes large. 
 \cite{pronzato_rendas_2021} express the Frank-Wolfe formulation in the sequential and uniformly weighted case as follows:
 \begin{align}
-   \bx^{(n+1)} \in \argmin_{\bx \in \iD_{\bX}} \left\{P_{\zeta_n}(\bx) - P_{\mu}(\bx)\right\}.
+   \bx^{(n+1)} \in \argmin_{\bx \in \iD_{\bX}} \left\{P_{\zeta_n}(\bx) - P_{\pi}(\bx)\right\}.
    \label{eq:kh_criterion}
 \end{align}
 \end{remark}
@@ -512,7 +398,7 @@ Our numerical experiments showed that these two versions generate very close des
 
 \begin{remark}
 In practice, the optimization problem is solved by a brute-force approach on a fairly dense finite subset $\iS\subseteq\iD_{\bX}$ of candidate points with size $N \gg n$ that emulates the target distribution, also called the ``candidate set''. 
-This sample is also used to estimate the target potential $P_\mu(\bx) \approx \frac1N \sum_{i=1}^N k\left(\bx^{(i)}, \bx\right)$.
+This sample is also used to estimate the target potential $P_\pi(\bx) \approx \frac1N \sum_{i=1}^N k\left(\bx^{(i)}, \bx\right)$.
 \end{remark}
 \medskip
 
@@ -520,24 +406,23 @@ The diagram illustrated in \fig{fig:kh_algo} summarizes the main steps of a kern
 One can notice that the initialization can either be done using a median point (maximizing the target potential) or from any existing design of experiments. 
 This second configuration showed to be practical when the analyst must include some characteristic points in the design (e.g., points with a physical interpretation). 
 
-\begin{figure}[ht!]
+\begin{figure}
     \centering
     \input{./part2/figures/DCE/KH_algo}
     \caption{Greedy kernel herding algorithm}
     \label{fig:kh_algo}
 \end{figure}
 
-As explained previously, choosing the kernel defines the function space on which the worst-case function is found (see \eq{eq:mmd}). 
+As explained previously, choosing the kernel defines the function space on which the worst-case function is found (see \eq{eq:mmd_c4}). 
 Therefore, this sampling method is sensitive to the kernel's choice. 
 A kernel is defined, both by the choice of its parametric family (e.g., Matérn, squared exponential) and the choice of its tuning. 
 The so-called ``support points'' method developed by \cite{mak_joseph_2018} is a special case of kernel herding that uses the characteristic and parameter-free ``energy-distance'' kernel (introduced by \cite{szekely_rizzo_2013}). 
 In the following numerical experiments, the energy-distance kernel will be compared with an isotropic tensor product of a Matérn kernel (with regularity parameter $\nu = 5/2$ and correlation lengths $\theta_i$), or a squared exponential kernel (with correlation lengths $\theta_i$) defined in Table \ref{tab:kernels}. 
 Since the Matérn and squared exponential kernels are widely used for Gaussian process regression \citep{rasmussen_2006}, they were naturally picked to challenge the energy-distance kernel. 
-The correlation lengths for the squared exponential and Matérn kernels are set using the heuristic given in \cite{fekhari_iooss_2023}, $\theta_i = n^{-1/p}, i \in \{1, \dots, p\}$. 
+The correlation lengths for the squared exponential and Matérn kernels are set using the heuristic given in \cite{fekhari_iooss_2023}, $\theta_i = n^{-1/d}, i \in \{1, \dots, d\}$. 
 
-\begin{table*}[ht] \caption{Kernels considered in the following numerical experiments.}
+\begin{table*}
     \begin{center}
-    %\tabletext{
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lll@{}}
     \hline
     Energy-distance & $k_E(\bx,\bx') = \frac12\, \left(\| \bx \| + \| \bx' \| - \| \bx-\bx' \|\right)$ & \\
@@ -547,8 +432,8 @@ The correlation lengths for the squared exponential and Matérn kernels are set 
      & & $\quad + \frac{5}{3 \theta^2} (x - x')^2 \Bigr) \exp \left( - \frac{\sqrt{5}}{\theta} |x - x'| \right)$ \\
     \hline
     \end{tabular*}
+    \caption{Kernels considered in the following numerical experiments.}
     \label{tab:kernels}
-    %}
     \end{center}
 \end{table*}
 
@@ -574,7 +459,7 @@ A presentation of these kernel-based discrepancies from the design of experiment
 To illustrate the kernel herding sampling of a complex distribution, \fig{fig:KH_mixture} shows three nested samples (orange crosses for different sizes $n\in\{10, 20, 40\}$) of a mixture of Gaussian distributions with complex nonlinear dependencies (with density represented by the black isoprobability contours). 
 In this example, the method seems to build a parsimonious design between each mode of the distribution (by subsampling directly without any transformation). 
 The candidate set (in light grey) was generated by a large quasi-Monte sample of the underlying Gaussian mixture. 
-In this two-dimensional case, this candidate set is sufficient to estimate the target potential $P_{\mu}$. 
+In this two-dimensional case, this candidate set is sufficient to estimate the target potential $P_{\pi}$. 
 However, the main bottleneck of kernel herding is the estimation of the potentials, which becomes costly in high dimensions.
 
 \begin{figure}[!h]
@@ -583,7 +468,7 @@ However, the main bottleneck of kernel herding is the estimation of the potentia
     \includegraphics[width=0.32\textwidth]{part2/figures/DCE/numerical_experiments/gaussian_mixture_sampling20.jpg}
     \includegraphics[width=0.32\textwidth]{part2/figures/DCE/numerical_experiments/gaussian_mixture_sampling40.jpg}
 \end{center}
-\caption{Sequential kernel herding for increasing design sizes ($n\in\{10, 20, 40\}$) built on a candidate set of $N=8196$ points drawn from a complex Gaussian mixture $\mu$} \label{fig:KH_mixture}
+\caption{Sequential kernel herding for increasing design sizes ($n\in\{10, 20, 40\}$) built on a candidate set of $N=8196$ points drawn from a complex Gaussian mixture $\pi$} \label{fig:KH_mixture}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%
@@ -601,9 +486,9 @@ To solve a probabilistic integration problem, the concept of Bayesian quadrature
 
 Kernel methods and Gaussian processes present a lot of connections and equivalences, thoroughly reviewed by \cite{motonobu_2018}. 
 In numerical integration, Gaussian processes have been used to build quadrature rules in the seminal paper of \cite{ohagan_1991}, introducing the concept of \emph{Bayesian quadrature} (BQ). 
-Let us recall the probabilistic integration problem $I_\mu(g) = \int_{\iD_\bX} g(\bx) \dd \mu(\bx)$ (stated in \eq{eq:quadrature_rule}). 
+Let us recall the probabilistic integration problem $I_\pi(g) = \int_{\iD_\bX} g(\bx) \dd \pi(\bx)$ (stated in \eq{eq:quadrature_rule}). 
 From a general point of view, this quantity could be generalized by composing $g$ with another function $\psi$ (e.g., other moments, quantiles, exceedance probabilities). 
-The quantity of interest then becomes, $I_\mu(\psi(g))$, for example when $\psi$ is a monomial, it gives a moment of the output distribution.
+The quantity of interest then becomes, $I_\pi(\psi(g))$, for example when $\psi$ is a monomial, it gives a moment of the output distribution.
 
 Let us assume, adopting a Bayesian point of view, that $\xi$ is a stochastic process describing the uncertainty affecting the knowledge about the true function $g$. 
 Let $\xi$ be a Gaussian process (GP) prior with a zero trend (denoted by $\textbf{0}$) to ease the calculation, and a stationary covariance kernel (denoted by $k(\cdot, \cdot)$). 
@@ -619,17 +504,17 @@ The conditional posterior $\xi_n := (\xi | \by_n) \sim \mathcal{GP}(\eta_n, s_n^
 \end{equation}
 where $\bk_n(\bx)$ is the column vector of the covariance kernel evaluations $[k_n(\bx, \bx^{(1)}), \dots,\allowbreak k_n(\bx, \bx^{(n)})]$ and $\bK_n$ is the $(n \times n)$ variance-covariance matrix such that the $(i, j)$-element is $\left\{\bK_n \right\}_{i, j}=k_n(\bx^{(i)}, \bx^{(j)})$.
 
-In BQ, the main object is the random variable $I_{\mu}(\xi_n)$. 
-According to \cite{briol_oates_2019}, its distribution on $\R$ is the pushforward of $\xi_n$ through the integration operator $I_\mu(\cdot)$, sometimes called \emph{posterior distribution}: 
+In BQ, the main object is the random variable $I_{\pi}(\xi_n)$. 
+According to \cite{briol_oates_2019}, its distribution on $\R$ is the pushforward of $\xi_n$ through the integration operator $I_\pi(\cdot)$, sometimes called \emph{posterior distribution}: 
 \begin{equation}
-    I_{\mu}(\xi_n) = \int_{\iD_\bX} (\xi(\bx) | \by_n)  \dd \mu(\bx) = \int_{\iD_\bX} \xi_n(\bx)  \dd \mu(\bx) \,.
+    I_{\pi}(\xi_n) = \int_{\iD_\bX} (\xi(\bx) | \by_n)  \dd \pi(\bx) = \int_{\iD_\bX} \xi_n(\bx)  \dd \pi(\bx) \,.
 \label{eq:posterior}
 \end{equation}
 
-\fig{fig:bayesian_quad} provides a one-dimensional illustration of the Bayesian quadrature of an unknown function (dashed black curve) against a given input measure $\mu$ (with corresponding grey distribution at the bottom). 
+\fig{fig:bayesian_quad} provides a one-dimensional illustration of the Bayesian quadrature of an unknown function (dashed black curve) against a given input measure $\pi$ (with corresponding grey distribution at the bottom). 
 For an arbitrary design, one can fit a Gaussian process model, interpolating the function observations (black crosses). 
 Then, multiple trajectories of this conditioned Gaussian process $\xi_n$ are drawn (orange curves) whilst its mean function, also called ``predictor'', is represented by the red curve. 
-Therefore, the input measure $\mu$ is propagated through the conditioned Gaussian process to obtain the random variable $I_{\mu}(\xi_n)$, with distribution represented on the right plot (brown curve). 
+Therefore, the input measure $\pi$ is propagated through the conditioned Gaussian process to obtain the random variable $I_{\pi}(\xi_n)$, with distribution represented on the right plot (brown curve). 
 Again on the right plot, remark how the mean of this posterior distribution (brown line) is closer to the reference output expected value (dashed black line) than the arithmetic mean of the observations (black line). 
 This plot was inspired by the paper of \cite{husar_duvenaud_2012}.
 
@@ -642,29 +527,29 @@ This plot was inspired by the paper of \cite{husar_duvenaud_2012}.
 \end{figure}
 
 \paragraph{Optimal weights computed by Bayesian quadrature}%---------------------%
-Taking the random process $\xi_n$ as Gaussian conveniently implies that its posterior distribution $a_\mu(\xi_n)$ is also Gaussian. 
+Taking the random process $\xi_n$ as Gaussian conveniently implies that its posterior distribution $a_\pi(\xi_n)$ is also Gaussian. 
 This comes from the linearity of the infinite sum of realizations of a Gaussian process. 
-The posterior distribution is described in a closed form through its mean and variance by applying Fubini's theorem (see the supplementary materials from \cite{briol_oates_2019} for the proof regarding the variance): %\elias{Add the full proof for the variance in appendix?}:
+The posterior distribution is described in a closed form through its mean and variance by applying Fubini's theorem (see the supplementary materials from \cite{briol_oates_2019} for the proof regarding the variance): 
 \begin{equation}
-     \bar{y}_n^{\mathrm{BQ}} := \E\left[I_{\mu}(\xi_n) | \by_n \right] 
-     = \int_{\iD_\bX} \eta_n(\bx) \dd \mu(\bx)
-     = \left[\int_{\iD_\bX} \bk_n\TT(\bx) \dd \mu(\bx) \right] \bK_n^{-1} \by_n
-     = P_\mu(\bX_n) \bK_n^{-1} \by_n,       
+     \overline{y}_n^{\mathrm{BQ}} := \E\left[I_{\pi}(\xi_n) | \by_n \right] 
+     = \int_{\iD_\bX} \eta_n(\bx) \dd \pi(\bx)
+     = \left[\int_{\iD_\bX} \bk_n\TT(\bx) \dd \pi(\bx) \right] \bK_n^{-1} \by_n
+     = P_\pi(\bX_n) \bK_n^{-1} \by_n,       
 \label{eq:mean_post}
 \end{equation}
 
 \begin{equation}
-    \left(\sigma_n^{\mathrm{BQ}}\right)^2 := \var\left(I_{\mu}(\xi_n) \right) 
-    = \iint_{\iD_{\bX^2}} k_n(\bx, \bx') \dd \mu(\bx) \dd \mu(\bx') 
-    = \varepsilon_\mu - P_\mu(\bX_n) \bK_n^{-1} P_\mu(\bX_n)\TT.
+    \left(\sigma_n^{\mathrm{BQ}}\right)^2 := \var\left(I_{\pi}(\xi_n) \right) 
+    = \iint_{\iD_{\bX^2}} k_n(\bx, \bx') \dd \pi(\bx) \dd \pi(\bx') 
+    = \varepsilon_\pi - P_\pi(\bX_n) \bK_n^{-1} P_\pi(\bX_n)\TT.
 \label{eq:var_post}
 \end{equation}
 \noindent
-Where $P_\mu(\bX_n)$ is the row vector of potentials $\left[\int k_n(\bx, \bx^{(1)}) \dd \mu(\bx), \dots, \int k_n(\bx, \bx^{(n)}) \dd \mu(\bx)\right]$, and $\varepsilon_\mu$ is given in \eq{eq:target_energy}. 
-As in the one-dimensional example presented in \fig{fig:bayesian_quad}, the expected value of $I_{\mu}(\xi_n)$ expressed in \eq{eq:mean_post} is a direct estimator of the quantity of interest \eq{eq:quadrature_rule}. 
+Where $P_\pi(\bX_n)$ is the row vector of potentials $\left[\int k_n(\bx, \bx^{(1)}) \dd \pi(\bx), \dots, \int k_n(\bx, \bx^{(n)}) \dd \pi(\bx)\right]$, and $\varepsilon_\pi$ is given in \eq{eq:target_energy}. 
+As in the one-dimensional example presented in \fig{fig:bayesian_quad}, the expected value of $I_{\pi}(\xi_n)$ expressed in \eq{eq:mean_post} is a direct estimator of the quantity of interest \eq{eq:quadrature_rule}. 
 The so-called ``Bayesian quadrature estimator'' appears to be a simple linear combination of the observations by taking the row vector of ``optimal weights'' as: 
 \begin{equation}
-    \wBQ := P_\mu(\bX_n) \bK_n^{-1}
+    \wBQ := P_\pi(\bX_n) \bK_n^{-1}
     \label{eq:bq_weights}
 \end{equation}
 For any given sample, an optimal set of weights can be computed, leading to the mean of the posterior distribution. 
@@ -673,32 +558,32 @@ Moreover, a prediction interval on the BQ estimator can be computed since the po
 The expressions in \eq{eq:mean_post} and \eq{eq:var_post} were extended to Gaussian processes in the case of constant and linear trends in \cite{pronzato_zhigljavsky_2020}. 
 In the following numerical experiments, the expression with a hypothesis of constant trend $\beta_n$ is used, which leads to:
 \begin{equation}
-     \E\left[I_{\mu}(\xi_n)\right] = \beta_n + P_\mu(\bX_n) \bK_n^{-1} \left(\by_n - \beta_n \mathbf{1}_n \right).
+     \E\left[I_{\pi}(\xi_n)\right] = \beta_n + P_\pi(\bX_n) \bK_n^{-1} \left(\by_n - \beta_n \mathbf{1}_n \right).
      \label{eq:mean_post_cst}
 \end{equation}
 
 \noindent Then, an a posteriori 95\% prediction interval around the mean Bayesian estimator is directly given by: 
 \begin{equation}
-   \Bar{y}_n^{\mathrm{BQ}} \in \left[\Bar{y}_n^{\mathrm{BQ}} - 2\sigma_n^{\mathrm{BQ}}, \Bar{y}_n^{\mathrm{BQ}} + 2\sigma_n^{\mathrm{BQ}} \right].
+   \overline{y}_n^{\mathrm{BQ}} \in \left[\overline{y}_n^{\mathrm{BQ}} - 2\sigma_n^{\mathrm{BQ}}, \overline{y}_n^{\mathrm{BQ}} + 2\sigma_n^{\mathrm{BQ}} \right].
 \end{equation}
 
 \paragraph{Variance-based Bayesian quadrature rule}%----------------%
-The link between the posterior variance and the squared MMD has been first made by \cite{husar_duvenaud_2012} in their Proposition 1: the expected variance in the Bayesian quadrature $\var\left(I_{\mu}(\xi_n)\right)$ is the MMD between the target distribution $\mu$ and $\zeta_n = \sum_{i=1}^n \wBQ^{(i)} \delta(\bx^{(i)})$. 
-The proof is reproduced below (as well as in Proposition 6.1 from \cite{motonobu_2018}): %\elias{check the condition to the Huszar's demonstration}
+The link between the posterior variance and the squared MMD has been first made by \cite{husar_duvenaud_2012} in their Proposition 1: the expected variance in the Bayesian quadrature $\var\left(I_{\pi}(\xi_n)\right)$ is the MMD between the target distribution $\pi$ and $\zeta_n = \sum_{i=1}^n \wBQ^{(i)} \delta(\bx^{(i)})$. 
+The proof is reproduced below (as well as in Proposition 6.1 from \cite{motonobu_2018}): 
 \begin{subequations}
 \begin{align}
-    \var\left(I_{\mu}(\xi_n)\right) &= \E\left[ \left(I_{\mu}(\xi_n) - I_{\zeta_n}(\xi_n)\right)^2\right]\\
-    &= \E\left[ \left( \left\langle \xi_n, P_{\mu} \right\rangle_{\iH(k)} - \left\langle \xi_n, P_{\zeta_n}\right\rangle_{\iH(k)} \right)^2\right]\\
-    &= \E\left[ \left\langle \xi_n, P_{\mu} - P_{\zeta_n} \right\rangle_{\iH(k)}^2\right]\\
-    %&= \E\left[ \lVert \xi_n \lVert^2 + \lVert P_{\mu}(\bx) - P_{\zeta_n}(\bx) \lVert^2 - 2 \left\langle \xi_n, P_{\mu}(\bx) - P_{\zeta_n}(\bx) \right\rangle_{\iH(k)}\right]\\
-    &= \lVert P_{\mu} - P_{\zeta_n} \lVert^2_{\iH(k)}\\ 
-    &= \MMD_k(\mu, \zeta_n)^2.
+    \var\left(I_{\pi}(\xi_n)\right) &= \E\left[ \left(I_{\pi}(\xi_n) - I_{\zeta_n}(\xi_n)\right)^2\right]\\
+    &= \E\left[ \left( \left\langle \xi_n, P_{\pi} \right\rangle_{\iH(k)} - \left\langle \xi_n, P_{\zeta_n}\right\rangle_{\iH(k)} \right)^2\right]\\
+    &= \E\left[ \left\langle \xi_n, P_{\pi} - P_{\zeta_n} \right\rangle_{\iH(k)}^2\right]\\
+    %&= \E\left[ \lVert \xi_n \lVert^2 + \lVert P_{\pi}(\bx) - P_{\zeta_n}(\bx) \lVert^2 - 2 \left\langle \xi_n, P_{\pi}(\bx) - P_{\zeta_n}(\bx) \right\rangle_{\iH(k)}\right]\\
+    &= \lVert P_{\pi} - P_{\zeta_n} \lVert^2_{\iH(k)}\\ 
+    &= \MMD(\pi, \zeta_n)^2.
 \end{align}
 \end{subequations}
 Note that the transition from equation (27c) to (27d) relies on the property stating that if $\xi$ is a standard Gaussian process then $\forall g \in \iH(k) : \left\langle \xi, g \right\rangle_{\iH(k)} \sim \iN(0, \lVert g \lVert^2_{\iH(k)}$). 
 The method that sequentially builds a quadrature rule by minimizing this variance is called by the authors ``Sequential Bayesian Quadrature'' (SBQ). 
 According to the previous proof, this criterion can be seen as an optimally-weighted version of the kernel herding criterion, as stated in the title of the paper from \cite{husar_duvenaud_2012}. 
-Later, \cite{briol_2015} proved the weak convergence of $I_{\mu}(\xi_n)$ towards the target integral. 
+Later, \cite{briol_2015} proved the weak convergence of $I_{\pi}(\xi_n)$ towards the target integral. 
 Closer to wind turbines applications, \cite{huchet_2019} and \cite{huchet_mattrand_2019} introduced the ``Adaptive Kriging Damage Assessment'' method: a Kriging-based method for mean damage estimation that is very close to SBQ. 
 However, This type of method inherits the limits from both KH and BQ since it searches for optimal design points among a candidate set and computes an inverse variance-covariance matrix. 
 These numerical operations both scale hardly in high dimension. 
@@ -723,7 +608,7 @@ Contrarily, \cite{motonobu_2019} presents a set of methods for BQ with transform
 \section{Numerical experiments}\label{sec:sec44}
 %============================================================%
 %============================================================%
-This section presents numerical results computed on two different analytical toy cases, respectively in dimension 2 (toy case \#1) and dimension 10 (toy case \#2), with easy-to-evaluate functions $g(\cdot)$ and associated input distributions $\mu$. 
+This section presents numerical results computed on two different analytical toy cases, respectively in dimension 2 (toy case \#1) and dimension 10 (toy case \#2), with easy-to-evaluate functions $g(\cdot)$ and associated input distributions $\pi$. 
 Therefore, reference values can easily be computed with great precision. 
 For each toy case, a large reference Monte Carlo sample ($N_{\mathrm{ref}} = 10^8$) is taken. 
 This first benchmark compares the mean estimation of toy cases given by a quasi-Monte Carlo technique (abbreviated by QMC in the next figures) which consists herein using a Sobol' sequence, and kernel herding with the three kernels defined in Table \ref{tab:kernels}. 
@@ -751,11 +636,10 @@ The 10-dimensional ``GSobol function'' (toy case \#2) with a set of coefficient 
 In the case of the two-dimensional Gaussian mixture problem, the complexity is carried by the mixture of Gaussian distributions with highly nonlinear dependencies.
 Probabilistic integration results are presented in \fig{fig:toy-case1} (toy case \#1) and \fig{fig:toy-case2} (toy case \#2). 
 Kernel herding samples using the energy-distance kernel are in red, while quasi-Monte Carlo samples built from Sobol' sequences are in grey. 
-%To ease the reading, the results from the other kernels defined in Table \ref{tab:kernels} are moved to \elias{Appendix \ref{apx:ana_bench}}.
 Convergences of the arithmetic means are plotted on the left and MMDs on the right. 
 The respective BQ estimators of the means are plotted in dashed lines. 
 
-\begin{table*}[h]
+\begin{table*}
     \centering
     \caption{Analytical toy-cases}
     \begin{tabular}{llll}
@@ -817,7 +701,7 @@ In these two toy cases, the MMD is shown to quantify numerical integration conve
 %----------------------------------------------------------------------%
 \subsection{Application to the Teesside wind turbine fatigue estimation}
 %----------------------------------------------------------------------%
-Let us summarize the mean damage estimation strategies studied in this paper. 
+Let us summarize the mean damage estimation strategies studied in this chapter. 
 The diagram represented in \fig{fig:sampling_diagram} describes the different workflows computed. 
 The simplest workflow is represented by the grey horizontal sequence. 
 It directly subsamples a design of experiments from a large and representative dataset (previously referred to as candidate set). 
@@ -900,7 +784,7 @@ Uncertainty propagation through numerical models is performed to ensure their st
 For this case, the method recommended by the standards (regular grid sampling) is intractable for even moderate-fidelity simulators. 
 In practice, such an approach can lead to poor uncertainty propagation, especially when facing simulation budget constraints.
 
-In the present paper, a real industrial wind turbine fatigue estimation use case is investigated, considering site-specific data. 
+In the present chapter, a real industrial wind turbine fatigue estimation use case is investigated, considering site-specific data. 
 As a perspective, other sites with different environmental conditions could be studied. 
 This use case induces two practical constraints: first, usual active learning methods are hard to set up on such a model (mainly due to the nonlinearity of the variable of interest), and they restrict the use of high-performance computing facilities; second, the input distribution of the environmental conditions presents a complex dependence structure which is hard to infer with common parametric approaches. 
 

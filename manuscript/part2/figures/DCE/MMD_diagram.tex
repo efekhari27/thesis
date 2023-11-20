@@ -9,9 +9,9 @@
     \node (C) at ($(A)!0.5!(B)$) {};
     \draw[{|-|}, very thick] (A) -- (B);
 
-    \fill [red!80] (A) circle (2pt) node[above, black] {$P_{\mu}$};
+    \fill [red!80] (A) circle (2pt) node[above, black] {$P_{\pi}$};
     \fill [red!80] (B) circle (2pt) node[below, black] {$P_{\zeta}$};
-    \node (MMD) at (4.5, 3.5) {$\left\lVert P_{\mu} - P_{\zeta}\right\lVert_{\iH(k)}$};
+    \node (MMD) at (4.5, 3.5) {$\left\lVert P_{\pi} - P_{\zeta}\right\lVert_{\iH(k)}$};
     \draw[-stealth] (MMD) to [bend left] (C);
 
     \node [inner sep=0pt] (disc) at (-2,0.9) {\includegraphics[width=.2\textwidth]{part2/figures/DCE/discrete.pdf}};
@@ -20,6 +20,6 @@
     \draw[-stealth] (disc.east) to [bend right] (B);
     % Text
     \node at (5, 0.25) {$\mathcal{H}_k$};
-    \node at (-3, 3) {$\mu$};
+    \node at (-3, 3) {$\pi$};
     \node at (-3, 1) {$\zeta$};
 \end{tikzpicture}

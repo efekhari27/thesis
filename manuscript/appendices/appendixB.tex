@@ -34,6 +34,108 @@ Beyond the discrepancy measure to the uniform distribution, this section introdu
 \elias{No closed form expression unlike the $f$-divergence but the use of RKHS goes around this issue.}
 
 
+
+%------------------------------------------------------------%
+\subsection{Kernel discrepancy}
+%------------------------------------------------------------%
+Quasi-Monte Carlo sampling methods widely rely on a uniformity metric, called \textit{discrepancy}. 
+This section first presents the link between discrepancy and numerical integration. 
+Then it introduces a kernel-based discrepancy, generalizing the concept to non-uniform measures. 
+This tool is eventually used to build a sequential quadrature rule by subsampling from a finite dataset.
+
+
+
+
+\paragraph{Reproducing kernel Hilbert space and kernel mean embedding}
+%------------------------------------------------------------%
+To generalize the Koksma-Hlawka inequality to any probability measure, let us assume that the integrand $g$ lives in a specific function space $\iH(k)$. $\iH(k)$ is a \emph{reproducing kernel Hilbert space} (RKHS), which is an inner product space of functions $g:\iD_{\bX} \rightarrow \R$. 
+Considering a symmetric and positive definite function $k: \iD_{\bX} \times \iD_{\bX} \rightarrow \R$, later called a ``reproducing kernel'' or simply a ``kernel'', an RKHS verifies the following axioms: 
+\begin{itemize}
+    \item The ``feature map'' $\phi : \iD_{\bX} \to \iH(k); \phi(\bx) = k(\cdot, \bx)$ belongs to the RKHS: $k(\cdot, \bx) \in \iH(k), \forall \bx \in \iD_{\bX}$;
+    \item The ``reproducing property'': $\langle g, k(\cdot, \bx) \rangle_{\iH(k)} = g(\bx), \quad \forall \bx \in \iD_{\bX}, \forall g \in \iH(k)$.
+\end{itemize}
+Note that it can be shown that every positive semi-definite kernel defines a unique RKHS (and vice versa) with a feature map $\phi$, such that $k(\bx, \bx') = \langle \phi(\bx), \phi(\bx') \rangle_{\iH(k)}$.
+This framework allows us to embed a continuous or discrete probability measure in an RKHS, as illustrated in \fig{fig:kernel_mean_embedding}. 
+For any measure $\pi$, let us define its \emph{kernel mean embedding} \citep{sejdinovic_2013}, also called ``potential'' $P_{\pi}(\bx)$ in \cite{pronzato_zhigljavsky_2020}, associated with the kernel $k$ as:
+
+\begin{equation}
+   P_{\pi}(\bx) := \int_{\iD_{\bX}} k(\bx, \bx') \dd \pi(\bx').
+\end{equation}
+
+Respectively, the potential $P_{\zeta_n}(\bx)$ of a discrete distribution $\zeta_n = \sum_{i=1}^{n} w_i \delta(\bx^{(i)}), w_i \in \R$ associated with the kernel $k$ can be written as:
+\begin{equation}\label{eq:potential}
+    %P_{\pi}(\bx) := \int_{\iD_{\bX}} k(\bx, \bx') \d \pi(\bx'), \qquad 
+    P_{\zeta_n}(\bx) =  \int_{\iD_{\bX}} k(\bx, \bx') \dd \zeta_n(\bx') = \sum_{i=1}^{n} w_i k(\bx, \bx^{(i)}).
+\end{equation}
+The potential $P_{\pi}(\bx)$ of the targeted measure $\pi$ will be referred to as ``target potential'' and the potential $P_{\zeta_n}(\bx)$ associated with the discrete distribution $\zeta_n$ called ``current potential'' when its support is the current design $\bX_n$. 
+When $P_{\zeta_n}(\bx)$ is close to $P_{\pi}(\bx)$, it can be interpreted as $\zeta_n$ being an adequate quantization or representation of $\pi$ (which leads to a good estimation of a quantity such as $I_{\pi}(g)$ from \eq{eq:quadrature_rule}). 
+Potentials can be computed in closed forms for specific pairs of distribution and associated kernel. Summary tables of some of these cases are detailed in \cite{briol_phd_2019} (section 3.4), \cite{pronzato_zhigljavsky_2020} (section 4), and extended in \cite{fekhari_iooss_2023}. 
+However, in most cases, the target potentials must be estimated on a large and representative sample, typically a large quasi-Monte Carlo sample of $\pi$.
+
+\medskip
+\begin{definition}
+The \emph{energy} of a measure $\pi$ is defined as the integral of the potential $P_\pi$ against the measure, which leads to the following scalar quantity:
+\begin{equation}
+    \varepsilon_\pi:= \int_{\iD_{\bX}} P_{\pi}(\bx) \dd \pi(\bx) = \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\pi(\bx) \dd\pi(\bx').
+\end{equation}
+\label{eq:target_energy}
+\end{definition}
+
+\begin{figure}
+    \centering
+    \input{part2/figures/DCE/MMD_diagram}
+    \caption{Kernel mean embedding of a continuous and discrete probability distribution}
+    \label{fig:kernel_mean_embedding}
+\end{figure}
+Finally, using the reproducing property and writing the Cauchy-Schwarz inequality on the absolute quadrature error leads to the following inequality, similar to the Koksma-Hlawka inequality \eq{eq:KH_inequality} (see \cite{briol_oates_2019}): 
+
+\begin{subequations}
+\begin{align}
+    \left| \sum_{i=1}^{n} w_i g(\bx^{(i)}) - \int_{\iD_{\bX}} g(\bx) \dd \pi(\bx) \right| &= \left| \left\langle g, P_{\zeta_n}(\bx) \right\rangle_{\iH(k)} - \left\langle g, P_{\pi}(\bx) \right\rangle_{\iH(k)} \right| \\
+    &= \left| \left\langle g, \left(P_{\zeta_n}(\bx) - P_{\pi}(\bx)\right) \right\rangle_{\iH(k)} \right|\\
+    &\leq \lVert g \lVert_{\iH(k)}  \left\lVert P_{\pi}(\bx) - P_{\zeta_n}(\bx) \right\lVert_{\iH(k)}.
+    \label{eq:quad_error}
+\end{align}
+\end{subequations}
+
+\paragraph{Maximum mean discrepancy}
+%------------------------------------------------------------%
+A metric of discrepancy and quadrature error is offered by the \emph{maximum mean discrepancy} (MMD). 
+This distance between two probability distributions $\pi$ and $\zeta$ is given by the worst-case error for any function within a unit ball of the Hilbert space $\iH(k)$, associated with the kernel $k$:
+\begin{equation}
+    \MMD(\pi, \zeta) := %\\ 
+    \sup_{\lVert g \lVert_{\iH(k)} \leq 1}
+            \left | \int_{\iD_{\bX}} g(\bx) \dd \pi(\bx) - \int_{\iD_{\bX}} g(\bx) \dd \zeta(\bx) \right| %= \left\lVert P_{\pi}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH(k)}.
+    \label{eq:mmd_c4}  
+\end{equation}
+
+According to the inequality in \eq{eq:quad_error}, $\MMD(\pi, \zeta) = \left\lVert P_{\pi} - P_{\zeta} \right\lVert_{\iH(k)}$, meaning that the MMD fully relies on the difference of potentials. 
+Moreover, \cite{sriperumbudur_2010} defines a kernel as ``characteristic kernel'' when the following equivalence is true: $\MMD(\pi, \zeta) = 0 \Leftrightarrow \pi = \zeta$. 
+This property makes the MMD a metric on $\iD_{\bX}$. 
+The squared MMD has been used for other purposes than numerical integration: e.g., statistical testing \citep{gretton_2006}, and global sensitivity analysis \citep{daveiga_2015}. 
+It can be written as follows:
+
+\begin{subequations}
+\begin{align}
+    \MMD(\pi, \zeta)^2 &= \left\lVert P_{\pi}(\bx) - P_{\zeta}(\bx) \right\lVert^2_{\iH(k)}\\
+        &= \left\langle \left(P_{\pi}(\bx) - P_{\zeta}(\bx) \right), \left(P_{\pi}(\bx) - P_{\zeta}(\bx) \right) \right\rangle_{\iH(k)}\\
+        &= \left\langle P_{\pi}(\bx), P_{\pi}(\bx) \right\rangle_{\iH(k)} - 2 \left\langle P_{\pi}(\bx), P_{\zeta}(\bx) \right\rangle_{\iH(k)} + \left\langle P_{\zeta}(\bx), P_{\zeta}(\bx) \right\rangle_{\iH(k)}\\
+        &= \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\pi(\bx) \dd\pi(\bx') - 2 \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\pi(\bx) \dd\zeta(\bx') + \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\zeta(\bx) \dd\zeta(\bx').
+\end{align}
+\end{subequations}
+Taking a discrete distribution with uniform weights $\zeta_n= \frac{1}{n} \sum_{i=1}^{n} \delta(\bx^{(i)})$, the squared MMD reduces to: 
+\begin{equation}\label{eq:mmd_design}
+    \MMD(\pi, \zeta_n)^2 = \varepsilon_\pi - \frac{2}{n} \sum_{i=1}^n P_{\pi}\left(\bx^{(i)}\right) + \frac{1}{n^2} \sum_{i, j=1}^n k\left(\bx^{(i)}, \bx^{(j)}\right).
+\end{equation}
+%\begin{remark}
+% Should we compare MMD to other divergences (see Sriperumbudur 2010)?
+%A strong link exists between numerical integration and space-filling design of experiments. The MMD yields an upper bound over a geometric space-filling metric called the ``covering radius'' (see section 4.1.2 in \cite{pronzato_zhigljavsky_2020}). 
+%\end{remark}
+
+
+
+
+
 %============================================================%
 \subsection*{Maximum discrepancy measure}
 %============================================================%
