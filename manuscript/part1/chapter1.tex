@@ -1672,11 +1672,11 @@ where $\overline{y}_n=(1/n)\,\sum_{i=1}^n y^{(i)}$ denotes the empirical mean of
 However, such metrics are not relevant for every regression method (typically, interpolant method have an $R^2=1$). 
 The \textit{predictivity coefficient} is an alternative defined as a normalized \textit{integrated square error} (ISE): 
 \begin{equation}
-    \mathrm{Q}^2(\wg_n) = 1 - \frac{\ise(\wg_n)}{\var(\wg_n)}, 
+    \mathrm{Q}^2(\wg_n) = 1 - \frac{\ISE(\wg_n)}{\var(\wg_n)}, 
 \end{equation} 
 where 
 \begin{equation}
-    \ise(\wg_n) = \int_{\iD_{\bX}} \left(g(\bx) - \wg(\bx)\right)^2 \, \ddx, \qquad
+    \ISE(\wg_n) = \int_{\iD_{\bX}} \left(g(\bx) - \wg(\bx)\right)^2 \, \ddx, \qquad
     \var(\wg_n) = \int_{\iD_{\bX}} \left(g(\bx) - \wg(\bx)\right)^2 \, \ddx.
 \end{equation}
 This quantity can be estimated on a test set $\left\{\bX_m, \by_m\right\}$: 

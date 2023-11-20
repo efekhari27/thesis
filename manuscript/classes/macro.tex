@@ -18,6 +18,8 @@
 \usepackage{pifont}
 \usepackage[object=vectorian]{pgfornament}
 \usepackage{lscape}
+\usepackage{comment}
+
 
 
 \usepackage{etoc} %chapter table of contents
@@ -125,6 +127,7 @@
 \def\balpha{{\boldsymbol{\alpha}}}
 \def\bbeta{{\boldsymbol{\beta}}}
 \def\blambda{{\boldsymbol{\lambda}}}
+\newcommand{\etab}{\mathbf{\eta}}
 
 \def\R{\mathbb{R}}
 \def\N{\mathbb{N}}
@@ -133,7 +136,7 @@
 \def\dd{\mathrm{d}}
 \def\ddx{\mathrm{d}\bx}
 \def\wBQ{\mathbf{w}_{\mathrm{BQ}}}
-\def\iX{\mathcal{X}}
+\def\X{\mathcal{X}}
 \def\iM{\mathcal{M}}
 \def\iN{\mathcal{N}}
 \def\iD{\mathcal{D}}
@@ -143,13 +146,14 @@
 \def\iF{\mathcal{F}}
 \def\iQ{\mathcal{Q}}
 
+
 \def\domega{\mathrm{d}\omega}
 \def\var{\operatorname{Var}}
 \def\cov{\operatorname{Cov}}
 \def\mse{\mathrm{MSE}}
 \def\imse{\mathrm{IMSE}}
 \def\mise{\mathrm{MISE}}
-\def\ise{\mathrm{ISE}}
+\def\ISE{\mathrm{ISE}}
 \def\MMD{\mathrm{MMD}}
 \def\yth{y_\mathrm{th}}
 \def\pf{p_\mathrm{f}}
@@ -175,6 +179,31 @@
 \newcommand*\wtilde[1]{\widetilde{#1}}
 \def\cg{\check{g}}
 \def\wg{\what{g}}
+
+%% New commands Luc
+\def\0b{\mathbf{0}}
+\def\Db{\mathbf{D}}
+\def\kb{\mathbf{k}}
+\def\Kb{\mathbf{K}}
+\def\Ib{\mathbf{I}}
+\def\Sb{\mathbf{S}}
+\def\GP{\mathsf{GP}}
+\newcommand{\bea}{\begin{eqnarray*}}
+\newcommand{\eea}{\end{eqnarray*}}
+\newcommand{\be}{\begin{eqnarray}}
+\newcommand{\ee}{\end{eqnarray}}
+\def\wb{\mathbf{w}}
+\def\SE{{\mathcal{E}}}%\def\SE{{\mathscr{E}}}
+\def\SN{{\mathcal{N}}}%\def\SN{{\mathscr{N}}}
+\def\pb{\mathbf{p}}
+\newcommand{\Kbarbar}{\overline{K}_{|m}}
+\newcommand{\Kbarbarb}{\overline{\Kb}_{|m}}
+\def\mve{\varepsilon}
+\newcommand{\Kbarbarp}{\overline{K'}_{|m}}
+\newcommand{\Kbarbarpb}{\overline{\Kb'}_{|m}}
+\newcommand{\fin} {\mbox{}~\hfill{\lower-0.3ex\hbox{$\triangleleft$}}}
+\def\e1{\mathrm{e}}
+
 
 
 % ******************************************************************************

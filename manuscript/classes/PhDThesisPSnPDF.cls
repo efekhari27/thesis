@@ -587,6 +587,7 @@ supported!}
   \RequirePackage{amsmath}
   \RequirePackage{amssymb}
   \RequirePackage{amsthm}
+  %\RequirePackage{mathrsfs}
 \fi
 
 % Don't break enumeration (etc.) across pages in an ugly manner
