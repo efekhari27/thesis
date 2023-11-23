@@ -133,7 +133,10 @@ Transforming in the ranks generally reduces the effect of outliers and ensures m
 The invariance by rank transform of copulas allows the estimation of different \textit{dependence measures} in the ranked space. 
 
 
-\paragraph{Spearman's rho.} Is a well-known dependence measure, also called the ``Spearman's rank correlation coefficient'', which is defined for two random variables $X_i, X_j$ as: 
+%------------------------------------------------------------%
+\paragraph{Spearman's rho.} 
+%------------------------------------------------------------%
+Is a well-known dependence measure, also called the ``Spearman's rank correlation coefficient'', which is defined for two random variables $X_i, X_j$ as: 
 \begin{equation}
     \rho^{\mathrm{S}}(X_i, X_j) = \frac{\cov(r_i(X_i), r_j(X_j))}{\sigma_{r_i(X_i)} \, \sigma_{r_j(X_j)}},
 \end{equation}
@@ -142,7 +145,10 @@ an equivalent definition exists, using the copula $C$ between the joint distribu
     \rho^{\mathrm{S}}(X_i, X_j) = 12 \int_{[0, 1]^2} C(u_i, u_j) \, \dd u_i \dd u_j - 3 = 12 \int_{[0, 1]^2} (C(u_i, u_j) - \Pi(u_i, u_j)) \, \dd u_i \dd u_j. 
 \end{equation}
 
-\paragraph{Kendall's tau.} Also referred to as the ``Kendall's rank correlation coefficient'', is defined for a pair of random variables $(X_i, X_j)$ and their respective independent copies $(X_i', X_j')$ as: 
+%------------------------------------------------------------%
+\paragraph{Kendall's tau.} 
+%------------------------------------------------------------%
+Also referred to as the ``Kendall's rank correlation coefficient'', is defined for a pair of random variables $(X_i, X_j)$ and their respective independent copies $(X_i', X_j')$ as: 
 \begin{equation}
     \tau(X_i, X_j) = \P\left((X_i - X_i')(X_j - X_j') > 0 \right) - \P\left((X_i - X_i')(X_j - X_j') < 0 \right),
 \end{equation}
@@ -153,8 +159,10 @@ and can also be defined using the copula $C$ between the joint distribution of t
 These dependence measures fully rely on the copula and are both bounded between -1 and 1. 
 Further properties and estimators of Spearman's rho and Kendall's tau are presented in \citet{durante_2015_copula} Section 2.4. 
 
-
-\paragraph{Upper/lower tail dependence.} Considering the random vector $\bX = (X_i, X_j)$ and the copula $C$ underlying their joint distribution. 
+%------------------------------------------------------------%
+\paragraph{Upper/lower tail dependence.} 
+%------------------------------------------------------------%
+Considering the random vector $\bX = (X_i, X_j)$ and the copula $C$ underlying their joint distribution. 
 The \textit{upper/lower tail dependence} coefficients are defined as: 
 \begin{subequations}
     \begin{align}

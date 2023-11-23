@@ -975,7 +975,7 @@ wish to left align your text}
 
 
 \vfill
-publicly defended on March xx, 2024 in front of the following jury:
+publicly defended on March 12, 2024 in front of the following jury:
 \vspace*{1em}
 
 \begin{tabular}{lll}

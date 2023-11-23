@@ -490,9 +490,9 @@ Let us recall the probabilistic integration problem $I_\pi(g) = \int_{\iD_\bX} g
 From a general point of view, this quantity could be generalized by composing $g$ with another function $\psi$ (e.g., other moments, quantiles, exceedance probabilities). 
 The quantity of interest then becomes, $I_\pi(\psi(g))$, for example when $\psi$ is a monomial, it gives a moment of the output distribution.
 
-Let us assume, adopting a Bayesian point of view, that $\xi$ is a stochastic process describing the uncertainty affecting the knowledge about the true function $g$. 
-Let $\xi$ be a Gaussian process (GP) prior with a zero trend (denoted by $\textbf{0}$) to ease the calculation, and a stationary covariance kernel (denoted by $k(\cdot, \cdot)$). 
-The conditional posterior $\xi_n := (\xi | \by_n) \sim \mathcal{GP}(\eta_n, s_n^2)$ has been conditioned on the function observations $\by_n = \left[g\left(\bx^{(1)}\right), \ldots, g\left(\bx^{(n)}\right)\right]\TT$ computed from the input design $\bX_n$ and is fully defined by the well-known ``Kriging equations'' (see e.g., \cite{rasmussen_2006}):
+Let us assume, adopting a Bayesian point of view, that $G$ is a stochastic process describing the uncertainty affecting the knowledge about the true function $g$. 
+Let $G$ be a Gaussian process (GP) prior with a zero trend (denoted by $\textbf{0}$) to ease the calculation, and a stationary covariance kernel (denoted by $k(\cdot, \cdot)$). 
+The conditional posterior $G_n := (G | \by_n) \sim \GP(\eta_n, s_n^2)$ has been conditioned on the function observations $\by_n = \left[g\left(\bx^{(1)}\right), \ldots, g\left(\bx^{(n)}\right)\right]\TT$ computed from the input design $\bX_n$ and is fully defined by the well-known ``Kriging equations'' (see e.g., \cite{rasmussen_2006}):
 \begin{equation}
     \left\{
     \begin{array}{ll}
@@ -504,17 +504,17 @@ The conditional posterior $\xi_n := (\xi | \by_n) \sim \mathcal{GP}(\eta_n, s_n^
 \end{equation}
 where $\bk_n(\bx)$ is the column vector of the covariance kernel evaluations $[k_n(\bx, \bx^{(1)}), \dots,\allowbreak k_n(\bx, \bx^{(n)})]$ and $\bK_n$ is the $(n \times n)$ variance-covariance matrix such that the $(i, j)$-element is $\left\{\bK_n \right\}_{i, j}=k_n(\bx^{(i)}, \bx^{(j)})$.
 
-In BQ, the main object is the random variable $I_{\pi}(\xi_n)$. 
-According to \cite{briol_oates_2019}, its distribution on $\R$ is the pushforward of $\xi_n$ through the integration operator $I_\pi(\cdot)$, sometimes called \emph{posterior distribution}: 
+In BQ, the main object is the random variable $I_{\pi}(G_n)$. 
+According to \cite{briol_oates_2019}, its distribution on $\R$ is the pushforward of $G_n$ through the integration operator $I_\pi(\cdot)$, sometimes called \emph{posterior distribution}: 
 \begin{equation}
-    I_{\pi}(\xi_n) = \int_{\iD_\bX} (\xi(\bx) | \by_n)  \dd \pi(\bx) = \int_{\iD_\bX} \xi_n(\bx)  \dd \pi(\bx) \,.
+    I_{\pi}(G_n) = \int_{\iD_\bX} (G(\bx) | \by_n)  \dd \pi(\bx) = \int_{\iD_\bX} G_n(\bx)  \dd \pi(\bx) \,.
 \label{eq:posterior}
 \end{equation}
 
 \fig{fig:bayesian_quad} provides a one-dimensional illustration of the Bayesian quadrature of an unknown function (dashed black curve) against a given input measure $\pi$ (with corresponding grey distribution at the bottom). 
 For an arbitrary design, one can fit a Gaussian process model, interpolating the function observations (black crosses). 
-Then, multiple trajectories of this conditioned Gaussian process $\xi_n$ are drawn (orange curves) whilst its mean function, also called ``predictor'', is represented by the red curve. 
-Therefore, the input measure $\pi$ is propagated through the conditioned Gaussian process to obtain the random variable $I_{\pi}(\xi_n)$, with distribution represented on the right plot (brown curve). 
+Then, multiple trajectories of this conditioned Gaussian process $G_n$ are drawn (orange curves) whilst its mean function, also called ``predictor'', is represented by the red curve. 
+Therefore, the input measure $\pi$ is propagated through the conditioned Gaussian process to obtain the random variable $I_{\pi}(G_n)$, with distribution represented on the right plot (brown curve). 
 Again on the right plot, remark how the mean of this posterior distribution (brown line) is closer to the reference output expected value (dashed black line) than the arithmetic mean of the observations (black line). 
 This plot was inspired by the paper of \cite{husar_duvenaud_2012}.
 
@@ -527,11 +527,11 @@ This plot was inspired by the paper of \cite{husar_duvenaud_2012}.
 \end{figure}
 
 \paragraph{Optimal weights computed by Bayesian quadrature}%---------------------%
-Taking the random process $\xi_n$ as Gaussian conveniently implies that its posterior distribution $a_\pi(\xi_n)$ is also Gaussian. 
+Taking the random process $G_n$ as Gaussian conveniently implies that its posterior distribution $a_\pi(G_n)$ is also Gaussian. 
 This comes from the linearity of the infinite sum of realizations of a Gaussian process. 
 The posterior distribution is described in a closed form through its mean and variance by applying Fubini's theorem (see the supplementary materials from \cite{briol_oates_2019} for the proof regarding the variance): 
 \begin{equation}
-     \overline{y}_n^{\mathrm{BQ}} := \E\left[I_{\pi}(\xi_n) | \by_n \right] 
+     \overline{y}_n^{\mathrm{BQ}} := \E\left[I_{\pi}(G_n) | \by_n \right] 
      = \int_{\iD_\bX} \eta_n(\bx) \dd \pi(\bx)
      = \left[\int_{\iD_\bX} \bk_n\TT(\bx) \dd \pi(\bx) \right] \bK_n^{-1} \by_n
      = P_\pi(\bX_n) \bK_n^{-1} \by_n,       
@@ -539,14 +539,14 @@ The posterior distribution is described in a closed form through its mean and va
 \end{equation}
 
 \begin{equation}
-    \left(\sigma_n^{\mathrm{BQ}}\right)^2 := \var\left(I_{\pi}(\xi_n) \right) 
+    \left(\sigma_n^{\mathrm{BQ}}\right)^2 := \var\left(I_{\pi}(G_n) \right) 
     = \iint_{\iD_{\bX^2}} k_n(\bx, \bx') \dd \pi(\bx) \dd \pi(\bx') 
     = \varepsilon_\pi - P_\pi(\bX_n) \bK_n^{-1} P_\pi(\bX_n)\TT.
 \label{eq:var_post}
 \end{equation}
 \noindent
 Where $P_\pi(\bX_n)$ is the row vector of potentials $\left[\int k_n(\bx, \bx^{(1)}) \dd \pi(\bx), \dots, \int k_n(\bx, \bx^{(n)}) \dd \pi(\bx)\right]$, and $\varepsilon_\pi$ is given in \eq{eq:target_energy}. 
-As in the one-dimensional example presented in \fig{fig:bayesian_quad}, the expected value of $I_{\pi}(\xi_n)$ expressed in \eq{eq:mean_post} is a direct estimator of the quantity of interest \eq{eq:quadrature_rule}. 
+As in the one-dimensional example presented in \fig{fig:bayesian_quad}, the expected value of $I_{\pi}(G_n)$ expressed in \eq{eq:mean_post} is a direct estimator of the quantity of interest \eq{eq:quadrature_rule}. 
 The so-called ``Bayesian quadrature estimator'' appears to be a simple linear combination of the observations by taking the row vector of ``optimal weights'' as: 
 \begin{equation}
     \wBQ := P_\pi(\bX_n) \bK_n^{-1}
@@ -558,7 +558,7 @@ Moreover, a prediction interval on the BQ estimator can be computed since the po
 The expressions in \eq{eq:mean_post} and \eq{eq:var_post} were extended to Gaussian processes in the case of constant and linear trends in \cite{pronzato_zhigljavsky_2020}. 
 In the following numerical experiments, the expression with a hypothesis of constant trend $\beta_n$ is used, which leads to:
 \begin{equation}
-     \E\left[I_{\pi}(\xi_n)\right] = \beta_n + P_\pi(\bX_n) \bK_n^{-1} \left(\by_n - \beta_n \mathbf{1}_n \right).
+     \E\left[I_{\pi}(G_n)\right] = \beta_n + P_\pi(\bX_n) \bK_n^{-1} \left(\by_n - \beta_n \mathbf{1}_n \right).
      \label{eq:mean_post_cst}
 \end{equation}
 
@@ -568,22 +568,22 @@ In the following numerical experiments, the expression with a hypothesis of cons
 \end{equation}
 
 \paragraph{Variance-based Bayesian quadrature rule}%----------------%
-The link between the posterior variance and the squared MMD has been first made by \cite{husar_duvenaud_2012} in their Proposition 1: the expected variance in the Bayesian quadrature $\var\left(I_{\pi}(\xi_n)\right)$ is the MMD between the target distribution $\pi$ and $\zeta_n = \sum_{i=1}^n \wBQ^{(i)} \delta(\bx^{(i)})$. 
+The link between the posterior variance and the squared MMD has been first made by \cite{husar_duvenaud_2012} in their Proposition 1: the expected variance in the Bayesian quadrature $\var\left(I_{\pi}(G_n)\right)$ is the MMD between the target distribution $\pi$ and $\zeta_n = \sum_{i=1}^n \wBQ^{(i)} \delta(\bx^{(i)})$. 
 The proof is reproduced below (as well as in Proposition 6.1 from \cite{motonobu_2018}): 
 \begin{subequations}
 \begin{align}
-    \var\left(I_{\pi}(\xi_n)\right) &= \E\left[ \left(I_{\pi}(\xi_n) - I_{\zeta_n}(\xi_n)\right)^2\right]\\
-    &= \E\left[ \left( \left\langle \xi_n, P_{\pi} \right\rangle_{\iH(k)} - \left\langle \xi_n, P_{\zeta_n}\right\rangle_{\iH(k)} \right)^2\right]\\
-    &= \E\left[ \left\langle \xi_n, P_{\pi} - P_{\zeta_n} \right\rangle_{\iH(k)}^2\right]\\
-    %&= \E\left[ \lVert \xi_n \lVert^2 + \lVert P_{\pi}(\bx) - P_{\zeta_n}(\bx) \lVert^2 - 2 \left\langle \xi_n, P_{\pi}(\bx) - P_{\zeta_n}(\bx) \right\rangle_{\iH(k)}\right]\\
+    \var\left(I_{\pi}(G_n)\right) &= \E\left[ \left(I_{\pi}(G_n) - I_{\zeta_n}(G_n)\right)^2\right]\\
+    &= \E\left[ \left( \left\langle G_n, P_{\pi} \right\rangle_{\iH(k)} - \left\langle G_n, P_{\zeta_n}\right\rangle_{\iH(k)} \right)^2\right]\\
+    &= \E\left[ \left\langle G_n, P_{\pi} - P_{\zeta_n} \right\rangle_{\iH(k)}^2\right]\\
+    %&= \E\left[ \lVert G_n \lVert^2 + \lVert P_{\pi}(\bx) - P_{\zeta_n}(\bx) \lVert^2 - 2 \left\langle G_n, P_{\pi}(\bx) - P_{\zeta_n}(\bx) \right\rangle_{\iH(k)}\right]\\
     &= \lVert P_{\pi} - P_{\zeta_n} \lVert^2_{\iH(k)}\\ 
     &= \MMD(\pi, \zeta_n)^2.
 \end{align}
 \end{subequations}
-Note that the transition from equation (27c) to (27d) relies on the property stating that if $\xi$ is a standard Gaussian process then $\forall g \in \iH(k) : \left\langle \xi, g \right\rangle_{\iH(k)} \sim \iN(0, \lVert g \lVert^2_{\iH(k)}$). 
+Note that the transition from equation (27c) to (27d) relies on the property stating that if $G$ is a standard Gaussian process then $\forall g \in \iH(k) : \left\langle G, g \right\rangle_{\iH(k)} \sim \iN(0, \lVert g \lVert^2_{\iH(k)}$). 
 The method that sequentially builds a quadrature rule by minimizing this variance is called by the authors ``Sequential Bayesian Quadrature'' (SBQ). 
 According to the previous proof, this criterion can be seen as an optimally-weighted version of the kernel herding criterion, as stated in the title of the paper from \cite{husar_duvenaud_2012}. 
-Later, \cite{briol_2015} proved the weak convergence of $I_{\pi}(\xi_n)$ towards the target integral. 
+Later, \cite{briol_2015} proved the weak convergence of $I_{\pi}(G_n)$ towards the target integral. 
 Closer to wind turbines applications, \cite{huchet_2019} and \cite{huchet_mattrand_2019} introduced the ``Adaptive Kriging Damage Assessment'' method: a Kriging-based method for mean damage estimation that is very close to SBQ. 
 However, This type of method inherits the limits from both KH and BQ since it searches for optimal design points among a candidate set and computes an inverse variance-covariance matrix. 
 These numerical operations both scale hardly in high dimension. 

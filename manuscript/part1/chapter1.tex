@@ -581,7 +581,7 @@ Even if the goal might look different from numerical integration, these two topi
 \footnotetext{\url{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/integration.ipynb}}
 
 %============================================================%
-\subsection{Numerical design of experiments}
+\subsection{Numerical design of experiments} \label{sec:LHS}
 %============================================================%
 Numerical design of experiments aim at uniformly exploring the input domain, e.g., to build a learning set for a regression model, or to initialize a multi-start optimization strategy. 
 A design of experiment (also simply called design) is qualified as \textit{space-filling} when it uniformly covers a domain. 
@@ -831,7 +831,7 @@ This quantity is formally written\footnote{Note that this probabilistic integrat
 \end{equation}
 were the indicator function applied to the failure domain returns $\1_{\left\{\iF_{\bX}\right\}}(x) = 1$ if $x \in \iF_{\bX}$ and $\1_{\left\{\iF_{\bX}\right\}}(x) = 0$ otherwise. 
 Rare event estimation implies both contour finding (i.e., characterizing the LSF) and an estimation strategy targeting the failure domain (often with a limited number of simulations). 
-Note that failure events are qualified as rare when their failure probability has an order of magnitude between $10^{-2} \leq \pf \leq 10^{-9}$ (see e.g., \citealt{lemaire_2013}). 
+Note that failure events are qualified as rare when their failure probability has an order of magnitude between $10^{-2} \leq \pf \leq 10^{-9}$ (see e.g., \citealt{lemaire_2009}). 
 
 Instead of directly performing a reliability analysis in the physical space (i.e., $\bx$-space), these problems are usually solved in the \emph{standard normal space} (i.e., $\bu$-space). 
 Working in the standard space reduces numerical issues caused by potentially unscaled or asymmetric marginals. 
@@ -896,7 +896,7 @@ This section introduced the commonly used rare event methods, see \cite{MorioBal
 \subsubsection{First and second order reliability methods (FORM/SORM)}
 %------------------------------------------------------------%
 
-The well-known first and second order reliability methods (FORM and SORM) both rely on a geometric approximation to estimate a failure probability \citep{lemaire_2013}. 
+The well-known first and second order reliability methods (FORM and SORM) both rely on a geometric approximation to estimate a failure probability \citep{lemaire_2009}. 
 They extrapolate a local approximation of the LSF built in the vicinity of a \textit{most-probable-failure-point} (MPFP), also called \textit{design point}.
 
 Working in the standard space, the methods first look for this MPFP, denoted $P^*$, with coordinates $\bu^*$, 
@@ -915,7 +915,7 @@ This point defines the smallest Euclidian distance between the LSS and the origi
 To understand its role in the reliability problem, let us recall that the density of the standard normal present an exponential decay in its radial and tangential direction. 
 Then, $P^*$ is the point with the biggest contribution to the failure probability (see the illustration in \fig{fig:FORM_SORM_approx}). 
 
-This distance between the origin and $P^*$ is another risk measure, defined as the \textit{Hasofer-Lind reliability index} \citep{lemaire_2013}, $\beta \in \R$ such that:
+This distance between the origin and $P^*$ is another risk measure, defined as the \textit{Hasofer-Lind reliability index} \citep{lemaire_2009}, $\beta \in \R$ such that:
 \begin{equation}
     \beta = \Vert \bu^* \Vert_2 = \balpha \TT \bu^*, \qquad \mathrm{s.t.} \quad
         \balpha = \frac{\nabla_{\bu} \,  \cg(\bu)}{\Vert \nabla_{\bu} \,  \cg(\bu) \Vert_2}.      
@@ -1738,9 +1738,9 @@ In practice, QMC and optimized LHS design introduced in Section~\ref{sec:central
 %------------------------------------------------------------%
 
 Considering a learning set $\bX_n$, the goal is to approximate the function $g(\cdot)$ by a scalar Gaussian process conditioned on a set of observations $\by_n = \left\{g\left(\bx^{(i)}\right)\right\}_{i=1}^n$. 
-Let us first define a prior structure $\xi$ on the function approximated $g(\cdot)$, taken as a Gaussian process with a mean function $m(\cdot)$ and covariance function $k(\cdot, \cdot)$:  
+Let us first define a prior structure $G$ on the function approximated $g(\cdot)$, taken as a Gaussian process with a mean function $m(\cdot)$ and covariance function $k(\cdot, \cdot)$:  
 \begin{equation}
-    \xi \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot)),
+    G \sim \GP(m(\cdot), k(\cdot, \cdot)),
 \end{equation} 
 with a: 
 \begin{itemize}
@@ -1754,9 +1754,9 @@ It is called ``simple kriging'' when the trend is fully known, ``ordinary krigin
 Note that \cite{schobi_2015} introduced a hybrid method named PC-Kriging setting a PCE as the trend of a kriging model. %\elias{paper PLS-Kriging from Onera 2015.}
 
 To ease the presentation, let us first consider the hyperparameters $\sigma, \btheta$ fully known and a zero trend $\bbeta = \textbf{0}$. 
-At a given point $\bx \in \iD_bX$ the realization of the GP is a Gaussian random variable $\xi(\bx) \sim \iN(m(\bx), k(\bx, \bx))$. 
-Working with Gaussian variables allows to easily write conditioning formulas between $\xi(\bx)$ and the observations $\by_n$. 
-This Gaussian variable $\xi(\bx)$ conditioned on the observations $\by_n$ is sometimes called conditional posterior $\xi_n(\bx) := (\xi(\bx) | \by_n) \sim \iN(\eta_n(\bx), s_n^2(\bx))$. 
+At a given point $\bx \in \iD_bX$ the realization of the GP is a Gaussian random variable $G(\bx) \sim \iN(m(\bx), k(\bx, \bx))$. 
+Working with Gaussian variables allows to easily write conditioning formulas between $G(\bx)$ and the observations $\by_n$. 
+This Gaussian variable $G(\bx)$ conditioned on the observations $\by_n$ is sometimes called conditional posterior $G_n(\bx) := (G(\bx) | \by_n) \sim \iN(\eta_n(\bx), s_n^2(\bx))$. 
 The well-known ``Kriging equations'' (see e.g., \citealt{rasmussen_2006}) offer its explicit expression:
 \begin{equation}
     \left\{
@@ -1853,10 +1853,10 @@ The generic black-box optimization problem tackled is defined as:
 
 To illustrate Bayesian optimization, let us present the EGO algorithm, defined by its specific learning criterion: the ``expected improvement''. 
 Considering an initial learning set $\left\{\bX_n, \by_n\right\}$ built on a space-filling input design $\bX_n$ to explore the domain. 
-A first surrogate $\xi_n(\bx) \sim \iN(\eta_n(\bx), s_n^2(\bx))$ is fitted using \eq{eq:kriging}. 
+A first surrogate $G_n(\bx) \sim \iN(\eta_n(\bx), s_n^2(\bx))$ is fitted using \eq{eq:kriging}. 
 The expected improvement, to be maximized, is then written as: 
 \begin{align}
-    \iA^{\textrm{EI}}(\bx; \by_n) &= \E\left[\max\left(g_{\min} - \xi_n(\bx)\right)\right] \\ 
+    \iA^{\textrm{EI}}(\bx; \by_n) &= \E\left[\max\left(g_{\min} - G_n(\bx)\right)\right] \\ 
                                   &=\left(g_{\min} - \eta_n(\bx)\right) \Phi\left( \frac{g_{\min} - \eta_n(\bx)}{s_n(\bx)}\right) + 
                                     s_n(\bx) \phi\left(\frac{g_{\min} - \eta_n(\bx)}{s_n(\bx)}\right),
     \label{eq:exp_improvement}
@@ -1899,7 +1899,7 @@ The reader may refer to \citet{MorioBalesdent2015} for further active learning t
 More recently, \citet{teixeira_2021} and \citet{moustapha_ss_2022} reviewed this topic with the presentation of wide numerical benchmarks.
 
 Considering an initial learning set $\left\{\bX_n, \by_n\right\}$ built on a space-filling input design $\bX_n$ to explore the domain. 
-A first Gaussian process $\xi_n(\bx) \sim \iN(\eta_n(\bx), s_n^2(\bx))$ is fitted using \eq{eq:kriging}. 
+A first Gaussian process $G_n(\bx) \sim \iN(\eta_n(\bx), s_n^2(\bx))$ is fitted using \eq{eq:kriging}. 
 The deviation number $U$ is looking for points close to the limit-state function while presenting a high kriging variance. 
 This criterion to be minimized, is defined as:   
 \begin{equation}
