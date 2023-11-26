@@ -1164,11 +1164,11 @@ A similar mechanism is used by other importance sampling methods, inferring the 
 \subsubsection{Nonparametric adaptive importance sampling}
 %------------------------------------------------------------%
 The use of multivariate kernel density estimation (KDE) to approximate the importance sampling optimal density $h_{\mathrm{opt}}$ was introduced in the context of structural reliability by \cite{ang_1992_nis}, latter followed by \citet{zhang_1996_NIS}.  
-Let us first present the nonparametric importance sampling from \cite{zhang_1996_NIS}, considering the instrumental density $h_0$ (for now, $h_0 \neq f_\bX$), 
+Let us first present the nonparametric importance sampling from \cite{zhang_1996_NIS}, considering the instrumental density $h_{[0]}$ (for now, $h_{[0]} \neq f_\bX$), 
 on which a sample $\left\{\bX_{[1]}^{(i)}\right\}_{i=1}^n$ is generated. 
 A first failure probability can be roughly estimated, assuming that enough samples lead to the failure domain: 
 \begin{equation}
-    \what{\pf}_{[1]} = \frac1n \sum_{i=1}^{n} \1_{\{g(\bx \leq 0)\}}\left(\bx^{(i)}_{[1]}\right) \frac{f_\bX\left(\bx^{(i)}_{[1]}\right)}{h_0\left(\bx^{(i)}_{[1]}\right)}
+    \what{\pf}_{[1]} = \frac1n \sum_{i=1}^{n} \1_{\{g(\bx \leq 0)\}}\left(\bx^{(i)}_{[1]}\right) \frac{f_\bX\left(\bx^{(i)}_{[1]}\right)}{h_{[0]}\left(\bx^{(i)}_{[1]}\right)}
     = \frac1n \sum_{i=1}^{n} \1_{\{g(\bx) \leq 0\}}\left(\bx^{(i)}_{[1]}\right) w^{(i)}_{[1]}. 
 \end{equation}
 On this biased sample, another density can be fitted using KDE, using the previously defined $\what{\pf}_{[1]}$ as a normalization term: 
@@ -1181,13 +1181,13 @@ The tuning of $\bH$ is usually done by minimizing an asymptotic mean integrated 
 In the previous expression, the normalization constant insures to build a probability density while the weights $w^{(i)}_{[1]}$, defined above, reflect the contribution of each point to $\what{\pf}_{[1]}$.  
 After performing this KDE, the estimated density can be used as instrumental density in \eq{eq:pf_IS}.
 
-As for the CE-IS methods, the risk is that barely any points sampled from the instrumental density $h_0$ hit the failure domain, leading to poor estimates. 
+As for the CE-IS methods, the risk is that barely any points sampled from the instrumental density $h_{[0]}$ hit the failure domain, leading to poor estimates. 
 \citet{zhang_1996_NIS} proposed to couple an adaptive mechanism with a nonparametric inference of the optimal density. 
 This method is further referred to as NAIS for \textit{nonparametric adaptive importance sampling}. 
 Later, the NAIS method was adapted by \cite{Morio_RESS_2011} to the reliability analysis problem, using a similar mechanism to the CE-AIS method. 
 
 In this framework, a series of intermediate threshold are computed as empirical $p_0$-quantiles $q_{[1]}^{p_0} > \dots > q_{[k_\#]}^{p_0}$ of the successive importance sampling steps. 
-This algorithm is initiated by setting $h_0 = f_\bX$ and stops at the step $k_\#$, when  $q_{[k_\#]}^{p_0} < 0$.
+This algorithm is initiated by setting $h_{[0]} = f_\bX$ and stops at the step $k_\#$, when  $q_{[k_\#]}^{p_0} < 0$.
 
 At the step $k$, the intermediate normalization constant is written as: 
 \begin{equation}
@@ -1672,16 +1672,16 @@ where $\overline{y}_n=(1/n)\,\sum_{i=1}^n y^{(i)}$ denotes the empirical mean of
 However, such metrics are not relevant for every regression method (typically, interpolant method have an $R^2=1$). 
 The \textit{predictivity coefficient} is an alternative defined as a normalized \textit{integrated square error} (ISE): 
 \begin{equation}
-    \mathrm{Q}^2(\wg_n) = 1 - \frac{\ISE(\wg_n)}{\var(\wg_n)}, 
+    \mathrm{Q}^2(\wg_n) = 1 - \frac{\ISE(\wg_n)}{\var(g(\bX))}, 
 \end{equation} 
 where 
 \begin{equation}
     \ISE(\wg_n) = \int_{\iD_{\bX}} \left(g(\bx) - \wg(\bx)\right)^2 \, \ddx, \qquad
-    \var(\wg_n) = \int_{\iD_{\bX}} \left(g(\bx) - \wg(\bx)\right)^2 \, \ddx.
+    \var(g(\bX)) = \int_{\iD_{\bX}} \left(g(\bx) - \int_{\iD_{\bX}} g(\bx)\, \ddx' \right)^2 \, \ddx.
 \end{equation}
 This quantity can be estimated on a test set $\left\{\bX_m, \by_m\right\}$: 
 \begin{equation}
-    \what{\mathrm{Q}}^2(\wg_n) = 1 - \frac{ \sum_{i=1}^m  \left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)^2}{\sum_{i=1}^m \left(\overline{\by}_m - y(\bx^{(i)})\right)^2}\,.
+    \what{\mathrm{Q}}^2(\wg_n) = 1 - \frac{ \sum_{i=1}^m  \left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)^2}{\sum_{i=1}^m \left(y(\bx^{(i)}) - \overline{\by}_m\right)^2}\,.
 \end{equation}
 Note that for either criteria, the higher the value, the better the quality of the fit. 
 

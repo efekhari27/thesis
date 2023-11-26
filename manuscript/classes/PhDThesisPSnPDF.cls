@@ -1153,7 +1153,7 @@ publicly defended on March 12, 2024 in front of the following jury:
 \newsavebox{\PHD@Title}
 \begin{lrbox}{\PHD@Title}
   \begin{minipage}[c]{0.98\textwidth}
-    \centering \Huge \scshape{\@title}
+      \centering \Huge \scshape{\@title}
     \ifthenelse{\equal{\@subtitle}{}}{
       % subtitle is not defined
     }{
