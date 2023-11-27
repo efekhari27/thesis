@@ -31,8 +31,8 @@
 %============================================================%
 %============================================================%
 
-Wind energy is a highly competitive industry with increasing regulations regarding its impact on ecosystems, land and sea-use, landscapes, or air traffic management \citep{eolien_en_mer_2022}. 
-During the long process to win calls for tenders, obtain construction permits, or through the wind farm exploitation, an advanced technical understanding of such systems might offer a competitive advantage. 
+Wind energy is a highly competitive industry with increasing regulations regarding its impact on ecosystems, land and sea use, landscapes, or air traffic management \citep{eolien_en_mer_2022}. 
+During the long process of winning calls for tenders, obtaining construction permits, or through wind farm exploitation, an advanced technical understanding of such systems might offer a competitive advantage. 
 
 The operation of offshore wind turbines (OWTs) is driven by multiple physics coupled. 
 This behavior results from different external solicitations which are highly turbulent and uncertain. 
@@ -40,18 +40,18 @@ Among them, the \textit{metocean} (abbreviation of ``meteorology'' and ``oceanog
 Yet, many other types of solicitations affect the exploitation of offshore wind turbines e.g.: the corrosion of the structure, global scour, marine growth, stress concentration factor induced by the manufacturing quality, etc. 
 
 In this context, numerical models have been developed to certify the structural integrity of OWTs with respect to their solicitations. 
-A wind farm project planned at given location should pass different validation procedures established by international standards such as the International Electrotechnical Commission \citep{iec_2019}. 
-As wind turbine structures face a large amount of stress cycles in their lifetime (up to $10^8$ for 20 years of operation), this chapter will particularly focus on fatigue damage assessment.
+A wind farm project planned at a given location should pass different validation procedures established by international standards such as the International Electrotechnical Commission \citep{iec_2019}. 
+As wind turbine structures face a large number of stress cycles in their lifetime (up to $10^8$ for 20 years of operation), this chapter will particularly focus on fatigue damage assessment.
 
 The present thesis studied different steps of uncertainty quantification on two wind farm projects. 
-First the Teesside wind farm, operating since 2014 in the North Sea, second the theoretical wind farm of south Brittany, currently at the stage of calls for tenders.
+First, the Teesside wind farm, operating since 2014 in the North Sea, second the theoretical wind farm of south Brittany, currently at the stage of calls for tenders.
 
-Considering the standard uncertainty quantification diagram presented in \fig{fig:UQ_methodo}, the material of this chapter is related to the step A (problem specification) and the step B (uncertainty quantification). 
+Considering the standard uncertainty quantification diagram presented in \fig{fig:UQ_methodo}, the material of this chapter is related to step A (problem specification) and step B (uncertainty quantification). 
 It briefly introduces wind turbine modeling and design, in the following layout: 
 Section~\ref{sec:metocean_simulation} presents the methods used for wind and wave generation and wake simulation at a farm scale; 
 Section~\ref{sec:owt_modeling} recalls elements of theory associated with wind turbine modeling; 
 Section~\ref{sec:owt_design} introduces recommended practices regarding design and operation; 
-finally, Section~\ref{sec:owt_uncertainties} gives a description of the various sources of uncertainties considered in this thesis. 
+finally, Section~\ref{sec:owt_uncertainties} describes the various sources of uncertainties considered in this thesis. 
 %To go further this general introduction, the reader might refer to the following sources on the different topics 
 
 
@@ -66,20 +66,20 @@ In the atmosphere, the wind represents the air movements caused by the heterogen
 Winds usually move from high-pressure to low-pressure regions. 
 Earth's rotation also impacts large-scale climate patterns, including winds by the intermediate of the well-known Coriolis effect. 
 The wind is a highly variable resource, making its exploitation for energy production uncertain. 
-This variability is both expressed in space and time with different behaviors depending on the scales studied. 
+This variability is expressed in space and time with different behaviors depending on the scales studied. 
 
 Regarding large timescales, yearly seasonal fluctuations of wind conditions are well-defined using probability distributions (typically Weibull distributions). 
 However, predictions at a shorter timescale are usually unreliable beyond a few days ahead. 
 Under a few days, the spectral wind energy distribution per time unit is represented by its power spectral density (PSD). 
 Historically, the spectral study of horizontal wind by \citet{van_1957_wind_psd} for timescales between a few seconds and ten days revealed distinct ranges of behaviors. 
 The PSD, such as the one illustrated in \fig{fig:wind_psd}, presents three main separated peaks, explaining how the wind energy is split. 
-The two first peaks are named ``synoptic'' and ``diurnal'' peak, which respectively correspond to return periods around four days and one day. 
+The two first peaks are named ``synoptic'' and ``diurnal'' peaks, which respectively correspond to return periods around four days and one day. 
 While these two peaks are relatively close together, the third peak is completely separated. 
 This third peak describes the energy related to wind turbulence, which evolves in a range below ten minutes. 
 Considering this typical energy distribution, wind behaviors are often referred to as ``short-term'' (for turbulent wind) and ``long-term'' (otherwise). 
-In wind turbine simulation, ten minutes simulations became a common practice to fully consider turbulent winds. 
+In wind turbine simulation, ten-minute simulations became a common practice to fully consider turbulent winds. 
 
-Remark that the spectrum presented in the research paper of \citet{van_1957_wind_psd} (represented in \fig{fig:wind_psd}) was build from wind measures near New York, USA. 
+Remark that the spectrum presented in the research paper of \citet{van_1957_wind_psd} (represented in \fig{fig:wind_psd}) was built from wind measures near New York, USA. 
 The same pattern between the three peaks is rather constant between sites, however, the geography (including the surface roughness, the topology, the proximity to the coast, etc.) may affect this distribution. 
 
 At a larger timescale than one year, assessing trends becomes more complicated. 
@@ -92,7 +92,7 @@ Additionally, wind resource assessment over decades is made more uncertain by cl
     \label{fig:wind_psd}
 \end{figure}
 
-%\elias{Add something general regrading wave modeling?}
+
 
 
 
@@ -118,14 +118,14 @@ The \textit{turbulence intensity} is a commonly used normalized statistic of the
     \caption{\elias{Should we keep this representation? If so, it will be done properly.}}
 \end{figure}
 
-As the wind depends on differences between pressure, humidity, air density, different models exist to represent vertical wind profiles. 
+As the wind depends on differences between pressure, humidity, and air density, different models exist to represent vertical wind profiles. 
 The vertical change in wind conditions is referred to as \textit{vertical wind shear}. 
 Assuming a constant standard deviation over the altitude, the power law is a widely used model to approximate vertical shear \citep{iec_2019}:
 \begin{equation}
     \overline{U}(z) = \overline{U}_0 \left(\frac{z}{z_{\mathrm{0}}}\right)^\alpha,
 \end{equation}
-with $\overline{U}_0$ a well-defined mean wind speed at the height $z_{\mathrm{0}}$ (typically corresponding to a measurement height), 
-$z$ the studied height (e.g., the turbine's hub-height), and $\alpha$ the vertical shear coefficient (defined according to measures or standards' recommendations). 
+where $\overline{U}_0$ is a well-defined mean wind speed at the height $z_{\mathrm{0}}$ (typically corresponding to a measurement height), 
+$z$ is the studied height (e.g., the turbine's hub height), and $\alpha$ is the vertical shear coefficient (defined according to measures or standards' recommendations). 
 
 To generate a turbulent wind field on a mesh around the turbine, the general mechanism is to apply inverse Fourier transforms on a turbulent wind spectrum.  
 Two types of parametric spectrums are commonly used in wind energy: the \textit{Kaimal model} \citep{kaimal_1972} and the \textit{Mann model} \citep{mann_1998}. 
@@ -135,13 +135,13 @@ In this thesis, the Kaimal spectrum as defined in \cite{iec_2019} is used for tu
     \label{eq:kaimal}
 \end{equation} 
 such that $f$ is the frequency, $\overline{U}$ is the longitudinal mean speed at hub-height, $L_k$ are the Kaimal length scales, and $\sigma_k$ standard deviations. 
-Along with the Kaimal wind speed spectrum, a spacial coherence model is usually defined in the frequency domain. 
-Each couples of nodes in the mesh are correlated, for example, using an exponential coherence model (see the complete definition in Annex C of \citealt{iec_2019}).
+Along with the Kaimal wind speed spectrum, a spatial coherence model is usually defined in the frequency domain. 
+Each couple of nodes in the mesh are correlated, for example, using an exponential coherence model (see the complete definition in Annex C of \citealt{iec_2019}).
 
 In this thesis, the full-field turbulent wind fields (i.e., over a regular mesh) are generated using TurbSim, a software developed by the National Renewable Energy Laboratory (NREL) \citep{turbsim_2009}. 
 TurbSim generates time realizations by adapting the spectral method proposed in \citet{veers_1988_sandia} (relying on the inverse Fourier transforms of each axial component).   
 Considering a wind spectrum (e.g., Kaimal model) and a vertical shear model (e.g., power law), TurbSim takes as inputs a mean wind speed, a turbulence standard deviation and a mean wind orientation. 
-\fig{fig:turbsim_simu} illustrates the corresponding wind field generated by a ten-minutes TurbSim simulation, considering a set of input long-term conditions. 
+\fig{fig:turbsim_simu} illustrates the corresponding wind field generated by a ten-minute TurbSim simulation, considering a set of input long-term conditions. 
 
 \begin{figure}
     \centering
@@ -152,8 +152,8 @@ Considering a wind spectrum (e.g., Kaimal model) and a vertical shear model (e.g
 
 In their recent review of the challenges in wind energy, \citep{veers_2019_review} list some limits of the two spectral turbulence models recommended by the standards. 
 First, their parameters were fitted using a restricted amount of data \citep{dimitrov_2017_turbulence_models_on_loads}. 
-Second, the spacial coherence models associated with Kaimal models showed differences with turbulence measured on site \citep{saranyasoontorn_2004}.  
-Finally, recent studies showed that the choice of spectral model impacts the resulting wind turbines loads \citep{doubrawa_2019}. 
+Second, the spatial coherence models associated with Kaimal models showed differences with turbulence measured on-site \citep{saranyasoontorn_2004}.  
+Finally, recent studies showed that the choice of spectral model impacts the resulting wind turbine loads \citep{doubrawa_2019}. 
 These approximations generally tend to overestimate wind flows, leading to conservative designs. 
 
 To ensure more realistic turbulent wind field generation, two research perspectives are actively explored. 
@@ -172,7 +172,7 @@ When studying the wind resources at a wind farm scale, modeling wind energy loss
 The wake is caused by the extraction of the wind kinetic energy, reducing the wind speed and increasing the turbulence downstream of the turbines (see the illustration in \fig{fig:wake_illustration}). 
 In a wind farm, this effect depends on the spacing between turbines, as well as the ambient wind speed and turbulence intensity. 
 The turbines positioned at the center of the farm are indeed the most impacted by the wake. 
-As a wind farm owner, the consequence of the wake is twofold: a loss of energy production (in the range of 10 to 20 percents depending on the farm), and an increase of fatigue loads (due to the asymmetric loading from the created turbulences).
+As a wind farm owner, the consequence of the wake is twofold: a loss of energy production (in the range of 10 to 20 percent depending on the farm), and an increase in fatigue loads (due to the asymmetric loading from the created turbulences).
 
 \begin{figure}%[h!]
     \centering
@@ -190,7 +190,7 @@ These models mostly rely on the equivalence between the thrust load and the turb
 Since the seminal engineering model proposed by \citet{jensen_1983_wake}, multiple enhancements were proposed. 
 A wide benchmark of the wake modeling solutions for different fidelities was performed in \citet{doubrawa_2020_benchmark} and \citet{hiperwind_2023_wp3}. 
 The optimal tuning of these engineering models was studied using measurements from a Doppler wind lidar in \citet{zhan_2020_optimal_wake}. 
-Different software programs propose wake engineering models, such as: FLORIS (developed by the NREL \citet{fleming_2020_FLORIS}), FarmShadow (developed by IFPEN). 
+Different software programs propose wake engineering models, such as FLORIS (developed by the NREL \citet{fleming_2020_FLORIS}), FarmShadow (developed by IFPEN). 
 
 To take into account the wake effect, control strategies increasingly move from the turbine scale to the farm scale. 
 This concept, called ``active wake control'', introduces small yaw misalignments (making the control of turbines individually suboptimal) to optimize the global wake inside the farm \citep{rott_2018_active_control,simley_2020_active_control,meyers_2022_active_control}. 
@@ -200,7 +200,7 @@ This concept, called ``active wake control'', introduces small yaw misalignments
 \subsection{Irregular wave generation}
 %============================================================%
 
-The propagation of wind generated waves has long been studied in hydrodynamics under the prism of different theories such as Airy's, and Stokes'. 
+The propagation of wind-generated waves has long been studied in hydrodynamics under the prism of different theories such as Airy's, and Stokes'. 
 Airy's wave theory (also referred to as the linear wave theory) models sea states under the hypothesis of small waves relatively to the water depth.  
 This spectral approach superposes many regular waves, following the same wave spectrum, to model irregular waves. 
 Two standard statistics are used in oceanography to represent sea states and their corresponding wave spectra: 
@@ -213,7 +213,7 @@ The most commonly used parametric wave spectrum is named JONSWAP, after the ``Jo
 \end{equation}
 The JONSWAP spectrum is a corrected version of the Pierson-Moskowitz spectrum (developed in 1964), adding a peak enhancement factor $\gamma^\alpha$. 
 Further details regarding the numerical values to choose in \eq{eq:jonswap} are given in \citet{burton_2021_wind_handbook}. 
-An illustration of the two spectra is presented in \fig{fig:jonswap}, revealing the enhancement factor proposed in the JONSWAP model to better fit sea states measurements. 
+An illustration of the two spectra is presented in \fig{fig:jonswap}, revealing the enhancement factor proposed in the JONSWAP model to better fit sea state measurements. 
 
 \begin{figure}%[h!]
     \centering
@@ -224,10 +224,10 @@ An illustration of the two spectra is presented in \fig{fig:jonswap}, revealing 
 \end{figure}
 
 Swell waves are the result of weather conditions occurring far away from the location studied. 
-Such waves usually present long wavelength, allowing them to propagate over long distances with little dissipation. 
-To take them into account, the unimodal wave spectra introduced in \eq{eq:jonswap} was improved. 
-Different methods allow to build a parametric bimodal distribution, with a mode in the low frequencies corresponding to the swell. 
-\citet{guedes_2005_bimodal_jonswap} reviews different bimodal wave spectra, and compares their adequacy with measured sea states. 
+Such waves usually present long wavelengths, allowing them to propagate over long distances with little dissipation. 
+To take them into account, the unimodal wave spectrum introduced in \eq{eq:jonswap} was improved. 
+Different methods allow building a parametric bimodal distribution, with a mode in the low frequencies corresponding to the swell. 
+\citet{guedes_2005_bimodal_jonswap} reviews different bimodal wave spectra and compares their adequacy with measured sea states. 
 
 
 
@@ -238,7 +238,7 @@ Different methods allow to build a parametric bimodal distribution, with a mode 
 %============================================================%
 
 Offshore wind turbine models are coupling multiple physics such as aerodynamics, hydrodynamics, mechanical elasticity, control and mooring dynamics for floating OWT. 
-Similarly to the usual practices from the offshore oil \& gas industry, OWT have been first modeled in the frequency domain. 
+Similarly to the usual practices from the offshore oil \& gas industry, OWT has been first modeled in the frequency domain. 
 At an early design stage, a study in the frequency domain gives a rough idea of the system's feasibility by computing its natural frequencies. 
 An OWT should not have its natural frequencies in the same range as the main frequencies of the wave energy spectra. 
 Otherwise, such systems can be subject to critical dynamic resonance, leading to their failure.
@@ -246,10 +246,10 @@ Otherwise, such systems can be subject to critical dynamic resonance, leading to
 Beyond this preliminary check, frequency-domain approaches present limits for OWT modeling. 
 As they rely on linear assumptions, they are unable to model the nonlinearities and transient loading phases \citep{matha_2011_ISOPE}. 
 These aspects happen to be essential in the design of OWTs \citep{jonkman_2011_ISOPE}. 
-As an alternative, the behavior of OWT systems are also simulated in the time domain. 
+As an alternative, the behavior of OWT systems is also simulated in the time domain. 
 
 In the time domain, such systems may be models for different fidelities. 
-The diagram in \fig{fig:owt_modeling_fidelities} illustrates the increasing complexities for two physics involved in OWT modeling (aerodynamics and structural dynamics). 
+The diagram in \fig{fig:owt_modeling_fidelities} illustrates the increasing complexities of two physics involved in OWT modeling (aerodynamics and structural dynamics). 
 Generally, the computational cost increases with the model fidelity, making uncertainty quantification intractable at some point. 
 In the present work, the numerical model of an OWT studied is actually a chain of three models executed sequentially (as illustrated in \fig{fig:owt_chained_model}): 
 \begin{itemize}
@@ -285,15 +285,15 @@ Considering bottom-fixed OWT \citep{popko_2021_DIEGO_benchmark} or floating OWT 
 %============================================================%
 
 The blade element momentum theory mixes different concepts to compute the aerodynamic forces on the rotating blades of the wind turbine. 
-In this coupled physics models, the aerodynamics affects the structural response and vise-versa. 
+In this coupled physics model, aerodynamics affects the structural response and vice versa. 
 To solve this problem, algorithms used in DIEGO first assess displacement of elementary blades, to recover the lift and drag coefficients. 
 The elementary loads are then integrated over each blade and communicated to the structural model.
 
 
 \paragraph{Momentum theory.}
 %------------------------------------------------------------%
-At the core of wind turbine's aerodynamics, the concept of \textit{momentum theory}, also called \textit{actuator disk theory} assumes that the air stream passing thought the rotor disk is bounded by a stream tube of circular surface (not mixing with the ambient air). 
-\fig{fig:actuator_disk} is a longitudinal representation of the actuator disk and the way it affects the air upstream and downstream the rotor. 
+At the core of wind turbine's aerodynamics, the concept of \textit{momentum theory}, also called \textit{actuator disk theory} assumes that the air stream passing through the rotor disk is bounded by a stream tube of circular surface (not mixing with the ambient air). 
+\fig{fig:actuator_disk} is a longitudinal representation of the actuator disk and the way it affects the air upstream and downstream of the rotor. 
 The associated momentum theory assumes the conservation of airflow at any cross-section (of area $A$) during a time period. 
 Passing through the actuator disk, the wind speed slows down and a drop in static pressure is at the origin of the wake. 
 This pressure drop generates an axial force (called \textit{axial thrust force}) and a torque on the actuator disk.
@@ -321,14 +321,14 @@ Using the momentum theory and Bernoulli's incompressible flow equation, one can 
     \end{align}
     \label{eq:momentum_theory}
 \end{subequations}
-The widely used power coefficient (respectively thrust coefficient) is the ratio of the power captured by the turbine against to the total kinetic wind power available in the stream tube: 
+The widely used power coefficient (respectively thrust coefficient) is the ratio of the power captured by the turbine against the total kinetic wind power available in the stream tube: 
 \begin{subequations}
     \begin{align}
         C_P &= \frac{P}{\frac12 \rho A_d U_\infty^3} = 4a (1-a)^2,\\
         C_T &= \frac{T}{\frac12 \rho A_d U_\infty^2} = 4a (1-a). 
     \end{align}
 \end{subequations} 
-Betz's law is a theoretical limit value of the power coefficient, obtained by cancelling the power coefficient gradient. 
+Betz's law is a theoretical limit value of the power coefficient, obtained by canceling the power coefficient gradient. 
 To this day, no wind turbine has exceeded this limit value: $C_P^{\mathrm{Betz}} = 0.593$ \citep{burton_2021_wind_handbook}.  
 
 
@@ -363,10 +363,10 @@ Under these assumptions, the axial thrust and torque exerted on a blade element 
     \label{fig:blade_theory}
 \end{figure}
 \textit{Blade element momentum theory} (BEMT) combines the results from blade element theory in \eq{eq:blade_element} with the results from momentum theory in \eq{eq:momentum_theory} to obtain the induction factors $a$ and $a'$. 
-The resolution of this sytem of equations is often solved by iterative approaches (e.g., \citealt{dai_2011_BEMT}). 
-Global axial thrust over the blade are then computed by integrating the elementary loads over all the elements. 
-Note that various corrections are applied to the BEMT model, for example to take into account the non-homogeneous loss of momentum over the rotor disk. 
-The BEMT also fails to model non-linear aerodynamic effects, occurring with sudden change of angle of attack. 
+The resolution of this system of equations is often solved by iterative approaches (e.g., \citealt{dai_2011_BEMT}). 
+Global axial thrust over the blade is then computed by integrating the elementary loads over all the elements. 
+Note that various corrections are applied to the BEMT model, for example, to take into account the non-homogeneous loss of momentum over the rotor disk. 
+The BEMT also fails to model non-linear aerodynamic effects, occurring with sudden changes of angle of attack. 
 Such effects are sometimes called ``dynamic stall'' and are represented in DIEGO by the Beddoes-Leishman model (see \citealt{burton_2021_wind_handbook} for further details).  
 
 %\elias{\paragraph{Aerodynamic damping?}}
@@ -384,10 +384,10 @@ Considering a slender cylindrical structure of diameter $D$, a flow velocity $u(
     F\,=\,C_{m}\,\rho \,{\frac {\pi }{4}}D^{2}\,{\frac{\dd u}{\dd t}}\,+\,C_{d}\,{\frac 12}\,\rho \,D\,u\,|u|.
 \end{equation}
 Standard values for the drag and inertial coefficients are often considered \citep{dnv_2013_offshore_design}. 
-DIEGO uses Morison’s equation together with first order potential solution to perform hydrodynamical simulations in the time domain.
-An extended introduction to hydrodynamics of fixed slender structures, as well as large floating structures is given in the Chapter 1 from \citep{milano_thesis_2021}.  
+DIEGO uses Morison's equation together with a first-order potential solution to perform hydrodynamical simulations in the time domain.
+An extended introduction to the hydrodynamics of fixed slender structures, as well as large floating structures, is given in Chapter 1 from \citep{milano_thesis_2021}.  
 
-To design floating structures, more complex wave loading modeling should be considered. 
+To design floating structures, more complex wave-loading modeling should be considered. 
 For this purpose, \citet{ronge_2023_hydrodynamics_fowt} reviews nonlinear theories applied to the fluid-structure interactions of FOWT and compares them to CFD results. 
 
 
@@ -398,19 +398,19 @@ For this purpose, \citet{ronge_2023_hydrodynamics_fowt} reviews nonlinear theori
 To maximize their energy production under turbulent wind conditions, wind turbines rely on their control systems. 
 This aspect of wind turbines is usually kept confidential by manufacturers, as it gives them a competitive advantage.  
 Nevertheless, the general control mode of a wind turbine depends on the wind speed. 
-Two main ranges of operation are usually defined: first between the cut-in and rated wind speed, second between the rated and cut-off wind speed. 
-These characteristic wind speed values are given by the turbine manufacturer, for example a turbine may present a cut-in at $4~\si{m.s^{-1}}$, a rated at $13~\si{m.s^{-1}}$ and a cut-off at $25~\si{m.s^{-1}}$. 
+Two main ranges of operation are usually defined: first between the cut-in and rated wind speed, and second between the rated and cut-off wind speed. 
+These characteristic wind speed values are given by the turbine manufacturer, for example, a turbine may present a cut-in at $4~\si{m.s^{-1}}$, a rated at $13~\si{m.s^{-1}}$ and a cut-off at $25~\si{m.s^{-1}}$. 
 Let us then recall the wind turbine power derived from the momentum theory: 
 \begin{equation}
     P = \frac12 \rho \, A_d \, U_\infty^3 \, C_p(\lambda, \beta), 
     \label{eq:power_wt}
 \end{equation}
-with the power coefficient $C_p$, function of the pitch angle $\beta$ and the blade tip speed ratio $\lambda$, defined between the tangential speed on top of the blade and the wind speed: $\lambda = \frac{\Omega \, R}{U_\infty}$, for the rotation speed $\Omega$ and a rotor radius $R$. 
+with the power coefficient $C_p$, as a function of the pitch angle $\beta$ and the blade tip speed ratio $\lambda$, defined between the tangential speed on top of the blade and the wind speed: $\lambda = \frac{\Omega \, R}{U_\infty}$, for the rotation speed $\Omega$ and a rotor radius $R$. 
 
 \paragraph{Below the rated wind speed.}
 The goal of the control system is to extract as much power as available. 
 A control strategy among the family of the \textit{maximum power point tracking} can be deployed \citep{abdullah_2012_control_review}.   
-For example, the ``power signal feedback'' uses the electromagnetic torque to control the power. 
+For example, the ``power signal feedback'' uses electromagnetic torque to control the power. 
 This method first computes the maxima of the extracted power as a function of the rotation speed (using \eq{eq:power_wt}), for different speed values. 
 Then, for a measured wind rotation speed, the system can determine the reference maximal power. 
 Considering this reference power, a controller (such as a proportional integral controller) intends to match the generated power with the reference by acting on the electromagnetic torque. 
@@ -421,10 +421,10 @@ The control system switches to a \textit{power limiting} mode by increasing the 
 By operating on the pitch, the rotation speed and the power produced are kept at their nominal values. 
 This control is also often realized by a proportional integral system \citep{bossanyi_2003_pitch_control}. 
 
-A more exhaustive description of wind turbines control systems is available in Chapter 8 from \citet{burton_2021_wind_handbook}. 
+A more exhaustive description of wind turbine control systems is available in Chapter 8 from \citet{burton_2021_wind_handbook}. 
 More recent strategies often consider the control at the farm scale. 
 As explained earlier, the operation of one turbine affects the others via the effect of its wake. 
-Moreover, since the wind energy production becomes important in the electric mix, its production might be constrained to respect the stability of the grid (e.g., quality of the utility frequency).  
+Moreover, since wind energy production becomes important in the electric mix, its production might be constrained to respect the stability of the grid (e.g., quality of the utility frequency).  
 The work of \citet{gionfra_2018_control} studied the optimal control of wind farms considering the effects of the wake and the grid restrictions. 
 
 %============================================================%
@@ -433,7 +433,7 @@ The work of \citet{gionfra_2018_control} studied the optimal control of wind far
 
 The structural elements of modern wind turbines, such as the tower and the blades, compose a dynamic system subject to important elastic deformations. 
 Modeling an operating wind turbine therefore requires rigid body dynamics and nonlinear elastic deformations. 
-All together, various approaches were developed to model the structural dynamics of wind turbines: modal analysis, multibody methods and finite element methods (FEM). 
+Altogether, various approaches were developed to model the structural dynamics of wind turbines: modal analysis, multibody methods and finite element methods (FEM). 
 At the stage of preliminary designs, modal approaches can be used to represent the dynamics under linear assumptions \citep{hegseth_2019_modal_FOWT}. 
 Then, the tower's natural frequencies assessed by a modal analysis can be compared with the wind, waves, and the rotor's frequencies. 
 As illustrated in \fig{fig:modal_analysis}, the structure's natural frequency (denoted by $f_0$) should not coincide with the main excitation frequencies to avoid critical dynamic resonance.
@@ -450,8 +450,8 @@ The \textit{soft-stiff} design strategy places the structure's natural frequency
 However, modal analysis does not model transient loading phases and their corresponding non-linearities, which is crucial beyond early design. 
 For a higher fidelity, simulations in the time domain using flexible multibody approaches are commonly used to describe the nonlinear dynamics \citep{holm_2009_multibody,alsolihat_2018_flexible_multibody}. 
 DIEGO implements such an approach by combining rigid multibody dynamics with a deflection model based on Lagrangian equations \citep{milano_thesis_2021}. 
-Note that for floating wind turbines modeling, a preliminary step of rigid body dynamics is added to define the coordinate system of the floater. 
-\citet{otter_2022_owt_modeling_review} reviews the state-of-the-art of numerical and experimental modelling techniques for multi-physics OWT systems. 
+Note that for floating wind turbine modeling, a preliminary step of rigid body dynamics is added to define the coordinate system of the floater. 
+\citet{otter_2022_owt_modeling_review} reviews the state-of-the-art of numerical and experimental modeling techniques for multi-physics OWT systems. 
 
 
 %============================================================%
@@ -466,7 +466,7 @@ Then, the \textit{stress-number of cycles curve} of a specific material (S-N cur
 As the stress cycles identified on the results of the OWT simulation are not constant, a linear aggregation method called \textit{Miner's rule} gathers the elementary damages over the stress time series studied. 
 
 
-\paragraph{Stress cycles identification.}
+\paragraph{Stress cycle identification.}
 %------------------------------------------------------------%
 Offshore wind turbine simulators as DIEGO, deliver a time-dependent stress tensor. 
 To ease the manipulation of this tensor, the equivalent Von Mises stress is computed, turning a multiaxial stress into an equivalent uniaxial stress. 
@@ -486,7 +486,7 @@ This assumption simplifies the expression of the equivalent Von Mises stress:
 Stress cycles can now be identified on the equivalent Von Mises stress time series. 
 The usual method to identify fatigue stress cycles is called \textit{rainflow counting} \citep{dowling_1972}. 
 In this approach, fatigue stress cycles are only defined by their amplitude (also called ``range'') and mean value, regardless of their chronology. 
-Rainflow counting returns a list of stress ranges identified denoted by $s$ in the following. 
+Rainflow counting returns a list of stress ranges identified and denoted by $s$ in the following. 
 
 
 \paragraph{S-N curve.}
@@ -495,7 +495,7 @@ The S-N curve is also called the ``W\"oler curve'' after the pioneer work of Aug
 As a result of repeated fatigue experiments, this tool determines the number of similar stress cycles necessary to reach a fatigue ruin for a defined stress cycle amplitude. 
 Its values depend on the material studied and on external conditions (i.e., in the offshore industry, the S-N curves distinguish the fatigue in the air vs. underwater). 
 
-A well admitted simplification of the S-N curve is to consider it as log-linear\footnotemark on two segments:
+A well-admitted simplification of the S-N curve is to consider it as log-linear\footnotemark on two segments:
 \begin{equation}
 \log(N_{\mathrm{c}}(s)) = \left\{
     \begin{array}{ll}
@@ -510,7 +510,7 @@ and $s_{\mathrm{e}}$ is the stress range axis of the intersection of the two log
 
 \footnotetext{The logarithms related to the S-N curves in this document are logarithms in base 10.}
 
-The expression of this curve in two linear segments arise from the concept of endurance limit of a material, $s_{\mathrm{e}}$, under which the effect of fatigue on a material should be considerably smaller. 
+The expression of this curve in two linear segments arises from the concept of endurance limit of a material, $s_{\mathrm{e}}$, under which the effect of fatigue on a material should be considerably smaller. 
 According to \cite{dnv_fatigue_2016}, the S-N curve is altered for welded tubular joints by taking into account the tube's thickness:
 \begin{equation}
 N_{\mathrm{c}}(s) = \left\{
@@ -521,7 +521,7 @@ N_{\mathrm{c}}(s) = \left\{
 \right.
 \end{equation}
 With $t_{\mathrm{ref}}$ the reference thickness (for tubular welded joints $t_{\mathrm{ref}}$ = 25 mm); $t$ the plate thickness, and $h$ the thickness exponent. 
-The numerical values considered in the present work derive from the Section 2.4.6 of \citet{dnv_fatigue_2016}, reproduced in Table \ref*{tab:sn_table}. 
+The numerical values considered in the present work derive from Section 2.4.6 of \citet{dnv_fatigue_2016}, reproduced in Table \ref*{tab:sn_table}. 
 
 \begin{table*}[h]
     \centering
@@ -549,7 +549,7 @@ Where the material's yield stress is denoted by $R_m$ and the endurance limit by
 The Haigh diagram represented in the \fig{fig:haigh_diagram} is a slice of the three-dimensional envelope for fixed values of fatigue endurance (i.e., number of cycles). 
 By comparing the two models visually, the Goodman line is more conservative and is mostly used in the literature. 
 Further discussion in the field of wind turbines was proposed in the early 2000s with a focus on the fatigue endurance of glass fiber materials \citep{sutherland_2000_fatigueWT}. 
-In the present work, the non-zero correction presented above are not considered as the values of mean stress were found to be negligible compared to the yield stress of the steel material studied. 
+In the present work, the non-zero correction presented above is not considered as the values of mean stress were found to be negligible compared to the yield stress of the steel material studied. 
 
 \begin{figure}
     \centering
@@ -576,13 +576,13 @@ In the following, the cumulative damage is computed without binning, as defined 
 
 Spectral methods were also introduced to quantify fatigue damage in the late 80s. 
 The main idea is to infer a PDF over the amplitudes of the stress cycles identified by rainflow counting, typically using a mixture of parametric distributions. 
-From this PDF, one can derive the fatigue endurance and therefore a cumulated damage (see further details in the review of \citealt{dirlik_2021}). 
+From this PDF, one can derive the fatigue endurance and the cumulated damage (see further details in the review of \citealt{dirlik_2021}). 
 In the context of wind turbine fatigue assessment, spectral approaches showed to be unsuited in some cases (e.g., for blades' fatigue \citealt{ragan_2007_dirlik_vs_miner}).  
-Overall, fatigue estimation in the time-domain does not represent important computational effort compared to the simulation of the wind turbine's physics. 
+Overall, fatigue estimation in the time domain does not represent an important computational effort compared to the simulation of the wind turbine's physics. 
 
 Nonlinear fatigue models were developed in the 90s \citep{fatemi_1998} to take into account the order in which the loading cycles were applied to the structure. 
-For offshore wind turbine applications, the recent work of \citet{rocher_2020_nonlinear_fatigue} studied a probabilistic version of a nonlinear fatigue models. 
-Unfortunately, this refined approach requires a larger computational effort and the calibration over experimental tests of various parameters \citep{freyssinet_2023_nonlinear_fatigue}.  
+For offshore wind turbine applications, the recent work of \citet{rocher_2020_nonlinear_fatigue} studied a probabilistic version of nonlinear fatigue models. 
+Unfortunately, this refined approach requires a larger computational effort and calibration over experimental tests of various parameters \citep{freyssinet_2023_nonlinear_fatigue}.  
 
 
 %============================================================%
@@ -591,7 +591,7 @@ Unfortunately, this refined approach requires a larger computational effort and 
 %============================================================%
 %============================================================%
 
-The design and operation of offshore wind turbines is at the intersection of various engineering, environmental and social considerations. 
+The design and operation of offshore wind turbines are at the intersection of various engineering, environmental and social considerations. 
 Regardless of the different bottom-fixed or floating technologies, OWTs are dynamically excited structures evolving in a harsh offshore environment.   
 To operate such assets over up to 25 years of lifespan, multiple aspects should be assessed, from soil modeling, studies of environmental impact, grid integration, manufacturing quality, port logistics, to marine growth management, and maintenance. 
 This section resumes the main types of OWT technologies, as well as the main design and operation practices.   
@@ -600,19 +600,19 @@ This section resumes the main types of OWT technologies, as well as the main des
 \subsection{Types of technologies and preliminary design}
 %============================================================%
 The multiple OWTs technologies developed over the last two decades can be gathered into two groups: bottom-fixed or floating technologies. 
-\fig{fig:FOWT_bottomfixed} and \ref{fig:FOWT_floating} respectively illustrates the different types of bottom-fixed or floating technologies. 
+\fig{fig:FOWT_bottomfixed} and \ref{fig:FOWT_floating} respectively illustrate the different types of bottom-fixed or floating technologies. 
 At this stage, the bottom-fixed solutions present more maturity while floating technologies are still transitioning from the phase of large demonstrators to industrial wind farms. 
-In France, the current development of offshore wind energy lead to the construction of the two first industrial projects (both managed by EDF Renewables). 
+In France, the current development of offshore wind energy has led to the construction of the two first industrial projects (both managed by EDF Renewables). 
 On the coast of Saint-Nazaire, 80 bottom-fixed wind turbines were built on monopile foundations, altogether producing up to 480 MW. 
 On the Mediterranean coast, the first French industrial floating project was recently installed 20 km offshore the coast of Marseille. 
-This pilot project, called ``\textit{Provence grand large}'', is composed of three turbines operating on so called ``tension-leg platforms'', delivering 25 MW of nominal power.     
+This pilot project, called ``\textit{Provence grand large}'', is composed of three turbines operating on so-called ``tension-leg platforms'', delivering 25 MW of nominal power.     
 
-In order to lift water depth limitations associated with bottom fixed technologies (technical limit around 60 meters), floating pilot projects emerge across the world. 
+In order to lift water depth limitations associated with bottom fixed technologies (technical limit around 60 meters), floating pilot projects have emerged across the world. 
 However, the wind energy industry still tests different floating technologies in terms of cost efficiency and durability (as listed in \citealt{mackinnon_2022_FOWT_table}). 
 An example of some farm projects with different types of technologies is described hereafter: 
 \begin{itemize}
-    \item \textbf{Semi-submersible}: a pilot project of three 10MW turbines called ``\textit{les éoliennes du Golfe du Lion}'' in the south of France relies on a semi-submersible technology developped by the company Principle Power \citep{cermelli_2018_windfloat}.   
-    \item \textbf{Tension-leg}: a pilot project of three 8MW turbines called ``\textit{Provence grand large}'' exploits tension-leg platforms co-developped between the IFPEN national laboratory and the company SBM \citep{caille_2017_TPL_IFPEN}. 
+    \item \textbf{Semi-submersible}: a pilot project of three 10MW turbines called ``\textit{les éoliennes du Golfe du Lion}'' in the south of France relies on a semi-submersible technology developed by the company Principle Power \citep{cermelli_2018_windfloat}.   
+    \item \textbf{Tension-leg}: a pilot project of three 8MW turbines called ``\textit{Provence grand large}'' exploits tension-leg platforms co-developed between the IFPEN national laboratory and the company SBM \citep{caille_2017_TPL_IFPEN}. 
     \item \textbf{Barge}: a pilot project of three 10MW turbines called ``EOLMED'' uses the floater developped by the company Ideol \citep{guignier_2016_ideol}. 
     \item \textbf{Spar}: the Norwegian oil and gas company Equinor chose the spar technology \citep{driscoll_2016_hywind} to equip its floating wind farm of 88MW, named ``Hywind Tampen''. 
 \end{itemize}
@@ -636,22 +636,22 @@ An example of some farm projects with different types of technologies is describ
 
 
 The turbines installed offshore over bottom-fixed foundations or floating structures present the same properties and components. 
-As described in \fig{fig:owt_diagram}, the structure of a wind turbine is composed of blades made in composite materials, while the tower, the transition peace and foundation (e.g., monopile) are made out of steel. 
+As described in \fig{fig:owt_diagram}, the structure of a wind turbine is composed of blades made of composite materials, while the tower, the transition piece and the foundation (e.g., monopile) are made out of steel. 
 The steels used for the foundation and the tower are typical structural steels (i.e., steels with low carbon concentration such as the S355). 
 
 Inside the nacelle, the gearbox adapts the rotation speed to suit the energy conversion system (i.e., generator). 
 To improve the reliability of the components, manufacturers offer without gearboxes, called ``direct-drive''. 
 This technology is relevant offshore, as the maintenance constraints are higher. 
-However, the corresponding generators used in this situation operate at lower rotation speed. 
-Adapting the generators significantly increase their weight and requires the use of larger permanent magnets increasing their price.   
+However, the corresponding generators used in this situation operate at a lower rotation speed. 
+Adapting the generators significantly increases their weight and requires the use of larger permanent magnets increasing their price.   
 
-The construction of an offshore wind farm requires several years of project planning, administrative procedures, consultation of the public opinion, and design. 
-Internationals standards define the recommended practices and requirements related to the design and operation of OWTs. 
-Among them, the IEC 61400 is subdivided in many parts, including the general one \citep{iec_2019} and other parts detailing specific topics.       
+The construction of an offshore wind farm requires several years of project planning, administrative procedures, consultation with public opinion, and design. 
+International standards define the recommended practices and requirements related to the design and operation of OWTs. 
+Among them, the IEC 61400 is subdivided into many parts, including the general one \citep{iec_2019} and other parts detailing specific topics.       
 To validate the structural integrity of a wind turbine design, the standards recommend simulating the behavior of the OWT (using the methods described in Section~\ref{sec:owt_modeling}) for many environmental conditions, called ``design load cases'' (DLC). 
 As the environmental conditions depend on the site studied, the standards provide generic DLCs depending on a rough classification of the environmental conditions. 
-Following the terminology in civil engineering, the structure is designed for ``fatigue limit states'' (FLS) and ``ultimate limit states'' (ULS) with respect to the environmental conditions. 
-For fatigue, advanced sampling methods relying on environmental data measured on site will be introduced in Chapter 4. 
+Following the terminology in civil engineering, the structure is designed for ``fatigue limit states'' (FLS) and ``ultimate limit states'' (ULS) with respect to environmental conditions. 
+For fatigue, advanced sampling methods relying on environmental data measured on-site will be introduced in Chapter~\ref{chpt:4}. 
 Beyond the main solicitations resulting from environmental loading, various aspects should be considered around offshore wind turbines. 
 
 \begin{figure}
@@ -683,11 +683,11 @@ The accurate geotechnical description of an offshore site plays an important rol
 The seabed soil properties are far from uniform in a wind farm, forcing the designer to adapt the foundations within a farm. 
 Prior to the installation, geotechnical surveys and soil testing are conducted to assess parameters such as soil composition, density, strength, and seabed stability. 
 
-To model the dynamic behavior of foundations, certification companies adapted their the methods from the oil \& gas industry to the offshore wind energy \citep{dnv_2018_soil}. 
+To model the dynamic behavior of foundations, certification companies adapted their methods from the oil \& gas industry to offshore wind energy \citep{dnv_2018_soil}. 
 For monopile foundations, the ``$p-y$'' method is often used to model soil-structure interactions. 
 Assuming that these interactions are purely lateral, this method defines a set of non-linear lateral springs along the foundation's height.  
 Together, the springs model the relation between the soil resistance ``$p$'' and the lateral displacement ``$y$''. 
-Generally speaking, monopile foundations for OWT tend to be more rigid than for oil \& gas platforms, as the cyclic loading on wind turbines induces more fatigue (see the case-study presented in \citet{le_2014_geotech_casestudy}).  
+Generally speaking, monopile foundations for OWT tend to be more rigid than for oil \& gas platforms, as the cyclic loading on wind turbines induces more fatigue (see the case study presented in \citet{le_2014_geotech_casestudy}).  
 However, various contributions in wind energy extended the use of $p-y$ curves to the case of multidirectional and irreversible displacements \citep{lovera_2019_thesis}. 
 In summary, geotechnical considerations are essential for offshore wind turbine design, and the variability of soil properties within a wind farm necessitates a tailored approach to foundation design. 
 Finally, the consideration of uncertainties in this field is still an open research topic \citep{reale_2021_OWT_soil_uncertainties}.
@@ -708,14 +708,14 @@ To limit its impact on the reliability of OWTs, this phenomenon is addressed wit
 %------------------------------------------------------------%
 The large-scale erosion of seabed sediment around bottom-fixed offshore wind turbine foundations, also called ``global scour'', poses different problems. 
 The stability of the foundation is first reduced, potentially leading to tilting. 
-Moreover, the load distributions changes, causing uneven stresses and increased fatigue. 
+Moreover, the load distribution changes, causing uneven stresses and increased fatigue. 
 Finally, submarine cable exposure increases the risk of damage and electrical faults. 
 As global scour is a critical element of the long-term OWT reliability, various mitigation measures are reviewed in \citet{fazeres_2021_scour}, including scour protection, and scour-robust foundation design.
 
 
 \paragraph{Port logistics.}
 %------------------------------------------------------------%
-In the installation and maintenance of such large scale systems, port logistics plays an important role considering the international supply chain involved. 
+In the installation and maintenance of such large-scale systems, port logistics plays an important role considering the international supply chain involved. 
 The coordination, transportation and assembly of massive wind turbine components, foundations, and supporting infrastructure requires meticulous planning and execution. 
 In accordance, the costs of handling operations and maintenance represent an important share of the \textit{levelized cost of energy} (LCOE) \citep{shields_2021_owt_lcoe}.  
 
@@ -727,18 +727,18 @@ Timing and synchronization are critical, as weather windows for handling operati
 
 \paragraph{Grid integration.}
 %------------------------------------------------------------%
-Unlike traditional centralized energy productions plants (i.e., nuclear and fossil), wind energy has considerable impact on the grid management. 
+Unlike traditional centralized energy production plants (i.e., nuclear and fossil), wind energy has a considerable impact on grid management. 
 The intermittency of offshore wind generation is driven by variable wind conditions, which disrupts the electricity supply \citep{heier_2014_grid_integration}. 
 Then, grid balancing becomes more complex as variable and distributed production sources are introduced.  
-Wind turbine integration often require more flexibility from the grid, resulting in grid infrastructure upgrades (e.g., energy storage) and advanced grid management. 
+Wind turbine integration often requires more flexibility from the grid, resulting in grid infrastructure upgrades (e.g., energy storage) and advanced grid management. 
 
 
 \paragraph{Environmental impact and social acceptance.} 
 %------------------------------------------------------------%
 The fast development of offshore wind turbines in Europe raises questions regarding environmental and social impact. 
-In their review, \citet{galparsoro_2022_owt_ecological_impact} showed that the installation and operation was shown to disrupt marine ecosystems.  
-Further studies should be realized to better understand the reliance of the ecosystems to this change. 
-This industry also affects other marine activities (e.g., fishing or tourism), and costal landscapes, which need to be discussed during the regional marine spacial planning. 
+In their review, \citet{galparsoro_2022_owt_ecological_impact} showed that the installation and operation were shown to disrupt marine ecosystems.  
+Further studies should be realized to better understand the reliance of the ecosystems on this change. 
+This industry also affects other marine activities (e.g., fishing or tourism), and coastal landscapes, which need to be discussed during the regional marine spatial planning. 
 Finally, social acceptance of offshore wind projects varies across Europe, often split between local disturbances and the regional economic activity generated.  
 
 
@@ -748,7 +748,7 @@ The manufacturing of structural wind turbine components is subject to several un
 For example, the manufacturing process of composite blades can lead to inconsistencies in the final product. 
 Imperfections in the composite material, like air pockets or delamination, can weaken the blades and reduce their lifespan. 
 Additionally, variations in manufacturing processes can result in differences in blade weight, which impacts the turbine's performance. 
-Regarding steel components, OWTs are mostly assembled by bolted and soldered joint. 
+Regarding steel components, OWTs are mostly assembled by bolted and soldered joints. 
 Inconsistent soldering, variations in material properties, and potential flaws in the joints can compromise the structural integrity of OWTs \citep{veers_2019_review}. 
 These uncertainties in manufacturing quality can pose significant challenges in ensuring the reliability and longevity of the structures. 
 Note that at the design phase, \textit{stress concentration factors} are defined by standards to take into account the local change in material properties created by soldering. 
@@ -759,20 +759,20 @@ Rigorous quality control, material testing, and manufacturing standards are esse
 %------------------------------------------------------------%
 
 To ensure the continued performance and availability of wind turbines, advanced maintenance planning is essential. 
-Maintenance activities involve inspections, repairs, component replacements, and addressing issues as corrosion, or electrical faults. 
-Preventive maintenance strategies (reviewed by \citet{ren_2021_owt_maintenance}) minimize the asset's unavailability and extends its lifespan. 
+Maintenance activities involve inspections, repairs, component replacements, and addressing issues such as corrosion, or electrical faults. 
+Preventive maintenance strategies (reviewed by \citet{ren_2021_owt_maintenance}) minimize the asset's unavailability and extend its lifespan. 
 
 Once the wind farms reach their planned lifetime (typically between 20--25 years), the operator has the choice between decommissioning, ``repowering'', or ``revamping'' the assets. 
 Usually, revamping implies an intermediate renovation of the WT. 
 In most cases, the underperforming major components are replaced while the structural components are kept. 
-Alternatively, repowering is a strategy reusing the foundations of a wind farm to install brand new furbines. 
-This approach is often an opportunity to increase the scale and performances of the old turbines. 
+Alternatively, repowering is a strategy for reusing the foundations of a wind farm to install brand-new turbines. 
+This approach is often an opportunity to increase the scale and performance of the old turbines. 
 
-As the first generation of wind farms currently reach their end-of-life, an important problematic raises from recycling large amounts of blades made out of composite materials. 
+As the first generation of wind farms currently reach their end-of-life, an important problem arises from recycling large amounts of blades made out of composite materials. 
 Different processes for recycling composite material are reviewed in \citet{jensen_2018_blade_recycling}, including mechanical, pyrolysis and chemical techniques. 
 However, recycling composites is a complex and energy-consuming operation, that needs to be further studied. 
 The recent lifecycle study of floating OWT in the Mediterranean region by \citet{pulselli_2022_FOWT_lifecycle} showed that effective maintenance and 
-proper decommissioning planning are essential for ensuring cost-effective yet durable lifecycle management.  
+proper decommissioning planning is essential for ensuring cost-effective yet durable lifecycle management.  
 
 
 
@@ -784,7 +784,7 @@ proper decommissioning planning are essential for ensuring cost-effective yet du
 %============================================================%
 
 Following the general diagram of uncertainty quantification in \fig{fig:UQ_methodo}, this section focuses on the definition of the uncertain inputs and their corresponding probabilistic model (step B). 
-In our case, the generic term of ``inputs'' refers to the inputs to the wind turbine numerical model illustrated in \fig{fig:owt_chained_model}, which will be considered as random afterwards. 
+In our case, the generic term of ``inputs'' refers to the inputs to the wind turbine numerical model illustrated in \fig{fig:owt_chained_model}, which will be considered as random afterward. 
 
 The random variables studied in this work are split into two groups (assumed independent) which are respectively called \textit{environmental variables} and \textit{system variables}. 
 First, the environmental variables are a collection of variables characterizing the long-term metocean conditions near a wind farm.
@@ -792,7 +792,7 @@ Even if the associated random vector presents a complex dependence structure, th
 
 The second group of uncertain inputs is related to the wind turbine system. 
 A wide range of uncertainties can be taken into account in such systems, such as material properties, manufacturing quality, soil conditions, control error, corrosion, marine growth, aerodynamic damping, etc.  
-Among them, a restricted list of four variables are kept according to sensitivity analysis results from the literature and expert knowledge. 
+Among them, a restricted list of four variables is kept according to sensitivity analysis results from the literature and expert knowledge. 
 %The present section defines the two groups of random variables, including a focus on the definition of probabilistic S-N curves. 
 
 
@@ -802,14 +802,14 @@ Among them, a restricted list of four variables are kept according to sensitivit
 
 During the planning and operation of a wind farm project, the metocean conditions are studied using different sources of information. 
 At the early stage, datasets generated by fine mesoscale numerical simulation can be used to assess the wind potential. 
-This was typically the case during the call for tenders\footnote{\url{https://eolbretsud.debatpublic.fr/}} issued by the French government regarding the construction of two floating offshore wind farm in the south coast of Brittany (of respectively 250 and 500 MW of nominal power). 
-Open-access environmental data of the sea-states in this reagion were available, as a result of mesoscale simulations \citep{raoult_2018_anemoc3} realized by EDF R\&D.    
-In a second time, the local conditions are measured using a meteorological mast with wind speed cup anemometers at different heights and wave boys are generally installed in the vincity of the future farm. 
+This was typically the case during the call for tenders\footnote{\url{https://eolbretsud.debatpublic.fr/}} issued by the French government regarding the construction of two floating offshore wind farms in the south coast of Brittany (of respectively 250 and 500 MW of nominal power). 
+Open-access environmental data of the sea-states in this region were available, as a result of mesoscale simulations \citep{raoult_2018_anemoc3} realized by EDF R\&D.    
+In a second phase, the local conditions are measured using a meteorological mast with wind speed cup anemometers at different heights and wave boys are generally installed in the vicinity of the future farm. 
 As a cheaper alternative to met masts, new measurement technologies such as floating LIDARs (standing for ``light detection and ranging'') were studied by \citet{gottschall_2017_floating_LIDAR}. 
 Then, different adequation methods between the local measures and the data obtained by mesoscale simulations were reviewed in \citet{sempreviva_2008_wind_assessment_review}.  
 Finally, after the installation of the turbines, the acquisition system (usually called SCADA, for ``supervisory control and data acquisition'') measures wind conditions with a sampling period of ten minutes. 
 
-In the present work, two wind farms projects are partially studied: the Teesside wind farm, operating in the North Sea, and the south Brittany floating project, at the stage of tenders call. 
+In the present work, two wind farm projects are partially studied: the Teesside wind farm, operating in the North Sea, and the south Brittany floating project, at the stage of tenders call. 
 Table \ref{tab:envi_variables} summarizes the variables considered as random hereafter. 
 The inference of such data will be discussed in Chapter \ref{chpt:3} of this manuscript. 
 Note that the environmental data resulting from the SCADA system of the Teesside wind farm is confidential, and will be represented as anonymized data in the following. 
@@ -838,10 +838,10 @@ Note that the environmental data resulting from the SCADA system of the Teesside
 \subsection{System inputs}
 %============================================================%
 As mentioned earlier, multiple parameters in a wind turbine system can be considered as uncertain. 
-Our study focuses on the effects of uncertainties on the fatigue damage over the structure. 
+Our study focuses on the effects of uncertainties on fatigue damage over the structure. 
 Therefore, the literature review of the sensitivity analysis on offshore wind turbine fatigue helped us narrow down a few system variables. 
 \citet{petrovska_2022} explored the sensitivity analysis of many variables on the fatigue of a wind turbine in Teesside. 
-Even if the use of the Morris method is questionable, the results allowed to screen out some variables. 
+Even if the use of the Morris method is questionable, the results allowed us to screen out some variables. 
 For example, the uncertainties related to the corrosion, the wind shear exponent, or the nacelle mass showed a limited impact on the fatigue.     
 By crossing the conclusions of various research with the expert knowledge among partners from the HIPERWIND European project, the system variables considered uncertain in the following are summarized in Table \ref{tab:sys_variables}. 
 Each of them is assumed independent, with a marginal probabilistic model arising from the literature. 
@@ -893,7 +893,7 @@ Then, this uncertainty can be assessed as a pure post-processing of fatigue dama
 
 In wind energy standards, S-N curves for design are actually a conservative envelope of the measured fatigue endurance. 
 Annex F.7 from \citet{dnv_fatigue_2016} describes how to define a design S-N curve from fatigue measures. 
-Assuming that the fatigue endurance follows a Gaussian distribution (on logarithmic scale), the design S-N curve $N_c^{\mathrm{design}}(s)$ is the curve at two standard deviations $\sigma_{N_c}$ below the median curve. 
+Assuming that the fatigue endurance follows a Gaussian distribution (on a logarithmic scale), the design S-N curve $N_c^{\mathrm{design}}(s)$ is the curve at two standard deviations $\sigma_{N_c}$ below the median curve. 
 
 Using the design S-N curve given in Section 2.4.6 \citet{dnv_fatigue_2016} and the normality assumption, one can reconstruct the median S-N curve by taking: 
 \begin{equation}
@@ -916,21 +916,21 @@ Using the design S-N curve given in Section 2.4.6 \citet{dnv_fatigue_2016} and t
 %============================================================%
 %============================================================%
 
-This chapter proposed an overview on offshore wind turbine modeling and design. 
+This chapter proposed an overview of offshore wind turbine modeling and design. 
 It introduced concepts related to the description and simulation of metocean conditions. 
 The impact of the wake on the performance and on unsymmetrical fatigue loading was also explained.  
 Then, the different theories considered in OWT modeling were introduced such as aerodynamics, hydrodynamics, structural dynamics and control. 
-A variety of softwares implementations exist for this purpose, but a special attention was brought on DIEGO a numerical model developed by EDF R\&D. 
+A variety of software implementations exist for this purpose, but special attention was brought to DIEGO, a numerical model developed by EDF R\&D. 
 As a perspective, uncertainty quantification could benefit from the different fidelities proposed to model OWT systems presenting very nonlinear transient phases. 
 
 To understand the design of OWTs, the most common technologies of bottom-fixed and floating turbines were presented. 
 Then, a focus on a few critical topics to be considered during design and exploitation was proposed. 
-In the light of the previous elements, the variables considered as random in this work were listed with a particular focus on probabilistic fatigue.   
+In light of the previous elements, the variables considered random in this work were listed with a particular focus on probabilistic fatigue.   
 
-This growing industry faces various challenges, for example related to the important use of primary commodities, the cohabitation of offshore dynamic structures with an ecosystem, composite materials recycling, etc. 
-Uncertainty quantification is a tool to understanding some of these problematics, however, many uncertainties are hard to characterize and quantify. 
+This growing industry faces various challenges, for example, related to the important use of primary commodities, the cohabitation of offshore dynamic structures with an ecosystem, composite materials recycling, etc. 
+Uncertainty quantification is a tool for understanding some of these problems, however, many uncertainties are hard to characterize and quantify. 
 For example, manufacturing quality issues were revealed by Siemens Gamesa\footnotemark regarding wrinkles on the surface of some blades. 
 
 
-\footnotetext{L. Pitel and R.Millard. (August 7 2023). Siemens Energy warns of €4.5bn loss from ailing wind turbine division. \textit{Finacial Times}. \url{https://www.ft.com/content/df8947cd-4bab-46ff-804e-b28de4b5a0f0}}
+\footnotetext{L. Pitel and R.Millard. (August 7, 2023). Siemens Energy warns of €4.5bn loss from ailing wind turbine division. \textit{Finacial Times}. \url{https://www.ft.com/content/df8947cd-4bab-46ff-804e-b28de4b5a0f0}}
 

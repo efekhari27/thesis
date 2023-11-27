@@ -23,7 +23,7 @@ Note that the following tools can be used to estimate the marginals of a multiva
 %============================================================%
 \subsection*{Moments method}
 %============================================================%
-The moments method aims at looking for a parametric distribution with density $f_X(\btheta)$, whose first moments (e.g., $m(\btheta)$ and $\sigma^2(\btheta)$) match 
+The moment's method aims at looking for a parametric distribution with density $f_X(\btheta)$, whose first moments (e.g., $m(\btheta)$ and $\sigma^2(\btheta)$) match 
 the empirical moments of the sample $X_n$ (e.g., $\what{m}_{X_n}$ and $\what{\sigma}^2$). After computing the empirical moments: 
 \begin{equation}
     \what{m}_{n} = \frac1n \sum_{i=1}^{n} x^{(i)}, \qquad \what{\sigma}^2_n = \frac{1}{n-1} \sum_{i=1}^{n} \left(x^{(i)} - \what{m}_{X_n}\right)^2,
@@ -35,7 +35,7 @@ Moreover, this technique is sensitive to the possible biases in the estimation o
 %============================================================%
 \subsection*{Maximum likelihood estimation}
 %============================================================%
-Maximum likelihood estimation (MLE) is a popular alternative the moments method. 
+Maximum likelihood estimation (MLE) is a popular alternative to the moments method. 
 Similarly, it aims at maximizing a given correspondence metric between the dataset $X_n$ and a parametric distribution with density $f_X(\btheta)$.
 This metric is the \textit{likelihood} function, defined as:
 \begin{equation}
@@ -48,7 +48,7 @@ The goal is then finding the optimal vector $\what{\btheta}^*$ of parameters min
 \end{equation}
 
 Remark that the quick analytical results from the moment method can be used as a starting point of the MLE optimization. 
-\elias{Asymptotic behaviors of this method are decribed in: add ref}
+\elias{Asymptotic behaviors of this method are described in: add ref}
 \elias{This method can be applied to censored data in the field of survival analysis. Add ref}
 
 \begin{example}
@@ -78,7 +78,7 @@ The empirical CDF is a cumulative stair-shaped representation of the sorted samp
     \what{F}_X(x) = \frac1n \sum_{i=1}^{n} \1_{\left\{x^{(i)} \leq x\right\}}.
 \end{equation}
 
-A histogram consists in sorting and gathering the observations in a sample $X_n$ into a finite number of categories. 
+A histogram consists of sorting and gathering the observations in a sample $X_n$ into a finite number of categories. 
 These categories are called bins and each regroups the same number of observations (identical binwidth). 
 The number of bins is the only tunning parameter of this method. 
 Its definition has a great impact on the visual consistency of the plot, therefore, many rules exist to define it.
@@ -121,7 +121,7 @@ Two quantitative goodness-of-fit criteria are commonly used to assess parametric
 The likelihood as a goodness-of-fit criterion should only be applied to the same family of distributions. 
 Otherwise, the comparison would unfairly advantage distributions with a large number of degrees of freedom.
 The two following criteria are metrics based on the likelihood with a correction related to the number of degrees of freedom of the distribution. 
-Moreover, let us remind that more flexible models will require more data to provide a robust estimation. 
+Moreover, let us remember that more flexible models will require more data to provide a robust estimation. 
 
 The AIC and BIC are expressed as follows:
 \begin{equation}
@@ -147,7 +147,7 @@ The quantile-quantile plot (also called QQ-plot) is a graphical tool providing a
 It compares the CDF of the fitted model with the empirical CDF of the sample $X_n$.
 To do so, it represents a scatterplot of the empirical quantiles (i.e., the ranked observations), against the quantiles of the fitted model at the levels 
 $\left\{\alpha^{(i)}\right\}_{i=1}^n = \left\{\what{F}_X(x^{(i)})\right\}_{i=1}^n$.
-The following \fig{fig:qqplot_kde} is a QQ-plot of the model fitted in \elias{Example xx}. The closer the scatter plot gets to the first bisector line the best the fit is.
+The following \fig{fig:qqplot_kde} is a QQ-plot of the model fitted in \elias{Example xx}. The closer the scatter plot gets to the first bisector line the better the fit is.
 
 \begin{figure}[ht]
     \centering

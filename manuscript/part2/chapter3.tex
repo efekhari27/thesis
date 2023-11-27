@@ -23,8 +23,8 @@
 %============================================================%
 %============================================================%
 The main sources of solicitation in offshore design reside in the metocean conditions. 
-To accurately verify a structural design against the joint wind and wave conditions, these random excitations must be carefully modelled. 
-Offshore structures are usually certified against ultimate limit states (related to the occurrence of extreme metocean conditions) and fatigue limit states (related the average fatigue over the metocean conditions). 
+To accurately verify a structural design against the joint wind and wave conditions, these random excitations must be carefully modeled. 
+Offshore structures are usually certified against ultimate limit states (related to the occurrence of extreme metocean conditions) and fatigue limit states (related to the average fatigue over the metocean conditions). 
 In this context, the probabilistic framework is typically used to model the joint distribution of random variables describing the metocean conditions (listed in Section~\ref{sec:owt_uncertainties}). 
 
 Note that a given probabilistic model might describe well the central behavior of the environmental distribution but not its tail behavior (and vice-versa).   
@@ -37,13 +37,13 @@ Second, their dependence structure is complex, making the probabilistic modeling
 
 This chapter explores different aspects of the environmental conditions' uncertainty quantification. 
 The theory of some nonparametric copulas is introduced before their use in metocean conditions inference. 
-A semiparametric approach is applied on the South Brittany data, mixing parametric modeling of the marginals with nonparametric modeling of the copula. 
+A semiparametric approach is applied to the South Brittany data, mixing parametric modeling of the marginals with nonparametric modeling of the copula. 
 To visually analyze multivariate distributions, the \textit{copulogram} is a new tool that decomposes the marginal effects and the dependence structure of a joint distribution. 
 
 At the scale of a wind farm, each turbine perceives different metocean conditions as the wake of other turbines creates wind perturbations. 
 To study this perturbation, an engineering wake model (see Section~\ref{sec:222}) was used to obtain one perturbed environmental distribution per turbine. 
-This work applies a kernel-based discrepancy (the maximum mean discrepancy) to compare wake induced perturbations. 
-In a second time, this discrepancy is used to gather wind turbines perceiving similar perturbations. 
+This work applies a kernel-based discrepancy (the maximum mean discrepancy) to compare wake-induced perturbations. 
+In a second phase, this discrepancy is used to gather wind turbines perceiving similar perturbations. 
 This clustering can be used to perform uncertainty propagation at the farm scale by considering a few turbines with are representative of a cluster. 
 
 
@@ -58,21 +58,21 @@ However, an accurate representation of the uncertain inputs is of prime importan
 For example, the work of \citet{torre_2019_copula_reliability} demonstrates the influence of the dependence model on the estimation of rare event probabilities by studying the same problem with different copula models. 
 
 When inferring a probabilistic model over a multivariate dataset, one can decompose the problem into the fit of a set of marginals and the fit of a copula (see the Sklar Theorem \ref{thm:sklar}). 
-In the case of metocean conditions, the fit of the marginals is not problematic considering the amounts of data available. 
+In the case of metocean conditions, the fit of the marginals is not problematic considering the amount of data available. 
 However, the complex dependence structure appears to be more challenging. 
-Different strategies to model the dependence for multivariate distributions are shortly summarized hereafter: 
+Different strategies to model the dependence for multivariate distributions are briefly summarized hereafter: 
 \begin{itemize}
     \item \textbf{Vine copulas} (also known as pair copula) decompose the joint distribution as a product of conditioned bivariate copulas organized in a tree-like structure called a vine. 
     This approach proved to be very efficient, but it requires the definition of the vine and the bivariate parametric copulas \citep{joe2011dependence}. 
     \item \textbf{Conditional modeling} defines the joint distribution as a product of univariate conditional distributions. 
-    In practice, the parameter of a marginal are defined as a function of other marginals (see e.g., \citealt{vanem_fekhari_2023}). 
+    In practice, the parameter of a marginal is defined as a function of other marginals (see e.g., \citealt{vanem_fekhari_2023}). 
     %This approach is widely used to model metocean conditions, but its implementation is not always straightforward. 
-    \item \textbf{Multivariate KDE} is another way to capture the dependence together with marginal effects. As the dimension and the size of the dataset increase, this method become less tractable \citep{wand_jones_1994_kde}.  
+    \item \textbf{Multivariate KDE} is another way to capture the dependence together with marginal effects. As the dimension and the size of the dataset increase, this method becomes less tractable \citep{wand_jones_1994_kde}.  
     \item \textbf{Nonparametric copulas} are methods uniformly approximating an empirical copula without any assumption on a dependence structure. They will be further described and used for metocean conditions inference in the present chapter.    
 \end{itemize}
 
 \begin{remark}
-    The strategy referred as ``conditional modeling'' can in fact be expressed as a copula \citep{vanem_2016} for continuous variables. For example, in the bivariate case of a continuous random vector $\bX = (X_1, X_2)$ with PDF $f_\bX(\bx)$, CDF $F_\bX(\bx)$ and density copula $c$: 
+    The strategy referred to as ``conditional modeling'' can in fact be expressed as a copula \citep{vanem_2016} for continuous variables. For example, in the bivariate case of a continuous random vector $\bX = (X_1, X_2)$ with PDF $f_\bX(\bx)$, CDF $F_\bX(\bx)$ and density copula $c$: 
     \begin{subequations}
         \begin{align}
             f_\bX(\bx) &= f_{X_1}(x_1) \, f_{X_2|X_1}(x_2|x_1) = f_{X_1}(x_1) \, f_{X_2}(x_2) \, c\left(F_{X_1}(x_1), F_{X_2}(x_2)\right)\\
@@ -114,13 +114,13 @@ A copula is bounded by two functions according to the Fréchet-Hoeffding bounds.
     Where the upper bound $M$ is still a copula while the lower bound $W$ is only one for $d=2$.
 \end{theorem}
 
-The rank transform plays an essential role to understand copulas. 
+The rank transform plays an essential role in understanding copulas. 
 Considering a continuous random vector $\bX \in \iD_{\bx}$ and the sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \sim \bX$, its \textit{ranks} $\bR_n = \left\{\br^{(1)}, \dots, \br^{(n)}\right\} \in \N^{n}$ correspond to the indexes of its order statistics: 
 \begin{equation}
     r^{(i)}_j = n \, \what{F}_{X_j}(x_j^{(i)}) = \sum_{l=1}^n \1_{\left\{x^{(l)}_j \leq x^{(i)}_j\right\}}, \quad \forall j \in \{1, \dots d\}, i \in \{1, \dots n\},
     \label{eq:ranks}  
 \end{equation}
-where $\what{F}_{X_j}$ stands for the marginal empirical CDF associated to the random variable $X_j$.
+where $\what{F}_{X_j}$ stands for the marginal empirical CDF associated with the random variable $X_j$.
 
 
 \begin{theorem}[Rank-invariance]
@@ -130,7 +130,7 @@ where $\what{F}_{X_j}$ stands for the marginal empirical CDF associated to the r
 \end{theorem}
 
 Transforming in the ranks generally reduces the effect of outliers and ensures more robust estimates. 
-The invariance by rank transform of copulas allows the estimation of different \textit{dependence measures} in the ranked space. 
+The invariance by the rank transform of copulas allows the estimation of different \textit{dependence measures} in the ranked space. 
 
 
 %------------------------------------------------------------%
@@ -170,15 +170,15 @@ The \textit{upper/lower tail dependence} coefficients are defined as:
         \lambda_L(X_i, X_j) &= \lim_{\substack{u \rightarrow 0 \\ u>0}} \, \P\left(X_i \leq F_{X_i}^{-1}(u) | X_j \leq F_{X_j}^{-1}(u)\right) = \lim_{\substack{u \rightarrow 0 \\ u>0}} \left(\frac{C(u, u)}{1 - u}\right) 
     \end{align}
 \end{subequations}
-\cite{joe_2014} further discusses asymptotic limit and outlines the particular case of the bivariate Gaussian copula, for which the tail dependence measures are null, $\lambda_U = \lambda_L = 0$.
-Note that Kendall's tau and the tail dependence coefficients both have their associated plots, allowing to compare the dependence of two distributions \elias{add ref}.
+\cite{joe_2014} further discusses the asymptotic limit and outlines the particular case of the bivariate Gaussian copula, for which the tail dependence measures are null, $\lambda_U = \lambda_L = 0$.
+Note that Kendall's tau and the tail dependence coefficients both have their associated plots, allowing us to compare the dependence of two distributions \elias{add ref}.
 
 %============================================================%
 \subsection{Empirical and checkerboard copula}
 %============================================================%
 
 The \textit{empirical copula} was introduced by \citet{deheuvels_1979_empirical_copula}, as an estimator of the copula $C$ associated with the random vector $\bX$. 
-Since the normalized ranks are a creasing mapping that present uniform marginals by construction, they are a natural empirical representation of the density copula. 
+Since the normalized ranks are a creasing mapping that presents uniform marginals by construction, they are a natural empirical representation of the density copula. 
 Considering a sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \sim \bX$ with the respective ranks $\bR_n = \left\{\br^{(1)}, \dots, \br^{(n)}\right\}$, a definition of the empirical copula is: 
 \begin{equation}
     C_n(u_1, \dots, u_d) = \frac1n \sum_{i=1}^{n} \prod_{j=1}^{d} \1 \left\{ \frac{r_j^{(i)}}{n} \leq u_j \right\}, \quad  \bu = (u_1, \dots, u_d) \in [0, 1]^d
@@ -210,7 +210,7 @@ In the following, an approximation of the empirical copula with Bernstein polyno
 \subsection{Empirical Bernstein and Beta copula}
 %============================================================%
 
-A few elements on Bernstein polynomials and their corresponding approximation is reminded before introducing the empirical Bernstein copula.
+A few elements about Bernstein polynomials and their corresponding approximation are reminded before introducing the empirical Bernstein copula.
 
 \subsubsection{Bernstein polynomials and approximation}
 %------------------------------------------------------------%
@@ -259,7 +259,7 @@ where $F_{m, r}$ is the CDF of the beta distribution $\mathcal{B}(r, m-r+1)$ (al
 
 Overall, the EBC is a very versatile tool which able to approximate complex dependence patterns. 
 Moreover, Monte Carlo sampling on an EBC is straightforward and licit since it is a genuine copula. 
-As a drawback, the estimation accuracy of this nonparametric method heavily relies on the polynomial order tuning.   
+As a drawback, the estimation accuracy of this nonparametric method heavily relies on polynomial order tuning.   
 
 
 \subsubsection{Asymptotic behavior of the empirical Bernstein copula}
@@ -289,9 +289,9 @@ Therefore, high-dimensional problems should rather be divided into a product of 
     \label{fig:hmise}
 \end{figure}
 
-The polynomial order for EBC estimation is still a bottleneck which was studied over the years by different authors (see e.g., \citealt{janssen_2012_ebc,bouezmarni_2013_EBC_convergence,rose_2015,segers_2017}).  
+The polynomial order for EBC estimation is still a bottleneck that was studied over the years by different authors (see e.g., \citealt{janssen_2012_ebc,bouezmarni_2013_EBC_convergence,rose_2015,segers_2017}).  
 Meanwhile, other nonparametric approaches such as the ``penalized Bernstein'' and the ``penalized B-spline'' estimators were compared to the EBC and vine copulas in a benchmark realized by \citet{nagler_2017}. 
-The results showed that the most performant methods vary depending on the problem studied (for different dimension, sample sizes, strength of dependence). 
+The results showed that the most performant methods vary depending on the problem studied (for different dimensions, sample sizes, and strength of dependence). 
 Regarding tail dependence modeling, nonparametric approaches are generally limited, but recent contributions introduced Bootstrap procedures to better this aspect \citep{kiriliouk_2021_resampling}.
 
 
@@ -305,7 +305,7 @@ The three versions of the EBC correspond to different polynomial orders, assumin
 
 As the order increases, the bias between the EBC and the copula $C$ tends to be reduced. 
 Note that the second EBC in \fig{fig:ebc_illustration} (c) where $(m_1=m_2=n)$ is equivalent to the Beta copula. 
-Moreover, increasing the order beyond the sample size definitely overfits of the copula. 
+Moreover, increasing the order beyond the sample size definitely overfits the copula. 
 
 %\elias{possible alternative: 2D plots in two rows. Row 1: empirical copula/EBCn=5/EBCn=10. Row 2: empirical density copula/EBCn=5/EBCn=10.}
 
@@ -343,7 +343,7 @@ Moreover, increasing the order beyond the sample size definitely overfits of the
 %============================================================%
 %============================================================%
 In statistics, data visualization offers a wide set of tools to analyze data. 
-Multivariate data visualization is of great help to apprehend problems with dimension higher than two. 
+Multivariate data visualization is of great help in apprehending problems with dimensions higher than two. 
 In the context of continuous variables, let us consider the $n$-sized sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \sim \bX \in \iD_{\bx}\subseteq\R^d$. 
 The marginal samples of $\bX_n$ are denoted by $X_{n, j} = \{x_j^{(1)}, \dots, x_j^{(n)}\}, j\in \{1, \dots, d\}$.
 
@@ -357,13 +357,13 @@ This representation was used in sensitivity analysis to illustrate the connectio
 Alternatively, the ``pairwise plot'', also named ``generalized draftsman plot'', was initially introduced by \citet{hartigan_1975_splom} to draw a matrix of scatter-plots between all the pairs of marginal samples $\{X_{n, i}, X_{n, j}\}, i \ne j \in \{1, \dots, d\}^2$. 
 Because of the symmetry, the pairwise plot is usually represented on the lower triangle of the matrix. 
 Later on, statisticians improved the pairwise plot by adding a histogram (or KDE) of the marginal samples $X_{n, j} j \in \{1, \dots, d\}$ on the diagonal. 
-Additionally, the upper triangle was completed with the values of linear correlation for each pairs of marginal sample $\{X_{n, i}, X_{n, j}\}, i \ne j$. 
-This matrix of correlation coefficients is also know as ``correlogram''. 
+Additionally, the upper triangle was completed with the values of linear correlation for each pair of marginal samples $\{X_{n, i}, X_{n, j}\}, i \ne j$. 
+This matrix of correlation coefficients is also known as ``correlogram''. 
 Altogether, this matrix plot became known as the ``scatter plot of matrices'' (SPLOM). 
 
 However, the linear correlation coefficient is known to give a poor description of the dependence in nonlinear cases. 
-When analysis a continuous sample $\bX_n \sim \bX$, the Sklar theorem states that the dependence structure within the random vector $\bX$ has a unique expression with its $d$-copula $C$. 
-As mentioned in Section~\ref{sec:copula_prelims}, the component wise normalized ranks of the original sample $\bX_n$ define the empirical copula density $c_n$ (converging towards $C$ as $n$ increases).
+When analyzing a continuous sample $\bX_n \sim \bX$, the Sklar theorem states that the dependence structure within the random vector $\bX$ has a unique expression with its $d$-copula $C$. 
+As mentioned in Section~\ref{sec:copula_prelims}, the component-wise normalized ranks of the original sample $\bX_n$ define the empirical copula density $c_n$ (converging towards $C$ as $n$ increases).
 
 To the best of our knowledge, the \textit{copulogram} is a new multivariate data visualization tool improving the SPLOM by representing the empirical copula density $c_n$ on the upper triangle of the matrix plot. 
 This plot is an empirical decomposition of a multivariate sample in the vein of the Sklar theorem between marginals on the diagonal and copula on the upper triangle.
@@ -377,9 +377,9 @@ This code mostly relies on the Python package for data visualization \href{https
 The developments are tracked and archived in a GitHub repository\footnotemark and the package can be installed from the package-management system ``PyPI''. 
 
 Multiple visual options are offered by the \texttt{copulogram} package, as illustrated in the GitHub repository. 
-For example, the user can represent the univariate samples on the diagonal, or the bivariate samples in the triangles with kernel density estimation.  
+For example, the user can represent the univariate samples on the diagonal or the bivariate samples in the triangles with kernel density estimation.  
 Categorical variables can be used to assign different colors depending on the data class. 
-The colors can also vary depending on a continuous variable after defining a mapping between the values of this variable and a set of color (also called colorbar).
+The colors can also vary depending on a continuous variable after defining a mapping between the values of this variable and a set of colors (also called colorbar).
 
 
 \footnotetext{GitHub repository: \url{https://github.com/efekhari27/copulogram}}
@@ -424,7 +424,7 @@ In this setup, the random inputs are independent but they each present interesti
 
 A Monte Carlo sample with size $n=10^3$ is generated, $\bX_n \simiid \bX$, and evaluated such that $Y_n=g(\bx_n)$.  
 The copulogram of the input-output sample $(\bX_n, Y_n)$ is represented in \fig{fig:ishigami_copulogram}. 
-As expected, the scatter-plots between the inputs in the upper triangle are uniform (representing an independent density copula). 
+As expected, the scatter plots between the inputs in the upper triangle are uniform (representing an independent density copula). 
 
 In GSA, the work of \citet{poczos_2012_copulaMMD} studied the discrepancy between the empirical density copula $c_n(X_j, Y), j \in \{1, \dots, d\}$ and the independent copula to qualitatively assess the importance of $X_j$.  
 In the same vein, the paper of \citet{plischke_2019_copulaGSA} attempted to formalize a link between different GSA approaches based on copulas and to quantitative approaches as the Sobol' indices. 
@@ -451,7 +451,7 @@ In the same vein, the paper of \citet{plischke_2019_copulaGSA} attempted to form
 \section{Semiparametric inference of the South Brittany metocean conditions} \label{sec:32_inference}
 %============================================================%
 %============================================================%
-Metocean conditions have been long studied in costal and offshore engineering. 
+Metocean conditions have been long studied in coastal and offshore engineering. 
 Inferring multivariate probabilistic models on metocean data became essential in wind energy. 
 
 Numerous approaches are proposed in the literature to fit a model on environmental data. 
@@ -460,7 +460,7 @@ Nonparametric methods as the KDE were also applied in this context (e.g., \citea
 The nonparametric techniques generally struggle to model the distributions' tails, even if the tails are essential to qualify structures for ultimate events. 
 However, they are highly flexible and often easier to implement than parametric methods.
 
-In this section, a semiparamertic inference strategy is presented, composing some well-known parametric models for the marginals (e.g., Weibull distribution for the wind speed), with a highly flexible dependence modeling by the EBC. 
+In this section, a semiparametric inference strategy is presented, composing some well-known parametric models for the marginals (e.g., Weibull distribution for the wind speed), with a highly flexible dependence modeling by the EBC. 
 A metocean dataset is used to showcase the empirical Bernstein copula and its representation by the copulogram. 
 This dataset from the ANEMOC (Digital Atlas of Ocean and Coastal Sea States atlas, \citealp{raoult_2018_anemoc3}) gathers 32 years of preprocessed data 
 (at an hourly resolution) from a location off the coast of South Brittany, France. 
@@ -555,11 +555,11 @@ The statistic used is the maximum mean discrepancy, $\MMD(\what{\bX_n}, \, \bX_n
 For a given fitted joint distribution, this procedure is repeated 100 times to take into account the sampling variability. 
 
 In \fig{fig:sb_ebc_mmd}, MMD distributions are represented for different values of the EBC polynomial order, with $m\in\{5, 10, 20, 50, 100, 1000\}$. 
-The smallest the values of this dissimilarity measure, the closer the samples should be. 
+The smaller the values of this dissimilarity measure, the closer the samples should be. 
 Even if further developments could be implemented to improve the MMD estimation, these results are sufficient to set the EBC tuning at $m=100$. 
 Considering this setup, \fig{fig:sb_copulograms} represents the copulogram of a sample $\what{\bX_n}$ (in red), side by side with the copulogram of the learning set $\bX_n$ (in blue).  
 This semiparametric approach offers a lot of flexibility, which is essential when inferring such complete dependence structures. 
-As any nonparametric method, it should be used with caution when inferring distributions' tails.  
+As with any nonparametric method, it should be used with caution when inferring distributions' tails.  
 
 
 \begin{figure}[h]
@@ -581,7 +581,7 @@ As any nonparametric method, it should be used with caution when inferring distr
         \begin{subfigure}[b]{0.49\linewidth}
             \centering
             \includegraphics[width=\linewidth]{../numerical_experiments/chapter3/figures/SB_EBC_copulogram.png}
-            \caption{Monte Carlo sample (size $n=5000$), generated from the semiparamertic model fitted on the ANEMOC data (EBC $B_{\bm}(C_n)$ with $ \{m_j=100\}_{j=1}^d$).}
+            \caption{Monte Carlo sample (size $n=5000$), generated from the semiparametric model fitted on the ANEMOC data (EBC $B_{\bm}(C_n)$ with $ \{m_j=100\}_{j=1}^d$).}
         \end{subfigure}
         \vspace*{5pt} 
         \caption{Copulogram of the South Brittany metocean data.}
@@ -599,8 +599,8 @@ As any nonparametric method, it should be used with caution when inferring distr
 In this section, a semiparametric inference strategy was illustrated on a metocean dataset from a site off the coast of South Brittany, France. 
 This approach is pragmatic and offers a lot of flexibility. 
 In our case, the unimodal marginals are fitted by MLE while the multimodal ones are fitted by KDE. 
-Considering the complexity of the dependence, the EBC showed interesting results for large size samples. 
-It scapacity to extrapolate in the tails could be further studied \citep{heredia_2022_nonparam_copula} but this tool is an appropriate solution for general inference (for example needed for fatigue assessment). 
+Considering the complexity of the dependence, the EBC showed interesting results for large-size samples. 
+Its capacity to extrapolate in the tails could be further studied \citep{heredia_2022_nonparam_copula} but this tool is an appropriate solution for general inference (for example needed for fatigue assessment). 
 
 In the monograph of \citet{joe2011dependence}, the use of nonparametric methods is briefly discussed p.250. 
 The author recommends using nonparametric copulas when the marginals are well-behaved, but the dependence structure is nonlinear. 
@@ -618,27 +618,27 @@ In a wind farm, the wake mostly depends on the turbines' layout, the ambient win
 The resulting heterogeneous wind field in a wind farm can be simulated by numerical models with different fidelities (as discussed in Section~\ref{sec:222}). 
 
 In our case, simplified wake models (sometimes called ``dynamic wake meandering'', or ``engineering'' models, see e.g., \citealp{doubrawa_2020_benchmark}) are used to simulate the wind speed deficit and the added turbulence at each turbine.
-To recover a wake-perturbed wind distribution at each turbine, the ambient wind distribution is propagated thought a wake model. 
+To recover a wake-perturbed wind distribution at each turbine, the ambient wind distribution is propagated through a wake model. 
 Having different wind distributions naturally impacts the loading and should be considered during fatigue assessment at a farm scale. 
-Such heterogeneity is mostly considered by internation standards via empirical coefficients (also called ``effective turbulence''). 
+Such heterogeneity is mostly considered by international standards via empirical coefficients (also called ``effective turbulence''). 
 \citet{doubrawa_2023} compares the effective turbulence approach with dynamic wake meandering models and studies their impact on loading. 
 
 In practice, fatigue assessment on a turbine represents a computational effort. 
-As a consequence of wake modeling, each turbine present a different wind distribution, which implies repeating a fatigue assessment for every turbine. 
+As a consequence of wake modeling, each turbine presents a different wind distribution, which implies repeating a fatigue assessment for every turbine. 
 To make this computation tractable at a farm scale, the present section aims at building clusters of turbines similarly affected by the wake. 
 Then, fatigue assessment can be computed on a few turbines, each representing a cluster of turbines facing similar wake-modified wind loading. 
 The maximum mean discrepancy (MMD) is used as a statistical dissimilarity measure to compare the perturbed distributions induced by the wake. 
 
-This new approach is applied on a theoretical wind farm representing the recent call for tenders off the coast of South Brittany, France. 
+This new approach is applied to a theoretical wind farm representing the recent call for tenders off the coast of South Brittany, France. 
 The turbines considered are a modified version of the floating offshore wind turbine (FOWT) IEA-15MW (described in \citealp{kim_natarajan_2022}). 
 Figure~\ref{fig:SB-farm} illustrates the layout of the 25 FOWTs modeled in the following, the coordinates are normalized by the rotor's diameter $D$. 
 The spacing between turbines in this regular layout is equivalent to seven rotor diameters in the dominant wind direction and five rotor diameters in the orthogonal direction (i.e., crosswind). 
 
 To develop this approach on the South Brittany farm, the present section is structured as follows: 
-first the wake model and its corresponding uncertainty propagation are presented, 
+first, the wake model and its corresponding uncertainty propagation are presented, 
 then MMDs are estimated between the resulting empirical joint wind distributions, 
-and finally a simple clustering gathers turbines perceiving similar wake and set their representative turbines. 
-In the end, the 25 FOWT are split into four groups, whose representant can be used for fatigue assessment of the hole group. 
+and finally, a simple clustering gathers turbines perceiving similar wakes and defines their representative turbines. 
+In the end, the 25 FOWT are split into four groups, whose representatives can be used for the fatigue assessment of the whole group. 
 
 \begin{figure}
     \centering
@@ -661,7 +661,7 @@ Therefore, an engineering wake model based on the Farmshadow™ software (develo
 In this model, the floaters are considered to be rigid, and all degrees of freedom are considered (surge, sway and heave for the three translations and roll, pitch and yaw for the three rotations). 
 
 FarmShadow™ uses engineering wake models to simulate the wind field throughout the whole farm, starting from the most upstream WT and working downwards. 
-More precisely, the model used includes the ``super-gaussian'' approach for speed deficit \citep{blondel_2020}, a waked-induced turbulence according to \citet{quian_2018}, and superimposition following the linear sum approach defined by \citet{zong_2020}.    
+More precisely, the model used includes the ``super-gaussian'' approach for speed deficit \citep{blondel_2020}, waked-induced turbulence according to \citet{quian_2018}, and superimposition following the linear sum approach defined by \citet{zong_2020}.    
 Further assumptions regarding the hydro-statics loading, the effect of the mooring lines, and the wake model are defined in \citet{lovera_fekhari_2023}.
 
 
@@ -677,7 +677,7 @@ The wake model described earlier takes as input a set of variables describing th
 The uncertainties associated with the ambient wind conditions are represented by a random vector $\bX$ following the distribution $f_0$. 
 A parametric model has been fitted in \cite{vanem_fekhari_2023} using conditional probability density functions to capture the dependence structure, 
 but the semi-parametric inference proposed in Section~\ref{sec:32_inference} could have been an alternative. 
-Note that the missing turbulence intensity in the ANEMOC data from South Brittany were assumed to follow a lognormal distribution.   
+Note that the missing turbulence intensity in the ANEMOC data from South Brittany was assumed to follow a lognormal distribution.   
 The random vector $\bX$ gathers the following random variables:
 \begin{itemize}
     \item Mean wind speed ($U$) is the 10-min average horizontal wind speed at hub height.
@@ -691,8 +691,8 @@ In practice, a Monte Carlo sample $\bX_n={\bx^{(1)},..,\bx^{(n)}} \sim \bX$ (wit
 Since the model has a low computational cost, Monte Carlo sampling was affordable while giving strong convergence guarantees. 
 
 \fig{fig:FIGJointPerturbationSB} illustrates the perturbation of the wind distributions for three WT differently affected by the wake depending on their position in the farm (see Figure~\ref{fig:SB-farm}). 
-One can notice that the distribution of WT~25 (in orange) is very close to the ambient distribution (in black), as expected since this WT being located on the edge of the farm and facing the dominant wind direction. 
-Meanwhile, the distribution of WT~13 (in red) seems more affected by the wake, by getting a higher wind turbulence with lower wind speed. 
+One can notice that the distribution of WT~25 (in orange) is very close to the ambient distribution (in black), as expected since this WT is located on the edge of the farm and facing the dominant wind direction. 
+Meanwhile, the distribution of WT~13 (in red) seems more affected by the wake, by getting higher wind turbulence with lower wind speed. 
 This analysis can be completed with the two marginals in \fig{fig:FIGMarginalWSP} and \fig{fig:FIGMarginalTI}, both describing the ambient marginal distributions (in black) and wake-disturbed distributions. 
 In general, a small wind speed deficit is indicated by the small shifts of the probability density functions to the left on \fig{fig:FIGMarginalWSP}. 
 Also, a small added turbulence is noticeable with shifts of the PDFs to the right on \fig{fig:FIGMarginalTI}. 
@@ -747,7 +747,7 @@ In the following, the idea is to compare the ambient wind distribution $f_0$ to 
 %------------------------------------------------------------%
 \paragraph{Application to the South Brittany wind farm project}
 %------------------------------------------------------------%
-Once the joint perturbed distributions of each WT evaluated on a large Monte Carlo sample, their squared MMD with the ambient wind conditions can be computed. 
+Once the joint perturbed distributions of each WT are evaluated on a large Monte Carlo sample, their squared MMD with the ambient wind conditions can be computed. 
 \fig{fig:FIGWakeEffect} represents the squared MMD for each WT to quantify the wake-induced perturbation. 
 The values of squared MMD presented in this figure are estimated between two Monte Carlo samples with size $n=6000$. 
 A verification of their convergence is realized in terms of coefficient of variation. 
@@ -768,13 +768,13 @@ The aim of this section is to use the MMD as a metric to define clusters of turb
 Instead of comparing the wake-perturbed distributions with the ambient one, let us compare all the pairs of wake-perturbed distributions. 
 Considering all the WT $\{1, \dots, n_{WT}\}$ in the farm, and their respective wake-perturbed distributions $\{f_l'\}_{l=1}^{n_{WT}}$, let us define the symmetric matrix $D$ of MMD between every pair of perturbed distributions such that $D_{i, j} = \what{\mathrm{MMD}}^2(f_i', f_j')$. 
 
-Different unsupervised clustering techniques, such as hierarchical or centroid based methods were compared in \citet{lovera_fekhari_2023}. 
-The ``k-medoids'' \citep{park_2009} are a variation of the well known k-means that selects actual data points as centers (i.e., medoids). 
-In our case, this method not only gathers turbines with the same wind conditions, but it also determines a representative turbine for each cluster. 
+Different unsupervised clustering techniques, such as hierarchical or centroid-based methods were compared in \citet{lovera_fekhari_2023}. 
+The ``k-medoids'' \citep{park_2009} are a variation of the well-known k-means that selects actual data points as centers (i.e., medoids). 
+In our case, this method not only gathers turbines with the same wind conditions but also determines a representative turbine for each cluster. 
 
 Assuming a final number of clusters equal to five, \fig{fig:kmedoids} represents the clusters defined by the k-medoid method applied to the matrix $D$. 
 Let us notice that the results are rather coherent with the main wind orientation illustrated in the wind rose (see \fig{fig:SB-farm}). 
-Interestingly, the conclusion that emerged from comparing the wake-perturbed distributions to the ambient one (see \fig{fig:FIGWakeEffect}) are different from the ones obtained by comparing pairs of wake-pertubed distributions. 
+Interestingly, the conclusion that emerged from comparing the wake-perturbed distributions to the ambient one (see \fig{fig:FIGWakeEffect}) is different from the ones obtained by comparing pairs of wake-perturbed distributions. 
 Finally, the representative turbines are tagged with the mention ``r'' and could be used to perform a fatigue analysis. 
 
 
@@ -796,7 +796,7 @@ Even if higher-fidelity models could simulate this phenomenon more accurately, t
 The present model has a reasonable error and has a short execution (i.e., about a few minutes on a regular computer). 
 The resulting wake-perturbed distributions at each turbine were compared to each other using a kernel-based dissimilarity measure for distributions. 
 Using this scalar metric of perturbations created by the wake, clusters were built.  
-In a context of fatigue assessment at the farm scale, the computed clusters may reduce the computational effort by assessing one turbine per cluster.    
+In the context of fatigue assessment at the farm scale, the computed clusters may reduce the computational effort by assessing one turbine per cluster.    
 
 
 %============================================================%
@@ -806,15 +806,15 @@ In a context of fatigue assessment at the farm scale, the computed clusters may 
 %============================================================%
 
 In this chapter, different aspects of uncertainty quantification were applied to define the metocean conditions in a wind farm. 
-First, to infer a joint environmental distribution, a semiparamertic approach was applied to a large dataset from a site in South Brittany, France. 
-This semiparamertic approach combines parametric models of the marginals with nonparametric models of the copula such as the highly flexible empirical Bernstein copula.  
+First, to infer a joint environmental distribution, a semiparametric approach was applied to a large dataset from a site in South Brittany, France. 
+This semiparametric approach combines parametric models of the marginals with nonparametric models of the copula such as the highly flexible empirical Bernstein copula.  
 Second, to take into account the heterogeneous wind conditions inside a farm, a dynamic wake meandering model was developed for the South Brittany farm. 
 Then, the ambient joint environmental distribution was propagated through this model to recover a wake-perturbed environmental distribution per turbine.  
 
 The copulogram is a new data visualization tool based on the empirical copula, aiming at improving the description of nonlinear dependencies in datasets.  
 
 The maximum mean discrepancy is a kernel-based dissimilarity measure between multivariate distributions which was used throughout this chapter. 
-Either for testing the goodness-of-fit of the semiparamertic model fitted using the EBC, or as a measure of the perturbation occasioned by the wake on the wind conditions. 
+Either for testing the goodness-of-fit of the semiparametric model fitted using the EBC, or as a measure of the perturbation occasioned by the wake on the wind conditions. 
 In this context, the MMD allowed building clusters of turbines witnessing the same wind conditions. 
 As perspectives, the robustness of this metric to the choice of kernel could be further investigated as well as the goodness-of-fit of the EBC over distributions' tails. 
 After defining the probabilistic model of the environmental conditions, this uncertainty is ready to be propagated in a multiphysics wind turbine model as DIEGO. 

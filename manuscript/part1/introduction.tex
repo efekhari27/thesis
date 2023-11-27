@@ -27,7 +27,7 @@ Furthermore, the field presents several scientific challenges that often involve
 The wind energy community is focused on different objectives, including enhancing the design of floating offshore wind turbines, refining wind resource estimation techniques, and optimizing maintenance operations. 
 In general, several decisions are made throughout the lifespan of a wind turbine by its designer, installer, and operator, all while having only partial knowledge of certain physical phenomena. 
 Therefore, modeling and controlling the various sources of uncertainties associated with offshore wind energy proved to be a key success factor in this highly competitive industry.
-%The design of an offshore wind farm depends on multiple site parameters such as the water depth, soil properties, wind, waves and currents conditions, and the local community acceptance. 
+%The design of an offshore wind farm depends on multiple site parameters such as the water depth, soil properties, wind, waves and current conditions, and the local community acceptance. 
 %Fortunately, international standards regulate this activity and provide general engineering guidelines. 
 
 Overall, the offshore wind industry needs methods for uncertainty management regarding safety margins and industrial asset management (at the component, wind turbine, and overall wind farm levels) \citep{OWT_review_2016}. 
@@ -56,7 +56,7 @@ Uncertainty quantification aims at modeling and controlling uncertainties around
 To do so, a generic methodology has been proposed to quantify and analyze uncertainties between input and output variables of a numerical model \citep{rocquigny_2008}. 
 An overview of the mathematical tools used in this field is provided by \citet{sullivan_2015}. 
 This approach improves the understanding of a system, ultimately contributing to more robust decision-making. 
-Figure \ref{fig:UQ_methodo} illustrates the main step of the generic uncertainty quantification method, which are briefly summarized hereafter: 
+Figure \ref{fig:UQ_methodo} illustrates the main steps of the generic uncertainty quantification method, which are briefly summarized hereafter: 
 \begin{itemize}
     \item \textbf{Step A -- Problem specification}:     
     This step involves identifying the system under study and constructing a numerical model capable of precisely simulating its behavior. 
@@ -68,7 +68,7 @@ Figure \ref{fig:UQ_methodo} illustrates the main step of the generic uncertainty
     The objective of the second step is to identify and model all the sources of uncertainty related to the input variables. 
     Most of the time the uncertainty modeling is done in the probabilistic framework.
     \item \textbf{Step C -- Uncertainty propagation}:
-    This step consists in propagating the uncertain inputs through the computer model.  
+    This step consists of propagating the uncertain inputs through the computer model.  
     Consequently, the output of the numerical model (commonly scalar) also becomes uncertain. 
     The goal is to estimate a quantity of interest, which is a statistic related to the studied random output variable. 
     The uncertainty propagation method may differ depending on the quantity of interest targeted (e.g., central tendency, a quantile, a rare event probability, etc.).    
@@ -96,7 +96,7 @@ Figure \ref{fig:UQ_methodo} illustrates the main step of the generic uncertainty
 %============================================================%
 
 Risk and uncertainty management in the field of wind energy is a significant concern for the electric utility Électricité de France (EDF). 
-This thesis aims at adapting and applying the generic uncertainty quantification methodology to industrial offshore wind energy studies. 
+This thesis aims to adapt and apply the generic uncertainty quantification methodology to industrial offshore wind energy studies. 
 As such, this use case raises scientific challenges related to its specific characteristics, described in the following:
 \begin{itemize}
     \item The numerical model exploited in the present work consists of a series of numerical models executed sequentially. 
@@ -105,14 +105,14 @@ As such, this use case raises scientific challenges related to its specific char
     and finally a post-processing phase to obtain scalar quantities of interest, aggregated over the temporal outputs. 
     \item The complexity of this simulator, along with the high unit computational cost (about 40 minutes per simulation), requires the use of efficient sampling methods and high-performance computing systems. 
     In addition to the complexity associated with the numerical model, modeling the input uncertainties also represents a challenge. 
-    Indeed, the joint distribution associated to environmental conditions present a complex dependence structure.   
+    Indeed, the joint distribution associated with environmental conditions presents a complex dependence structure.   
     The quality of the inference step is critical as it directly impacts the conclusions of uncertainty propagation.
 \end{itemize}
 
-In order to apply the generic methodology for uncertainty quantification to the offshore wind turbine case, this thesis aims at answering the following questions: 
+In order to apply the generic methodology for uncertainty quantification to the offshore wind turbine case, this thesis aims to answer the following questions: 
 \begin{itemize}
     \item[\textbf{Q1.}] \textit{
-    How to accureately model the dependence structure associated with the joint environmental distribution? 
+    How to accurately model the dependence structure associated with the joint environmental distribution? 
     } (\ding{238} Step B)
     \item[\textbf{Q2.}] \textit{
     How to perform uncertainty propagation through a computationally expensive numerical chain uniquely based on an empirical description (measured data) of input uncertainties?
@@ -121,7 +121,7 @@ In order to apply the generic methodology for uncertainty quantification to the 
     How to estimate rare event probabilities related to the fatigue failure of offshore wind turbine structures?
     } (\ding{238} Step C)
     \item[\textbf{Q4.}] \textit{
-    How to assess and analyse the sensitivity of uncertain inputs regarding quantities of interest resulting from structural reliability (i.e., reliability-oriented sensitivity analysis)? 
+    How to assess and analyze the sensitivity of uncertain inputs regarding quantities of interest resulting from structural reliability (i.e., reliability-oriented sensitivity analysis)? 
     } (\ding{238} Step C')
 \end{itemize}
 
@@ -137,12 +137,12 @@ After a reminder of some mathematical concepts, the model specification step is 
 The different types and sources of uncertainties are then presented, along with their modeling within a probabilistic framework. 
 Uncertainty propagation depends on the estimated quantities of interest, therefore, one section addresses propagation methods for central tendency studies, 
 and another focuses on rare event probability estimation (a statistic related to the tails of output distributions). 
-The section dedicated to central tendency presents numerical integration, sampling, and design of experiments methods \citep{fang_liu_2018}. 
+The section dedicated to central tendency presents numerical integration, sampling, and design of experiment methods \citep{fang_liu_2018}. 
 The one about rare event probabilities introduces usual methods from the field of structural reliability \citep{lemaire_2009,MorioBalesdent2015}. 
 
 This chapter also covers the main methods for global sensitivity analysis \citep{daveiga_iooss_2021}. 
 This field divides its methods into two major classes: screening methods and importance measures. 
-Screening techniques, typically applied in high-dimensional problems, aim to identify variables with low impact on the variability of the output of interest. 
+Screening techniques typically applied in high-dimensional problems, aim to identify variables with low impact on the variability of the output of interest. 
 Importance measures, on the other hand, quantitatively allocate, for each input variable, a share of the output variability, enabling the ranking of variables based on their influence.
 
 Finally, this chapter presents an overview of the families of metamodels commonly used in uncertainty quantification \citep{forrester_2008}. 
@@ -158,14 +158,14 @@ Since then, their use has expanded to solve problems in structural reliability \
 %------------------------------------------------------------%
 The simulation of an offshore wind turbine involves modeling multiple physical aspects interacting with random environmental conditions. 
 This chapter first introduces spectral methods used to generate wind and wave velocity fields by applying inverse Fourier transforms (e.g., as implemented in the TurbSim tool \citep{turbsim_2009}]). 
-These simulated wind velocity fields then the become the inputs of a multi-physics wind turbines numerical model. 
-Such simulation includes a simplified modeling of the interactions between fluids and structures (using the blade element momentum theory), dynamic modeling of the structure using flexible multibody methods, and modeling of wind turbine control systems [source]. 
-The numerical code studied generates time series of several physical quantities describing the system's behavior.
+These simulated wind velocity fields then become the inputs of a multi-physics wind turbine numerical model. 
+Such simulation includes simplified modeling of the interactions between fluids and structures (using the blade element momentum theory), dynamic modeling of the structure using flexible multibody methods, and modeling of wind turbine control systems [source]. 
+The numerical code studied generates a time series of several physical quantities describing the system's behavior.
 
 This thesis particularly focuses on the probabilistic evaluation of fatigue damage in wind turbine structures. 
-Fatigue damage is a phenomenon that deteriorates the mechanical properties of a material as a result of exposure to many of cyclic, low-amplitude stresses. 
+Fatigue damage is a phenomenon that deteriorates the mechanical properties of a material as a result of exposure to many cyclic low-amplitude stresses. 
 Currently, standards recommend the use of deterministic safety factors to address this failure mode \citep{iec_2019,dnv_loads_2016}. 
-A probabilistic approach enhances the analysis and can sometimes reveal conservative of safety margins. 
+A probabilistic approach enhances the analysis and can sometimes reveal conservative safety margins. 
 Several recent studies have addressed this topic from different methodological perspectives \citep{huchet_2019,lataniotis_2019,cousin_2021,hirvoas_2021,petrovska_2022}.
 
 In this context, this chapter enumerates the input parameters of the calculation chain that are considered uncertain. 
@@ -179,9 +179,9 @@ This chapter examines perturbations in environmental conditions within an offsho
 A theoretical offshore wind farm off the southern coast of Brittany is considered as a use case, and a simplified numerical model of wake in this wind farm is used. 
 This model provides an analytical prediction of the wind speed deficit and turbulence created by the wake, taking into account the influence of the floaters' positions due to rigid body dynamics. 
 
-In a second phase, uncertainty propagation is carried out thought the wake model, considering the joint distribution of ambient environmental conditions as inputs. 
+In the second phase, uncertainty propagation is carried out through the wake model, considering the joint distribution of ambient environmental conditions as inputs. 
 In the end, an environmental distribution perturbed by the wake is simulated for each wind turbine. 
-A dissimilarity measure between distribution, based of kernels and named the \textit{maximum mean discrepancy} (MMD), is used to compare the distributions perceived by each wind turbine. 
+A dissimilarity measure between distributions, based on kernels and named the \textit{maximum mean discrepancy} (MMD), is used to compare the distributions perceived by each wind turbine. 
 This measure allows the clustering of wind turbines exposed to similar environmental conditions, resulting in identical structural responses. 
 Given the high computational cost of aero-servo-hydro-elastic simulations for offshore wind turbines, this preliminary study enables reliability analysis at the wind farm scale without repeating the analysis for each turbine. 
 Ultimately, only four classes are selected to represent a wind farm of 25 turbines.
@@ -193,7 +193,7 @@ Chapter four presents the use of the kernel-based dissimilarity measure (MMD) in
 This quadrature technique belongs to the family of "Bayesian quadratures" \citet{briol_oates_2019}, which can be viewed as a generalization of quasi-Monte Carlo methods \citet{hickernell_2020}. 
 
 The properties of this method are highlighted through an industrial application dedicated to estimating the mean fatigue damage of a wind turbine structure. 
-Although this quantity is crucial in the design and certification of wind turbines, the methods used to estimated it are known to be suboptimal (i.e., regular grids). 
+Although this quantity is crucial in the design and certification of wind turbines, the methods used to estimate it are known to be suboptimal (i.e., regular grids). 
 The study is conducted on a model of a fixed offshore wind turbine belonging to a farm in the North Sea. 
 Uncertainties in input environmental conditions are inferred from in-situ measured data. 
 
@@ -215,12 +215,12 @@ This experiment illustrates the practical relevance of this technique as an effe
 
 \paragraph{Chapter 6 -- Nonparametric rare event estimation.} 
 %------------------------------------------------------------%
-Estimating rare events probabilities is a common issue in industrial risk management, especially in the field of structural reliability \citep{chabridon_2018_thesis}. 
+Estimating rare event probabilities is a common issue in industrial risk management, especially in the field of structural reliability \citep{chabridon_2018_thesis}. 
 To address this, several techniques have been proposed to overcome the known limitations of the Monte Carlo method. 
 Among them, ``subset sampling'' \citep{AuBeck2001} is a technique based on the split of a rare probability into a product of less rare (and thus easier to estimate) conditional probabilities associated with nested failure events. 
 However, this technique relies on conditional simulation using Markov chain Monte Carlo (MCMC) methods. 
 These algorithms, while converging, often produce samples that are not independent and identically distributed (i.i.d.) due to the correlation between the Markov chains.
-In this chapter another conditional sampling method is proposed, with the advantage of preserving the i.i.d. property. 
+In this chapter, another conditional sampling method is proposed, with the advantage of preserving the i.i.d. property. 
 Independent sampling is particularly relevant for reusing these samples in a posterior reliability-oriented sensitivity analysis. 
 The algorithm introduced is based on the non-parametric inference of the conditional joint distribution using kernel density estimation of marginals combined with dependence inference using the empirical Bernstein copula \citep{sancetta_satchell_2004}. 
 The so-called ``Bernstein adaptive nonparametric conditional sampling'' (BANCS), is compared to the subset sampling method for several structural reliability problems. 
@@ -231,8 +231,8 @@ The initial results are promising, but further investigation is needed to contro
 %------------------------------------------------------------%
 This chapter deals with sensitivity analysis for risk measures (e.g., rare event probabilities). 
 Global sensitivity analysis \citep{daveiga_iooss_2021} assigns a portion of the global output variability to each variable (or group of variables), often using a functional decomposition of the output variance. 
-However, when studying risk measure (often located in the distributions' tails), the global sensitivity might be very different to the sensitivity to the risk measure. 
-``Reliability-oriented sensitivity analysis'' (ROSA), studies the impact of the inputs in regard to a risk-measure such as a rare event probability (see e.g., \citet{chabridon_2018_thesis}). 
+However, when studying risk measures (often located in the distributions' tails), the global sensitivity might be very different from the sensitivity to the risk measure. 
+``Reliability-oriented sensitivity analysis'' (ROSA), studies the impact of the inputs in regard to a risk measure such as a rare event probability (see e.g., \citet{chabridon_2018_thesis}). 
 Using the nested subsets obtained with the BANCS algorithm (presented in Chapter 6), the idea of this chapter is to study the ROSA evolution as the subsets get closer to the failure domain. 
 For each subset, a ROSA is carried out with a kernel-based importance measure called the ``Hilbert-Schmidt Independence Criterion'' adapted to this context \citep{marrel_chabridon_2021}. 
 

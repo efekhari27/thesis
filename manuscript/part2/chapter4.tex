@@ -38,7 +38,7 @@ often arises from the complex dependence structure such variables may exhibit.
 Here, two cases may occur: either measured data are directly available (i.e., the ``given-data'' context) or a theoretical parametric form for the joint input probability distribution can be postulated.
 Such existing parametric joint distributions often rely on prior data fitting combined with expert knowledge. 
 For example, several parametric approaches have been proposed in the literature to derive such formulations, ranging from fitting conditional distributions \citealp{vanem_fekhari_2023}) to using vine copulas \citep{li_zhan_2020}. 
-When a considerable amount of environmental data is available, nonparametric approaches as the empirical Bernstein copula were studied in the Chapter~\ref{chpt:3} to capture complex dependence structures. 
+When a considerable amount of environmental data is available, nonparametric approaches such as the empirical Bernstein copula were studied in Chapter~\ref{chpt:3} to capture complex dependence structures. 
 Alternatively, an idea is to directly use the data as an empirical representation of input uncertainties in order to avoid an additional inference error. 
 
 Step C usually focuses on propagating the input uncertainties in order to estimate the quantity of interest. 
@@ -149,7 +149,7 @@ In total, five years of wind data have been collected on the turbines which are 
 Their acquisition system (usually called ``SCADA'' for ``Supervisory Control And Data Acquisition'') has a sampling period of ten minutes. 
 The wave data arise from a buoy placed in the middle of the farm. 
 These data describe the physical features listed in Table \ref{tab:envi_variables_c4}. 
-A limitation of the present study is that it controller-induced uncertainty (like wind misalignment) is not considered. 
+A limitation of the present study is that its controller-induced uncertainty (like wind misalignment) is not considered. 
 
 \begin{table*} 
     \begin{center}
@@ -231,8 +231,8 @@ This theorem states that considering a random vector $\mathbf{X} \in \R^d$, with
 \end{equation}
 
 It allows us to divide the problem of fitting a joint distribution into two independent problems: fitting the marginals and fitting the copula. 
-The empirical Bernstein copula is a nonparametric copula approximation method introduced and applied on similar data in Chapter~\ref{chpt:3}. 
-Provided a large enough learning set $\bX_n$ (over five years in the present case), the EBC combined with kernel density estimation for the marginals enable to fit well the environmental joint distribution related to the dataset in \fig{fig:envi_pairplot}. 
+The empirical Bernstein copula is a nonparametric copula approximation method introduced and applied to similar data in Chapter~\ref{chpt:3}. 
+Provided a large enough learning set $\bX_n$ (over five years in the present case), the EBC combined with kernel density estimation for the marginals fits well the environmental joint distribution related to the dataset in \fig{fig:envi_pairplot}. 
 Moreover, the densities of the EBC are available in an explicit form, making Monte Carlo or quasi-Monte Carlo generation easy. 
 As discussed in Chapter~\ref{chpt:3}, this method is sensitive to the chosen polynomial orders $\{m_j\}_{j=1}^d$ and the learning set size. 
 
@@ -256,7 +256,7 @@ According to \cite{li_zhan_2020} and our own experience, the most critical azimu
 Looking at these illustrations, the wind and wave conditions have a very dominant orientation, which is explained by the closeness of the wind farm to the shore. 
 Then, it is assumed that azimuth angles in these directions will be more solicited, leading to higher fatigue damage. 
 To assess fatigue damage, rainflow counting \citep{dowling_1972} first identifies the stress cycles and their respective amplitudes (using the implementation of the ASTM E1049-85 rainflow cycle counting algorithm from the Python package \texttt{rainflow}\footnote{\href{https://github.com/iamlikeme/rainflow}{https://github.com/iamlikeme/rainflow}}). 
-For each identified stress cycle of amplitude $s \in \R_+$, the so-called ``Stress vs. Number of cycles'' curve (also called the ``SN curve'' or ``W\"ohler curve'') allows one to estimate the number $N_{\mathrm{c}}$ of similar stress cycles necessary to reach fatigue ruin. 
+For each identified stress cycle of amplitude, $s \in \R_+$, the so-called ``Stress vs. Number of cycles'' curve (also called the ``SN curve'' or ``W\"ohler curve'') allows one to estimate the number $N_{\mathrm{c}}$ of similar stress cycles necessary to reach fatigue ruin. 
 The SN curve, denoted by $W(\cdot)$ is an affine function in the log-log scale with slope $-m$ and y-intercept $a$:
 \begin{equation}
     N_{\mathrm{c}}(s) = a s^{-m}, \, a\in\R_+, \, m\in\R_+.
@@ -349,10 +349,10 @@ When generalizing to a non-uniform measure, a good quantization of $\pi$ should 
 
 Quasi-Monte Carlo sampling methods widely rely on a metric of uniformity, called \textit{discrepancy}. 
 To go beyond uniform measures, Appendix~\ref{apx:B} introduces a kernel-based discrepancy, generalizing the discrepancy concept to non-uniform measures. 
-This tool, name the maximum mean discrepancy (MMD) allows comparing multivariate distributions by embedding them in a specific function space. 
+This tool, named the maximum mean discrepancy (MMD) allows comparing multivariate distributions by embedding them in a specific function space. 
 In this manuscript, the MMD was employed as a tool for statistical testing and quantifying the perturbations of distributions in Chapter~\ref{chpt:3}, and for sensitivity analysis in Section~\ref{sec:gsa}.
 
-Herin, the MMD is used to build a quadrature rule by sampling from a know measure. 
+Herin, the MMD is used to build a quadrature rule by sampling from a known measure. 
 In other words, to quantize a known target measure $\pi$ by a design sample $\bX_n$. 
 For practical reasons, the design construction is done sequentially. 
 Sequential strategies have also been used to learn and validate regression models for statistical learning (see \cite{fekhari_iooss_2023}). 
@@ -404,7 +404,7 @@ This sample is also used to estimate the target potential $P_\pi(\bx) \approx \f
 
 The diagram illustrated in \fig{fig:kh_algo} summarizes the main steps of a kernel herding sampling algorithm. 
 One can notice that the initialization can either be done using a median point (maximizing the target potential) or from any existing design of experiments. 
-This second configuration showed to be practical when the analyst must include some characteristic points in the design (e.g., points with a physical interpretation). 
+This second configuration is practical when the analyst must include some characteristic points in the design (e.g., points with a physical interpretation). 
 
 \begin{figure}
     \centering
@@ -584,7 +584,7 @@ Note that the transition from equation (27c) to (27d) relies on the property sta
 The method that sequentially builds a quadrature rule by minimizing this variance is called by the authors ``Sequential Bayesian Quadrature'' (SBQ). 
 According to the previous proof, this criterion can be seen as an optimally-weighted version of the kernel herding criterion, as stated in the title of the paper from \cite{husar_duvenaud_2012}. 
 Later, \cite{briol_2015} proved the weak convergence of $I_{\pi}(G_n)$ towards the target integral. 
-Closer to wind turbines applications, \cite{huchet_2019} and \cite{huchet_mattrand_2019} introduced the ``Adaptive Kriging Damage Assessment'' method: a Kriging-based method for mean damage estimation that is very close to SBQ. 
+Closer to wind turbine applications, \cite{huchet_2019} and \cite{huchet_mattrand_2019} introduced the ``Adaptive Kriging Damage Assessment'' method: a Kriging-based method for mean damage estimation that is very close to SBQ. 
 However, This type of method inherits the limits from both KH and BQ since it searches for optimal design points among a candidate set and computes an inverse variance-covariance matrix. 
 These numerical operations both scale hardly in high dimension. 
 
@@ -653,9 +653,9 @@ The respective BQ estimators of the means are plotted in dashed lines.
 \medskip
 \begin{remark}
     Different kernels are used in these numerical experiments. 
-    First, the generation kernel, used by the kernel herding algorithm to generate designs (with the heuristic tuning defined in Section~\ref{sec:4khsubsec}). 
+    First, the generation kernel is used by the kernel herding algorithm to generate designs (with the heuristic tuning defined in Section~\ref{sec:4khsubsec}). 
     Second, the BQ kernel allows computation of the optimal weights (arbitrarily set up as a Matérn $5/2$ with the heuristic tuning). 
-    Third, the evaluation kernel, which must be common to allow a fair comparison of the computed MMD results (same as the BQ kernel).
+    Third, the evaluation kernel must be common to allow a fair comparison of the computed MMD results (same as the BQ kernel).
 \end{remark}
 \medskip
 
