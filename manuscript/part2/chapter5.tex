@@ -145,7 +145,7 @@ $\kb_m(\bx)$ is the column vector $[K(\bx,\bx^{(1)}),\ldots,K(\bx,\bx^{(m)})]\TT
 and $\Kb_m$ is the $m\times m$ covariance matrix whose element $(i,j)$ is given by $\{\Kb_m\}_{i,j}=K(\bx^{(i)},\bx^{(j)})$, with $K$ a positive definite kernel. 
 Note that in the case of a learning model $\eta_m$ which interpolates the observations $\by_m$, the errors observed at the learning points $\bX_m$ equal zero, leading finally to the posterior $\GP(0,\sigma^2\,K_{|m})$ for $\delta_m(\bx)$. 
 
-%In \cite{PR2021a}, the authors propose a weighting scheme for the test set when the ML model interpolates the train set observations. 
+%In \cite{pronzato_rendas_2021}, the authors propose a weighting scheme for the test set when the ML model interpolates the train set observations. 
 %They suggest several variants corresponding to different constraints on the weights (e.g., non-negativity, summing to one). 
 %In the following, we consider the unconstrained version only, which in our experience works best. 
 
@@ -208,7 +208,7 @@ Therefore, an optimally weighted estimator of the predictivity coefficient suppo
 \end{equation}
 with $\overline{y}_n=(1/n)\,\sum_{i=1}^n y(\bx^{(m+i)})$.
 Notice that the weights $w_i^*$ do not depend on the variance parameter $\sigma^2$ of the GP model. 
-Moreover, this approach does not constrain the weights, which works better in our experience than the different constrained versions (e.g., non-negativity, summing to one) studied in \citet{PR2021a}. 
+Moreover, this approach does not constrain the weights, which works better in our experience than the different constrained versions (e.g., non-negativity, summing to one) studied in \citet{pronzato_rendas_2021}. 
 %\joseph{C'est pourquoi je pense qu'il ne faut pas l'introduire. En plus, on n'a jamais dit que le noyau de covariance devait être stationnaire. 
 %Luc: la présence de sigma^2 n'a pas de lien avec la stationarité. 
 %Joseph : Peut-être faudrait-il alors changer la lettre grecque utilisée, car sigma est souvent associé à un écart-type, et donc sigma^2 à une variance, ce qui voudrait dire que K est un noyau de corrélation.} 
@@ -331,9 +331,9 @@ Greedy MMD minimization can be applied to other kernels than the distance kernel
 In the next section the closely related method of kernel herding is recalled (KH) \citep{chen_welling_2010}, after its presentation in Chapter~\ref{chpt:4} of the present manuscript.
 
 %============================================================%
-\subsection{Kernel herding}\label{sec:KH}
+\subsection{Kernel herding}\label{sec:C5_KH}
 %============================================================%
-As introduced in Section~\ref{sec:KH}, \citet{lacoste_2015} proposed a linearization of the MMD minimization using the Frank-Wolfe algorithm. 
+As introduced in Chapter~\ref{chpt:4}, \citet{lacoste_2015} proposed a linearization of the MMD minimization using the Frank-Wolfe algorithm. 
 Let us define a positive definite kernel $K$ on $\iD_\bx\times\iD_\bx$, and consider $\xi_i=(1/i)\sum_{j=1}^i \delta_{\bx^{(i)}}$ as the empirical measure for $\bX_i$.  
 In the sequential and uniformly weighted case, this iteration $i$ of kernel herding is expressed as a difference of potentials: 
 \begin{eqnarray}\label{eq:KH}
@@ -439,7 +439,7 @@ In the next section, these designs are used for estimating the quality of the pr
 This section presents numerical results obtained on three different test cases, in dimension 2 (test cases 1 and 2) and 8 (test case 3), for which $y(\bx)=f(\bx)$ with $f(\bx)$ has an easy to evaluate analytical expression, see Section \ref{sec:testCases}. 
 This allows a good estimation of $Q_\pi^2$ (see \eq{eq:Q2th}) by a large Monte Carlo sample (with size $M=10^6$), which will serve as a reference when assessing the performance of each of the other estimators. 
 
-The validation designs are built by FSSF, support points and kernel herding, presented in Sections~\ref{sec:FSSF}, \ref{sec:SP}, and \ref{sec:KH}, 
+The validation designs are built by FSSF, support points and kernel herding, presented in Sections~\ref{sec:FSSF}, \ref{sec:SP}, and \ref{sec:C5_KH}, 
 and the performances obtained are compared for each one, considering the uniform and the weighted estimator of Section~\ref{sec:weighting}. 
 
 %============================================================%
@@ -758,7 +758,7 @@ Our study shows that ideas and tools from the design of experiment framework can
 This chapter explored approaches based on support points, kernel herding and FSSF, considering the incremental construction of a test set (\textit{i}) either as a particular space-filling design problem, where design points should populate the holes left in the design space by the training set, or (\textit{i}) from the point of view of partitioning a given dataset into a training set and a test set. 
 
 A numerical benchmark has been performed for a panel of test cases of different dimensions and complexity. 
-Additionally to the usual predictivity coefficient, a new weighted metric (see \citealp{PR2021a}) has been proposed and shown to improve the assessment of the predictivity of a given model for a given test set. 
+Additionally to the usual predictivity coefficient, a new weighted metric (see \citealp{pronzato_rendas_2021}) has been proposed and shown to improve the assessment of the predictivity of a given model for a given test set. 
 
 This weighting procedure appears very efficient for interpolators, like Gaussian process regression models, as it corrects the bias when the points in the test set used to predict the errors are far from the training points. 
 For the first three test cases (Section~\ref{sec:val_res1}), pairing one iterative design method with the weight-corrected estimator of the predictivity coefficient $Q^2$ shows promising results as the estimated $Q^2$ characteristic is close to the true one even for test-sets of moderate size. 

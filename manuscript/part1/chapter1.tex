@@ -27,6 +27,7 @@ Section~\ref{sec:uq} presents a classification of the input uncertainties and th
 Section~\ref{sec:central_propagation} and \ref{sec:reliability} introduce various methods to propagate the input uncertainties through the numerical model for different purposes; 
 Section~\ref{sec:gsa} presents the main inverse methods to perform sensitivity analysis in our framework; 
 Finally, Section~\ref{sec:surrogate} introduces the concept of surrogate models to emulate a model by realizing statistical learning on a limited dataset.
+Additionally, numerical examples of the important methods are implemented during this chapter using \texttt{OpenTURNS}, a Python package for uncertainty quantification.    
 
 
 \paragraph*{\href{https://openturns.github.io/www/}{\textbf{\texttt{OpenTURNS}}}\footnotemark.} 
@@ -59,7 +60,7 @@ In the following, it will be assumed that the numerical models passed a \textit{
 Formally, part of the problem specification is the definition of the set of $d$ input variables $\bx = \left(x_1, \dots, x_d\right)\TT$ considered as uncertain (e.g., wind speed, wave period, etc.). 
 The outputs studied are also defined at this stage, which will only be of scalar type in the present work.  
 UQ methods suited to other types of outputs exist (see e.g., for time series outputs \citealt{lataniotis_2019}, for functional outputs \citealt{auder_2012,rollon_2021}). 
-Let us then define the following numerical model:
+Let us then define the following numerical model $\iM$, with its respective input $\iD_{\bx}$ and output domains $\iD_{\by}$:
 \begin{equation}
 \iM : \bigg|
     \begin{array}{rcl}
@@ -156,7 +157,7 @@ The expected value of a random vector $\E[\bX]$, also called the first moment, i
 \begin{equation}
     \mu_{\bX} = \E[\bX] = \int_{\Omega} \bX(\omega) \,\dd \P(\omega) =  \int_{\iD_{\bx}} \bx \, f_{\bX}(\bx) \, \dd\bx = \left(\E[X_1], \dots, \E[X_d]\right)\TT.
 \end{equation}
-In addition, considering two random variables $X_j$ and $X_j$, with $i, j \in \{1, \dots, d\}$, one can write their respective variance:
+In addition, considering two random variables $X_i$ and $X_j$, with $i, j \in \{1, \dots, d\}$, one can write their respective variance:
 \begin{equation}
     \var(X_i) = \E\left[X_i - \E[X_i]\right],
 \end{equation}
@@ -164,7 +165,7 @@ and a covariance describing their joint variability:
 \begin{equation}
     \cov(X_i, X_j) = \E\left[\left(X_i - \E[X_i]\right) \left(X_j - \E[X_j]\right)\right].
 \end{equation}
-The \textit{standard deviation} $\sigma_{X_j} = \sqrt{\var(X_j)}$ and \textit{coefficient of variation} $\delta_{X_j} = \frac{\var(X_j)}{|\E[X_j]|}$ are two quantities directly associated to the two first moments.
+The \textit{standard deviation} $\sigma_{X_j} = \sqrt{\var(X_j)}$ and \textit{coefficient of variation} $\delta_{X_j} = \frac{\E[X_j]}{\sqrt{\var(X_j)}}$ are two quantities directly associated to the two first moments.
 
 %\elias{Remark on high dimension: We call high dimension anything higher than $p>10$ and it creates issues.}
 
@@ -259,10 +260,10 @@ Second, a function describing the dependence structure between all variables: a 
 Theorem \ref{thm:sklar} expresses the joint CDF by combining marginal CDFs and a copula, which is practical for sampling joint distributions. 
 Conversely, the copula can be defined by using the joint CDF and the marginal CDFs: 
 \begin{equation}
-    C(u_1, \dots, u_d) = F_{\bX}(F^{-1}_{X_1}(u_1), \dots, F^{-1}_{X_d}(u_d))
+    C(u_1, \dots, u_d) = F_{\bX}(F^{-1}_{X_1}(u_1), \dots, F^{-1}_{X_d}(u_d)).
 \end{equation}
 This equation allows us to extract a copula from a joint distribution by knowing its marginals.
-Additionally, copulas are invariant under creasing transformations. 
+Additionally, copulas are invariant under increasing transformations. 
 This property is important to understand the use of rank transformation to display the copula without the marginal effects.     
 
 Identically to the univariate continuous distributions, a large catalog of families of copulas exists (e.g., independent, Normal, Clayton, Frank, Gumbel copula, etc.). 
@@ -445,12 +446,12 @@ By construction, the law of large numbers makes this estimator unbiased, however
 Considering the images of the sample $\bX_n$, one can also estimate the variance of the output random variable $\what{\sigma}^2_Y$.
 The variance of the Monte Carlo estimator results from a manipulation of the central limit theorem:
 \begin{equation}
-    \var\left(\overline{y}_n^{\textrm{MC}}\right) = \frac{1}{\sqrt{n}} \var\left(g(\bX)\right). 
+    \var\left(\overline{y}_n^{\textrm{MC}}\right) = \frac{1}{n} \var\left(g(\bX)\right). 
     \label{eq:MC_variance}
 \end{equation}
 This estimator also comes with theoretical confidence intervals at $\alpha \%$, regardless of the output distribution: 
 \begin{equation}
-    I_{\P_{\bX}}(g) \in \left[\overline{y}_n^{\textrm{MC}}  - q_\alpha \frac{\var\left(g(\bX)\right)}{\sqrt{n}}, \overline{y}_n^{\textrm{MC}}  + q_\alpha \frac{\var\left(g(\bX)\right)}{\sqrt{n}} \right],
+    I_{\P_{\bX}}(g) \in \left[\overline{y}_n^{\textrm{MC}}  - q_\alpha \sqrt{\frac{\var\left(g(\bX)\right)}{n}}, \, \overline{y}_n^{\textrm{MC}}  + q_\alpha \sqrt{\frac{\var\left(g(\bX)\right)}{n}} \right],
     \label{eq:MC_IC}
 \end{equation}
 where $q_\alpha$ is the $\alpha$-quantile of the standard normal distribution. 
@@ -467,7 +468,7 @@ For further details, the reader may refer to Chapters 8, 9 and 10 from \citet{ow
 \subsubsection{Quasi-Monte Carlo and Koksma-Hlawka inequality}
 %------------------------------------------------------------%
 
-Among the methods presented so far, classical deterministic quadratures are subject to the curse of dimension while Monte Carlo methods deliver contrasted performances. 
+Among the methods presented so far, classical deterministic quadratures are subject to the curse of dimensionality while Monte Carlo methods deliver contrasted performances. 
 Quasi-Monte Carlo is a deterministic family of numerical integration schemes with respect to the uniform measure on $[0, 1]$. 
 It offers powerful performances with strong guarantees by choosing nodes according to \textit{low discrepancy} sequences. 
 
@@ -475,11 +476,10 @@ The discrepancy of a set of nodes (or a design) can be seen as a metric of its u
 The lowest the discrepancy of a design is, the ``closest'' it is to uniformity. 
 
 The Koksma-Hlawka theorem \citep{morokoff_1995,leobacher_2014} is a fundamental result for understanding the role of the discrepancy in numerical integration. 
-\begin{theorem}[Koksma-Hlawka]
+\begin{theorem}[Koksma-Hlawka]\label{thm:koksma_inequality}
     If $g:[0, 1]^d\rightarrow\R$ has a bounded variation (i.e., its total variation is finite), then for any design $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \in [0, 1]^d$:
     \begin{equation}
         \left| \int_{[0, 1]^d} g(\bx) \ddx - \frac1n \sum_{i=1}^n g\left(\bx^{(i)}\right)\right| \leq  V(g) D^*(\bX_n).
-        \label{eq:koksma_inequality}
     \end{equation}
     Where $D^*(\bX_n)$ is the star discrepancy of the design $\bX_n$, while $V(g)$ quantifies the complexity of the integrand, which is related to its total variation. 
     The reader might refer to \citet{leobacher_2014} Section 3.4 for further mathematical proof.
@@ -490,20 +490,20 @@ The function's variation $V(g)$ in \eq{eq:koksma_inequality} can be formally def
     V(g) = \sum_{\mathfrak{u}\subseteq\{1, \dots, p \}} \int_{[0, 1]^\mathfrak{u}} \left| \frac{\partial^{\mathfrak{u}}g}{\partial \bx_{\mathfrak{u}}}(\bx_{\mathfrak{u}}, 1)\right| \dd\bx.
 \end{equation}
 
-In which the \textit{$L_p$ star discrepancy} of a design $\bX_n$ is defined as the $L_p$-norm of the difference between the empirical CDF of the design $\what{F}_{\bX_n}$ and the CDF of the uniform distribution $F_{\textbf{U}}$:  
-\begin{equation}
-    D^*_p(\bX_n) = \lVert \what{F}_{\bX_n} - F_{\textbf{U}}\rVert _p = \left(\int_{[0, 1]^d} \lvert\what{F}_{\bX_n}(\bx) - F_{\textbf{U}}(\bx)\rvert ^p \, \ddx \right)^{1/p}.
-\end{equation}
-Additionally, the $L_\infty$ star discrepancy can be defined from a geometric point of view. 
+The star discrepancy $D^*(\bX_n)$ can be defined from a geometric point of view. 
 Let us first consider the number of elements from a design $\bX_n$, falling in a subdomain $[\mathbf{0}, \bx)$ as $\#(\bX_n \cap [\mathbf{0}, \bx))$. 
 Then, if this empirical quantification is compared with the volume of the rectangle $[\mathbf{0}, \bx)$, denoted by $\mathrm{vol}\left([\mathbf{0}, \bx)\right)$, the star discrepancy is expressed as:   
 \begin{equation}
     D^*(\bX_n) = \sup_{\bx \in [0, 1]^d} \left| \frac{\#(\bX_n \cap [\mathbf{0}, \bx))}{n} - \mathrm{vol}\left([\mathbf{0}, \bx)\right)\right|.
 \end{equation}
-%\elias{Figure xx empirically represents discrepancy concept}
-Let us point out that this star discrepancy is equivalent to the Kolmogorov-Smirnov statistic, verifying whether the design follows a uniform distribution. 
+The star-discrepancy $D^*(\bX_n)$ is actually a particular case of the \textit{$L_p$ star discrepancy} denoted by $D^*_p(\bX_n)$, for which $p=\infty$. 
+In the general case, $D^*_p(\bX_n)$ is defined as the $L_p$-norm of the difference between the empirical CDF of the design $\what{F}_{\bX_n}$ and the CDF of the uniform distribution $F_{\textbf{U}}$:  
+\begin{equation}
+    D^*_p(\bX_n) = \lVert \what{F}_{\bX_n} - F_{\textbf{U}}\rVert _p = \left(\int_{[0, 1]^d} \lvert\what{F}_{\bX_n}(\bx) - F_{\textbf{U}}(\bx)\rvert ^p \, \ddx \right)^{1/p}.
+\end{equation}
+Let us point out that this star discrepancy $D^*(\bX_n)$ is equivalent to the Kolmogorov-Smirnov statistic, verifying whether the design follows a uniform distribution \citep{fang_liu_2018}. 
 
-One can notice how the Koksma-Hlawka inequality dissociates the quadrature performance into a contribution from the function complexity and one from the repartition of the quadrature nodes. 
+In Theorem~\ref{thm:koksma_inequality}, one can notice how the Koksma-Hlawka inequality dissociates the quadrature performance into a contribution from the function complexity and one from the repartition of the quadrature nodes. 
 Knowing that the complexity of the studied integrand is fixed, this property explains the motivation to generate low-discrepancy quadratures in numerical integration.  
 
 Note that the design can also be considered as a discrete distribution (uniform sum of Dirac distributions).
@@ -590,7 +590,7 @@ However, a difference comes from the fact that this community often works with d
 Users of designs of experiments also consider various properties. 
 \begin{itemize}
     \item Some might be interested in the sequentiality of a sampling method, to eventually add new points as they get their computational budget extended. 
-    \item Some might request a sampling method conserving its properties in any subdomains. 
+    \item Some might request a sampling method conserving its properties in any subdomains (i.e., subprojections of the inputs’ domain). 
     This second property can be useful to reduce the problem's dimension by dropping a few unimportant variables (see the following Section~\ref{sec:gsa} on global sensitivity analysis).
 \end{itemize}
 
@@ -641,7 +641,7 @@ These space-filling metrics are widely used to optimize different sampling techn
 %------------------------------------------------------------%
 \subsubsection{Latin hypercube sampling}
 %------------------------------------------------------------%
-Latin hypercube sampling is a method introduced in 1979 \citep{mckay_beckman_1979}, initially for numerical integration. 
+Latin hypercube sampling is a method initially introduced in the 70s for numerical integration \citep{mckay_beckman_1979}. 
 In a bounded domain, this stratified sampling technique forces the distribution of each sub-projection to be as uniform as possible. 
 To do so, for an $n$-sized design, each marginal domain is divided into $n$ identical segments. 
 This creates a regular grid of $n^{d}$ squared cells over the domain. 
@@ -650,12 +650,12 @@ Then, a Latin hypercube design (LHD) does not allow more than one point within a
 That way, new LHDs can be built as a permutation of the marginals of an existing LHD. 
 Inside each selected cell from the grid, the point can be placed at the center or randomly.
 
-Various contributions proposed a variance, and a central limit theorem to LHS \citep{owen_1996}. 
-Similarly to the Monte Carlo variance in \eq{eq:MC_variance}, LHS variance can be expressed as:
+Various contributions proposed a variance, and a central limit theorem to LHS \citep{owen_1992_tcl_lhs}. 
+Under monotony hypothesis, the LHS variance can be expressed, when $n\rightarrow\infty$, as:
 \begin{equation}
-    \var\left(\overline{y}_n^{\textrm{LHS}}\right) = \frac{1}{\sqrt{n}} \var\left(g(\bX)\right) - \frac{C}{n} + o\left( \frac1n \right). 
+    \var\left(\overline{y}_n^{\textrm{LHS}}\right) = \frac{1}{n} \var\left(g(\bX)\right) - \frac{C}{n} + o\left( \frac1n \right). 
 \end{equation}
-Where $C$ is a positive constant, showing that the LHS usually reduces the variance for numerical integration. 
+Where $C$ is a positive constant, showing that the LHS usually reduces the variance for numerical integration (proof proposed in \citealp{stein_1987_lhs}). 
 Because of its stratified structure, LHS can generate poor designs from a space-filling point of view (see e.g., the illustration in \fig{fig:poor_LHS}). 
 %Note that LHS was also studied for estimating tail statistics such as quantiles \citep{cannamela_2008_LHS_quantile}.  
 The following section presents various methods aiming at optimizing LHDs.
@@ -813,7 +813,7 @@ the \textit{failure domain} $\iF_{\bx}$, and the \textit{safe domain} $\mathcal{
     \mathcal{S}_\bx := \{\bx \in \iD_\bx \, | \, g(\bx) > \yth\}. 
     %\iD_\bx = \iF_{\bx} \cup \mathcal{S}_\bx 
 \end{equation}
-The border between these two domains is a hypersurface called \textit{limit-state surface} (LLS), defined by $\iF_{\bx}^0 := \{\bx \in \iD_\bx | g(\bx) = 0\}$. 
+The border between these two domains is a hypersurface called \textit{limit-state surface}, defined by $\iF_{\bx}^0 := \{\bx \in \iD_\bx | g(\bx) = 0\}$. 
 Similarly to any UQ study using a numerical model, this problem may require to be resolved using a limited number of calls to a black-box simulator. 
 The difficulties in a reliability problem come from the properties of the LSF: nonlinear, costly to evaluate or with a multimodal failure domain. 
 Additionally, note that the reliability problem can be the composition of multiple reliability problems, often modeled as a system of problems in series and parallel.
@@ -829,7 +829,7 @@ This quantity is formally written\footnote{Note that this probabilistic integrat
     \end{split}
     \label{eq:pf}
 \end{equation}
-were the indicator function applied to the failure domain returns $\1_{\left\{\iF_{\bX}\right\}}(x) = 1$ if $x \in \iF_{\bX}$ and $\1_{\left\{\iF_{\bX}\right\}}(x) = 0$ otherwise. 
+where the indicator function applied to the failure domain returns $\1_{\left\{\iF_{\bX}\right\}}(x) = 1$ if $x \in \iF_{\bX}$ and $\1_{\left\{\iF_{\bX}\right\}}(x) = 0$ otherwise. 
 Rare event estimation implies both contour finding (i.e., characterizing the LSF) and an estimation strategy targeting the failure domain (often with a limited number of simulations). 
 Note that failure events are qualified as rare when their failure probability has an order of magnitude between $10^{-2} \leq \pf \leq 10^{-9}$ (see e.g., \citealt{lemaire_2009}). 
 
@@ -875,7 +875,7 @@ For example in OpenTURNS, depending on the three following cases, different type
 
 
 %============================================================%
-\subsection{Rare event estimation methods} 
+\subsection{Rare event estimation methods}\label{sec:rare_event}
 %============================================================%
 %\elias{Why are the previous sampling methods not suited for rare events?}
 %\elias{Surrogate based methods can help the contour finding step.}
@@ -883,7 +883,7 @@ For example in OpenTURNS, depending on the three following cases, different type
 The main risk measure chosen for rare event estimation in this work is the previously introduced failure probability. 
 Therefore, let us recall that the goal is to build an efficient estimation (or approximation) of the following $d$-dimensional integral: 
 \begin{equation}
-    \pf = \int_{\iD_\bx} \1_{\iF_\bx}(\bx) f_\bX(\bx) \, \dd\bx
+    \pf = \int_{\iD_\bx} \1_{\iF_\bx}(\bx) f_\bX(\bx) \, \dd\bx.
 \end{equation}
 
 In the context of rare event estimation using costly to evaluate numerical models, the simulation budget is often limited to $n$ runs with $\pf \ll \frac1n$. 
@@ -911,7 +911,7 @@ Using the properties of the standard space allows us to rewrite it as:
 \end{align}
 This problem then becomes a quadratic optimization under nonlinear constraint. 
 It is classically solved by gradient descent algorithms (e.g., Abdo-Rackwitz algorithm \citealp{abdo_rack_1991}) but can also use gradient-free techniques (e.g., Cobyla algorithm \citealp{powell_1994}). 
-This point defines the smallest Euclidian distance between the LSS and the origin of the standard space. 
+This point defines the smallest Euclidian distance between the limit-state surface and the origin of the standard space. 
 To understand its role in the reliability problem, let us recall that the density of the standard normal presents an exponential decay in its radial and tangential directions. 
 Then, $P^*$ is the point with the biggest contribution to the failure probability (see the illustration in \fig{fig:FORM_SORM_approx}). 
 
@@ -928,7 +928,7 @@ Then, FORM aims at approximating the limit-state function $\cg(\cdot)$ by its fi
     \begin{split}
         \cg(\bu) &= \cg_1(\bu^*) + o\left(\Vert \bu - \bu^* \Vert_2^2\right)\\
                  &= \cancel{\cg(\bu^*)} + \nabla_{\bu} \,  \cg(\bu^*)\TT \left(\bu -\bu^* \right) + o\left(\Vert \bu - \bu^* \Vert_2^2\right)\\
-                 &= \Vert \nabla_{\bu} \, \cg(\bu) \Vert_2 \left(\balpha\TT \bu^* - \balpha\TT \bu \right) + o\left(\Vert \bu - \bu^* \Vert_2^2\right)
+                 &= \Vert \nabla_{\bu} \, \cg(\bu) \Vert_2 \left(\balpha\TT \bu^* - \balpha\TT \bu \right) + o\left(\Vert \bu - \bu^* \Vert_2^2\right).
     \end{split}    
 \end{equation}
  
@@ -966,7 +966,7 @@ When the MPFP is not unique, the application of these methods might lead to impo
 From a geometrical point of view, having more than one MPFP means that more than one failure zone is at the same Euclidean distance of the origin. 
 Applying a FORM or SORM resolution in this particular case leads to the estimation of only one of the failure areas. 
 The \textit{muti-FORM} algorithm (see \citet{derkiureghian_1998}) prevents this situation by applying successive FORM. 
-Once the first MPFP $P^{*^{(1)}}$ is found, the LSS is modified by removing a nudge to find to following MPFP $P^{*^{(2)}}$, positioned at a similar distance but in a different direction. 
+Once the first MPFP $P^{*^{(1)}}$ is found, the limit-state surface is modified by removing a nudge to find to following MPFP $P^{*^{(2)}}$, positioned at a similar distance but in a different direction. 
 
 \begin{figure}[ht]
     \centering
@@ -997,11 +997,11 @@ Only the estimator is now written using the indicator function applied to the LS
     \pf \approx \what{\pf}^{\textrm{MC}} = \frac1n \sum_{i=1}^{n} \1_{\iF_\bx}(\bx^{(i)}).
 \end{equation} 
 
-Provided that the failure probability is bounded, this estimator converges toward it almost surely according to the LLN. 
+Provided that the failure probability is bounded, this estimator converges toward it almost surely according to the law of large numbers. 
 Once again, Monte Carlo offers an unbiased estimator, regardless of the problem's dimension or the regularity of the function $g(\cdot)$  
 Additionally, the variance of this estimator is fully known:
 \begin{equation}
-    \var\left(\what{\pf}^{\textrm{MC}}\right) = \frac1n \pf (1 - pf).
+    \var\left(\what{\pf}^{\textrm{MC}}\right) = \frac1n \pf \, (1 - \pf).
 \end{equation} 
 The variance of this estimator can be used to build its confidence interval according to the central limit theorem (similarly to the ones from \eq{eq:MC_IC}). 
 Because of the small scale of the quantities manipulated in rare event estimation, the estimator's coefficient of variation is also widely used: 
@@ -1049,7 +1049,7 @@ The importance sampling estimator of the failure probability is defined for a sa
 \end{equation}
 Similarly to Monte Carlo, this estimator is unbiased, however, its variance is defined as: 
 \begin{equation}
-    \var\left( \what{\pf}^{\mathrm{IS}}\right) = \frac1n \left( \E_{h}\left[\left(\1_{\iF_\bx}(\bX) \, \frac{f_\bX(\bX)}{h_\bX(\bX)}\right)^2\right] - \pf^2\right).
+    \var\left( \what{\pf}^{\mathrm{IS}}\right) = \frac1n \left( \E_{h_\bX}\left[\left(\1_{\iF_\bx}(\bX) \, \frac{f_\bX(\bX)}{h_\bX(\bX)}\right)^2\right] - \pf^2\right).
     \label{eq:IS_variance}
 \end{equation}
 The quality of the variance reduction associated to this technique fully depends on the choice of the instrumental distribution. 
@@ -1094,13 +1094,13 @@ Finally, other importance sampling schemes integrate adaptive mechanisms, progre
 %------------------------------------------------------------%
 
 The \textit{cross-entropy-based adaptive importance sampling} (CE-AIS) is an adaptive strategy, optimizing the IS variance reduction by searching for the best instrumental distribution within a parametric family. 
-Let us consider the distribution $h_{\blambda}$, belonging to the parametric family $\iH_\blambda$, defined as: 
+Let us consider the distribution $h_{\blambda}$, belonging to the parametric family $\iH_\blambda$, defined for a set of parameters $\blambda$ in a parameter space $\iD_blambda\subseteq \R^p$ as: 
 \begin{equation}
     \iH_\blambda = \left\{\bx \longmapsto h_\bX(\bx | \blambda) = h_{\blambda}(\bx), \quad \blambda = (\lambda_1, \dots, \lambda_p) \in \iD_\blambda \subseteq \R^p\right\}.
 \end{equation} 
 The early work of \citet{bucher_1988_AIS} only included normal distributions to minimize the IS variance w.r.t. the parameter $\blambda$, using \eq{eq:IS_variance} the optimization simplifies as:
 \begin{equation}
-    \blambda^* = \argmin_{\blambda \in \iD_\blambda} \, \E_{h_\blambda}\left[ \1_{\iF_\bx}(\bX) \, w_\bX(\bX)^2 \right]. 
+    \blambda^* = \argmin_{\blambda \in \iD_\blambda} \, \E_{h_\blambda}\left[ \1_{\iF_\bx}(\bX) \, \left(\frac{f_\bX(\bx)}{h_\blambda(\bx)}\right)^2 \right]. 
 \end{equation}
 However, this optimization strategy requires sampling with respect to the instrumental distribution at each optimization iteration, which was overcome by a different approach. 
 
@@ -1211,7 +1211,7 @@ Overall, the NAIS offers more flexibility to infer the optimal importance sampli
 This property might suit problems presenting a highly nonlinear limit state function. 
 Then, relying on importance sampling still provides an expression of the estimator's variance, by adapting \eq{eq:IS_variance} to the recurrent mechanism in NAIS. 
 Because this approach depends on KDE, it inherits its drawbacks. 
-As discussed in \citet{Morio_RESS_2011}, tuning the KDE can create numerical issues and KDE famously suffers from the curse of dimension. 
+As discussed in \citet{Morio_RESS_2011}, tuning the KDE can create numerical issues and KDE famously suffers from the curse of dimensionality. 
 In practice, the performances of NAIS seriously decrease for problems in dimensions larger than ten. 
 
 %An algorithmic presentation of the two previous adaptive importance sampling techniques is given in Appendix D of \citet{chabridon_2018_thesis}. 
@@ -1342,9 +1342,9 @@ In this context, \textit{feature selection} serves the same purpose with a sligh
 Screening methods usually assume the inputs to be independent while feature selection does not. 
 Moreover, feature selection not only looks for the irrelevant features to the learning but also the redundant features \citep{fan_2010_feature_selection}.     
 
-The global sensitivity of an output can be explained by different elements: the single variability of the inputs, their dependence, and their interactions. 
+The global sensitivity of an output can be explained by different elements: the marginal effects of the inputs, their dependence, and their interactions. 
 Two variables present interactions when their simultaneous effect on an output is not additive. 
-Note that SA on dependent inputs is an active field of research and the inputs will mostly be considered as independent in the following.
+Note that SA on dependent inputs is an active field of research.
 
 
 %============================================================%
@@ -1395,7 +1395,7 @@ As the Morris method, they study the mean value of local derivatives of the mode
 This continuous formulation does not require using OAT designs, which was proven to be more efficient when exploiting sampling methods such as quasi-Monte Carlo. 
 The efficiency of the DGSMs for screening purposes was outlined in many papers (e.g., \citet{kucherenko_iooss_2017}). 
 Since their value depends on the probability distribution of the input, a normalized version was developed. 
-The connections between DGSM and variance-based GSA measures (i.e., Sobol' indices introduced hereafter), revealed bounding properties between DGSMs and Sobol' total indices \citep{lamboni_iooss_2013_DGSM}.
+The connections between DGSM and variance-based GSA measures (i.e., Sobol' indices introduced hereafter), revealed bounding properties between DGSMs and Sobol' total indices \citep{roustant_2017}.
 
 %============================================================%
 \subsection{Variance-based importance measures}
@@ -1410,7 +1410,7 @@ Beyond this information, importance measures quantify the influence of inputs, a
 Sobol' indices are the most popular importance measure in GSA. 
 Their universality comes from the functional decomposition of the output's variance, attributing variance share to the inputs. 
 Considering a squared-integrable and measurable function $g(\cdot)$ and an independent random vector $\bX$. 
-The output random variable $Y = g(\bX)$ can be decomposed, according to \citet{hoeffiding_1948}, as: 
+The output random variable $Y = g(\bX)$ can be decomposed, according to \citet{hoeffding_1948}, as: 
 \begin{equation}
     Y = g(\bX) = g_0 + \sum_{j=1}^{d} g_j(X_j) + \sum_{j<l}^{d} g_{jl}(X_j, X_l) + \dots + g_{1 \dots d}(\bX),
     \label{eq:hoeffding}
@@ -1427,7 +1427,7 @@ with the previous terms defined according to this recurrence:
     \label{eq:hoeffding_terms}
 \end{subequations}
 
-Sobol in \citet{sobol_1993} proved that this decomposition is unique by exploiting the orthogonality of the terms of the decomposition. 
+Different authors proved that this decomposition is unique by exploiting the orthogonality of the terms of the decomposition \citep{efron_1981,sobol_1993}. 
 %\elias{add footnote for any input domain and the dependence see Chastaing these}
 Therefore, this decomposition can be transposed in terms of functional decomposition of variance (also called functional analysis of variance or FANOVA):
 \begin{equation}
@@ -1462,7 +1462,7 @@ The so-called \textit{closed Sobol' index} associated to a subset of inputs $A \
 \end{equation}
 
 Assessing Sobol' indices for every order becomes complex in medium to high dimensions. 
-The \textit{total Sobol' index} $S_j^T$ associated with the variable $j$, see \citet{saltelli_2008}, quantifies the share of output variance which is explained by all the interactions of the variable $X_j$:
+The \textit{total Sobol' index} $S_j^T$ associated with the variable $j$, see \citet{homma_1996}, quantifies the share of output variance which is explained by all the interactions of the variable $X_j$:
 \begin{equation}
     S_j^T = 1 - \frac{\var\left(\E[Y|\bX_{-j}]\right)}{\var(Y)} = \frac{\E\left[\var(Y|\bX_{-j})\right]}{\var(Y)},
     \label{eq:sobol_total}
@@ -1474,7 +1474,7 @@ This definition can also be generalized for a subset of inputs $A \in \mathcal{P
 \end{equation}
 
 By analyzing jointly the first and total Sobol' indices, one can get an indication about the decomposition between the marginal and interaction effects. 
-Note that the total indexes are only equal to the first indexes when the model does not present interactions (i.e., purely additive model).
+Note that the total indices are only equal to the first indices when the model does not present interactions (i.e., purely additive model).
 %Moreover, the following inequalities hold: 
 %\begin{equation}
 %    S_j \leq 1, \qquad S_j \leq S_{T_j}, \qquad \forall j \in \{1, \dots, d\}. 
@@ -1490,7 +1490,7 @@ Authors such as \citet{marrel_2009} also studied the use of Gaussian processes f
 In the case of independent inputs, the first and total Sobol' indices are a complete tool for GSA. 
 The main advantage of this approach is the quantitative nature of its results, allowing to objectively compare the effect of input variables. 
 When the inputs present a dependence structure, it becomes complicated to distinguish its effects from possible interactions. 
-However, many authors tried to adapt Sobol's indices to this context. 
+However, many authors tried to adapt Sobol' indices to this context. 
 Chapter 5 of \citet{daveiga_iooss_2021} reviews four of these approaches. 
 For example, \citet{mara_tarantola_2012} proposed two extra Sobol' indices, called ``full indices'', detecting the contributions associated with the inputs' dependence. 
 Note that the interpretation and estimation of this solution becomes complicated. 
@@ -1548,10 +1548,10 @@ The following section introduces another family of GSA methods based on distance
 Beyond variance-based GSA, many types of distances between distributions have been used to evaluate the dependence between the input and output distributions. 
 Comparing the entire distributions instead of their moments might be more robust in some cases (e.g., when the variance is a poor indicator of the variability). 
 The tools used to do so are generally called \textit{dissimilarity measures} between distributions.  
-Appendix \ref{apx:D} briefly introduces two families of dissimilarity measures: the class of $f$-Csisz\'{a}r divergences (e.g., the Kullback-Leibler divergence, total variation distance) and the class of integral probability metrics (IPM) (e.g., Wasserstein distance, total variation distance, maximum mean discrepancy). 
+Appendix \ref{apx:D} briefly introduces two families of dissimilarity measures: the class of $f$-Csisz\'{a}r divergences (e.g., the Kullback-Leibler divergence, total variation distance) and the class of integral probability metrics (e.g., Wasserstein distance, total variation distance, maximum mean discrepancy). 
 %This appendix focuses on the \textit{maximum mean discrepancy} (MMD), a kernel-based dissimilarity measure between distributions with interesting estimation properties.  
 
-Considering the probability measures $\P_{X_j}$ and $\P_{Y}$ (associated with the random variables $X_j$ and $Y$) and a dissimilarity measure $\Delta(\cdot, cdot)$, one can define two formulations for GSA: 
+Considering the probability measures $\P_{X_j}$ and $\P_{Y}$ (associated with the random variables $X_j$ and $Y$) and a dissimilarity measure $\Delta(\cdot, \cdot)$, one can define two formulations for GSA: 
 \begin{itemize}
     \item directly using a dissimilarity measure to assess $\Delta(\P_Y, \P_{Y |X_j})$;
     \item building a \textit{dependence measures} evaluating $\Delta(\P_{(X_j, Y)}, \P_{X_j} \otimes \P_Y)$.
@@ -1559,7 +1559,7 @@ Considering the probability measures $\P_{X_j}$ and $\P_{Y}$ (associated with th
 
 The first approach was studied in association with $f$-divergences in \citet{daveiga_2015,rahman_2016}. 
 However, some $f$-divergences introduce estimation issues, and the resulting importance measures do not propose a functional decomposition of variance (also called FANOVA).  
-Using kernel-based IPMs such as the maximum mean discrepancy (MMD), an alternative importance measure was proposed.  
+Using kernel-based integral probability metrics such as the maximum mean discrepancy (MMD), an alternative importance measure was proposed.  
 The following section presents the \textit{Hilbert-Schmidt Independence Criterion} (HSIC), which was initially introduced by \citet{gretton_2006} for dependence testing, and later adapted as a dependence measure in GSA by \citet{daveiga_2015}. 
 
 
@@ -1574,7 +1574,7 @@ This distance between two probability distributions $\pi$ and $\zeta$ can be def
     %= \left\lVert P_{\pi}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH(k)}.
     \label{eq:mmd_chapter1}  
 \end{equation}
-This quantity is a distance in the RKHS by taking a characteristic kernel (e.g., the Gaussian or Matérn kernel). 
+This quantity is a distance in the Reproducing kernel Hilbert space (RKHS) by taking a characteristic kernel (e.g., the Gaussian or Matérn kernel). 
 After a calculation developed in Appendix \ref{apx:D}, an unbiased one-sample estimator of the squared-MMD was proposed by \citet{gretton_2006}, 
 with a convergence rate of $\mathcal{O}(n^{-1/2})$ in probability. 
 Considering the two-samples $\left\{\pi^{(i)}\right\}_{i=1}^n \sim \pi$ and $\left\{\zeta^{(j)}\right\}_{j=1}^n \sim \zeta$: 
@@ -1623,7 +1623,7 @@ Several techniques derive from rare event estimation (e.g., the FORM importance 
 Finally, sensitivity analysis may describe the effects of random inputs on the variation of the output, however, this study is done by assuming a model on the input uncertainties. 
 The role of a regulatory agency auditing an uncertainty quantification approach for certification (i.e., a nuclear safety authority), might be to challenge the way to model the uncertainties on the inputs.  
 In this case, various tools for \textit{robustness analysis} exist to quantify the impact of mispecifying the random inputs on the quantity of interest studied. 
-Among the methods to pertubate uncertainty models, some remain in the probabilistic framework, such as the ``perturbed-law based indices'' (PLI) \citep{lemaitre_2015_PLI}, or on extra-probabilistic methods \citep{ajenjo_2022_structural_safety}. 
+Among the methods to pertubate uncertainty models, some remain in the probabilistic framework, such as the ``perturbed-law based indices'' (PLI) \citep{lemaitre_2015_PLI,iooss_2022_pli}, or on extra-probabilistic methods \citep{ajenjo_2022_structural_safety}. 
 
 
 
@@ -1726,7 +1726,7 @@ The ``bagging'' validation method (for ``bootstrap aggregating'') consists of a 
 \subsection{General purposes surrogate model}
 %============================================================%
 
-In this section, a particular focus is dedicated to Gaussian process (GP) regression (also called kriging after the geostatician D.G. Krige). 
+In this section, a particular focus is dedicated to Gaussian process (GP) regression which will be useful in the following chapters (GP is also called kriging after the geostatician D.G. Krige). 
 Gaussian processes are a widely used regression method in UQ for their performance, flexibility and their associated confidence model. 
 In a small-data context, the way of placing the few points forming the surrogate's learning set is critical. 
 Intuitively, to build a versatile surrogate model, the learning set should collect information over the entire domain uniformly. 
@@ -1738,7 +1738,7 @@ In practice, QMC and optimized LHS design introduced in Section~\ref{sec:central
 %------------------------------------------------------------%
 
 Considering a learning set $\bX_n$, the goal is to approximate the function $g(\cdot)$ by a scalar Gaussian process conditioned on a set of observations $\by_n = \left\{g\left(\bx^{(i)}\right)\right\}_{i=1}^n$. 
-Let us first define a prior structure $G$ on the function approximated $g(\cdot)$, taken as a Gaussian process with a mean function $m(\cdot)$ and covariance function $k(\cdot, \cdot)$:  
+Let us first define a prior structure $G$ on the function approximating $g(\cdot)$, taken as a Gaussian process with a mean function $m(\cdot)$ and covariance function $k(\cdot, \cdot)$:  
 \begin{equation}
     G \sim \GP(m(\cdot), k(\cdot, \cdot)),
 \end{equation} 
@@ -1746,7 +1746,7 @@ with a:
 \begin{itemize}
     \item \textit{trend model}: $~m(\bx) = \mathbf{f}(\bx)\TT \bbeta$, composed of a functional basis $\mathbf{f} = \left(f_1, \dots, f_d\right)\TT$ and a vector of coefficients 
     $\bbeta = \left(\beta_1, \dots, \beta_d\right)\TT$,
-    \item \textit{covariance model}: $~k(\bx, \bx')$, usually taken stationary, such that $k(\bx, \bx') = \sigma^2 k_{\mathrm{s}}(\bx - \bx', \btheta)$ with $\sigma^2>0$ and $\btheta \in \iD_\bX$.
+    \item \textit{covariance model}: $~k(\bx, \bx')$, usually taken stationary, such that $k(\bx, \bx') = \sigma^2 k_{\mathrm{s}}(\bx - \bx', \btheta)$ with $\sigma^2>0$ and $\btheta \in \R^d_+$.
 \end{itemize}
 The trend model of a GP defines its general tendency, while the covariance model influences its regularity. 
 Gaussian process regression takes different names depending on the knowledge of the trend model. 
@@ -1754,7 +1754,7 @@ It is called ``simple kriging'' when the trend is fully known, ``ordinary krigin
 Note that \cite{schobi_2015} introduced a hybrid method named PC-Kriging setting a PCE as the trend of a kriging model. %\elias{paper PLS-Kriging from Onera 2015.}
 
 To ease the presentation, let us first consider the hyperparameters $\sigma, \btheta$ fully known and a zero trend $\bbeta = \textbf{0}$. 
-At a given point $\bx \in \iD_bX$ the realization of the GP is a Gaussian random variable $G(\bx) \sim \iN(m(\bx), k(\bx, \bx))$. 
+At a given point $\bx \in \iD_\bX$ the realization of the GP is a Gaussian random variable $G(\bx) \sim \iN(m(\bx), k(\bx, \bx))$. 
 Working with Gaussian variables allows us to easily write conditioning formulas between $G(\bx)$ and the observations $\by_n$. 
 This Gaussian variable $G(\bx)$ conditioned on the observations $\by_n$ is sometimes called conditional posterior $G_n(\bx) := (G(\bx) | \by_n) \sim \iN(\eta_n(\bx), s_n^2(\bx))$. 
 The well-known ``Kriging equations'' (see e.g., \citealt{rasmussen_2006}) offer its explicit expression:
@@ -1782,7 +1782,7 @@ In the simplest framework, the kriging model exactly interpolates the observatio
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.5\textwidth]{../numerical_experiments/chapter1/figures/kriging_1D.png}
+    \includegraphics[width=0.6\textwidth]{../numerical_experiments/chapter1/figures/kriging_1D.png}
     \caption{Illustration of an ordinary kriging model fitted on a limited set of observations ($n=7$). 
     The predictor is represented in and several trajectories of the conditioned Gaussian process are drawn and represented in purple.}
     \label{fig:kriging_1D}
@@ -1790,7 +1790,7 @@ In the simplest framework, the kriging model exactly interpolates the observatio
 
 
 Associated with kriging models, another validation criterion is relevant to evaluate the kriging variance $s_n^2(\bx)$. 
-The predictive variance adequation (PVA) has been introduced by \citet{bachoc_2013} to confirm that the kriging variance is reliable. 
+The predictive variance adequation (PVA) has been introduced to confirm that the kriging variance is reliable (see e.g., \citealt{bachoc_2013}). 
 For a validation performed by holdout, and using an independent $m$-sized test set, the PVA is defined as: 
 \begin{equation}
     \mathrm{PVA} = \left| \log\left( \frac1m \sum_{i=1}^{n} \frac{\left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)}{s_n^2(\bx^{(i)})}\right) \right|.
@@ -1827,6 +1827,7 @@ For example, to fit a surrogate model for contour finding in reliability analysi
 Similarly, to build a surrogate for a global optimization problem, one should focus the learning set around the optimum(s). 
 Unfortunately, the area(s) of interest is usually unknown before evaluating the true function. 
 \textit{Active learning} is a general concept, aiming at iteratively increasing the learning set w.r.t. a \textit{learning criterion} (also called ``acquisition function'') depending on the surrogate's goal to enhance the surrogate in the area(s) of interest. 
+Note that the expression ``adaptive design'' is also widely used in the computer experiments community to designate this concept.   
 An exploration-exploitation trade-off arises in active learning, mostly sorted by the learning criterion.
 
 \begin{remark}
@@ -1848,7 +1849,7 @@ Numerous reviews of this field were proposed by \citet{shahriari_2015,gramacy_20
 
 The generic black-box optimization problem tackled is defined as:
 \begin{equation}
-    \bx^* = \argmin_{\bx \in \iD_{\bX}} \, g(\bx) \approx \argmin_{\bx \in \iD_{\bX}} \, \what{g}(\bx).
+    \bx^* = \argmin_{\bx \in \iD_{\bX}} \, g(\bx). % \approx \argmin_{\bx \in \iD_{\bX}} \, \what{g}(\bx).
 \end{equation}
 
 To illustrate Bayesian optimization, let us present the EGO algorithm, defined by its specific learning criterion: the ``expected improvement''. 
@@ -1910,7 +1911,7 @@ where $\yth \in R$ is a threshold defining the failure domain.
 
 \fig{fig:AK_1D} reuses the same one-dimensional function as in \fig{fig:EGO_1D} to create a rare event problem. 
 In this case, the failure domain is defined for output values below the threshold $\yth$. 
-Once again, three iterations of the AK algorithm are illustrated, with the corresponding learning criterion $U$ (to minimize). 
+Once again, three iterations of the active kriging (AK) algorithm are illustrated, with the corresponding learning criterion $U$ (to minimize). 
 In this simple case, the LSF is defined by the two intersections of the function with the threshold. 
 Therefore, the AK method selects points near these intersections. 
 
@@ -1946,7 +1947,7 @@ Such methods are relevant for models with a very high computational cost (typica
 
 In UQ, surrogate models are used for uncertainty propagation (step C) and inverse analysis (step C'). 
 Surrogate modeling is made difficult when the functions present discontinuities (or strong nonlinearities), high dimension, stochasticity, or nonscalar inputs or outputs. 
-To deal with high dimensional problems, unimportant inputs can be screened using sensitivity analysis (see Section~\ref{sec:screening}), otherwise, model order reduction methods might be used \elias{ref ?}. 
+To deal with high dimensional problems, unimportant inputs can be screened using sensitivity analysis (see Section~\ref{sec:screening}), otherwise, model order reduction methods might be used \citep{schilders_2008}. 
 When the function is stochastic, different approaches allow fitting the function and its intrinsic variability \citep{binois_2019_replication,baker_2020_stochastic_surrogates_review,zhu_2023_thesis}. 
 
 Provided a strict validation process, surrogate models are a great opportunity for uncertainty quantification. 
@@ -1963,9 +1964,8 @@ This section gives a literature overview of the main steps in uncertainty quanti
 From uncertainty modeling, uncertainty propagation, and sensitivity analysis to surrogate modeling. 
 To ease the methodological presentation, all the illustrations from this section are reproducible using the Python/OpenTURNS scripts available on the GitHub repository mentioned earlier. 
 
-Finally this work, the numerical models exploited are supposed to be accurate, but they obviously carry some modeling uncertainty \citep{oberkampf_2010_VVUQ}. 
+Finally in this work, the numerical models exploited are supposed to be accurate, but they obviously carry some modeling uncertainty \citep{oberkampf_2010_VVUQ}. 
 In fact, prior to uncertainty quantification, the model should be calibrated to make it match some physical information (e.g., measurements). 
 Numerical model calibration is also called data assimilation when a stream of measured data is available. 
 
 The aim of this work is to apply the tools presented in this chapter to offshore wind turbine models, therefore the next chapter introduces the numerical models manipulated in this thesis.  
-

@@ -43,11 +43,11 @@
   organization={American Society of Mechanical Engineers}
 }
 
-
 @inproceedings{fekhari_iooss_2023,
     author = {E. Fekhari and B. Iooss and J. Mur\'e and L. Pronzato and J. Rendas},
     title = {{Model predictivity assessment: incremental test-set selection and accuracy evaluation}},
     publisher = {Springer},
+    editor= {Salvati, N. and Perna, C. and Marchetti, S. and Chambers, R.},
     booktitle = {Studies in Theoretical and Applied Statistics},
     year = {2023},
     pages={315--347},
@@ -81,7 +81,9 @@
     author = {Damblin, G. and Couplet, M. and Iooss, B.},
     year = {2013},
     title = {{Numerical studies of space-filling designs: Optimization of Latin Hypercube Samples and subprojection properties}},
-    volume = {7},
+    volume={7},
+    number={4},
+    pages={276--289},
     journal = {Journal of Simulation},
 }
 
@@ -136,7 +138,9 @@ journal = {Operations Research},
     author = {Joseph, V.R. and Gul, E. and Ba, S.},
     year = {2015},
     title = {{Maximum projection designs for computer experiments}},
-    volume = {102},
+    volume={102},
+    number={2},
+    pages={371--380},
     journal = {Biometrika},
 }
 
@@ -189,16 +193,16 @@ pages={29--52},
     journal = {Technometrics},
 }
 
-@incollection{owen_1996,
-title = {{9 Computer experiments}},
-series = {Handbook of Statistics},
-publisher = {Elsevier},
-volume = {13},
-pages = {261--308},
-year = {1996},
-booktitle = {Design and Analysis of Experiments},
-author = {J.R. Koehler and A.B. Owen},
+@article{owen_1992_tcl_lhs,
+  title={{A central limit theorem for Latin hypercube sampling}},
+  author={Owen, A.B.},
+  journal={Journal of the Royal Statistical Society: Series B (Methodological)},
+  volume={54},
+  number={2},
+  pages={541--551},
+  year={1992},
 }
+
 
 @article{owen_2003,
     author = {Owen, A.B.},
@@ -226,6 +230,16 @@ volume = {47},
 journal = {The Annals of Statistics},
 pages = {641 -- 661},
 year = {2019},
+}
+
+@article{stein_1987_lhs,
+  title={{Large sample properties of simulations using Latin hypercube sampling}},
+  author={Stein, M.},
+  journal={Technometrics},
+  volume={29},
+  number={2},
+  pages={143--151},
+  year={1987},
 }
 
 @article{torossian_picheny_2020,
@@ -308,6 +322,7 @@ year = {2019},
    author = {A.B. Owen},
    year = {2013},
    title = {{Monte Carlo theory, methods and examples}},
+   note={Stanford University}
 }
 
 
@@ -426,7 +441,7 @@ year = {2019},
 
 @article{chabridon2021global,
   title={Global Reliability-oriented Sensitivity Analysis under Distribution Parameter Uncertainty},
-  author={Chabridon, Vincent and Balesdent, Mathieu and Perrin, Guillaume and Morio, J{\'e}r{\^o}me and Bourinet, Jean-Marc and Gayton, Nicolas},
+  author={Chabridon, V. and Balesdent, M. and Perrin, G. and Morio, J. and Bourinet, J.-M. and Gayton, N.},
   journal={Mechanical Engineering under Uncertainties: From Classical Approaches to Some Recent Developments},
   pages={237--277},
   year={2021},
@@ -737,6 +752,7 @@ journal = {ASCE-ASME Journal of Risk and Uncertainty in Engineering Systems, Par
 @phdthesis{bourinet_2018,
   title={{Reliability analysis and optimal design under uncertainty-Focus on adaptive surrogate-based approaches}},
   author={Bourinet, J.-M.},
+  type = {{HDR}},
   year={2018},
   school={Universit{\'e} Clermont Auvergne}
 }
@@ -1048,12 +1064,16 @@ author = {E. Vanem},
   year={2013},
 }
 
-@unpublished{baker_2020_stochastic_surrogates_review,
-  title={{Stochastic simulators: An overview with opportunities}},
+@article{baker_2020_stochastic_surrogates_review,
   author={Baker, E. and Barbillon, P. and Fadikar, A. and Gramacy, R.B. and Herbei, R. and Higdon, D. and Huang, J. and Johnson, L.R. and Mondal, A. and Pires, B. and others},
-  note={arXiv preprint arXiv:2002.01321},
-  year={2020}
+  title = {{Analyzing Stochastic Computer Models: A Review with Opportunities}},
+  journal = {Statistical Science},
+  volume = {37},
+  number = {1},
+  pages = {64 -- 89},
+  year = {2022},
 }
+
 
 @article{binois_2019_replication,
   title={{Replication or exploration? Sequential design for stochastic simulation experiments}},
@@ -1264,6 +1284,14 @@ author = {E. Vanem},
     publisher={Springer}
 }
 
+@book{schilders_2008,
+  title={{Model order reduction: theory, research aspects and applications}},
+  author={Schilders, W. and Van der Vorst, H. A and Rommes, J.},
+  volume={13},
+  year={2008},
+  publisher={Springer}
+}
+
 @book{tibshirani_2009,
   title={{The elements of statistical learning: data mining, inference, and prediction}},
   author={Hastie, T. and Tibshirani, R. and Friedman, J.H.},
@@ -1281,7 +1309,7 @@ author = {E. Vanem},
 
 @phdthesis{zhu_2023_thesis,
   TITLE = {{Surrogate Modeling for Stochastic Simulators Using Statistical Approaches}},
-  AUTHOR = {X., Zhu},
+  AUTHOR = {Zhu, X.},
   SCHOOL = {{Chair of Risk, Safety and Uncertainty Quantification, ETH Zurich}},
   YEAR = {2022},
 }
@@ -1654,10 +1682,12 @@ author = {J.P. Jensen and K. Skelton},
 }
 
 @inproceedings{matha_2011_ISOPE,
-  title={{Challenges in simulation of aerodynamics, hydrodynamics, and mooring-line dynamics of floating offshore wind turbines}},
   author={Matha, D. and Schlipf, M. and Pereira, R. and Jonkman, J.},
-  booktitle={ISOPE International Ocean and Polar Engineering Conference},
-  year={2011},
+  year = {2011},
+  month = {01},
+  pages = {},
+  title = {{Challenges in Simulation of Aerodynamics, Hydrodynamics, and Mooring-Line Dynamics of Floating Offshore Wind Turbines}},
+  journal = {Proceedings of the International Offshore and Polar Engineering Conference}
 }
 
 @article{marty_2021_cable_marine_growth,
@@ -2453,11 +2483,13 @@ year={2019},
 %%------------------------ PAPERS --------------------------%%
 @article{briol_oates_2019,
     author = {Briol, F.X. and Oates, C. and Girolami, M. and Osborne, M. and Sejdinovic, D.},
-    year = {2019},
-    pages = {1 -- 22},
     title = {{Probabilistic Integration: A Role in Statistical Computation?}},
     volume = {34},
     journal = {Statistical Science},
+    number = {1},
+    publisher = {Institute of Mathematical Statistics},
+    pages = {1 -- 22},
+    year = {2019},
 }
 
 @article{daveiga_2015,
@@ -2469,12 +2501,13 @@ pages = {1283 -- 1305},
 year  = {2015},
 }
 
-@misc{daveiga_2021_kernel_ANOVA,
-      title={Kernel-based ANOVA decomposition and Shapley effects -- Application to global sensitivity analysis}, 
-      author={Sébastien da Veiga},
+@unpublished{daveiga_2021_kernel_ANOVA,
+      title={{Kernel-based ANOVA decomposition and Shapley effects -- Application to global sensitivity analysis}}, 
+      author={Da Veiga, S.},
       year={2021},
-      eprint={2101.05487},
-      archivePrefix={arXiv},
+      HAL_ID = {hal-03108628},
+      NOTE = {Preprint \url{https://hal.science/hal-03108628}},
+      URL = {https://hal.science/hal-03108628},
 }
 
 @article{mak_joseph_2018,
@@ -2511,7 +2544,7 @@ year  = {2015},
 }
 
 @article{ohagan_1991,
-    title = {Bayes-{H}ermite quadrature},
+    title = {{Bayes-{H}ermite quadrature}},
     journal = {Journal of Statistical Planning and Inference},
     volume = {29},
     pages = {245-260},
@@ -2528,12 +2561,14 @@ year  = {2015},
 }
 
 @unpublished{pronzato_rendas_2021,
-    doi = {10.48550/ARXIV.2112.05583},
-    author = {Pronzato, L. and Rendas, M.J},
-    title = {{Validation design I: construction of validation designs via kernel herding}},
-    note = {preprint, \url{https://arxiv.org/abs/2112.05583}},
-    year = {2021},
+  TITLE = {{Validation of Machine Learning Prediction Models}},
+  AUTHOR = {Pronzato, L. and Rendas, M.-J.},
+  NOTE = {preprint, \url{https://hal.science/hal-03818234}},
+  YEAR = {2023},
+  KEYWORDS = {Model Validation ; Bayesian Quadrature ; Maximum Mean Discrepancy ; Experimental Design},
+  HAL_ID = {hal-03818234},
 }
+
 
 @article{pronzato_zhigljavsky_2020,
     TITLE = {{Bayesian quadrature and energy minimization for space-filling design}},
@@ -2548,7 +2583,7 @@ year  = {2015},
     author = {D. Sejdinovic and B. Sriperumbudur and A. Gretton and K. Fukumizu},
     journal = {The Annals of Statistics},
     pages = {2263--2291},
-    title = {Equivalence of distance-based and {RKHS}-based statistics in hypothesis testing},
+    title = {{Equivalence of distance-based and {RKHS}-based statistics in hypothesis testing}},
     volume = {41},
     year = {2013}
 }
@@ -2605,6 +2640,7 @@ year  = {2015},
     title = {{Frank-Wolfe Bayesian Quadrature: Probabilistic Integration with Theoretical Guarantees}},
     year = {2015}
 }
+
 @inproceedings{chen_welling_2010,
     title={{Super-samples from kernel herding}},
     author={Y. Chen and M. Welling and A. Smola},
@@ -2687,11 +2723,12 @@ year  = {2015},
 %%------------------------ PAPERS --------------------------%%
 
 @incollection{bai_1989_directional_kde,
-  title={{Kernel estimators of density function of directional data}},
+  title = {{Kernel Estimators of Density Function of Directional Data}},
+  booktitle = {Multivariate Statistics and Probability},
+  publisher = {Academic Press},
+  pages = {24--39},
+  year = {1989},
   author={Bai, Z.D. and Radhakrishna-Rao, C. and Zhao, L.C.},
-  booktitle={Multivariate statistics and probability},
-  pages={24--39},
-  year={1989},
 }
 
 @article{beer_2013_imprecise_proba,
@@ -2723,6 +2760,17 @@ year  = {2015},
   year={2016},
 }
 
+@article{efron_1981,
+ author = {B. Efron and C. Stein},
+ journal = {The Annals of Statistics},
+ title = {{The Jackknife Estimate of Variance}},
+ number = {3},
+ volume = {9},
+ pages = {586--596},
+ year = {1981}
+}
+
+
 @article{fan_2010_feature_selection,
   title={{A selective overview of variable selection in high dimensional feature space}},
   author={Fan, J. and Lv, J.},
@@ -2753,16 +2801,36 @@ year  = {2015},
   year={2021},
 }
 
+@article{homma_1996,
+  title={{Importance measures in global sensitivity analysis of nonlinear models}},
+  author={Homma, T. and Saltelli, A.},
+  journal={Reliability Engineering \& System Safety},
+  volume={52},
+  number={1},
+  pages={1--17},
+  year={1996},
+}
 
-@article{hoeffiding_1948,
+@article{hoeffding_1948,
   title={{A class of statistics with asymptotically normal distributions}},
-  author={Hoeffiding, W.},
+  author={Hoeffding, W.},
   journal={Annals of Mathematical Statistics},
   volume={19},
   number={3},
   pages={293--325},
   year={1948}
 }
+
+@article{iooss_2022_pli,
+  title={{BEPU robustness analysis via perturbed law-based sensitivity indices}},
+  author={Iooss, B. and Verg{\`e}s, V. and Larget, V.},
+  journal={Proceedings of the Institution of Mechanical Engineers, Part O: Journal of Risk and Reliability},
+  volume={236},
+  number={5},
+  pages={855--865},
+  year={2022},
+}
+
 
 @article{kiureghian_2009,
 author    = {Der Kiureghian, A. and Ditlevsen, O.},
@@ -2886,7 +2954,6 @@ pages = {1635--1642},
 series = {ICML'12}
 }
 
-
 @article{rahman_2016,
   title={{The f-sensitivity index}},
   author={Rahman, S.},
@@ -2897,11 +2964,15 @@ series = {ICML'12}
   year={2016},
 }
 
-@book{saporta_2006,
-  title={Probabilit{\'e}s, analyse des donn{\'e}es et statistique},
-  author={Saporta, Gilbert},
-  year={2006},
-  publisher={Editions technip}
+@article{roustant_2017,
+author = {O. Roustant and F. Barthe and B. Iooss},
+title = {{Poincaré inequalities on intervals – application to sensitivity analysis}},
+volume = {11},
+journal = {Electronic Journal of Statistics},
+number = {2},
+publisher = {Institute of Mathematical Statistics and Bernoulli Society},
+pages = {3081 -- 3119},
+year = {2017},
 }
 
 @article{sobol_1993,
@@ -2958,6 +3029,29 @@ series = {ICML'12}
     year = 	 {2017}
 }
 
+@techreport{blanchard_2023,
+  TITLE = {{Fiches p{\'e}dagogiques sur le traitement des incertitudes dans les codes de calcul}},
+  AUTHOR = {Blanchard, J.-B. and Chocat, R. and Damblin, G. and Baudin, M. and Bousquet, N. and Chabridon, V. and Iooss, B. and Keller, M. and Pelamatti, J. and Sueur, R.},
+  INSTITUTION = {{EDF}},
+  YEAR = {2023},
+  HAL_ID = {hal-04205632},
+}
+
+@phdthesis{carmassi_2018,
+  title={{Uncertainty quantification and calibration of a photovoltaic plant model: warranty of performance and robust estimation of the long-term production}},
+  author={Carmassi, M.},
+  year={2018},
+  school={Universit{\'e} Paris Saclay}
+}
+
+
+@phdthesis{damblin_2015,
+  title={{Contributions statistiques au calage et {\`a} la validation des codes de calcul}},
+  author={Damblin, G.},
+  year={2015},
+  school={Paris, AgroParisTech}
+}
+
 @book{daveiga_iooss_2021,
     author = {Da Veiga, S. and Gamboa, F. and Iooss, B. and Prieur, C.},
     year = {2021},
@@ -2967,13 +3061,14 @@ series = {ICML'12}
 }
 
 @Inbook{kucherenko_iooss_2017,
-title = {{Derivative-Based Global Sensitivity Measures}},
-author = {Kucherenko, S. and Iooss, B.},
-bookTitle = {Handbook of Uncertainty Quantification},
-year={2017},
-publisher={Springer International Publishing},
-address={Cham},
-pages={1241--1263},
+  title = {{Derivative-Based Global Sensitivity Measures}},
+  author = {Kucherenko, S. and Iooss, B.},
+  booktitle = {Handbook of Uncertainty Quantification},
+  year={2017},
+  publisher={Springer International Publishing},
+  address={Cham},
+  editor={Ghanem, R. and Higdon, D.and Owhadi, H.},
+  pages={1241--1263},
 }
 
 @book{kurrer_2018_history_structures,
@@ -3008,7 +3103,7 @@ year = {2009}
 
 @book{rocquigny_2008,
     title={{Uncertainty in industrial practice: a guide to quantitative uncertainty management}},
-    author={de Rocquigny, E. and Devictor, N. and Tarantola, S.},
+    author={De Rocquigny, E. and Devictor, N. and Tarantola, S.},
     year={2008},
     publisher={John Wiley \& Sons}
 }
@@ -3020,12 +3115,19 @@ year = {2009}
   publisher={John Wiley \& Sons}
 }
 
+@book{saporta_2006,
+  title={Probabilit{\'e}s, analyse des donn{\'e}es et statistique},
+  author={Saporta, Gilbert},
+  year={2006},
+  publisher={Editions technip}
+}
+
 @article{schutz_1996_history_fatigue,
 title = {{A history of fatigue}},
 journal = {Engineering Fracture Mechanics},
 volume = {54},
 number = {2},
-pages = {263-300},
+pages = {263--300},
 year = {1996},
 author = {Sch\"{u}tz, W.},
 }
@@ -3036,7 +3138,7 @@ publisher = {John Wiley \& Sons, Ltd},
 title = {{Probabilistic Design of Structures Submitted to Fatigue}},
 booktitle = {Fatigue of Materials and Structures},
 chapter = {5},
-pages = {223-263},
+pages = {223--263},
 year = {2013},
 }
 
@@ -3232,13 +3334,6 @@ pages={282--290},
 year={1970}
 }
 
-@unpublished{PR2021a,
- author={L. Pronzato and M.-J. Rendas},
- title={Validation design {I}: construction of validation designs via kernel herding},
- note={Preprint},
- year={2021}
-}
-
 @book{mul07,
         author             = {W. G. M\"uller},
         publisher          = {Springer},
@@ -3274,7 +3369,7 @@ year={1970}
 }
 
 @Article{decbaz08,
-  author = 	 {A. {de Cr\'ecy} and P. Bazin and H. Glaeser and T. Skorek and J. Joufcla and P. Probst and K. Fujioka and B.D. Chung and D.Y. Oh and M. Kyncl and R. Pernica and J. Macek and R. Meca and R. Macian and F. D'Auria and A. Petruzzi and L. Batet and M. Perez and F. Reventos},
+  author = 	 {A. {De Cr\'ecy} and P. Bazin and H. Glaeser and T. Skorek and J. Joufcla and P. Probst and K. Fujioka and B.D. Chung and D.Y. Oh and M. Kyncl and R. Pernica and J. Macek and R. Meca and R. Macian and F. D'Auria and A. Petruzzi and L. Batet and M. Perez and F. Reventos},
   title = 	 {Uncertainty and sensitivity analysis of the {LOFT L2-5} test: {R}esults of the {BEMUSE} programme},
   journal = 	 {Nuclear Engineering and Design},
   volume =       {12},

@@ -3,20 +3,74 @@
 %********************************* Seventh Chapter *****************************
 %*******************************************************************************
 \cleardoublepage
-\chapter{Sequential reliability oriented sensitivity analysis}
+\chapter{Application to wind turbine fatigue reliability and robustness}
 \label{chpt:7}
 %*******************************************************************************
 \hfill
 \localtableofcontents
 \newpage
 
-On risk levels: https://onlinelibrary.wiley.com/doi/epdf/10.1002/we.2610
-\elias{Partie plus prospective}
+On risk levels for OWT: https://onlinelibrary.wiley.com/doi/epdf/10.1002/we.2610
 
+
+%============================================================%
+%============================================================%
 \section{Introduction}
-\section{PLI + application on the case}
-\section{HSIC for GSA}
-\section{HSIC for TSA \& CSA}
-\section{Sequential ROSA}
-\section{Application to wind turbine fatigue reliability}
+%============================================================%
+%============================================================%
+\begin{itemize}
+    \item Recall the system random variables
+    \item Define the specific QoI, maybe with a diagram
+\end{itemize}
+
+
+
+
+%============================================================%
+%============================================================%
+\section{Surrogate modeling for reliability analysis}
+%============================================================%
+%============================================================%
+
+\begin{itemize}
+    \item Present the HPC implementation required to realize such computations
+    \item Hybrid DoE construction (benefitting from the flexibility of the KH)
+    \item Gaussian model validation made difficult by the strong nonlinearities
+    \item Possible lack of trust in the mean estimation
+\end{itemize}
+
+
+
+%============================================================%
+%============================================================%
+\section{Reliability and robustness analysis}
+%============================================================%
+%============================================================%
+
+
+%============================================================%
+\subsection{Reliability analysis}
+%============================================================%
+\begin{itemize}
+    \item Nominal reliability analysis for 3 possible models of $D_cr$ and using multiple RA methods including BANCS
+\end{itemize}
+
+%============================================================%
+\subsection{Robustness analysis}
+%============================================================%
+\begin{itemize}
+    \item Definition of the PLI
+    \item Perturbation protocol (only on the variance)
+    \item Numerical results and discussion on the relevance of the study  
+\end{itemize}
+
+
+%============================================================%
+%============================================================%
 \section{Conclusion}
+%============================================================%
+%============================================================%
+
+
+
+

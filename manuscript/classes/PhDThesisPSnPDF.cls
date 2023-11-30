@@ -978,17 +978,31 @@ wish to left align your text}
 publicly defended on March 12, 2024 in front of the following jury:
 \vspace*{1em}
 
-\begin{tabular}{lll}
-    Pr. Mireille BOSSY, & INRIA, Sophia-Antipolis & Examiner\\
-    Dr. Vincent CHABRIDON & EDF R\&D, Chatou & Co-advisor\\
-    Dr. Sébastien DA VEIGA & ENSAI, Rennes & Examiner\\
-    Dr. Bertrand IOOSS & EDF R\&D, Chatou & Thesis director\\
-    Dr. Ana\"is LOVERA & EDF R\&D, Saclay& Invite\\
-    Dr. Joseph MUR\'E & EDF R\&D, Chatou & Co-advisor\\
-    Pr. Franck SCHOEFS & Nantes Université, Nantes & Reviewer\\
-    Pr. Daniel STRAUB & TUM, Munich & Reviewer\\
-    Pr. Bruno SUDRET & ETH, Z\"urich & Examiner\\ 
-\end{tabular}
+%\begin{tabular}{lll}
+%    Pr. Mireille BOSSY, & INRIA, Sophia-Antipolis & Examiner\\
+%    Dr. Vincent CHABRIDON & EDF R\&D, Chatou & Co-advisor\\
+%    Dr. Sébastien DA VEIGA & ENSAI, Rennes & Examiner\\
+%    Dr. Bertrand IOOSS & EDF R\&D, Chatou & Thesis director\\
+%    Dr. Ana\"is LOVERA & EDF R\&D, Saclay& Invite\\
+%    Dr. Joseph MUR\'E & EDF R\&D, Chatou & Co-advisor\\
+%    Pr. Franck SCHOEFS & Nantes Université, Nantes & Reviewer\\
+%    Pr. Daniel STRAUB & TUM, Munich & Reviewer\\
+%    Pr. Bruno SUDRET & ETH, Z\"urich & Examiner\\ 
+%\end{tabular}
+
+%\begin{adjustwidth}{-8mm}{-8mm}
+  \begin{tabular}{llll}
+    Director & Dr. Bertrand IOOSS      & Sr. Research Engineer  & EDF R\&D, Chatou \\
+    Co-advisors     & Dr. Vincent CHABRIDON   & Research Engineer         & EDF R\&D, Chatou \\
+                    & Dr. Joseph MUR\'E       & Research Engineer         & EDF R\&D, Chatou \\
+    Reviewers       & Pr. Franck SCHOEFS      & Professor                 & Nantes Université, Nantes\\
+                    & Pr. Daniel STRAUB       & Professor                 & TUM, Munich\\
+    Examiners       & Pr. Mireille BOSSY      & Research Director         & INRIA, Sophia-Antipolis\\
+                    & Dr. Sébastien DA VEIGA  & Associate Professor       & ENSAI, Rennes\\
+                    & Pr. Bruno SUDRET        & Professor                 & ETH, Z\"urich \\ 
+    Invite          & Dr. Ana\"is LOVERA      & Research Engineer         & EDF R\&D, Saclay\\
+  \end{tabular}
+%\end{adjustwidth}
 
 \end{center}
 

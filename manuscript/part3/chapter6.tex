@@ -10,25 +10,27 @@
 \localtableofcontents
 \newpage
 
+\elias{Terminology: elite set or elite sample can be used to describe the points that failed at each step}
 %============================================================%
 %============================================================%
 \section{Introduction}
 %============================================================%
 %============================================================%
-Reliability analysis of a system is often associated with rare event probability estimation. 
-Considering that the system's performance is modeled by a deterministic scalar function $g: \iD_\bx \subseteq \R^d \rightarrow \R$, called \emph{limit-state function} and a critical threshold on the system's output $\yth\in\R$, one can define the \emph{failure domain} as $\iF_{\bx} := \{\bx \in \iD_\bx | g(\bx) \leq \yth\}$. 
-Uncertain inputs are represented by a continuous random vector $\bX \in \iD_\bx$ assumed to be distributed according to its joint probability density function (PDF) $f_\bX$. 
-In this context, uncertainty propagation consists in composing the random vector $\bX$ by the function $g$ to get an output variable of interest $Y = g(\bX) \in \R$. 
-A usual risk measure in reliability analysis is the \emph{failure probability}, denoted by $\pf$, and defined as the probability that the system exceeds the threshold $\yth$:
-%\begin{equation}
-%    \pf := \P(g(\bX) \leq \yth)
-%        %&= \int_{\iF_\bx} f_\bX(\bx) \, \d\bx\\
-%        = \int_{\iD_\bx} \1_{\iF_\bx}(\bx) f_\bX(\bx) \, \d\bx
-%\end{equation}
-%where $\1_{\iF_\bx}(\cdot)$ is the indicator function of the failure domain such that $\1_{\iF_\bx}(\bx) = 1$ if $\bx \in \iF_\bx$ and $\1_{\iF_\bx}(\bx) = 0$ otherwise. 
+
+The assessment of a system's reliability, such as offshore wind turbines, often involves the estimation of rare event probabilities. 
+The system's performance is typically modeled by a deterministic scalar function, denoted by $g: \iD_\bx \subseteq \R^d \rightarrow \R$, referred to as the \textit{limit-state function}. 
+A critical threshold on the system's output, denoted as $\yth \in \R$, then defines the \textit{failure domain}, expressed as $\iF_{\bx} := \{\bx \in \iD_\bx | g(\bx) \leq \yth\}$. 
+Considering a probabilistic framework, inputs' uncertainties are modeled by a continuous random vector $\bX \in \iD_\bx$, with a joint probability density function (PDF) denoted by $f_\bX$. 
+In this scenario, uncertainty propagation consists in composing the random vector $\bX$ with the function $g$ to obtain the output variable of interest $Y = g(\bX) \in \R$. 
+A common risk measure in reliability analysis is the \textit{failure probability}, denoted by $\pf$, representing the probability of the system exceeding the threshold $\yth$:
+\begin{equation}
+    \pf := \P(g(\bX) \leq \yth)
+        %&= \int_{\iF_\bx} f_\bX(\bx) \, \d\bx\\
+        = \int_{\iD_\bx} \1_{\iF_\bx}(\bx) f_\bX(\bx) \, \dd\bx
+\end{equation}
+where $\1_{\iF_\bx}(\cdot)$ is the indicator function of the failure domain such that $\1_{\iF_\bx}(\bx) = 1$ if $\bx \in \iF_\bx$ and $\1_{\iF_\bx}(\bx) = 0$ otherwise. 
+
 Rare event problems are usually solved in the so-called \emph{standard normal space} after applying an ``iso-probabilistic transformation'' which can be either the Rosenblatt or the generalized Nataf one \citep{Lebrun_PHD_2013}.
-%VCN : je n'aime pas vraiment cette phrase qui est trop discutable...
-%%In structural reliability, a failure probability is considered rare for values between $10^{-2} \leq \pf \leq 10^{-8}$. 
 Additionally, the limit-state function $g$ can be viewed as an input-output ``black-box'' model which can be costly to evaluate (e.g., a complex numerical model), making the failure probability estimation nontrivial. 
 When the limit-state function is a costly computer model, one can build a surrogate model and use specific active learning methods (see, e.g., \citet{moustapha_ss_2022}). 
 However, using surrogate models is not always possible for practical engineering applications as they might introduce another level of approximation, which can be prohibitive from safety auditing. 
@@ -36,24 +38,34 @@ Moreover, their validation as well as their behavior with respect to large input
 
 Going back to the rare event estimation literature, one can consider two major types of techniques for failure probability calculation \citep{MorioBalesdent2015}: (i) Geometric approaches, such as the \emph{first-/second-order reliability method} (FORM/SORM) whose aim is to approximate the limit-state function by a first-/second-order Taylor expansion at the most probable failure point; (ii) Simulation-based techniques such as the \emph{crude Monte Carlo} method. 
 Unfortunately, FORM/SORM methods do not provide a lot of statistical information as they are purely geometric approaches.
-%% VCN : pour moi, ce n'est pas le plus grave. Le plus grave est que ces méthodes ne donennt pas d'info statistique sur l'estimation, car elles relèvent d'un calcul numérique => SORM gère très bien les LSF très courbées !
-%fail to solve highly nonlinear or high-dimensional problems
-% \citep{Rackwitz_2001}
 Meanwhile, estimating a rare event probability by crude Monte Carlo becomes rapidly intractable. 
-To overcome this limit, advanced simulation techniques have been developed: among others, one can mention several ``variance reduction methods'' such as the non-adaptive and adaptive versions of the \emph{Importance Sampling} \citep{RubinsteinKroese1981} (either parametric, using the Cross-Entropy method \citet{NKurtz_JSong_StrucSaf_2013}, or nonparametric \citet{Morio_RESS_2011}) and splitting techniques \citep{cerou2012sequential} such as the \emph{Subset Simulation} (SS) \citet{AuBeck2001}. 
-In these techniques, the idea is to write the rare event $\pf$ as a product of larger conditional probabilities, each one of them being easier to estimate. 
+To overcome this limit, advanced simulation techniques have been developed: among others, one can mention several ``variance reduction methods'' such as the non-adaptive and adaptive versions of the \emph{Importance Sampling} \citep{RubinsteinKroese1981} 
+(either parametric, using the Cross-Entropy method \citet{NKurtz_JSong_StrucSaf_2013}, or nonparametric \citet{Morio_RESS_2011}) and splitting techniques \citep{cerou2012sequential} such as the \emph{Subset Simulation} (SS) \citet{AuBeck2001}. 
+
+In subset simulation, the idea is to write the rare event $\pf$ as a product of larger conditional probabilities, each one of them being easier to estimate. 
 To generate intermediary conditional samples, this method uses Markov chain Monte Carlo (MCMC) sampling, which presents numerous versions \citep{Papaioannou_PEM_2015}. 
 However, MCMC algorithms are known to be highly tunable algorithms which produce non-i.i.d. samples, which consequently, cannot be used for direct statistical estimation (e.g., failure probability or sensitivity indices \citep{daveiga_iooss_2021}. 
 
-% glasserman1999multilevel
-% Importance sampling is a variance reduction method used to improve crude Monte Carlo, with various adaptations in the instrumental density construction. Among others, one can refer to the ``adaptive importance sampling by cross-entropy'' \citep{NKurtz_JSong_StrucSaf_2013}, or the ``nonparametric adaptive importance sampling'' \citep{Morio_EJOP_2010}. Alternatively, ``subset sampling'' (SS) \citep{AuBeck2001} (also referred to as ``multilevel splitting'' \citep{glasserman1999multilevel}, or ``sequential Monte Carlo'' \citep{cerou2012sequential}) is a different type of variance reduction method. It constantly relies on the same idea: a rare event can be expressed as a product of nested conditional events (subsets). The failure probability $\pf$ is written as a product of the respective conditional probabilities, each larger than $\pf$ (therefore easier to estimate). To generate intermediary subset samples, this method uses Markov chain Monte Carlo (MCMC) sampling, which presents numerous versions \cite{Papaioannou_PEM_2015}.
+In adaptive importance sampling\elias{, summarize the limits of AIS-CE and NAIS.}
 
+% Importance sampling is a variance reduction method used to improve crude Monte Carlo, with various adaptations in the instrumental density construction. 
+%Among others, one can refer to the ``adaptive importance sampling by cross-entropy'' \citep{NKurtz_JSong_StrucSaf_2013}, or the ``nonparametric adaptive importance sampling'' \citep{Morio_EJOP_2010}. 
+%Alternatively, ``subset sampling'' (SS) \citep{AuBeck2001} (also referred to as ``multilevel splitting'' \citep{glasserman1999multilevel}, or ``sequential Monte Carlo'' \citep{cerou2012sequential}) is a different type of variance reduction method. 
+%It constantly relies on the same idea: a rare event can be expressed as a product of nested conditional events (subsets). 
+%The failure probability $\pf$ is written as a product of the respective conditional probabilities, each larger than $\pf$ (therefore easier to estimate). 
+%To generate intermediary subset samples, this method uses Markov chain Monte Carlo (MCMC) sampling, which presents numerous versions \cite{Papaioannou_PEM_2015}.
+Further discussions and literature review on this topic are presented in Setion~\ref{sec:rare_event} of this manuscript. 
+
+
+\elias{Compare with NAIS, not SS.}
+\elias{Say that this work improves and extends the ICASP paper}
 The present work proposes a new rare event estimation method, adopting the same sequential structure as SS while using a strictly different sampling mechanism to generate conditional samples. 
 This method intends to fit the intermediary conditional distributions with a nonparametric tool called the \emph{Empirical Bernstein Copula}. 
 Contrarily to SS, the proposed method named ``Bernstein adaptive nonparametric conditional sampling'' (BANCS), generates i.i.d. samples of the intermediary conditional distributions. 
 For instance, a practical use of such i.i.d. samples can be to estimate dedicated reliability-oriented sensitivity indices (see, e.g., \cite{chabridon2021global,marrel_chabridon_2021}).
 
-In this paper, Section 2 will recall the methodology of subset sampling and probabilistic modeling. 
+
+In this chapter, Section 2 will recall the methodology of subset sampling and probabilistic modeling. 
 Then, Section 3 will introduce the BANCS method for rare event estimation. 
 Section 4 will apply this method to three toy-cases and analyze the results with respect to SS performances. 
 Then, the last section present some conclusions and research perspectives.
@@ -113,10 +125,16 @@ Since univariate marginals are usually well-fitted with nonparametric tools (e.g
 \section{Bernstein adaptive nonparametric conditional sampling}
 %============================================================%
 %============================================================%
+\begin{enumerate}
+    \item The algorithm / estimator + variance / illustrations 2D
+    \item Optimal tuning for empirical Bernstein copula inference 
+    \item Code available on GitHub
+\end{enumerate}
 
-%------------------------------------------------------------%
+
+%============================================================%
 \subsection{Empirical Bernstein copula}
-%------------------------------------------------------------%
+%============================================================%
 
 Copulas are continuous and bounded functions defined on a compact set (the unit hypercube). 
 Bernstein polynomials allow to uniformly approximate as closely as desired any continuous and real-valued function defined on a compact set (Weierstrass approximation theorem). 
@@ -165,9 +183,9 @@ In the following, this nonparametric tool is used to fit the intermediary condit
 \end{figure}
 
 
-%------------------------------------------------------------%
+%============================================================%
 \subsection{Bernstein adaptive nonparametric conditional sampling algorithm}
-%------------------------------------------------------------%
+%============================================================%
 
 This new method reuses the main idea from SS while employing a different approach to generate conditional samples. 
 Instead of using MCMC sampling, the conditional distribution is firstly fitted by a nonparametric procedure, before sampling on this nonparametric model. 
@@ -181,32 +199,35 @@ Note that the BANCS method does not require iso-probabilistic transform.
 \caption{Bernstein adaptive nonparametric conditional sampling (BANCS).}\label{alg:bancs}
 \footnotesize
 \begin{algorithmic}
-\State \Comment{Inputs:}
+\State \Comment{Inputs:}\hfill~
 \State $f_\bX$, joint PDF of the inputs
 \State $g(\cdot)$, limit-state function
 \State $\yth \in \R$, threshold defining the failure event 
 \State $N$, number of samples per iteration
 \State $m \in \N$, parameter of the EBC fitting
-\State $p_0 \in \left]0, 1\right[$, empirical quantile order (rarity parameter)
-\State \Comment{Algorithm:}
+\State $p_0 \in ]0, 1[$, empirical quantile order (rarity parameter)
+\State \Comment{Algorithm:}\hfill~
 \State Set $k = 0$ and $f_{[0]} = f_\bX$
-\State Sample $\bX_{[0], N} = \{\bX_{[0]}^{(j)}\}_{j=1}^N \overset{\text{i.i.d}}{\sim} f_{[0]}$
-\State Evaluate $G_{[0], N} = \{g(\bX_{[0]}^{(j)})\}_{j=1}^N$
+\State Sample $\bX_{[0], N} = \{\bx_{[0]}^{(j)}\}_{j=1}^N \overset{\text{i.i.d}}{\sim} f_{[0]}$
+\State Evaluate $G_{[0], N} = \{g(\bx_{[0]}^{(j)})\}_{j=1}^N$
 \State Estimate the empirical $p_0$-quantile $\widehat{q}_{[0]}^{p_0}$ of the set $G_{[0], N}$
 
 \While{$\widehat{q}_{[k]}^{p_0} > \yth$}
-\State Subsample $\mathbf{A}_{[k+1], n}=\{\bX_{[k]}^{(j)} \subset \bX_{[k], N}| g(\bX_{[k]}^{(j)}) > \widehat{q}_{[k]}^{p_0} \}_{j=1}^n$
+\State Subsample $\mathbf{A}_{[k+1], n}=\{\bx_{[k]}^{(j)} \subset \bX_{[k], N}| g(\bx_{[k]}^{(j)}) > \widehat{q}_{[k]}^{p_0} \}_{j=1}^n$
 \State Fit marginals of the subset $\mathbf{A}_{[k+1], n}$ by KDE $\{\widehat{F}_i\}_{i=1}^d$
 \State Fit the copula of the subset $\mathbf{A}_{[k+1], n}$ by EBC $B_\bm(C_n)$
 \State Build a CDF $\widehat{F}_{[k+1]}(\bx) = B_\bm(C_n)(\widehat{F}_1(x_1), \dots, \widehat{F}_d(x_d))$
-\State Sample $\bX_{[k+1], N} = \{\bX_{[k+1]}^{(j)}\}_{j=1}^N \overset{\text{i.i.d}}{\sim} \widehat{f}_{[k+1]}$
-\State Evaluate $G_{[k+1], N} = \{g(\bX_{[k+1]}^{(j)})\}_{j=1}^N$
+\State Sample $\bX_{[k+1], N} = \{\bx_{[k+1]}^{(j)}\}_{j=1}^N \overset{\text{i.i.d}}{\sim} \widehat{f}_{[k+1]}$
+\State Compute IS weights $\bw_{[k+1], N} = \{w_{[k+1]}^{(j)}\}_{j=1}^N = \left\{\frac{f_\bX(\bx_{[k+1]}^{(j)})}{\widehat{f}_{[k+1]}(\bx_{[k+1]}^{(j)})}\right\}_{j=1}^N$
+\State Evaluate $G_{[k+1], N} = \{g(\bx_{[k+1]}^{(j)})\}_{j=1}^N$
 \State Estimate the empirical $p_0$-quantile $\widehat{q}_{[k+1]}^{p_0}$ of $G_{[k+1], N}$
 \State Set $k = k+1$
 \EndWhile
 \State Set total iteration number $k_\# = k-1$ 
-\State Estimate $\widehat{\pf} = (1 - p_0)^{k_\#} \cdot \frac{1}{N} \sum_{j=1}^N \1_{\{g(\bX_{[k_\#]}^{(j)}) \geq \yth  \}}(\bX_{[k_\#]^{(j)}}) $
-%\COMMENT{Outputs:}
+%\State Estimate $\widehat{\pf} = (1 - p_0)^{k_\#} \cdot \frac{1}{N} \sum_{j=1}^N \1_{\{g(\bX_{[k_\#]}^{(j)}) \geq \yth  \}}(\bX_{[k_\#]^{(j)}}) $
+\State Estimate $\widehat{\pf} = \frac{1}{N\, k_\#} \sum_{k=1}^{k_\#} \sum_{j=1}^N \1_{\{g(\bx_{[k]}^{(j)}) \geq \yth  \}}(\bx_{[k]}^{(j)}) \, w_{[k]}^{(j)}$
+\State Estimate $\var(\widehat{\pf}) = \frac{1}{N-1} \left[\frac1N \sum_{j=1}^N \1_{\{g(\bx_{[k]}^{(j)}) \geq \yth  \}}(\bx_{[k]}^{(j)}) \, w_{[k]}^{(j)} - (\widehat{\pf})^2\right]$
+\State \Comment{Outputs:}\hfill~
 \State $\widehat{\pf}$, estimate of $\pf$
 \end{algorithmic}
 \end{algorithm}
@@ -296,9 +317,9 @@ with the input random vector $\bX = (X_1, \dots, X_7)$, following a product of n
 The reliability problem consists in evaluating: $p_{\mathrm{f}, 3} = \mathbb{P} ( g_3(\bX) \leq 0 ) =  8.10 \times 10^{-3}$.
 
 
-%------------------------------------------------------------%
+%============================================================%
 \subsection{Results analysis}
-%------------------------------------------------------------%
+%============================================================%
 
 Results of our numerical experiments are presented graphically (for 2-dimensional problems) in Figures  \ref{fig:toycase1_reliability} and \ref{fig:toycase2_reliability}, and numerically in Table \ref{tab:result_table}. 
 In the same fashion as the previous illustrations, the figures represent the intermediary quantiles $\widehat{q}_{[k]}^{p_0}$ estimated over conditional samples of size $N=10^4$. 
@@ -347,14 +368,37 @@ However, one can note that SS coefficient of variation is computed by an approxi
 
 
 
-\section{Application to wind turbine fatigue reliability}
-%\section{Application to a floating offshore wind turbine reliability}
+%============================================================%
+%============================================================%
+\section{Sequential reliability-oriented sensitivity analysis}
+%============================================================%
+%============================================================%
+\begin{itemize}
+    \item Definition of the formalism and the main methods (FORM alpha-factors, Sobol', T-HSIC, Shapley)
+    \item Motivate the need
+    \item Literature review 
+    \item Definition of the T-HSIC 
+    \item Post-processing BANCS results with dynamic T-HSIC (how does the ROSA evolve with the rarity?)
+\end{itemize}
+
+
+
+
 
 %============================================================%
 %============================================================%
 \section{Conclusion}
 %============================================================%
 %============================================================%
+\begin{itemize}
+    \item Learn from a weighted sample
+    \item Compare the learning-time with NAIS
+    \item Optimze the EBC tunning with a test set (possibly build by KH)
+    \item What if the sampling is not iid?
+    \item Advantage of working directly in the physical space directly
+\end{itemize}
+
+
 Subset Simulation uses MCMC sampling to generate its intermediary conditional samples. 
 However, MCMC algorithms tends to be complex to tune and does not generate i.i.d. conditional samples. 
 In this work, a new method is proposed, replacing MCMC sampling with a simpler procedure. 
@@ -370,3 +414,8 @@ BANCS estimated coefficient of variation is higher than SS approximated coeffici
 This work can be further explored by building an approximation of BANCS variance and confidence interval. 
 One major advantage remains that the samples generated at each iteration are i.i.d. leading to a possible use of these samples to perform global reliability-oriented sensitivity analysis \citep{marrel_chabridon_2021} 
 in order to detect and analyze the most influential input variables leading to failure.
+
+
+
+%\section{Application to wind turbine fatigue reliability}
+%\section{Application to a floating offshore wind turbine reliability}
