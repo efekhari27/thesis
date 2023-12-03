@@ -1201,7 +1201,7 @@ Then, an intermediate instrumental density is inferred by KDE on the samples exc
             \1_{\{g(\bx) \leq q_{[j]}^{p_0}\}}\left(\bx^{(i)}_{[j]}\right) w^{(i)}_{[j]} \, K\left(\bH_{[k]}^{-1/2} (\bx - \bx^{(i)}_{[j]})\right).
 \end{equation} 
 The last instrumental density $\what{h}_{[k_{\#}]}$ is finally considered as an approximation of the optimal density for importance sampling introduced in \eq{eq:pf_IS}: 
-\begin{equation}
+\begin{equation}\label{eq:pf_NAIS}
     \what{\pf}^{\mathrm{NAIS}} = \frac1n \sum_{i=1}^{n} \1_{\{g(\bx) \leq 0\}} \,
                                                  \frac{f_\bX\left(\bx^{(i)}_{[k_{\#}]}\right)}{\what{h}_{[k_{\#}]}\left(\bx^{(i)}_{[k_{\#}]}\right)} \, , \qquad
                                                  \left\{\bX_{[k_{\#}]}^{(i)}\right\}_{i=1}^n \simiid h_{k_{\#}}.
@@ -1218,12 +1218,12 @@ In practice, the performances of NAIS seriously decrease for problems in dimensi
 
 
 %------------------------------------------------------------%
-\subsubsection{Subset sampling}
+\subsubsection{Subset simulation}
 %------------------------------------------------------------%
-Although the concept of splitting already existed, the name of \textit{subset sampling} (SS) was first introduced by \citet{AuBeck2001} in the structural reliability community. 
+Although the concept of splitting already existed, the name of \textit{subset simulation} (SS) was first introduced by \citet{AuBeck2001} in the structural reliability community. 
 This concept was generalized as a sequential Monte Carlo method under the name of ``adaptive multilevel splitting'', as reviewed by \citet{cerou_2019_sequentialMC}. 
 
-Subset sampling splits the failure event $\iF_{\bx}$ into an intersection of $k_\#$ intermediary events $\iF_{\bx} = \cap_{k=1}^{k_\#} \iF_{[k]}$.
+Subset simulation splits the failure event $\iF_{\bx}$ into an intersection of $k_\#$ intermediary events $\iF_{\bx} = \cap_{k=1}^{k_\#} \iF_{[k]}$.
 Each are nested such that $\iF_{[1]} \supset \dots \supset \iF_{[k_\#]} = \iF_{\bx}$.
 The failure probability is then expressed as a product of conditional probabilities:
 \begin{equation}
@@ -1242,7 +1242,7 @@ Finally, the failure probability is estimated by:
     \label{eq:pf_SS}
 \end{equation}
 
-\footnotetext{An algorithmic presentation of the generic subset sampling method is given in Appendix \ref{apx:C}.}
+\footnotetext{An algorithmic presentation of the generic subset simulation method is given in Appendix \ref{apx:C}.}
 
 In practice, the subset sample size should be large enough to properly estimate intermediary quantiles, leading to the usual recommendation of $p_0=0.1$. 
 \fig{fig:SS_reliability} illustrates the consecutive subset samples moving towards the failure domain. 
@@ -1253,11 +1253,11 @@ The first one results from a first-order Taylor expansion of \eq{eq:pf_SS} and i
 The second assumes the estimations of the conditional probabilities to be independent and tends to underestimate the coefficient of variation. 
 
 As discussed in \citep{Papaioannou_PEM_2015}, the efficiency of the SS method depends on the choice and tuning of the MCMC algorithm. 
-The Metropolis–Hastings (MH) algorithm is widely used as MCMC algorithm for subset sampling, however, it quickly becomes inefficient as the dimension increases.  
+The Metropolis–Hastings (MH) algorithm is widely used as MCMC algorithm for subset simulation, however, it quickly becomes inefficient as the dimension increases.  
 Different improvements of the MH are made possible by working in the standard space, such as the ``component-wise'' (or ``modified M–H''). 
 More recently, alternative MCMC methods including physical system dynamics (e.g., Hamiltonian MCMC) showed promising results in high-dimension reliability problems \citep{papakonstantinou_2023_HMCMC}. 
 
-The subset sampling is a versatile method, presenting consistent performances even for rare probabilities. 
+The subset simulation is a versatile method, presenting consistent performances even for rare probabilities. 
 Its flexibility allows it to deal with highly nonlinear LSF, but its drawbacks arise from the use of MCMC sampling. 
 The convergence of MCMC is complex to control and depends on its tuning, in addition, the MCMC samples are dependent. 
 Unlike the methods derived from importance sampling, the variance of $\widehat{\pf}^{\mathrm{SS}}$ is only approximated. 
@@ -1268,7 +1268,7 @@ Unlike the methods derived from importance sampling, the variance of $\widehat{\
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{../numerical_experiments/chapter1/figures/reliability_SS_illustration.png}
-    \caption{Illustration of a rare event estimation by subset sampling ($n=4\cdot10^4, p_0 = 0.1$).}
+    \caption{Illustration of a rare event estimation by subset simulation ($n=4\cdot10^4, p_0 = 0.1$).}
     \label{fig:SS_reliability}
 \end{figure}
 
@@ -1918,7 +1918,7 @@ Therefore, the AK method selects points near these intersections.
 
 Unlike optimization problems, the surrogate is used for uncertainty propagation, meaning that the rare event estimation is the result of the approximation of the LSF (i.e., contour finding) and a sampling techniques. 
 AK methods were coupled with most sampling techniques introduced in Section~\ref{sec:reliability} (e.g., AK-MCS, AK-IS, AK-SS, etc. ). 
-As an agnostic strategy, \citet{moustapha_ss_2022} recommend starting by applying an AK method (using the learning function $U$) paired with a subset sampling (taking an intermediary probability $p_0 =0.2$). 
+As an agnostic strategy, \citet{moustapha_ss_2022} recommend starting by applying an AK method (using the learning function $U$) paired with a subset simulation (taking an intermediary probability $p_0 =0.2$). 
 
 The AK methods present the advantages of being easily implemented and interpreted, however, their learning criterion relies on a local approach. 
 Alternatively, the \textit{stepwise uncertainty reduction} (SUR) chooses iterative points by reducing the future expected uncertainty related to the quantity of interest \citep{bect_ginsbourger_2012}. 

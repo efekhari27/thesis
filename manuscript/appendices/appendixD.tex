@@ -127,7 +127,7 @@
     IS_results=IS_algo.getResult()
     IS_pf=IS_results.getProbabilityEstimate()
     IS_pf_confidence=IS_results.getConfidenceLength(0.95)
-    # Estimate pf using subset sampling
+    # Estimate pf using subset simulation
     SS_algo=ot.SubsetSampling(failure_event)
     SS_algo.run()
     SS_results=SS_algo.getResult()

@@ -261,14 +261,14 @@ Ce travail a mené à la publication et au développement informatique suivant :
 
 L'estimation de probabilités d'événements rares est un problème courant dans la gestion des risques industriels, notamment dans le domaine de la fiabilité des structures \cite{chabridon_2018_thesis}. 
 Pour ce faire, plusieurs techniques ont été proposées pour surmonter les limites connues de la méthode de Monte Carlo. 
-Parmi elles, la méthode de ``\textit{subset sampling}'' \cite{AuBeck2001} est une technique qui repose sur la décomposition de la probabilité de l'événement rare en un produit de probabilités conditionnelles moins rares (donc plus simples à estimer) associées à des événements de défaillance imbriqués. 
+Parmi elles, la méthode de ``\textit{subset simulation}'' \cite{AuBeck2001} est une technique qui repose sur la décomposition de la probabilité de l'événement rare en un produit de probabilités conditionnelles moins rares (donc plus simples à estimer) associées à des événements de défaillance imbriqués. 
 Cependant, cette technique repose sur la simulation conditionnelle à base de méthodes de Monte Carlo par chaînes de Markov (MCMC). 
 Ces algorithmes permettent, à la convergence, de simuler selon la densité cible. 
 Cependant, en pratique, ils produisent souvent des échantillons non indépendants et identiquement distribués (i.i.d.) en raison de la corrélation entre les chaînes de Markov. 
 Ce chapitre propose une autre méthode pour échantillonner conditionnellement aux événements de défaillance imbriqués afin d'obtenir des échantillons dont la propriété d'être i.i.d. est préservée. 
 La propriété d'indépendance des échantillons est particulièrement pertinente pour exploiter ces mêmes échantillons pour une analyse de sensibilité fiabiliste. 
 L'algorithme proposé repose sur l'inférence non-paramétrique de la distribution conjointe conditionnelle en utilisant une estimation par noyau des marginales combinée à une inférence de la dépendance à l'aide de la copule empirique de Bernstein \cite{sancetta_satchell_2004}. 
-L'algorithme appelé \textit{``Bernstein adaptive nonparametric conditional sampling''} (BANCS) est comparée à la méthode du \textit{subset sampling} pour plusieurs problèmes de fiabilité des structures. 
+L'algorithme appelé \textit{``Bernstein adaptive nonparametric conditional sampling''} (BANCS) est comparée à la méthode du \textit{subset simulation} pour plusieurs problèmes de fiabilité des structures. 
 Les premiers résultats sont encourageants, mais le contrôle du biais de l'estimateur doit être plus amplement investigué. 
 Ce travail a mené à la publication et au développement informatique suivant : \\
 
@@ -303,29 +303,25 @@ En résumé, cette thèse aborde plusieurs aspects du traitement des incertitude
 \begin{center}
     \footnotesize
     \renewcommand*{\arraystretch}{1.4}
-    \begin{tabularx}{\textwidth}{l X}
-        Book Chap. & \underline{E. Fekhari}, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). 
-                    ``Model predictivity assessment: incremental test-set selection and accuracy evaluation''. 
-                    In: \textit{Studies in Theoretical and Applied Statistics}, pages 315--347. Springer.\\
+    \begin{tabularx}{\textwidth}{c X}
+        Book Chap.      & \underline{E. Fekhari}, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). 
+                        ``Model predictivity assessment: incremental test-set selection and accuracy evaluation''. 
+                        In: \textit{Studies in Theoretical and Applied Statistics}, pages 315--347. Springer.\\
+        \hline  
+        Jour. Pap.      & \underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2023).
+                        ``Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature''. 
+                        In: \textit{Data-Centric Engineering}.\\
+
+                        %& \elias{\underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2023).
+                        %``TO DO: Bernstein adaptive nonparametric conditional sampling''.
+                        %In: \textit{Special Issue in Honor of Professor Armen Der Kiureghian. Reliability Engineering \& System Safety}.}\\
         \hline
-        Jour. Pap.   & \underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2023).
-                    ``Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature''. 
-                    In: \textit{Data-Centric Engineering}, In press.\\
-        \hline
-        Int. Conf   & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022).
-                    ``Numerical Studies of Bayesian Quadrature Applied to Offshore Wind Turbine Load Estimation''.
-                    In: \textit{SIAM Conference on Uncertainty Quantification (SIAM UQ22)}, Atlanta, USA. (Talk)\\
-        
-                    & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022). 
-                    ``Model predictivity assessment: incremental test-set selection and accuracy evaluation''.
-                    In: \textit{22nd Annual Conference of the European Network for Business and Industrial Statistics (ENBIS 2022)}, Trondheim, Norway. (Talk)\\
-        
-                    & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022). 
+\shortstack{Int. Conf.\\Pap.}& \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022). 
                     ``Efficient techniques for fast uncertainty propagation in an offshore wind turbine multi-physics simulation tool''.
                     In: \textit{Proceedings of the 5th International Conference on Renewable Energies Offshore (RENEW 2022)}, Lisbon, Portugal. (Paper \& Talk)\\
         
                     & \underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2023). 
-                    ``Bernstein adaptive nonparametric conditional sampling: a new method for rare event probability estimation''\footnote{Cette contribution a été récompensée par le ``CERRA Student Recognition Award''}.
+                    ``Bernstein adaptive nonparametric conditional sampling: a new method for rare event probability estimation''\footnote{This contribution was rewarded by the ``CERRA Student Recognition Award''}.
                     In: \textit{Proceedings of the 13th International Conference on Applications of Statistics and Probability in Civil Engineering (ICASP 14)}, Dublin, Ireland. (Paper \& Talk)\\
         
                     & E. Vanem, \underline{E. Fekhari}, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2023). 
@@ -335,6 +331,14 @@ En résumé, cette thèse aborde plusieurs aspects du traitement des incertitude
                     & A. Lovera, \underline{E. Fekhari}, B. Jézéquel, M. Dupoiron, M. Guiton and E. Ardillon (2023). 
                     ``Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis". 
                     In: \textit{Journal of Physics: Conference Series (WAKE 2023)}, Visby, Sweden (Paper)\\
+        \hline
+\shortstack{Int. Conf.\\Short Abs.}  & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022).
+                    ``Numerical Studies of Bayesian Quadrature Applied to Offshore Wind Turbine Load Estimation''.
+                    In: \textit{SIAM Conference on Uncertainty Quantification (SIAM UQ22)}, Atlanta, USA. (Talk)\\
+        
+                    & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022). 
+                    ``Model predictivity assessment: incremental test-set selection and accuracy evaluation''.
+                    In: \textit{22nd Annual Conference of the European Network for Business and Industrial Statistics (ENBIS 2022)}, Trondheim, Norway. (Talk)\\
         \hline
         Nat. Conf.  & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022).
                     ``Kernel-based quadrature applied to offshore wind turbine damage estimation''. 
@@ -348,7 +352,7 @@ En résumé, cette thèse aborde plusieurs aspects du traitement des incertitude
 
                     & Journées Scientifiques de l’Eolien 2024, Saint-Malo, France. ``Evaluation probabiliste de la fiabilité en fatigue des structures éoliennes en mer''. (Talk)
                     
-        \end{tabularx}
+        \end{tabularx}    
 \end{center}
 
 \newpage

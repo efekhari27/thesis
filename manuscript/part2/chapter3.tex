@@ -542,14 +542,14 @@ The aim of this section is to complete the set of marginals fitted previously by
 A nonparametric estimation using the empirical Bernstein copula is studied in this section. 
 To validate the goodness-of-fit of the EBC, the ANEMOC dataset (with size $N=10^4$) is randomly split into two:
 a learning set $\bX_n$ and a validation set $\bX_n'$. 
-A joint distribution $\what{F_\bX}$ is then build using $\bX_n$, by combining the marginals fitted earlier with an empirical copula $B_{\bm}(C_n)$, such that: 
+A joint distribution $\what{F}_\bX$ is then build using $\bX_n$, by combining the marginals fitted earlier with an empirical copula $B_{\bm}(C_n)$, such that: 
 \begin{equation}
-    \what{F_\bX}(\bx) = B_{\bm}(C_n)\left(\what{F_{X_1}}(x_1), \dots, \what{F_{X_d}}(x_d)\right).
+    \what{F}_\bX(\bx) = B_{\bm}(C_n)\left(\what{F}_{X_1}(x_1), \dots, \what{F}_{X_d}(x_d)\right).
 \end{equation}
 Where $\what{F_{X_j}}$ stand for the model of the marginal $j$, just inferred in Section~\ref{sec:marginal_inference}. 
 While $C_n$ is the empirical copula associated with the sample $\bX_n$, and all the polynomial orders of the EBC are equal, $\bm = \{m, \dots, m\}, m\in\N$.
 
-Then, one could compare a sample $\what{\bX_n}$, generated from the fitted joint distribution $\what{F_\bX}$, with the learning set $\bX_n$. 
+Then, one could compare a sample $\what{\bX_n}$, generated from the fitted joint distribution $\what{F}_\bX$, with the learning set $\bX_n$. 
 However, to prevent an overfit from the semiparametric model, the comparison is rather done between $\bX_n$ and the independent validation set $\bX_n'$. 
 The statistic used is the maximum mean discrepancy, $\MMD(\what{\bX_n}, \, \bX_n')$, initially introduced for multivariate two-sample testing (a specific presentation of the MMD and its estimation is developed in Appendix~\ref{apx:B}). 
 For a given fitted joint distribution, this procedure is repeated 100 times to take into account the sampling variability. 
@@ -565,7 +565,7 @@ As with any nonparametric method, it should be used with caution when inferring 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{../numerical_experiments/chapter3/figures/SB_MMD_goodness.png}
-    \caption{Empirical distributions of the maximum mean discrepancy between the validation sample $\bX'$ and the sample $\what{\bX_n} \simiid \what{F_\bX}$ (repeated for 100 samples $\what{\bX_n}$).}
+    \caption{Empirical distributions of the maximum mean discrepancy between the validation sample $\bX'$ and the sample $\what{\bX_n} \simiid \what{F}_\bX$ (repeated for 100 samples $\what{\bX_n}$).}
     \label{fig:sb_ebc_mmd}
 \end{figure}
 
