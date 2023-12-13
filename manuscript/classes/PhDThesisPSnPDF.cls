@@ -992,7 +992,7 @@ publicly defended on March 12, 2024 in front of the following jury:
 
 %\begin{adjustwidth}{-8mm}{-8mm}
   \begin{tabular}{llll}
-    Director & Dr. Bertrand IOOSS      & Sr. Research Engineer  & EDF R\&D, Chatou \\
+    Director & Dr. Bertrand IOOSS      & Senior Researcher  & EDF R\&D, Chatou \\
     Co-advisors     & Dr. Vincent CHABRIDON   & Research Engineer         & EDF R\&D, Chatou \\
                     & Dr. Joseph MUR\'E       & Research Engineer         & EDF R\&D, Chatou \\
     Reviewers       & Pr. Franck SCHOEFS      & Professor                 & Nantes Université, Nantes\\

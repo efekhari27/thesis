@@ -28,6 +28,7 @@ Then, a common risk measure in reliability analysis is the \textit{failure proba
         %&= \int_{\iF_\bx} f_\bX(\bx) \, \d\bx\\
         = \int_{\iD_\bx} \1_{\iF_\bx}(\bx) f_\bX(\bx) \, \dd\bx.
 \end{equation}
+The usual convention presented in Section~\ref{sec:reliability} allows to modify the limit-state function in order to set the threshold to zero. 
 %where $\1_{\iF_\bx}(\cdot)$ is the indicator function of the failure domain such that $\1_{\iF_\bx}(\bx) = 1$ if $\bx \in \iF_\bx$ and $\1_{\iF_\bx}(\bx) = 0$ otherwise. 
 
 %Rare event problems are usually solved in the so-called \emph{standard normal space} after applying an ``iso-probabilistic transformation'' which can be either the Rosenblatt or the generalized Nataf one \citep{Lebrun_PHD_2013}.
@@ -41,14 +42,14 @@ The main methods for rare event estimation (see Section~\ref{sec:reliability}) c
 \textit{(ii)} simulation-based techniques such as the \emph{crude Monte Carlo} method. 
 Unfortunately, FORM/SORM methods do not provide a lot of statistical information as they are purely geometric approaches.
 Meanwhile, estimating a rare event probability by crude Monte Carlo becomes rapidly intractable for engineering applications. 
-To overcome this limit, advanced simulation techniques have been developed: among others, one can mention several ``variance reduction'' methods such as the non-adaptive and adaptive versions of the \emph{Importance Sampling} \citep{RubinsteinKroese1981} and splitting techniques \citep{cerou2012sequential} such as the \emph{Subset Simulation} (SS) \citet{AuBeck2001}.
+To overcome this limit, advanced simulation techniques have been developed: among others, one can mention several ``variance reduction'' methods such as the non-adaptive and adaptive versions of the \emph{Importance Sampling} \citep{RubinsteinKroese1981} and splitting techniques \citep{cerou2012sequential} such as the \emph{Subset Simulation} (SS) \citep{AuBeck2001}.
 
 In subset simulation, the idea is to write the rare event $\pf$ as a product of larger conditional probabilities, each one of them being easier to estimate. 
 To generate intermediary conditional samples, this method uses Markov chain Monte Carlo (MCMC) sampling, which presents numerous versions \citep{Papaioannou_PEM_2015}. 
 However, MCMC algorithms are known to be highly tunable algorithms which produce non-i.i.d. samples, which consequently, cannot always be used for direct statistical estimation (e.g., failure probability or sensitivity indices \citealp{daveiga_iooss_2021}). 
 
 Adaptive importance sampling infers conditional distributions before using an importance sampling estimator of the failure probability. 
-The set of auxiliary distributions converging towards the failure domain is either fitted by parametric approaches (e.g., using the cross-entropy method \citealt{kurtz_song_2013_aisce}), or nonparametric methods (e.g., using multivariate KDE \citealt{Morio_RESS_2011}). 
+The set of auxiliary distributions converging towards the failure domain is either fitted by parametric approaches (e.g., using the cross-entropy method \citealt{rubinstein_2004_CE}), or nonparametric methods (e.g., using multivariate KDE \citealt{Morio_RESS_2011}). 
 The main drawback of the cross-entropy adaptive importance sampling (AIS-CE) is its limited flexibility, not allowing it to perform well in the case of multimodal failure domains. 
 On the other hand, nonparametric adaptive importance sampling (NAIS) inherits its drawbacks from the multivariate KDE (i.e., significant performance drop for medium to high dimension). 
 
@@ -197,7 +198,7 @@ Note that the BANCS method does not require iso-probabilistic transform.
         \caption{Iteration $k=1$.}
     \end{subfigure}
     \caption{BANCS algorithm applied to toy-case \#1: illustration of conditional sampling and nonparametric fit at the first and second iterations.}
-    \label{fig:bancs_illustration1}
+    \label{fig:bancs_illustration}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -221,7 +222,7 @@ This estimator also benefits from an IS variance, which can also be estimated, u
     \var(\widehat{\pf}^{\mathrm{BANCS}}) = \frac{1}{N-1} \left[\frac1N \sum_{i=1}^N \left(\frac{f_\bX(\bx_{[k_\#]}^{(i)})}{\widehat{f}_{[k_\#]}(\bx_{[k_\#]}^{(i)})}\right)^2 \, \1_{\{g(\bx_{[k_\#]}^{(i)}) \leq \yth \}}(\bx_{[k_\#]}^{(i)}) \, - \, \left(\widehat{\pf}^{\mathrm{BANCS}}\right)^2\right]
 \end{equation}
 
-\fig{fig:bancs_illustration1} illustrates the nonparametric fit and conditional sampling in BANCS method on a two-dimensional reliability problem (later introduced as ``toy-case \#1''). 
+\fig{fig:bancs_illustration} illustrates the nonparametric fit and conditional sampling in BANCS method on a two-dimensional reliability problem (later introduced as ``toy-case \#1''). 
 At the iteration $k=0$, the conditional distribution fitted (with PDF represented by the blue isolines) slightly overlays below the quantile border $\widehat{q}_{[0]}^{p_0}$. 
 Ideally, the conditional distribution fitted should be sharp around this border without overfitting the data
 At the second iteration, the PDF of the second conditional distribution fitted is represented by the brown isolines. 
@@ -230,7 +231,7 @@ Including the samples from the previous iterations tends to make the fit sharper
 
 
 %Tools to control the goodness of fit of nonparametric conditional distributions are also available. 
-%As an example, let us consider the fitted conditional distribution at the first iteration (visible in \fig{fig:bancs_illustration1}). 
+%As an example, let us consider the fitted conditional distribution at the first iteration (visible in \fig{fig:bancs_illustration}). 
 %Its quantile-quantile plot in \fig{fig:qqplot} shows a good fit of the two marginals by KDE. 
 %Then, the goodness of fit of copulas can be evaluated by Kendall's plot, represented in \fig{fig:kendall_plot}. 
 %This fit is also good, even if a slight bias is again visible.
@@ -238,14 +239,14 @@ Including the samples from the previous iterations tends to make the fit sharper
 %\begin{figure}[!ht]
 %    \centering
 %    \includegraphics[width=0.6\linewidth]{part3/figures/BANCS/qqplots.pdf}
-%    \caption{QQ-plot for KDE of marginals of the conditional distribution from \fig{fig:bancs_illustration1}.}
+%    \caption{QQ-plot for KDE of marginals of the conditional distribution from \fig{fig:bancs_illustration}.}
 %    \label{fig:qqplot}
 %\end{figure}
 %
 %\begin{figure}[!ht]
 %    \centering
 %    \includegraphics[width=0.6\linewidth]{part3/figures/BANCS/kendall_plot.pdf}
-%    \caption{Kendall plot for EBC on the copula of a conditional distribution from \fig{fig:bancs_illustration1}.}
+%    \caption{Kendall plot for EBC on the copula of a conditional distribution from \fig{fig:bancs_illustration}.}
 %    \label{fig:kendall_plot}
 %\end{figure}
 
@@ -273,7 +274,7 @@ In order to take into account the variability of the method's results, each expe
 %============================================================%
 \subsection{Analytical toy-cases}
 %============================================================%
-The reference values of the failure probabilities of each problem studied hereafter are obtained by Monte Carlo estimation on very large samples. 
+The reference values of the failure probabilities of each problem studied hereafter are obtained by Monte Carlo estimation on very large samples (typically with size $N = 10^9$). 
 
 %------------------------------------------------------------%
 \paragraph{Toy-case \#1: Parabolic reliability problem.}
@@ -303,31 +304,43 @@ with the input random vector $\bX = (X_1, X_2)$ following a standard 2-dimension
 The reliability problem consists in evaluating: $p_{\mathrm{f}, 2} = \mathbb{P} ( g_2(\bX) \leq 0 ) =  2.22 \times 10^{-3}$.
 
 %------------------------------------------------------------%
-\paragraph{Toy-case \#3: Medium-dimensional reliability problem.}
+\paragraph{Toy-case \#3: Modified Ishigami reliability problem.}
+%------------------------------------------------------------%
+Let us define the modified Ishigami reliability problem (inspired by the manuscript of \elias{cite thèse P.Lemaitre}), considering the following function $g_3: \R^3 \rightarrow \R$:
+\begin{equation}
+    g_3(\bx) = \sin(x_1) + 7 \, \sin(x_2)^2 + \frac{x_3^4 \, \sin(x_1)}{10} - 10.5.
+\end{equation}
+with the input random vector $\bX = (X_1, X_2, X_3)$ following a standard 3-dimensional normal distribution. 
+The reliability problem consists in evaluating: $p_{\mathrm{f}, 3} = \mathbb{P} ( g_3(\bX) \leq 0 ) =  1.94 \times 10^{-5}$.
+
+%------------------------------------------------------------%
+\paragraph{Toy-case \#4: Medium-dimensional reliability problem.}
 %------------------------------------------------------------%
 
-Let us define the medium-dimensional reliability problem (proposed by \cite{yun2018efficient}), considering the following function $g_3 : \R^7 \rightarrow \R$:
+Let us define the medium-dimensional reliability problem (proposed by \cite{yun2018efficient}), considering the following function $g_4 : \R^7 \rightarrow \R$:
 
 \begin{equation}
-    g_3(\bx) = 15.59 \times 10^4 - \frac{x_1 x_3^2}{2 x_3^2} \frac{x_2^4 - 4 x_5 x_6 x_7^2 + x_4 (x_6 + 4 x_5 + 2 x_6 x_7)}{x_4 x_5 (x_4 + x_6 + 2 x_6 x_7)},
+    g_4(\bx) = 15.59 \times 10^4 - \frac{x_1 x_3^2}{2 x_3^2} \frac{x_2^4 - 4 x_5 x_6 x_7^2 + x_4 (x_6 + 4 x_5 + 2 x_6 x_7)}{x_4 x_5 (x_4 + x_6 + 2 x_6 x_7)},
 \end{equation}
 with the input random vector $\bX = (X_1, \dots, X_7)$, following a product of normal distributions defined in \cite{yun2018efficient}. 
-The reliability problem consists in evaluating: $p_{\mathrm{f}, 3} = \mathbb{P} ( g_3(\bX) \leq 0 ) =  8.10 \times 10^{-3}$.
+The reliability problem consists in evaluating: $p_{\mathrm{f}, 4} = \mathbb{P} ( g_4(\bX) \leq 0 ) =  8.10 \times 10^{-3}$.
 
 
 %------------------------------------------------------------%
-\paragraph{Toy-case \#4: Medium-dimensional oscillator problem.}
+\paragraph{Toy-case \#5: Medium-dimensional oscillator problem.}
 %------------------------------------------------------------%
-Let us define the higher-dimensional oscillator reliability problem (adapted from \elias{add ref}), considering the following function $g_4 : \R^8 \rightarrow \R$:
+Let us define the higher-dimensional oscillator reliability problem (adapted from \elias{add ref}), considering the following function $g_5 : \R^8 \rightarrow \R$:
 
 \begin{equation}
-    g_4(\bx) = F_s - 3 k_s \sqrt{\frac{\pi S_0}{4 \zeta_s \omega_s^3} \, \frac{\zeta_a \zeta_s}{\zeta_p \zeta_s (4 \zeta_a^2 + \theta^2) + \gamma \zeta_a^2} \, \frac{\omega_p \, (\zeta_p \omega_p^3 + \zeta_s \omega_s^3)}{4 \zeta_a \omega_a^4}},
+    g_5(\bx) = F_s - 3 k_s \sqrt{\frac{\pi S_0}{4 \zeta_s \omega_s^3} \, \frac{\zeta_a \zeta_s}{\zeta_p \zeta_s (4 \zeta_a^2 + \theta^2) + \gamma \zeta_a^2} \, \frac{\omega_p \, (\zeta_p \omega_p^3 + \zeta_s \omega_s^3)}{4 \zeta_a \omega_a^4}},
 \end{equation}
 where $\bx = \left(m_p, m_s, k_p, k_s, \zeta_p, \zeta_s, F_s, S_0\right)$,  
 $\quad \omega_p=\sqrt{k_p/m_p}, \quad \omega_s=\sqrt{k_s/m_s}, \quad \omega_a = (\omega_p + \omega_s)/2, \quad $
 $\zeta_a = (\zeta_p + \zeta_s)/2, \quad \gamma = m_s/m_p, \quad \theta= (\omega_p-\omega_s)/\omega_a$. 
 The input random vector $\bX$, defined as a product of marginals following the distributions defined in Table~\ref{tab:oscillator}. 
-The reliability problem consists in evaluating: $p_{\mathrm{f}, 4} = \mathbb{P} ( g_4(\bX) \leq 0 ) =  3.78 \times 10^{-7}$.
+The reliability problem consists in evaluating: $p_{\mathrm{f}, 5} = \mathbb{P} ( g_5(\bX) \leq 0 ) =  3.78 \times 10^{-7}$.
+\elias{mention the cross-cut}
+
 
 \begin{table}[h]
 \centering
@@ -340,34 +353,40 @@ The reliability problem consists in evaluating: $p_{\mathrm{f}, 4} = \mathbb{P} 
     Coeff. of variation & 0.1 & 0.1 & 0.2 & 0.2 & 0.4 & 0.5 & 0.1 & 0.1\\
     \hline
 \end{tabular}
-\caption{Random inputs from the toy-case \#4.}
+\caption{Random inputs from the toy-case \#5.}
 \label{tab:oscillator}
 \end{table}
 
 %============================================================%
-\subsection{Results analysis}
+\subsection{Benchmark results and analysis}
 %============================================================%
 
-\begin{itemize}
-    \item do
-\end{itemize}
+In the present section, the BANCS algorithm is applied to four analytical toy-cases and its performances are compared with SS and NAIS. 
+After representing the two first iterations of BANCS on toy-case \#1 in \fig{fig:bancs_illustration}, all BANCS iterations from this cas are illustrated in \fig{fig:2D_toycase_reliability}. 
+This figure shows the intermediate quantiles $\{\widehat{q}_{[k]}^{p_0}\}_{k=1}^{k_\#}$ which are estimated over conditional samples of size $N=10^4$. 
+The points of each sample exceeding their respective $p_0$-quantile are also represented in the same color as their $p_0$-quantile border. 
+\fig{fig:2D_toycase_reliability} right provides the same kind of illustration for BANCS applied to test-case \#2, a well-known system problem. 
+On these two-dimensional cases, one can visualize the empirical quantiles driving the conditional distributions towards the failure domain(s) and the nonparametric inference capturing multi-modal patterns.  
 
-Results of our numerical experiments are presented graphically (for 2-dimensional problems) in \fig{fig:2D_toycase_reliability}, and numerically in Table \ref{tab:result_table}. 
+After this first illustration of one execution of BANCS, a more extensive benchmark is proposed. 
+To present a fair assessment of the dispersion of the methods compared, each experiment is repeated $100$ times to obtain a set of independent estimates of failure probabilities. 
+Then, a Boostrap procedure on this set allows to compute a confidence interval of the mean failure probability. 
+An empirical variance and coefficient of variation (COV) of each probability estimator are also computed on the set of repetitions. 
+This way, the SS coefficient of variation is not the result of an approximation (tending to underestimate the true SS coefficient of variation \citealp{Papaioannou_PEM_2015}).
+\fig{fig:bancs_benchmark} summarizes the results of this benchmark comparing BANCS with SS and NAIS for different sample sizes $N \in \{300,\, 500,\, 700,\, 10^3,\, 2\cdot10^3,\, 5\cdot10^3,\, 10^4\}$.  
+On the left side, the estimates of failure probabilities repeated 100 times are displayed by their average over the repetitions (full lines) and their Bootsrap confidence intervals. 
+The reference value for each problem is also represented by a horizontal black line. 
+On the right, an estimate of the coefficient of variation provides a normalized information on the dispersion of the estimators.  
+Note that all the estimates are plotted against their total number of samples (corresponding to the number of evaluations to the function). 
 
-
-In the same fashion as the previous illustrations, the figures represent the intermediary quantiles $\widehat{q}_{[k]}^{p_0}$ estimated over conditional samples of size $N=10^4$. 
-Moreover, samples $\mathbf{A}_{[k+1], n}$ exceeding these quantiles are also represented in the same color. 
-Notice how the last estimated quantile is set to the problem threshold $\yth = 0$. 
-To capture the dispersion of BANCS estimation, 100 repetitions were realized. \elias{Since the vairance provided by the SS is only approximated on bootstraping repetitions seems more fair.}
-Let us notice that for each toy-case, BANCS well estimates the failure probabilities' orders of magnitude. 
-Yet the numerical values in Table \ref{tab:result_table} consistently present a positive bias, leading to an overestimated failure probability. 
-This bias is partially explained by the EBC tuning choice and could be reduced at the expense of a slightly higher variance.
-
-The variance obtained with the repetitions is quite large. 
-Although, part of it is due to the fact that the algorithm might compute a different total number of subsets (e.g., toy-case \#1 is either solved in four or five subsets). 
-Overall, considering the EBC tuning from \eq{eq:kimse}, BANCS performs worst than SS on toy-cases \#1 and \#2 but performs as well as SS on the toy-case \#3. 
-This might be due to the fact that toy-case \#3 has a higher input dimension. 
-However, one can note that SS coefficient of variation is computed by an approximation, tending to underestimate the true coefficient of variation (see e.g., \cite{Papaioannou_PEM_2015}). 
+To present a diverse panel of problems, the benchmark is conducted on test-case \#2 (four-branch problem with $d=2$), test-case \#4 (with $d=7$), test-case \#5 (oscillator problem with $d=8$). 
+BANCS consistently showed good results on all three cases. 
+The variance of its estimator is always smaller or equivalent to the SS variance (see their respective COV). 
+In test-cases \#2 and \#3, BANCS estimation converges faster than SS and as fast as NAIS. 
+For test-case \#4, the NAIS implementation used does not support input distributions with bounded domains and was therefore removed. 
+BANCS did not encounter the same difficulty as it fits separately the copula and the marginals (which can easily be truncated). 
+On this rare and complex case, SS is more accurate for small-sized samples (i.e., $N\leq 10^3$) but becomes equivalent to BANCS for larger sample sizes. 
+Finally, BANCS showed equivalent or better performances than SS and NAIS (on these first cases), while providing i.i.d. sampling and the flexibility of nonparametric inference.   
 
 \begin{figure}
     \centering
@@ -389,6 +408,16 @@ However, one can note that SS coefficient of variation is computed by an approxi
 
 \begin{figure}
     \centering
+    \includegraphics[width=0.7\textwidth]{part3/figures/BANCS/crosscut_oscillator.png}
+    \caption{Cross-cut visualization of the function of test-case \#5 through FORM's most-probable failure point $P^*$. 
+    The limit-state function (full line) delimits the safe domain (in blue) and the failure domain (in red). 
+    FORM produces the Taylor approximation around $P^*$ (dashed lines).}
+    \label{fig:crosscut_oscillator}
+\end{figure}
+
+
+\begin{figure}
+    \centering
     \begin{subfigure}[b]{0.49\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/RP4B_mean.png}
@@ -402,64 +431,189 @@ However, one can note that SS coefficient of variation is computed by an approxi
     \begin{subfigure}[b]{0.49\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/RP38_mean.png}
-        \caption{Failure probability (toy-case \#3).}
+        \caption{Failure probability (toy-case \#4).}
     \end{subfigure}
     \begin{subfigure}[b]{0.47\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/RP38_cov.png}
-        \caption{Coefficient of variation (toy-case \#3).}
+        \caption{Coefficient of variation (toy-case \#4).}
     \end{subfigure}
 
     \begin{subfigure}[b]{0.49\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/Oscillator_mean.png}
-        \caption{Failure probability (toy-case \#3).}
+        \caption{Failure probability (toy-case \#5).}
     \end{subfigure}
     \begin{subfigure}[b]{0.47\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/Oscillator_cov.png}
-        \caption{Coefficient of variation (toy-case \#3).}
+        \caption{Coefficient of variation (toy-case \#5).}
     \end{subfigure}
-
-
     \caption{Todo.}
-    \label{fig:bancs_results}
+    \label{fig:bancs_benchmark}
+\end{figure}
+
+%============================================================%
+%============================================================%
+\section{Reliability-oriented sensitivity analysis}
+%============================================================%
+%============================================================%
+
+Global sensitivity analysis was introduced in Section~\ref{sec:gsa} as a tool to study the general impact of the input random variables on the output random variable. 
+When estimating quantities of interest related to the output distribution's tail (e.g., failure probabilities), the SA should be dedicated to the subdomain of interest (i.e., failure domain). 
+In other words, the global influence of the inputs (e.g., on the output's variance) may be different from their reliability-oriented influence (e.g., their influence on a rare event probability). 
+
+To address the topic of \textit{reliability-oriented sensitivity analysis} (ROSA), different SA methods were adapted to the analysis of risk measures. 
+The importance factors are a first local ROSA measure, near the most-probable failure point, obtained as a post-treatment of FORM. 
+Later on, global sensitivities such as the Sobol' indices were adapted to the indicator \citet{wei_2012_rosa,chabridon_2018_thesis,perrin_2019_rosa}. 
+Recently, \citet{papaioannou_2021_rosa_form} discussed the link between the importance factors and the Sobol' indices on the indicator. 
+Moment-independent importance measures were also applied to study the sensitivity of reliability. 
+For example, \citet{daveiga_2015} suggested the use of Hilbert-Schmidt indepencence criterion (HSIC) for reliability which was further explored by \citet{marrel_chabridon_2021} who distinguished two categories of ROSA with different purposes: 
+\begin{itemize}
+    \item \textit{Target sensitivity analysis} (TSA): measuring the influence of input variables to reach a restricted domain defined by the output (e.g., failure domain);
+    \item \textit{Conditional sensitivity analysis} (CSA): studies the impact of input variables within the restricted domain (i.e., conditionally to this domain).
+\end{itemize}
+In the context of dependent inputs, the Shapley effects were adapted to the indicator function \citep{ilidrissi_2021_rosa,demange_2023_ijuq}. 
+
+This section aims at demonstrating the estimation of TSA and CSA indices as a simple post-processing of BANCS. 
+After estimating a rare event probability with BANCS, a set of i.i.d. samples (each with size $N$) are available. 
+These consecutive samples gradually move closer to the failure domain and become rarer from the perspective of the initial input distribution. 
+This section first recalls the TSA and CSA adaptation from \citet{marrel_chabridon_2021} of the Hilbert-Schmidt independence criterion (HSIC), a kernel-based sensitivity measure introduced in Section~\ref{sec:gsa} for GSA.
+Then, the computation of the target-HSIC (respectively conditional-HSIC) is presented as a post-precessing of the BANCS reliability analysis of test-cases \#3 and \#5. 
+
+
+%============================================================%
+\subsection{Target and conditional HSIC}
+%============================================================%
+
+A first approach for TSA is to directly apply any SA measure to the binary variable $\1_{\{g(\bX) \leq \yth\}} = \1_{\{Y \leq \yth\}}$. 
+This strategy does not distinguish points in the vicinity of the limit-state function from points far from this border. 
+In the present work, a threshold relaxation using the weight transformation from \citet{marrel_chabridon_2021} is applied to gather more information. 
+Let us consider the weight function $w_{\iF}: \R \rightarrow [0, 1]$ such that $w_{\iF}(y) = \exp(-d_{\iF}(y)/s)$, where $d_{\iF} = \mathrm{inf}_{y'\in \iF} \Vert y -y' \Vert$ is a distance to the border and $s\in\R$ is a smoothing parameter. 
+
+Then, a TSA measure can be defined as the result of any sensitivity measure applied between the random inputs $\bX$ and $w_{\iF}(Y)$. 
+In our case, the target-HSIC (T-HSIC) and their respective normalized version the target $R^2_{\HSIC}$ are defined as: 
+\begin{subequations}
+    \begin{align}
+        T \mhyphen \HSIC(X_j, Y) & = \HSIC(X_j, w_{\iF}(Y)) = \MMD^2(\P_{(X_j, w_{\iF}(Y))}, \P_{X_j} \otimes \P_{w_{\iF}(Y)})\, ,\\
+        T \mhyphen R^2_{\HSIC}(X_j, Y) &= \frac{T \mhyphen \HSIC(X_j, w_{\iF}(Y))}{\sqrt{T \mhyphen \HSIC(X_j, X_j) \, T \mhyphen \HSIC(w_{\iF}(Y), w_{\iF}(Y))}}\, .
+    \end{align}
+\end{subequations}
+The stronger the dependence, the more $X_j$ is influent on the occurrence of the rare event $\{Y\in\iF\}$.  
+Another advantage of applying the threshold relaxation is that any real-value kernel can be used to define the HSIC. 
+
+
+To define the CSA indices, let us define the probability of $Y$ conditionally to the rare event $\{Y \in \iF\}$, considering the measurable space $(\Omega, \iA)$:
+\begin{equation}
+    \P_{Y|\{Y\in\iF\}}(A) = \frac{\int_{A} \1_{g(\bX)\leq0}(y) \, \dd \P_Y}{\pf}\,, \quad \forall A \in \iA\,.
+\end{equation}
+After applying the same threshold relaxation as earlier, one can write: 
+\begin{equation}
+    \P_Y^{w_{\iF}}(A)= \frac{\int_A w_{\iF}(y) \, \dd \P_Y}{\int_{\Omega} w_{\iF}(y) \, \dd \P_Y} \, ,
+\end{equation}
+and the conditional expectation \elias{why is the ``y'' is in capital in the paper?}: 
+\begin{equation}
+    \E[Y|Y \in \iF] = \E_{Y\sim\P_Y^{w_{\iF}}}[Y] = \frac{\int_\Omega y w_{\iF}(y) \, \dd \P_Y}{\int_{\Omega} w_{\iF}(y) \, \dd \P_Y}\, .
+\end{equation}
+Using this expression, the following conditional HSIC is developped in \citet{marrel_chabridon_2021}:
+\begin{subequations}
+    \begin{align}
+        C \mhyphen \HSIC(X_j, Y) & = \HSIC_{(X_j, Y) \,\sim\, \P_{(X_j, Y)}^{w_{\iF}}} (X_j, w_{\iF}(Y)) \, ,\\
+        C \mhyphen R^2_{\HSIC}(X_j, Y) &= \frac{C \mhyphen \HSIC(X_j, w_{\iF}(Y))}{\sqrt{C \mhyphen \HSIC(X_j, X_j) \, C \mhyphen \HSIC(w_{\iF}(Y), w_{\iF}(Y))}}\, .
+    \end{align}
+\end{subequations}
+
+The R2-HSIC is a normalized index which can be used to rank variables by influence but its value depends on the choice of kernel. 
+Statistical tests are the only robust way of screening variables with respect to our quantity of interest.
+\citet{delozzo_2016_hsic_test} proposed a permutation-based statistical test of independence based HSIC. 
+Note that the HSIC generally do not require independence of the samples but the permutation tests do. 
+
+The respective estimators of all indices are provided in \citet{marrel_chabridon_2021} and their implementation is available in \ot.
+Unlike Sobol' indices, the HSIC estimation is realized on the same sample for every variable $X_j$. 
+This property allows us to apply HSIC TSA and CSA to the samples evaluated during the BANCS reliability analysis.
+
+
+%============================================================%
+\subsection{ROSA as a post-treatment of BANCS reliability analysis}
+%============================================================%
+
+After assessing a rare event probability using BANCS, a nested set of samples moving towards the failure domain is available.
+This setup is the opportunity to study the evolution of the ROSA of all variables as the problem gets rarer.
+At iteration $k$, a TSA is conducted on the sample $S_k$ with the intermediary threshold $\what{q}^{p_0}_k$ to study which random variables lead below this threshold. 
+Then the CSA is assessed on the sample $S_{k+1}$, drawn according to distribution $\what{f}_{[k+1]}$ conditional to the threshold $\what{q}^{p_0}_k$. 
+The target and conditional sensitivity analysis are presented via the R2-HSIC and the p-value of permutation tests.  
+\fig{fig:rosa_ishigami} represents these results for the test-case \#3 while \fig{fig:rosa_oscillateur} shows the results for test-case \#5. 
+
+%------------------------------------------------------------%
+\paragraph{Test-case \#3:}
+%------------------------------------------------------------%
+On the Ishigami problem, the variable $X_2$ has the least influence on the TSA while the variable $X_3$ has the least influence on the CSA. 
+As the samples get closer to the failure domain the variable $X_1$ has less impact on the TSA and more impact on the CSA. 
+\elias{Add a sentence to comment the permutation tests.}
+
+%------------------------------------------------------------%
+\paragraph{Test-case \#5:}
+%------------------------------------------------------------%
+On the oscillator problem, the variable $F_s$ is of prime importance on the CSA. 
+For the TSA, $F_s$ has less influence as the samples get rarer while $\zeta_p$ and $\zeta_s$ become more important.  
+\elias{Add a sentence to comment the permutation tests.}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{part3/figures/BANCS/ishigami_TR2HSIC.png}
+        \caption{Target $R^2_{\HSIC}(X_j, Y)$.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{part3/figures/BANCS/ishigami_Tpvalue_permutation.png}
+        \caption{Target p-value by permutations.}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{part3/figures/BANCS/ishigami_CR2HSIC.png}
+        \caption{Conditional $R^2_{\HSIC}(X_j, Y)$.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{part3/figures/BANCS/ishigami_Cpvalue_permutation.png}
+        \caption{Conditional p-value by permutations.}
+    \end{subfigure}
+    \caption{Target and conditional HSIC as a post-treatment of BANCS reliability analysis of test-case \#3. 
+                The consecutive samples from BANCS are denoted by $\{S_k\}_{k=1}^{k_\#}$ (each with size $N=5\times10^3$).}
+    \label{fig:rosa_ishigami}
 \end{figure}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table*}[h]
+\begin{figure}
     \centering
-    \caption{Results of the numerical experiments (subset sample size $N=10^4$, $p_0=0.1$).}
-    \begin{tabular}{|l|l|l||l|l||l|l|}\hline
-     & $d$ & $\pf^{\mathrm{ref}}$ & $\widehat{\pf}^{\mathrm{BANCS}}$ & $\widehat{\delta}^{\mathrm{BANCS}}$ & $\widehat{\pf}^{\mathrm{SS}}$ & $\widehat{\delta}^{\mathrm{SS}}$\\
-    \hline
-    Toy-case \#1 & 2 & $1.31 \times 10^{-4}$ & $2.67 \times 10^{-4}$ & $24 \%$ & $1.30 \times 10^{-4}$ & $9 \%$\\
-    \hline
-    Toy-case \#2 & 2 & $2.21 \times 10^{-4}$ & $4.23 \times 10^{-4}$ & $7 \%$ & $2.24 \times 10^{-4}$ & $6 \%$\\
-    \hline
-    Toy-case \#3 & 7 & $8.10 \times 10^{-3}$ & $9.32 \times 10^{-3}$ & $15 \%$ & $8.92 \times 10^{-3}$ & $6 \%$\\ \hline
-    \end{tabular}
-    \label{tab:result_table}
-\end{table*}
-
-
-
-%============================================================%
-%============================================================%
-\section{Sequential reliability-oriented sensitivity analysis}
-%============================================================%
-%============================================================%
-\begin{itemize}
-    \item Definition of the formalism and the main methods (FORM alpha-factors, Sobol', T-HSIC, Shapley)
-    \item Motivate the need
-    \item Literature review 
-    \item Definition of the T-HSIC 
-    \item Post-processing BANCS results with dynamic T-HSIC (how does the ROSA evolve with the rarity?)
-\end{itemize}
-
-
-
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{part3/figures/BANCS/oscillator_TR2HSIC.png}
+        \caption{Target $R^2_{\HSIC}(X_j, Y)$.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{part3/figures/BANCS/oscillator_Tpvalue_permutation.png}
+        \caption{Target p-value by permutations.}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{part3/figures/BANCS/oscillator_CR2HSIC.png}
+        \caption{Conditional $R^2_{\HSIC}(X_j, Y)$.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{part3/figures/BANCS/oscillator_Cpvalue_permutation.png}
+        \caption{Conditional p-value by permutations.}
+    \end{subfigure}
+    \caption{Target and conditional HSIC as a post-treatment of BANCS reliability analysis of test-case \#5. 
+                Applied to the nested samples from BANCS (denoted by $\{S_k\}_{k=1}^{k_\#}$), each with size $N=5\times10^3$.}
+    \label{fig:rosa_oscillator}
+\end{figure}
 
 
 %============================================================%
@@ -470,12 +624,13 @@ However, one can note that SS coefficient of variation is computed by an approxi
 \begin{itemize}
     \item Learn from a weighted sample
     \item Compare the learning-time with NAIS
-    \item Optimze the EBC tunning with a test set (possibly build by KH)
+    \item Optimize the EBC tuning with a test set (possibly build by KH)
     \item What if the sampling is not iid?
     \item Advantage of working directly in the physical space directly
     \item Perspective learning the entire distribution with Bernstein polynomials
     \item We could fit the marginals with parametric models and compare
     \item EBC by blocs in high dimension 
+    \item Estimate the quantiles with IS on all previous samples
 \end{itemize}
 
 
