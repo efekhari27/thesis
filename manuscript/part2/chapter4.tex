@@ -267,15 +267,15 @@ Finally, a usual approach to compute the damage is to aggregate the fatigue cont
 Damage occurring during a 10-minute operating time is simulated and then scaled up to the OWT lifetime. 
 More details regarding damage assessment and the W\"ohler curve used are available in Section 2.4.6 from \citep{dnv_fatigue_2016}. 
 For a realization $\bx \in \iD_{\bX}$ of environmental conditions, at a structural node $i$, an azimuth angle $\theta$; $k \in \N$ stress cycles of respective amplitude $\{s_{i, \theta}^{(j)}(\bx)\}_{j=1}^k$ are identified. 
-Then, Miner's rule \citep{fatemi_1998} defines the damage function $g_{i, \theta}(\bx): \iD_{\bX} \rightarrow \R_+$ by:
+Then, Miner's rule (see Section~\ref{sec:235}) defines the damage function $g_{i, \theta}(\bx): \iD_{\bX} \rightarrow \R_+$ by:
 \begin{equation}
     g_{i, \theta}(\bx) = \sum_{j=1}^{k} \frac{1}{N_{\mathrm{c}}\left(s_{i, \theta}^{(j)}(\bx)\right)}.
-    \label{miner1}
+    \label{eq:miner1}
 \end{equation}
 
-As defined by the DNV standards for OWT fatigue design \citep{dnv_fatigue_2016}, the quantity of interest in the present chapter is the ``mean damage'' $d_{\mathrm{c}}^{i, \theta}$ (also called ``cumulative damage''), computed at a node $i$, for an azimuth angle $\theta$:
+As defined by the DNV standards for OWT fatigue design \citep{dnv_fatigue_2016}, the quantity of interest in the present chapter is the ``mean damage'' $D_{\mathrm{c}}^{i, \theta}$ (also called ``mean cumulative damage''), computed at a node $i$, for an azimuth angle $\theta$:
 \begin{equation}
-    d_{\mathrm{c}}^{i, \theta} = \E[g_{i, \theta}(\bX)] = \int_{\iD_\bX} g_{i, \theta}(\bx) f_{\bX}(\bx)\, \dd \bx \,.
+    D_{\mathrm{c}}^{i, \theta} = \E[g_{i, \theta}(\bX)] = \int_{\iD_\bX} g_{i, \theta}(\bx) f_{\bX}(\bx)\, \dd \bx \,.
     \label{eq:mean_integral}
 \end{equation}
 

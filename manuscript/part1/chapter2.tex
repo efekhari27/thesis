@@ -563,16 +563,15 @@ In the present work, the non-zero correction presented above is not considered a
 \paragraph{Cumulative damage theory.}
 %------------------------------------------------------------%
 A popular approach to assess the damage cumulated on a stress time series is to consider the fatigue contribution of each stress cycle according to the S-N curve. 
-Palmgren-Miner's rule defines the \textit{cumulative damage} $d_c$ by summing the fatigue contributions of each stress cycle $k$, regardless of their order of appearance:
+Palmgren-Miner's rule defines the \textit{cumulative damage} $d_{\mathrm{c}}$ by summing the fatigue contributions of each stress cycle $k$, regardless of their order of appearance:
 \begin{equation}
-    d_c = \sum_{j=1}^{k} \frac{1}{N_{\mathrm{c}}\left(s^{(j)}\right)}.
+    d_{\mathrm{c}} = \sum_{j=1}^{k} \frac{1}{N_{\mathrm{c}}\left(s^{(j)}\right)}.
     \label{eq:miner}
 \end{equation}
 In this theory, the material reaches fatigue ruin when the cumulative damage exceeds one.  
 A common practice when using Palmgren-Miner's rule is to gather the stress cycles in a set of bins. 
 This practice induces an integration error, which becomes significant as the number of bins is reduced. 
 In the following, the cumulative damage is computed without binning, as defined in \eq{eq:miner}.
-
 
 Spectral methods were also introduced to quantify fatigue damage in the late 80s. 
 The main idea is to infer a PDF over the amplitudes of the stress cycles identified by rainflow counting, typically using a mixture of parametric distributions. 
@@ -822,10 +821,10 @@ Note that the environmental data resulting from the SCADA system of the Teesside
         \hline
         Mean wind speed & $U$ & 10-min. average horizontal at 10m\\
         Turbulence & $\sigma_s $ & 10-min.  standard deviation \\
-        Wind direction & $\theta_{wind} $ & Wind directions\\
+        Wind direction & $\theta_{\mathrm{wind}} $ & Wind directions\\
         Significant wave height & $H_s $  & Significant wave height per hour\\
         Peak wave period & $T_p $ & Peak 1-hour spectral wave period \\
-        Wave direction & $\theta_{wave} $ & Wave directions\\
+        Wave direction & $\theta_{\mathrm{wave}} $ & Wave directions\\
         %Mean shear & $\alpha$ & Normal & 10-min mean shear exponent \\
         %Air density & $\delta$ & - & -\\
         \hline
@@ -849,13 +848,13 @@ Each of them is assumed independent, with a marginal probabilistic model arising
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{ l l l l}
+    \begin{tabular}{llll}
         \hline
         {\it Name} & {\it Notation} & {\it Marginal model} & {\it Description}\\
         \hline
-        Soil coefficient & $S$ & Normal ($\mu=1., \sigma=0.3$) & Applied to the soil stiffness matrix\\
-        Yaw misalignment & $\theta_{\mathrm{m}}$ & Normal ($\mu=0., \sigma=0.3$) & Error in wind alignment\\
-        SN curve coefficient & $a$ & Log-normal ($\mu=1, \sigma=0.3$) & See \cite{guede_2007}\\
+        Soil stiffness coeff. & $K_{\mathrm{soil}}$ & Normal($\mu=1, \sigma=0.2$) & Truncation: $[0.5, 2]$\\
+        Yaw misalignment & $\Theta_{\mathrm{yaw}}$ & Normal($\mu=0, \sigma=5$) & Truncation: $[-10, 10]$\\
+        SN curve coeff. & $\varepsilon$ & Log-normal($\mu=1, \sigma=0.2$) & See \cite{guede_2007}\\
         Critical damage & $D_{\mathrm{cr}}$ & Log-normal ($\mu=1, \sigma=0.3$) & See \cite{drexler_musculus_2021}\\\hline
     \end{tabular}
     \caption{Marginal distributions of the system random variables}
@@ -864,7 +863,7 @@ Each of them is assumed independent, with a marginal probabilistic model arising
 
 
 
-\subsection{Probabilistic fatigue assessment}
+\subsection{Probabilistic fatigue assessment}\label{sec:probabilistic_sn}
 %------------------------------------------------------------%
 The definition of a fatigue endurance model has a main impact on fatigue damage assessment. 
 However, the S-N curves usually describing the endurance of a material are built on repeated laboratory experiments. 
@@ -877,17 +876,17 @@ This variation is commonly assumed to follow a log-normal distribution in the li
 A probabilistic model of the S-N curve naturally comes: 
 \begin{subequations}
     \begin{align}
-        \log(N_c(s, \omega)) &= \log(a) - m \log(s) + \log(\varepsilon(\omega))\\
-        \Rightarrow N_c(s, \omega) &= a \, s^{-m} \, \varepsilon(\omega),
+        \log(N_c(s, \varepsilon)) &= \log(a) - m \log(s) + \log(\varepsilon)\\
+        \Rightarrow N_c(s, \varepsilon) &= a \, s^{-m} \, \varepsilon,
     \end{align}
 \end{subequations}
-where $\log(\varepsilon(\omega)) \sim \mathcal{N}(0, \sigma_{N_c}=0.2)$ is assumed when no measurement is available (according to Appendix F.5 from \citealt{dnv_fatigue_2016}). 
+where $\log(\varepsilon) \sim \mathcal{N}(0, \sigma_{N_c}=0.2)$ is assumed when no measurement is available (according to Appendix F.5 from \citealt{dnv_fatigue_2016}). 
 
 This uncertainty can be injected in the Miner-Palmgren rule defined in \eq{eq:miner}: 
 \begin{equation}
-    d_c(\omega) = \sum_{j=1}^k \frac{1}{N_c(s^{(j)}, \omega)}
-            = \sum_{j=1}^k \frac{1}{a \, \left(s^{(j)}\right)^{-m} \, \varepsilon(\omega)}
-            = \frac{1}{\varepsilon(\omega)} \sum_{j=1}^k \frac{1}{a \, \left(s^{(j)}\right)^{-m}}
+    d_{\mathrm{c}}(\varepsilon) = \sum_{j=1}^k \frac{1}{N_c(s^{(j)}, \varepsilon)}
+            = \sum_{j=1}^k \frac{1}{a \, \left(s^{(j)}\right)^{-m} \, \varepsilon}
+            = \frac{1}{\varepsilon} \sum_{j=1}^k \frac{1}{a \, \left(s^{(j)}\right)^{-m}}.
 \end{equation}
 Then, this uncertainty can be assessed as a pure post-processing of fatigue damage results computed with a single deterministic S-N curve. 
 
@@ -897,7 +896,7 @@ Assuming that the fatigue endurance follows a Gaussian distribution (on a logari
 
 Using the design S-N curve given in Section 2.4.6 \citet{dnv_fatigue_2016} and the normality assumption, one can reconstruct the median S-N curve by taking: 
 \begin{equation}
-    q_{50\%}[\log(N_c(s, \omega))]= \log(N_c^{\mathrm{design}}(s)) + 2 \, \sigma_{N_c}. 
+    q_{50\%}[\log(N_c(s, \varepsilon))]= \log(N_c^{\mathrm{design}}(s)) + 2 \, \sigma_{N_c}. 
 \end{equation}
 
 \fig{fig:probabilistic_SN} illustrates the design curve defined by DNV for tubular joints (in Section 2.4.6) and the reconstructed probabilistic model according to the previous assumptions. 
