@@ -200,7 +200,7 @@ Afterwards, the robustness of this reliability analysis is studied by applying p
 \subsection{Nominal reliability analysis}\label{sec:owt_ra}
 %============================================================%
 
-The surrogate model of the cumulative damage over lifetime $\widetilde{D}$ is first modified to include the SN curve uncertainty, defined in Section~\ref{sec:probabilistic_sn}:
+The surrogate model of the cumulative damage over lifetime $\widetilde{D}$ is first modified to include the SN curve uncertainty $\varepsilon$, defined in Section~\ref{sec:probabilistic_sn}:
 \begin{equation}
     \widetilde{D}'(\bz) = \widetilde{D}'(k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}, \varepsilon) = \frac1\varepsilon \, \widetilde{D}(k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}).
 \end{equation} 
@@ -220,10 +220,10 @@ However, this significant difference questions the robustness of this result to 
 \begin{table*}[h]
     \centering
     \caption{Nominal reliability analysis (IS and SS size $N=5 \times 10^4$, SS $p_0=0.1$).}
-    \begin{tabular}{l||c|c|c|c}
+    \begin{tabular}{r||c|c|c|c}
               &  \multicolumn{2}{c|}{$D_{\mathrm{cr}} \sim $ \bf Lognormal} & \multicolumn{2}{c}{$D_{\mathrm{cr}} \sim $ \bf Normal}\\
     \hline
-    \bf RA method & $\widehat{\pf}$       & $\widehat{\mathrm{cov}}$    & $\widehat{\pf}$       & $\widehat{\mathrm{cov}}$ \\
+    \bf Reliability method & $\widehat{\pf}$       & $\widehat{\mathrm{cov}}$    & $\widehat{\pf}$       & $\widehat{\mathrm{cov}}$ \\
     \hline\hline
     FORM      & $9.87 \times 10^{-13}$ & --                    & $3.35 \times 10^{-6}$ & --\\
     \hline
@@ -263,7 +263,7 @@ where $p_{\mathrm{f}, j \delta}$ is the probability obtained when injecting $f_{
 In our case, each variable in $\bZ$ is perturbed one by one in terms of relative standard deviation, such that $\sigma_{j \delta} = \sigma_j (1+\delta)$. 
 See the illustration of such perturbations in \fig{fig:perturbations}, for distributions of $K_{\mathrm{soil}}$ on the left, and $\Theta_{\mathrm{yaw}}$ on the right.
 This strategy assumes that the analyst has enough information to determine the mean of the variables $Z_j$. 
-\fig{fig:pli_all} presents the PLI results obtained for relative perturbations of the standard deviations of $(K_{\mathrm{soil}}, \Theta_{\mathrm{yaw}}, \epsilon)$. 
+\fig{fig:pli_all} presents the PLI results obtained for relative perturbations of the standard deviations of $(K_{\mathrm{soil}}, \Theta_{\mathrm{yaw}}, \varepsilon)$. 
 The computation of the failure probabilities is done by independent FORM-IS estimations. 
 In the hypothesis of a normal $D_{\mathrm{cr}}$, the most important variable is $\Theta_{\mathrm{yaw}}$, while the fluctuations are quite stable in the hypothesis of a lognormal $D_{\mathrm{cr}}$. 
 
@@ -291,7 +291,7 @@ As a perspective, this study could be completed by a joint perturbation of both 
         \includegraphics[width=\linewidth]{./part3/figures/OWT/PLI_ALL_Hyp_Normal.png}
         \caption{$D_{\mathrm{cr}} \sim $ Normal.}
     \end{subfigure}
-    \caption{Perturbed-law based indices for relative perturbation of the standard deviations of $(K_{\mathrm{soil}}, \Theta_{\mathrm{yaw}}, \epsilon)$. 
+    \caption{Perturbed-law based indices for relative perturbation of the standard deviations of $(K_{\mathrm{soil}}, \Theta_{\mathrm{yaw}}, \varepsilon)$. 
     The failure probabilities studied are each estimated by FORM-IS method with sample size $N=10^4$.}
     \label{fig:pli_all}
 \end{figure}
@@ -319,12 +319,28 @@ As a perspective, this study could be completed by a joint perturbation of both 
 %============================================================%
 %============================================================%
 
+In this chapter, a fully probabilistic reliability analysis was performed on the monopile foundation of an OWT located in Teesside, UK. 
+Our demonstrative study first required an important computational effort (i.e., over $10^5$ Turbsim-DIEGO simulations), made possible with the development of a tailored wrapper deployed a high-performance facility. 
+These simulations served the construction of a surrogate model emulating the lifetime damage function. 
 
+The second phase of this chapter addressed the estimation of a failure probability using this surrogate. 
+A general conclusion is that this probability is highly dependent of the probabilistic model describing the random critical damage. 
+To challenge the modeling hypothesis of the critical damage and the system variables, a robustness analysis was realized. 
+It consists in studying the impact of perturbating the input distributions on an output quantity.   
+The robustness of the failure probability was assessed with the formalism of the perturbed-law based indices, introduced by \citet{lemaitre_2015_PLI}.
+This additional study mostly confirmed the importance of the critical damage definition. 
+
+From an industrial point of view, the failure probabilities obtained are much lower than, the risk levels targeted in the standards, which is in favor of lifetime extension. 
+However, let us outline that this demonstrative results did not consider: 
 \begin{itemize}
-    \item Turbines are stopped about 6pc of their lifetime, which reduces the aerodynamic amortissement and therefore increases fatigue
-    \item Starts and stops increase the damage
-    \item Installation of the foundation can create early damage
-    \item Stress concentration factors were fixed to 1
-\end{itemize}
+    \item The periods in parked position which could significantly affect damage \elias{add ref};
+    \item The rapid transition phases occasioned by emergency stopping;
+    \item The stress-concentration resulting from soldering;
+    \item The early damage produced during the installation of the monopile foundations by hydraulic impact pilling (i.e., hammering).  
+\end{itemize} 
+Another interesting industrial perspective could be to reproduce a similar study on a floating OWT model and compare the conclusions.  
+
+From a methodological aspect, a stochastic surrogate model could be built by considering all the damages before averaging them over the environmental repetitions. 
+This framework would lead to the open question of reliability analysis on stochastic models \elias{add ref}. 
 
 
