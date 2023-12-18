@@ -4,8 +4,169 @@
 %*******************************************************************************
 \chapter*{Conclusion and perspectives}
 \addcontentsline{toc}{chapter}{Conclusion and perspectives} 
-\chaptermark{Introduction}
+\chaptermark{Conclusion and perspectives}
 %*******************************************************************************
 
 
+%============================================================%
+%============================================================%
+\section*{Summary of the main contributions and perspectives}
+%============================================================%
+%============================================================%
+Uncertainty quantification on the industrial application of offshore wind turbine (OWT) raises numerous methodological questions. 
+In the present thesis, two main tools were exploited in very different contexts: the maximum mean discrepancy (MMD) as a kernel-based dissimilarity measure, and the empirical Bernstein copula (EBC) for multivariate nonparametric inference. 
+This work first tackled problems related to uncertainty quantification of offshore environmental conditions (i.e., metocean), including their perturbation induced by the turbine's wake. 
+In a second part, it dealt with uncertainty propagation for different goals (i.e., quantities of interest) such as mean estimation, mean assessment of a surrogate's predictivity, or rare event probability estimation.
+For reproducibility purposes, most numerical developments related to this work are documented and openly accessible. 
 
+
+%============================================================%
+\subsection*{Uncertainty quantification of environmental conditions}
+%============================================================%
+%A SIMULATION STUDY ON THE USEFULNESS OF THE BERNSTEIN COPULA FOR STATISTICAL MODELING OF METOCEAN VARIABLES
+\elias{add perspective refs}
+The first contribution to this topic is a study on the efficiency of a semiparametric inference of the metocean data. 
+In the proposed strategy, the multivariate copula is approximated by EBC, while the marginals can either be fitted by parametric or nonparametric method.   
+The simplicity and high flexibility of the EBC suits the complex dependence structures found in metocean datasets. 
+As perspectives, a more extensive numerical comparison (e.g., with Vine copula) could be performed, for example using the MMD as a statistic for multivariate testing. 
+Note that the MMD could also serve as a metric to optimize the Bernstein polynomial order. 
+From a wider perspective, goodness-of-fit for nonparametric methods might be studied in the same fashion as the validation of machine learning models (by wisely choosing a set of points to test the model).
+Finally, this method could also be studied in the context of extreme conditions assessment, which is usually in favor of parametric approaches. 
+
+After defining a probabilistic model of the ambient metocean conditions, the influence of the turbines' wake was studied. 
+An uncertainty propagation of the ambient conditions through a simplified wake model of a wind farm provided the wake-perturbed metocean distribution at each turbine.  
+Then our main contribution was to propose the MMD as a dissimilarity measure between these distributions. 
+A matrix of dissimilarities was obtained by computing the MMD between every turbine, on which a simple clustering method allowed to gather turbines with similar conditions.  
+By creating clusters of turbines solicited with similar environmental conditions, this approach aims at reducing the number loading studies at the farm scale (e.g., fatigue assessment).
+These contributions are related to the following publications:
+\begin{itemize}
+    \footnotesize
+    \item[\ding{125}] A. Lovera, \underline{E. Fekhari}, B. Jézéquel, M. Dupoiron, M. Guiton and E. Ardillon (2023). ``Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis". In: \textit{Journal of Physics: Conference Series (WAKE 2023)}.
+    \item[\ding{125}] E. Vanem, \underline{E. Fekhari}, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2023). ``A joint probability distribution model for multivariate wind and wave conditions''. In: \textit{Proceedings of the ASME 2023 42th International Conference on Ocean, Offshore and Arctic Engineering (OMAE 2023)}. 
+    \item[\ding{125}] E. Vanem, \O{}. Lande and \underline{E. Fekhari}, (2024). ``A simulation study on the usefulness of the Bernstein copula for statistical modeling of metocean variables''. . To appear in: \textit{Proceedings of the ASME 2024 43th International Conference on Ocean, Offshore and Arctic Engineering (OMAE 2024)}.
+\end{itemize}
+
+%============================================================%
+\subsection*{Reliability and robustness analysis of offshore wind turbines subject to fatigue damage}
+%============================================================%
+
+These contributions are linked with uncertainty propagation on the multi-physics numerical model of an offshore wind turbine. 
+A first contribution concerns the estimation of lifetime cumulative fatigue damage as a mean against the environmental conditions. 
+The use of Bayesian quadrature methods such as the kernel herding is an efficient and flexible solution for given-data uncertainty propagation (i.e., directly subsampling from a large dataset without inference). 
+Our numerical experiments showed conclusive results in comparison to Monte Carlo and quasi-Monte Carlo sampling. 
+
+
+
+\elias{Reliability analysis over the system variables}
+\elias{Reliability analysis, using the PLI method, due to the lack of information on these uncertainties}
+
+
+
+\begin{itemize}
+    \item Kernel herding is an efficient and flexible solution for given-data uncertainty propagation. 
+    \item Application to the mean lifetime fatigue damage estimation and conclusive comparison with MC and QMC
+    \item Reliability analysis considering random system variables (probabilistic SN curve, yaw misalignment, soil stiffness)
+    \item Robustness analysis wrt the system variables and the random critical damage (add main conclusions)
+\end{itemize}
+
+\begin{itemize}
+    \item Explore and adapt kernel herding for other quantities (e.g., quantiles) using conditional kernel mean embedding and potentially randomization. 
+    \item Extend the reliability analysis on a floating OWT case, with a more challenging wave condition impact
+    \item Assess the reliability of the Teesside wind farm by exploiting the representative wind turbines in terms of wake
+    \item Explore nonlinear cumulative models 
+    \item Connect this work with ULS conclusions: how to determine what is the most influential
+\end{itemize}
+
+These contributions are related to the following publications:
+\begin{itemize}
+    \footnotesize
+    \item[\ding{125}] E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2023). ``Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature''. In: \textit{Data-Centric Engineering}, In press.
+    \item[\ding{125}] E. Fekhari, B. Iooss, V. Chabridon, J. Muré (2022). ``Efficient techniques for fast uncertainty propagation in an offshore wind turbine multi-physics simulation tool''. In: \textit{Proceedings of the 5th International Conference on Renewable Energies Offshore (RENEW 2022)}.
+\end{itemize}
+
+%============================================================%
+\subsection*{Surrogate model predictivity assessment}
+%============================================================%
+
+\begin{itemize}
+    \item Sequential test set construction and optimal weighting method for coefficients of predictivity
+    \item Two contexts: ML (give-data) or computer experiments
+\end{itemize}
+
+\begin{itemize}
+    \item stopping rule based on MMD
+    \item Connect the validation with results from SA to give more importance to certain variables
+\end{itemize}
+
+This contribution is related to the following publication:
+\begin{itemize}
+    \footnotesize
+    \item[\ding{125}] E. Fekhari, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). ``Model predictivity assessment: incremental test-set selection and accuracy evaluation''. In: \textit{Studies in Theoretical and Applied Statistics}, pages 315--347. Springer.
+\end{itemize}
+
+%============================================================%
+\subsection*{Adaptive rare event estimation using Bernstein copula}
+%============================================================%
+
+\begin{itemize}
+    \item New algorithm for rare event estimation: BANCS
+    \item Free ROSA as a post-processing of the iid samples from the RA. 
+    The same way FORM delivers local information
+\end{itemize}
+
+\begin{itemize}
+    \item Other sampling methods to improve the estimation
+    \item Optimal Berstein copula estimation?
+    \item Semi-parametric modeling?
+    \item On high dimensional problems: exploit ROSA to simplify certain problems
+    \item On high dimensional problems: EBC by block 
+\end{itemize}
+
+This contribution is related to the following publication:
+\begin{itemize}
+    \footnotesize
+    \item[\ding{125}] E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2023). ``Bernstein adaptive nonparametric conditional sampling: a new method for rare event probability estimation''. In: \textit{Proceedings of the 13th International Conference on Applications of Statistics and Probability in Civil Engineering (ICASP 14)}.
+\end{itemize}
+
+
+
+
+%============================================================%
+%============================================================%
+\section*{Summary of the numerical developments}
+%============================================================%
+%============================================================%
+
+%============================================================%
+\subsection*{Python package \texttt{otkerneldesign}}
+%============================================================%
+\begin{itemize}
+    \item CUDA 
+    \item Exploit the work on estimators realized in \ot
+\end{itemize}
+
+
+%============================================================%
+\subsection*{Python package \texttt{bancs}}
+%============================================================%
+
+\begin{itemize}
+    \item Documentation and packaging
+    \item Perform an exhaustive benchmark
+\end{itemize}
+
+%============================================================%
+\subsection*{Python package \texttt{copulogram}}
+%============================================================%
+
+\begin{itemize}
+    \item Documentation
+\end{itemize}
+
+%============================================================%
+\subsection*{Offshore wind turbine reliability wrapper}
+%============================================================%
+
+\begin{itemize}
+    \item Adapt the current reliability wrapper to a floating case
+\end{itemize}
