@@ -1,4 +1,4 @@
-# Thesis manuscript
+# Thesis manuscript :mortar_board:
 
 General repository of the following PhD thesis in Computer Science:
 
@@ -7,7 +7,8 @@ General repository of the following PhD thesis in Computer Science:
 
 ## Repository structure :file_folder:
 
-This repository is divided into two folders: 
+This repository is divided into two folders:
+
 :open_file_folder:**manuscript**: containing the LaTex sources of the manuscript.
 
 :open_file_folder:**numerical_experiments**: holding the Python/OpenTURNS code generating most figures from the manuscript. 
@@ -38,18 +39,21 @@ This repository is divided into two folders:
 
 :mega: E. Fekhari, B. Iooss, V. Chabridon, J. Muré (2023). "Rare event estimation using nonparametric Bernstein adaptive sampling". In: *Proceedings of the Mascot-Num 2023 Annual Conference (MASCOT-NUM 2023)*, Le Croisic, France. 
 
-:mega: Le Printemps de la Recherche 2022, Nantes, France. "Traitement des incertitudes pour la gestion d’actifs éoliens". 
+:mega: *Le Printemps de la Recherche 2022*, Nantes, France. "Traitement des incertitudes pour la gestion d’actifs éoliens". 
 
-:mega: Journées Scientifiques de l’Eolien 2024, Saint-Malo, France. "Evaluation probabiliste de la fiabilité en fatigue des structures éoliennes en mer".
+:mega: *Journées Scientifiques de l’Eolien 2024*, Saint-Malo, France. "Evaluation probabiliste de la fiabilité en fatigue des structures éoliennes en mer".
 
 
 
 ## Related developments :bar_chart:
 
-- [```otkerneldesign```](https://efekhari27.github.io/otkerneldesign/master/): Python package generating designs of experiments based on kernel methods such as Kernel Herding.
-- [```bancs```](https://github.com/efekhari27/bancs): Python package implementing the ``Bernstein Adaptive Nonparametric Conditional Sampling'' method for rare event estimation.
-- [```copulogram```](https://github.com/efekhari27/copulogram): Python package proposing a synthetic visualization tool for multivariate distributions. 
-- [```ctbenchmark```](https://github.com/efekhari27/ctbenchmark): Python presenting a standardized process to benchmark different sampling methods for central tendency estimation
+:point_right: [```otkerneldesign```](https://efekhari27.github.io/otkerneldesign/master/): Python package generating designs of experiments based on kernel methods such as Kernel Herding.
+
+:point_right: [```bancs```](https://github.com/efekhari27/bancs): Python package implementing the ``Bernstein Adaptive Nonparametric Conditional Sampling'' method for rare event estimation.
+
+:point_right: [```copulogram```](https://github.com/efekhari27/copulogram): Python package proposing a synthetic visualization tool for multivariate distributions. 
+
+:point_right: [```ctbenchmark```](https://github.com/efekhari27/ctbenchmark): Python presenting a standardized process to benchmark different sampling methods for central tendency estimation
 
 ____
 
