@@ -987,20 +987,21 @@ publicly defended on March 12, 2024 in front of the following jury:
 %    Dr. Joseph MUR\'E & EDF R\&D, Chatou & Co-advisor\\
 %    Pr. Franck SCHOEFS & Nantes Université, Nantes & Reviewer\\
 %    Pr. Daniel STRAUB & TUM, Munich & Reviewer\\
-%    Pr. Bruno SUDRET & ETH, Z\"urich & Examiner\\ 
+%    Pr. Bruno SUDRET & ETH, Zurich & Examiner\\ 
 %\end{tabular}
 
 %\begin{adjustwidth}{-8mm}{-8mm}
   \begin{tabular}{llll}
     Director & Dr. Bertrand IOOSS      & Senior Researcher  & EDF R\&D, Chatou \\
     Co-advisors     & Dr. Vincent CHABRIDON   & Research Engineer         & EDF R\&D, Chatou \\
-                    & Dr. Joseph MUR\'E       & Research Engineer         & EDF R\&D, Chatou \\
     Reviewers       & Pr. Franck SCHOEFS      & Professor                 & Nantes Université, Nantes\\
                     & Pr. Daniel STRAUB       & Professor                 & TUM, Munich\\
     Examiners       & Pr. Mireille BOSSY      & Research Director         & INRIA, Sophia-Antipolis\\
                     & Dr. Sébastien DA VEIGA  & Associate Professor       & ENSAI, Rennes\\
-                    & Pr. Bruno SUDRET        & Professor                 & ETH, Z\"urich \\ 
-    Invite          & Dr. Ana\"is LOVERA      & Research Engineer         & EDF R\&D, Saclay\\
+                    & Pr. Bruno SUDRET        & Professor                 & ETH, Zurich \\ 
+    Invitees        & Dr. Ana\"is LOVERA      & Research Engineer         & EDF R\&D, Saclay\\
+                    & Dr. Joseph MUR\'E       & Research Engineer         & EDF R\&D, Chatou \\
+
   \end{tabular}
 %\end{adjustwidth}
 

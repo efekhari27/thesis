@@ -80,7 +80,12 @@
 
 % ********************************** Preamble **********************************
 % Preamble: Contains packages and user-defined commands and settings
+
 \input{classes/macro}
+
+\input{glossary}
+
+\makeglossaries
 
 % ************************ Thesis Information & Meta-data **********************
 % Thesis title and author information, reference file for biblatex
@@ -94,8 +99,8 @@
 \ifdefineAbstract
  \pagestyle{empty}
  \includeonly{classes/declaration, classes/abstract}
-\fi
-
+ \fi
+ 
 % ***************************** Chapter Mode ***********************************
 % The chapter mode allows user to only print particular chapters with references
 % Title, Contents, Frontmatter are disabled by default
@@ -103,7 +108,7 @@
 % To use choose `chapter' option in the document class
 
 \ifdefineChapter
- \includeonly{chapters/chapter3}
+\includeonly{chapters/chapter3}
 \fi
 
 % ******************************** Front Matter ********************************
@@ -114,45 +119,32 @@
 \include{classes/UCA_font_page}
 
 \frontmatter
+
 \newpage
+
 \maketitle
 
 %\include{dedication}
 %\include{declaration}
-%\include{acknowledgement}
+\include{classes/acknowledgement}
 \include{classes/abstract}
+%\include{classes/abstract_fr}
+
 
 % *********************** Adding TOC and List of Figures ***********************
 \tableofcontents
-
 \etocsettocstyle{\noindent\rule{\linewidth}{.4pt}}{\noindent\rule{\linewidth}{.4pt}}
 
 \listoffigures
 
 \listoftables
 
-\clearpage
-\printglossary[type=\acronymtype]
-
-% \printnomenclature[space] space can be set as 2em between symbol and description
-%\printnomenclature[3em]
-
-\printnomenclature
-
+\glossarystyle{list}
+\printglossary[type=\acronymtype,title=List of Acronyms]
 % ******************************** Main Matter *********************************
 \mainmatter
 
 \include{part1/introduction}
-
-
-%% \epigraph{Il n'y a pas de hasard, \\il n'y a que des rendez-vous.}{\textsc{P. Eluard}}
-%% \epigraph{\textit{Le hasard, c'est le purgatoire de la causalité.}}{\textsc{J. Baudrillard}}
-%% \epigraph{\textit{Le savoir acquis dans un pays étranger peut-être une patrie et l'ignorance peut-être un exil vécu dans son propre pays.}}{\textsc{Averroes - Ibn Rochd}}
-%% \epigraph{\textit{Toute pensée émet un coup de dé.}}{\textsc{S. Mallarmé}}
-%% \epigraph{\textit{Essayez encore. Rater encore. Rater mieux.}}{\textsc{S. Beckett}}
-%% \epigraph{\textit{Le doute est un état mental désagréable, mais la certitude est ridicule.}}{\textsc{Voltaire}}
-%% \epigraph{\textit{La résignation est un suicide quotidien. }}{\textsc{H. Balzac}}
-
 
 \setlength\epigraphwidth{.35\textwidth}
 \epigraphhead[550]{
@@ -209,12 +201,9 @@
 
 %\printbibliography[heading=bibintoc, title={References}]
 
-
 \end{spacing}
 
 % ********************************** Appendices ********************************
-
-
 \begin{appendices} % Using appendices environment for more functunality
 \include{appendices/appendixA}
 \include{appendices/appendixB}

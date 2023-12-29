@@ -18,7 +18,7 @@
 
 The progress of computer simulation gradually allows the virtual resolution of more complex problems in scientific fields such as physics, astrophysics, engineering, climatology, chemistry, or biology. 
 This domain often provides a deterministic solution to complex problems depending on several inputs. 
-Associating an uncertainty quantification (UQ) analysis with these numerical models is a key element in improving the understanding of the phenomena studied. 
+Associating an uncertainty quantification (\abv{uq}) analysis with these numerical models is a key element in improving the understanding of the phenomena studied. 
 A wide panel of UQ methods has been developed over the years to pursue these studies for a reasonable computational cost. 
 
 This chapter presents the essential tools and methods from the generic UQ framework, including elements partially inspired from \citet{sullivan_2015} and \citet{chabridon_2018_thesis}. 
@@ -37,7 +37,7 @@ It combines high performance using C++ programming with high accessibility throu
 Overall, this open-source library provides tools for various steps of the UQ framework (e.g., uncertainty quantification, uncertainty propagation, surrogate modeling, reliability, sensitivity analysis and calibration). 
 To guarantee software quality, the development follows robust processes such as exhaustive unit testing and multiplatform continuous integration. 
 A dedicated forum hosts an active community, which helps new users and discusses future developments. 
-Finally, no-code users can benefit from \texttt{OpenTURNS}'s free-download Graphical User Interface software, named \texttt{Persalys}\footnotemark. 
+Finally, no-code users can benefit from \texttt{\abv{openturns}}'s free-download Graphical User Interface software, named \texttt{Persalys}\footnotemark. 
 In this chapter, the methodological concepts introduced are linked to minimal \ot implementations examples, available in Appendix~\ref{apx:D}. 
 
 \footnotetext{\ot installation guide and documentation are available at \url{https://openturns.github.io/www/}}
@@ -50,7 +50,7 @@ In this chapter, the methodological concepts introduced are linked to minimal \o
 %============================================================%
 In our computer experiments context, uncertainty quantification is performed around an input-output numerical simulation model. 
 This numerical model, or code, is hereafter considered as \textit{black-box} since the knowledge of the underlying physics doesn't inform the UQ methods. 
-Alternatively, one could consider \textit{intrusive} UQ methods, introducing uncertainties within the resolution of the equations of the physics (see e.g., \citealt{lemaitre_2010}). 
+Alternatively, one could consider \textit{intrusive} UQ methods, introducing uncertainties within the resolution of the equations of the physics (see e.g., \citealp{lemaitre_2010}). 
 In practice, numerical models might be a sequence of codes executed in series to obtain a variable of interest.
 
 While simulation models are in most cases deterministic, they may also be qualified as intrinsically stochastic (i.e., two runs of the same model taking the same inputs return different outputs).
@@ -59,7 +59,7 @@ In the following, it will be assumed that the numerical models passed a \textit{
 
 Formally, part of the problem specification is the definition of the set of $d$ input variables $\bx = \left(x_1, \dots, x_d\right)\TT$ considered as uncertain (e.g., wind speed, wave period, etc.). 
 The outputs studied are also defined at this stage, which will only be of scalar type in the present work.  
-UQ methods suited to other types of outputs exist (see e.g., for time series outputs \citealt{lataniotis_2019}, for functional outputs \citealt{auder_2012,rollon_2021}). 
+UQ methods suited to other types of outputs exist (see e.g., for time series outputs \citealp{lataniotis_2019}, for functional outputs \citealp{auder_2012,rollon_2021}). 
 Let us then define the following numerical model $\iM$, with its respective input $\iD_{\bx}$ and output domains $\iD_{\by}$:
 \begin{equation}
 \iM : \bigg|
@@ -76,7 +76,7 @@ Therefore, UQ methods should be efficient and require as few simulations as poss
 In this context, surrogate models (or metamodels) are statistical approximations of the costly numerical model, that can be used to perform tractable UQ. 
 Surrogate models are built and validated on a limited number of simulations (in a \textit{supervised learning} framework). 
 In practice, note that the model specification step is often associated with the development of a \textit{wrapper} of the code. 
-It is an overlay of code allowing its execution in a parametric way, which is often associated with \textit{high-perfomance computer} (HPC) deployment.  
+It is an overlay of code allowing its execution in a parametric way, which is often associated with \textit{high-perfomance computer} (\abv{hpc}) deployment.  
 Once the model is specified, a critical step in uncertainty quantification is enumerating the input uncertainties and building their associated mathematical model.
 
 
@@ -142,7 +142,7 @@ Which is a probability measure on $(\iD_{\bx}, \iA)$, denoted $\P_{\bX}$ and def
 \begin{equation}
     \P_{\bX}(B) = \P(\bX \in B) = \P(\omega \in \Omega : \bX(\omega)\in B), \quad \forall B \in \iA.
 \end{equation}
-The \textit{cumulative distribution function} (CDF) is a common tool to manipulate random variables. 
+The \textit{cumulative distribution function} (\abv{cdf}) is a common tool to manipulate random variables. 
 It is a function $F_{\bX} : \iD_{\bx} \rightarrow [0, 1]$ defined for all $\bx \in \iD_{\bx}$ as: 
 \begin{equation}
     F_{\bX}(\bx) = \P(\bX \leq \bx)
@@ -150,7 +150,7 @@ It is a function $F_{\bX} : \iD_{\bx} \rightarrow [0, 1]$ defined for all $\bx \
             = \P_{\bX}\left(\, ]-\infty, x_1] \times \dots \times ]-\infty, x_d]\, \right).
 \end{equation}
 The CDF is a positive, increasing, right-continuous function, which tends to $0$ as $\bx$ tends to $-\infty$ and to $1$ as $\bx$ tends to $+\infty$. 
-In the continuous case, one can also define a corresponding \textit{probability density function} (PDF) $f_{\bX}: \iD_{\bx} \rightarrow \R_+$  with 
+In the continuous case, one can also define a corresponding \textit{probability density function} (\abv{pdf}) $f_{\bX}: \iD_{\bx} \rightarrow \R_+$  with 
 $f_{\bX}(\bx) = \frac{\partial^d F_{\bX}(\bx)}{\partial x_1 \dots \partial x_d}$.
 
 The expected value of a random vector $\E[\bX]$, also called the first moment, is a vector defined as:
@@ -165,7 +165,7 @@ and a covariance describing their joint variability:
 \begin{equation}
     \cov(X_i, X_j) = \E\left[\left(X_i - \E[X_i]\right) \left(X_j - \E[X_j]\right)\right].
 \end{equation}
-The \textit{standard deviation} $\sigma_{X_j} = \sqrt{\var(X_j)}$ and \textit{coefficient of variation} $\delta_{X_j} = \frac{\E[X_j]}{\sqrt{\var(X_j)}}$ are two quantities directly associated to the two first moments.
+The \textit{standard deviation} $\sigma_{X_j} = \sqrt{\var(X_j)}$ and \textit{coefficient of variation} (\abv{cov}) $\delta_{X_j} = \frac{\E[X_j]}{\sqrt{\var(X_j)}}$ are two quantities directly associated to the two first moments.
 
 %\elias{Remark on high dimension: We call high dimension anything higher than $p>10$ and it creates issues.}
 
@@ -181,7 +181,7 @@ Finally, a panel of tools to evaluate the goodness of fit between a probabilisti
 
 In general, the single effects of multivariate distributions tend to be well modeled. 
 However, modeling the dependence structure underlying a joint distribution is often overlooked.  
-To illustrate the importance of this step, \fig{fig:joint_dist_samples} represents three i.i.d samples from three bivariate distributions sharing the same single effects (e.g., here two exponential distributions) but different dependence structures. 
+To illustrate the importance of this step, \fig{fig:joint_dist_samples} represents three \abv{iid} samples from three bivariate distributions sharing the same single effects (e.g., here two exponential distributions) but different dependence structures. 
 Judging from this example, one can assume that the joint distribution results from the composition of the single effects, also called marginals, and an application governing the dependence between them. 
 \begin{figure}[ht]
     \centering
@@ -347,7 +347,7 @@ some are victims of the curse of dimensionality and some are not.
 %------------------------------------------------------------%
 
 Historically, quadrature methods have been developed for univariate integrals. 
-The Gaussian rule and the Fejér-Clenshaw-Curtis rule are two univariate deterministic quadratures that will be briefly introduced (see \citealt{sullivan_2015} for further elements). 
+The Gaussian rule and the Fejér-Clenshaw-Curtis rule are two univariate deterministic quadratures that will be briefly introduced (see \citealp{sullivan_2015} for further elements). 
 
 %Let us first mention the Newton-Cotes quadratures, generalizing multiple rules (e.g., the trapezoidal rule, Simpson's rule, etc.).
 Gaussian quadrature is a powerful univariate quadrature building together a set of irregular nodes and a set of weights. 
@@ -401,7 +401,7 @@ Uncertainty quantification problems are rarely unidimensional, but one can direc
 This exhaustive approach quickly shows its practical limits as the problem's dimension increases. 
 In \fig{fig:bivariate_quads}, the left plot represents a two-dimensional tensor product of identical Gauss-Legendre quadratures. 
 Alternatively, sparse multivariate quadratures (i.e., Smolyak sparse grid) explore the joint domain more efficiently. 
-Using the Smolyak recurrent formula (see e.g., \citealt{sullivan_2015}), two univariate quadratures can be combined as illustrated on the right of \fig{fig:bivariate_quads}. 
+Using the Smolyak recurrent formula (see e.g., \citealp{sullivan_2015}), two univariate quadratures can be combined as illustrated on the right of \fig{fig:bivariate_quads}. 
 %\elias{Introduce the recurrent Smolyak formula?}
 
 \begin{figure}[h!]
@@ -425,7 +425,7 @@ Using the Smolyak recurrent formula (see e.g., \citealt{sullivan_2015}), two uni
 %------------------------------------------------------------%
 \subsubsection{Monte Carlo methods}
 %------------------------------------------------------------%
-Monte Carlo methods were initially developed in the 1940s to solve problems in neutronics.  
+Monte Carlo (\abv{mc}) methods were initially developed in the 1940s to solve problems in neutronics.  
 Ever since, this frequentist technique has been applied to the resolution of the Lebesgue integral. 
 To integrate a function $g$ against a measure $\P_{\bX}$, it randomly generates points following the input measure. 
 The integral is estimated by taking the uniform arithmetic mean of the nodes' images obtained by this random process. 
@@ -437,7 +437,7 @@ Pseudorandom algorithms generate a sequence of numbers with a very large, but fi
 This sequence can be exactly repeated by fixing the same initial point, also called \textit{pseudorandom seed}.
 Most programming languages use the Mersenne-Twister pseudorandom generator \citep{matsumoto_1998}, offering a very long period (around $4.3\times10^{6001}$ iterations).
 
-Formally, the ``Vanilla'' Monte Carlo (sometimes called ``crude'' Monte Carlo) method uses a set of i.i.d samples $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\}$ following the joint distribution of $\P_{\bX}$. 
+Formally, the ``Vanilla'' Monte Carlo (sometimes called ``crude'' Monte Carlo) method uses a set of i.i.d. samples $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\}$ following the joint distribution of $\P_{\bX}$. 
 The Monte Carlo estimator of the integral is given by: 
 \begin{equation}
     I_{\P_{\bX}}(g) \approx \overline{y}_n^{\textrm{MC}} = \frac1n \sum_{i=1}^{n} g(\bx^{(i)}).
@@ -469,7 +469,7 @@ For further details, the reader may refer to Chapters 8, 9 and 10 from \citet{ow
 %------------------------------------------------------------%
 
 Among the methods presented so far, classical deterministic quadratures are subject to the curse of dimensionality while Monte Carlo methods deliver contrasted performances. 
-Quasi-Monte Carlo is a deterministic family of numerical integration schemes with respect to the uniform measure on $[0, 1]$. 
+Quasi-Monte Carlo (\abv{qmc}) is a deterministic family of numerical integration schemes with respect to the uniform measure on $[0, 1]$. 
 It offers powerful performances with strong guarantees by choosing nodes according to \textit{low discrepancy} sequences. 
 
 The discrepancy of a set of nodes (or a design) can be seen as a metric of its uniformity. 
@@ -560,9 +560,9 @@ Each is split into the first 128 points (in red) and the following 128 points (i
 
 Crude Monte Carlo estimators provide guarantees associated with the estimate. 
 This complementary information is essential to deliver an end-to-end uncertainty quantification, which is missed in deterministic QMC methods.  
-\textit{Randomized quasi-Monte Carlo} (RQMC) is a method introducing some randomness in QMC in order to compute confidence intervals while benefiting from a low variance. 
+\textit{randomized quasi-Monte Carlo} is a method introducing some randomness in QMC in order to compute confidence intervals while benefiting from a low variance. 
 A specific review of the randomized (also called ``scrambled'') QMC is proposed by \citet{lecuyer_2018}. 
-Various authors recommend the use of RQMC by default instead of QMC as a good practice. 
+Various authors recommend the use of randomized QMC by default instead of QMC as a good practice. 
 Recent works aim at exploring the use of these methods to estimate different quantities of interest, such as an expected value \citep{gobet_2022} or a quantile \citep{tuffin_2019}. 
 
 Ultimately, quasi-Monte Carlo methods generate powerful integration schemes. 
@@ -599,7 +599,7 @@ The previously introduced discrepancies are an example of space-filling metrics.
 Other types of space-filling metrics rely on purely geometrical considerations.  
 
 This section will first define a few space-filling metrics. 
-Secondly, the \textit{Latin hypercube sampling} (LHS) will be introduced as a variance-reduction method that became popular in the UQ community. 
+Secondly, the \textit{Latin hypercube sampling} (\abv{lhs}) will be introduced as a variance-reduction method that became popular in the UQ community. 
 Finally, a general discussion on uncertainty propagation with respect to non-uniform measures will be presented.
 
 %------------------------------------------------------------%
@@ -720,7 +720,7 @@ However, uncertainty propagation is often performed on complex input distributio
 In uncertainty quantification, this step might be referred to as the estimation of the output random variable's central tendency (i.e., its mean and variance). 
 Central tendency estimation is a numerical integration with respect to any input distribution, sometimes called \textit{probabilistic integration} \citep{briol_oates_2019} as part of \textit{probabilistic numerics} \citep{oates_sullivan_2019}.  
 
-To generate i.i.d samples following any distribution (i.e., non-uniform), one may use \textit{inverse transform} sampling. 
+To generate i.i.d. samples following any distribution (i.e., non-uniform), one may use \textit{inverse transform} sampling. 
 After generating samples in the unit hypercube, the inverse CDF function (i.e., quantile function) is applied to the marginals. 
 Finally, possible dependence effects may be added using the Sklar theorem \eq{thm:sklar}.
 
@@ -802,7 +802,7 @@ Note however that the present work will not address the problems of time-depende
 
 Following the UQ methodology, the behavior of the system is modeled by $\iM(\cdot)$. 
 Considering the problem of exceeding a safety threshold in \eq{eq:failure_proba}, the system's performance is commonly defined as the difference between the model's output and the safety threshold $\yth\in\R$. 
-Formally, the \textit{limit-state function} (LSF) is a deterministic function $g:\R\rightarrow\R$ quantifying this performance: 
+Formally, the \textit{limit-state function} (\abv{lsf}) is a deterministic function $g:\R\rightarrow\R$ quantifying this performance: 
 \begin{equation}
     g(\bx) = \yth - \iM(\bx).
 \end{equation}
@@ -831,7 +831,7 @@ This quantity is formally written\footnote{Note that this probabilistic integrat
 \end{equation}
 where the indicator function applied to the failure domain returns $\1_{\left\{\iF_{\bX}\right\}}(x) = 1$ if $x \in \iF_{\bX}$ and $\1_{\left\{\iF_{\bX}\right\}}(x) = 0$ otherwise. 
 Rare event estimation implies both contour finding (i.e., characterizing the LSF) and an estimation strategy targeting the failure domain (often with a limited number of simulations). 
-Note that failure events are qualified as rare when their failure probability has an order of magnitude between $10^{-2} \leq \pf \leq 10^{-9}$ (see e.g., \citealt{lemaire_2009}). 
+Note that failure events are qualified as rare when their failure probability has an order of magnitude between $10^{-2} \leq \pf \leq 10^{-9}$ (see e.g., \citealp{lemaire_2009}). 
 
 Instead of directly performing a reliability analysis in the physical space (i.e., $\bx$-space), these problems are usually solved in the \emph{standard normal space} (i.e., $\bu$-space). 
 Working in the standard space reduces numerical issues caused by potentially unscaled or asymmetric marginals. 
@@ -896,8 +896,8 @@ This section introduced the commonly used rare event methods, see \cite{MorioBal
 \subsubsection{First and second order reliability methods (FORM/SORM)}
 %------------------------------------------------------------%
 
-The well-known first and second-order reliability methods (FORM and SORM) both rely on a geometric approximation to estimate a failure probability \citep{lemaire_2009}. 
-They extrapolate a local approximation of the LSF built in the vicinity of a \textit{most-probable-failure-point} (MPFP), also called \textit{design point}.
+The well-known first and second-order reliability methods (\abv{form} and \abv{sorm}) both rely on a geometric approximation to estimate a failure probability \citep{lemaire_2009}. 
+They extrapolate a local approximation of the LSF built in the vicinity of a \textit{most-probable-failure-point} (\abv{mpfp}), also called \textit{design point}.
 
 Working in the standard space, the methods first look for this MPFP, denoted $P^*$, with coordinates $\bu^*$, 
 To find it, one can solve the following quadratic optimization problem: 
@@ -941,7 +941,7 @@ Depending on the properties of the LFS, this approximation will be more or less 
 Note that for a purely linear LFS, $\pf = \pf^{\mathrm{FORM}}$. 
 When the function is nonlinear, adding a quadratic term to the Taylor expansion can help the approximation. 
 The approximation method is then called SORM for \textit{second order reliability method}. 
-However, this added complexity implies the computation of Hessian matrices, which can be complicated (see Chapter 1 from \citealt{bourinet_2018} for their estimation).
+However, this added complexity implies the computation of Hessian matrices, which can be complicated (see Chapter 1 from \citealp{bourinet_2018} for their estimation).
 
 
 \begin{figure}[ht]
@@ -981,7 +981,7 @@ Once the first MPFP $P^{*^{(1)}}$ is found, the limit-state surface is modified 
 Overall, FORM and SORM methods deliver a very efficient approximation of small probabilities for relatively simple problems (in terms of linearity and dimension). 
 For this reason, they have been widely used in the practical context of limited simulation budgets. 
 \citet{straub_2014_fatigue_form} illustrates the efficiency of FORM approaches on industrial cases such as probabilistic fatigue damage. 
-However, these methods present serious limits as the dimension increases (see the discussion in Chapter 1 from \citealt{chabridon_2018_thesis}). 
+However, these methods present serious limits as the dimension increases (see the discussion in Chapter 1 from \citealp{chabridon_2018_thesis}). 
 Additionally, their main drawback is the lack of complementary information concerning the confidence of the results. 
 The textbook example illustrated in \fig{fig:multi_FORM} shows that the method might miss some important areas of the failure domain, leading to poor estimations. 
 As an alternative to approximation methods, simulation-based methods often provide the analyst with an assessment of the estimation's confidence. 
@@ -1029,7 +1029,7 @@ This excessive simulation budget comes from the fact that the vast majority of t
 \subsubsection{Importance sampling}
 %------------------------------------------------------------%
 
-Importance sampling (IS) is a variance reduction method, aiming at improving the performances of crude Monte Carlo sampling. 
+Importance sampling (\abv{is}) is a variance reduction method, aiming at improving the performances of crude Monte Carlo sampling. 
 In the context of rare event estimation, the main idea is to deliberately introduce a bias in the sampled density, shifting it towards the failure domain. 
 If this shift actually goes towards the failure domain, it allows drawing more points in it, leading to a better estimate of our quantity.
 
@@ -1093,18 +1093,18 @@ Finally, other importance sampling schemes integrate adaptive mechanisms, progre
 \subsubsection{Adaptive importance sampling by cross-entropy}
 %------------------------------------------------------------%
 
-The \textit{cross-entropy-based adaptive importance sampling} (CE-AIS) is an adaptive strategy, optimizing the IS variance reduction by searching for the best instrumental distribution within a parametric family. 
+The \textit{cross-entropy-based adaptive importance sampling} (\abv{ceais}) is an adaptive strategy, optimizing the IS variance reduction by searching for the best instrumental distribution within a parametric family. 
 Let us consider the distribution $h_{\blambda}$, belonging to the parametric family $\iH_\blambda$, defined for a set of parameters $\blambda$ in a parameter space $\iD_blambda\subseteq \R^p$ as: 
 \begin{equation}
     \iH_\blambda = \left\{\bx \longmapsto h_\bX(\bx | \blambda) = h_{\blambda}(\bx), \quad \blambda = (\lambda_1, \dots, \lambda_p) \in \iD_\blambda \subseteq \R^p\right\}.
 \end{equation} 
-The early work of \citet{bucher_1988_AIS} only included normal distributions to minimize the IS variance w.r.t. the parameter $\blambda$, using \eq{eq:IS_variance} the optimization simplifies as:
+The early work of \citet{bucher_1988_AIS} only included normal distributions to minimize the IS variance \abv{wrt} the parameter $\blambda$, using \eq{eq:IS_variance} the optimization simplifies as:
 \begin{equation}
     \blambda^* = \argmin_{\blambda \in \iD_\blambda} \, \E_{h_\blambda}\left[ \1_{\iF_\bx}(\bX) \, \left(\frac{f_\bX(\bx)}{h_\blambda(\bx)}\right)^2 \right]. 
 \end{equation}
 However, this optimization strategy requires sampling with respect to the instrumental distribution at each optimization iteration, which was overcome by a different approach. 
 
-The ``cross-entropy'' (CE) method uses Kullback-Leibler (KL) divergence to optimize importance sampling. 
+The ``cross-entropy'' (CE) method uses Kullback-Leibler (\abv{kl}) divergence to optimize importance sampling. 
 KL divergence is a dissimilarity measure between distributions, expressed between the parametric instrumental distribution $h_\blambda$ and the optimal one $h_{\mathrm{opt}}$: 
 \begin{subequations}
     \begin{align}
@@ -1163,7 +1163,7 @@ A similar mechanism is used by other importance sampling methods, inferring the 
 %------------------------------------------------------------%
 \subsubsection{Nonparametric adaptive importance sampling}
 %------------------------------------------------------------%
-The use of multivariate kernel density estimation (KDE) to approximate the importance sampling optimal density $h_{\mathrm{opt}}$ was introduced in the context of structural reliability by \cite{ang_1992_nis}, latter followed by \citet{zhang_1996_NIS}.  
+The use of multivariate kernel density estimation (\abv{kde}) to approximate the importance sampling optimal density $h_{\mathrm{opt}}$ was introduced in the context of structural reliability by \cite{ang_1992_nis}, latter followed by \citet{zhang_1996_NIS}.  
 Let us first present the nonparametric importance sampling from \cite{zhang_1996_NIS}, considering the instrumental density $h_{[0]}$ (for now, $h_{[0]} \neq f_\bX$), 
 on which a sample $\left\{\bX_{[1]}^{(i)}\right\}_{i=1}^n$ is generated. 
 A first failure probability can be roughly estimated, assuming that enough samples lead to the failure domain: 
@@ -1177,13 +1177,13 @@ On this biased sample, another density can be fitted using KDE, using the previo
             \1_{\{g(\bx) \leq 0\}}\left(\bx^{(i)}_{[1]}\right) w^{(i)}_{[1]} \, K\left(\bH_{[1]}^{-1/2} (\bx - \bx^{(i)}_{[1]})\right).
 \end{equation}
 Where the kernel $K$ is commonly taken as the multivariate Gaussian-centered density with the covariance matrix $\bH$. 
-The tuning of $\bH$ is usually done by minimizing an asymptotic mean integrated squared error (AMISE) criterion \citep{glad_2007_kde_amise}. 
+The tuning of $\bH$ is usually done by minimizing an asymptotic mean integrated squared error (\abv{amise}) criterion \citep{glad_2007_kde_amise}. 
 In the previous expression, the normalization constant ensures building a probability density while the weights $w^{(i)}_{[1]}$, defined above, reflect the contribution of each point to $\what{\pf}_{[1]}$.  
 After performing this KDE, the estimated density can be used as instrumental density in \eq{eq:pf_IS}.
 
 As for the CE-IS methods, the risk is that barely any points sampled from the instrumental density $h_{[0]}$ hit the failure domain, leading to poor estimates. 
 \citet{zhang_1996_NIS} proposed to couple an adaptive mechanism with a nonparametric inference of the optimal density. 
-This method is further referred to as NAIS for \textit{nonparametric adaptive importance sampling}. 
+This method is further referred to as \abv{nais} for \textit{nonparametric adaptive importance sampling}. 
 Later, the NAIS method was adapted by \cite{Morio_RESS_2011} to the reliability analysis problem, using a similar mechanism to the CE-AIS method. 
 
 In this framework, a series of intermediate thresholds are computed as empirical $p_0$-quantiles $q_{[1]}^{p_0} > \dots > q_{[k_\#]}^{p_0}$ of the successive importance sampling steps. 
@@ -1220,7 +1220,7 @@ In practice, the performances of NAIS seriously decrease for problems in dimensi
 %------------------------------------------------------------%
 \subsubsection{Subset simulation}
 %------------------------------------------------------------%
-Although the concept of splitting already existed, the name of \textit{subset simulation} (SS) was first introduced by \citet{AuBeck2001} in the structural reliability community. 
+Although the concept of splitting already existed, the name of \textit{subset simulation} (\abv{ss}) was first introduced by \citet{AuBeck2001} in the structural reliability community. 
 This concept was generalized as a sequential Monte Carlo method under the name of ``adaptive multilevel splitting'', as reviewed by \citet{cerou_2019_sequentialMC}. 
 
 Subset simulation splits the failure event $\iF_{\bx}$ into an intersection of $k_\#$ intermediary events $\iF_{\bx} = \cap_{k=1}^{k_\#} \iF_{[k]}$.
@@ -1233,7 +1233,7 @@ The failure probability is then expressed as a product of conditional probabilit
 From a practical point of view, the analyst tunes the algorithm\footnotemark$~$ by setting the intermediary probabilities $\P(\iF_{[k]} | \iF_{[k-1]}) = p_0, \forall k \in \{1, \dots, k_\# \}$. 
 Then, the corresponding quantiles $q_{[1]}^{p_0} > \dots > q_{[k_\#]}^{p_0}$ are estimated for each conditional subset samples $\bX_{[k], N}$ of size $N$. 
 Note that the initial quantile is estimated by crude Monte Carlo sampling on the input PDF $f_{\bX}$. 
-Following conditional subset samples are generated by \textit{Monte Carlo Markov Chain} (MCMC) sampling of 
+Following conditional subset samples are generated by \textit{Monte Carlo Markov Chain} (\abv{mcmc}) sampling of 
 $f_{\bX}(\bx |\iF_{[k-1]})$, using as seeds initialization points the $n= N p_0$ samples given by $\mathbf{A}_{[k], n}=\{\bX_{[k-1]}^{(i)} \subset \bX_{[k-1], N}| g(\bX_{[k-1]}^{(i)}) > \widehat{q}_{[k-1]}^{p_0} \}_{i=1}^n$. 
 This process is repeated until an intermediary quantile becomes negative: $\widehat{q}_{[k_\#]}^{p_0} < 0$. 
 Finally, the failure probability is estimated by:
@@ -1253,8 +1253,8 @@ The first one results from a first-order Taylor expansion of \eq{eq:pf_SS} and i
 The second assumes the estimations of the conditional probabilities to be independent and tends to underestimate the coefficient of variation. 
 
 As discussed in \citep{Papaioannou_PEM_2015}, the efficiency of the SS method depends on the choice and tuning of the MCMC algorithm. 
-The Metropolis–Hastings (MH) algorithm is widely used as MCMC algorithm for subset simulation, however, it quickly becomes inefficient as the dimension increases.  
-Different improvements of the MH are made possible by working in the standard space, such as the ``component-wise'' (or ``modified M–H''). 
+The Metropolis–Hastings algorithm is widely used as MCMC algorithm for subset simulation, however, it quickly becomes inefficient as the dimension increases.  
+Different improvements of the MH are made possible by working in the standard space, such as the ``component-wise'' (or ``modified Metropolis–Hastings''). 
 More recently, alternative MCMC methods including physical system dynamics (e.g., Hamiltonian MCMC) showed promising results in high-dimension reliability problems \citep{papakonstantinou_2023_HMCMC}. 
 
 The subset simulation is a versatile method, presenting consistent performances even for rare probabilities. 
@@ -1330,7 +1330,7 @@ The aim of sensitivity analysis (SA) is to determine the impact of a single (or 
 As described earlier, this step is qualified as an inverse analysis in the general UQ framework (illustrated in \fig{fig:UQ_methodo}), in opposition to the forward uncertainty propagation step. 
 In fact, the analyst studies the effect of the inputs at different scales, hence the distinction between ``local'' and ``global'' SA. 
 Local SA focuses on the impact of small perturbations around nominal values of the inputs (i.e., derivative-based approaches), while
-global sensitivity analysis (GSA), typically studies the general variability (e.g., the variance) of the output, 
+global sensitivity analysis (\abv{gsa}), typically studies the general variability (e.g., the variance) of the output, 
 Two types of GSA methods exist in the literature, either proposing qualitative or quantitative approaches:  
 \begin{itemize}
     \item \textit{screening methods}: determines the non-influential variables in a UQ study (qualitative);
@@ -1361,7 +1361,7 @@ Screening methods allow discriminating the non-influential variables, which can 
 
 The Morris method \citep{morris_1991} is a screening method historically used in engineering applications. 
 It starts by mapping the input domain $\iD_{\bX}$ into a unit hypercube $[0, 1]^d$, which is discretized as a regular grid with step $\Delta \in \R$. 
-The algorithm computes local elementary sensitivity by building ``one at a time'' (OAT) local trajectories over the regular grid. 
+The algorithm computes local elementary sensitivity by building ``one at a time'' (\abv{oat}) local trajectories over the regular grid. 
 Each OAT design starts at a random node $\bx^{(t)} = (x^{(t)}_1, \dots, x^{(t)}_j,\dots, x^{(t)}_d)$ of the grid, and moves only in one direction by an increment equal to the elementary step such that: $\bx^{(t)} + \Delta_j = (x^{(t)}_1, \dots, x^{(t)}_j + \Delta ,\dots, x^{(t)}_d)$. 
 The elementary effect in the direction of the variable $i$ from an OAT trajectory $t$ is expressed as a finite difference: 
 \begin{equation}
@@ -1387,7 +1387,7 @@ Another disadvantage of this method is that it does not distinguish interactions
 \subsubsection{Derivative-based global sensitivity measures}
 %------------------------------------------------------------%
 
-The Derivative-based global sensitivity measures (DGSM) are a GSA method introduced in \citet{sobol_1995_DGSM} and further studied in \citet{kucherenko_2009_DGSM}. 
+The Derivative-based global sensitivity measures (\abv{dgsm}) are a GSA method introduced in \citet{sobol_1995_DGSM} and further studied in \citet{kucherenko_2009_DGSM}. 
 As the Morris method, they study the mean value of local derivatives of the model output with regard to the inputs: 
 \begin{equation}
     v_j = \int_{\iD_{\bX}} \left(\frac{\partial g(\bx)}{\partial x_j}\right)^2 f_{\bX}(\bx) \, \dd \bx = \E\left[\left(\frac{\partial g(\bX)}{\partial X_j}\right)^2\right].
@@ -1429,7 +1429,7 @@ with the previous terms defined according to this recurrence:
 
 Different authors proved that this decomposition is unique by exploiting the orthogonality of the terms of the decomposition \citep{efron_1981,sobol_1993}. 
 %\elias{add footnote for any input domain and the dependence see Chastaing these}
-Therefore, this decomposition can be transposed in terms of functional decomposition of variance (also called functional analysis of variance or FANOVA):
+Therefore, this decomposition can be transposed in terms of functional decomposition of variance (also called functional analysis of variance or \abv{fanova}):
 \begin{equation}
     \var(Y) = \sum_{j=1}^{d} V_j(Y)  + \sum_{j<l}^{d} V_{jl}(Y) + \dots + V_{1 \dots d}(Y), 
     \label{eq:fanova}
@@ -1559,8 +1559,8 @@ Considering the probability measures $\P_{X_j}$ and $\P_{Y}$ (associated with th
 
 The first approach was studied in association with $f$-divergences in \citet{daveiga_2015,rahman_2016}. 
 However, some $f$-divergences introduce estimation issues, and the resulting importance measures do not propose a functional decomposition of variance (also called FANOVA).  
-Using kernel-based integral probability metrics such as the maximum mean discrepancy (MMD), an alternative importance measure was proposed.  
-The following section presents the \textit{Hilbert-Schmidt Independence Criterion} (HSIC), which was initially introduced by \citet{gretton_2006} for dependence testing, and later adapted as a dependence measure in GSA by \citet{daveiga_2015}. 
+Using kernel-based integral probability metrics such as the maximum mean discrepancy (\abv{mmd}), an alternative importance measure was proposed.  
+The following section presents the \textit{Hilbert-Schmidt independence criterion} (\abv{hsic}), which was initially introduced by \citet{gretton_2006} for dependence testing, and later adapted as a dependence measure in GSA by \citet{daveiga_2015}. 
 
 
 %------------------------------------------------------------%
@@ -1574,7 +1574,7 @@ This distance between two probability distributions $\pi$ and $\zeta$ can be def
     %= \left\lVert P_{\pi}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH(k)}.
     \label{eq:mmd_chapter1}  
 \end{equation}
-This quantity is a distance in the Reproducing kernel Hilbert space (RKHS) by taking a characteristic kernel (e.g., the Gaussian or Matérn kernel). 
+This quantity is a distance in the Reproducing kernel Hilbert space (\abv{rkhs}) by taking a characteristic kernel (e.g., the Gaussian or Matérn kernel). 
 After a calculation developed in Appendix \ref{apx:D}, an unbiased one-sample estimator of the squared-MMD was proposed by \citet{gretton_2006}, 
 with a convergence rate of $\mathcal{O}(n^{-1/2})$ in probability. 
 Considering the two-samples $\left\{\pi^{(i)}\right\}_{i=1}^n \sim \pi$ and $\left\{\zeta^{(j)}\right\}_{j=1}^n \sim \zeta$: 
@@ -1623,7 +1623,7 @@ Several techniques derive from rare event estimation (e.g., the FORM importance 
 Finally, sensitivity analysis may describe the effects of random inputs on the variation of the output, however, this study is done by assuming a model on the input uncertainties. 
 The role of a regulatory agency auditing an uncertainty quantification approach for certification (i.e., a nuclear safety authority), might be to challenge the way to model the uncertainties on the inputs.  
 In this case, various tools for \textit{robustness analysis} exist to quantify the impact of mispecifying the random inputs on the quantity of interest studied. 
-Among the methods to pertubate uncertainty models, some remain in the probabilistic framework, such as the ``perturbed-law based indices'' (PLI) \citep{lemaitre_2015_PLI,iooss_2022_pli}, or on extra-probabilistic methods \citep{ajenjo_2022_structural_safety}. 
+Among the methods to pertubate uncertainty models, some remain in the probabilistic framework, such as the ``perturbed-law based indices'' (\abv{pli}) \citep{lemaitre_2015_PLI,iooss_2022_pli}, or on extra-probabilistic methods \citep{ajenjo_2022_structural_safety}. 
 
 
 
@@ -1670,7 +1670,7 @@ The \textit{coefficient of validation}, denoted by $R^2$, is the first validatio
 \end{equation}
 where $\overline{y}_n=(1/n)\,\sum_{i=1}^n y^{(i)}$ denotes the empirical mean of the observations in the test sample. 
 However, such metrics are not relevant for every regression method (typically, the interpolant methods have an $R^2=1$). 
-The \textit{predictivity coefficient} is an alternative defined as a normalized \textit{integrated square error} (ISE): 
+The \textit{predictivity coefficient} is an alternative defined as a normalized \textit{integrated square error} (\abv{ise}): 
 \begin{equation}
     \mathrm{Q}^2(\wg_n) = 1 - \frac{\ISE(\wg_n)}{\var(g(\bX))}, 
 \end{equation} 
@@ -1692,7 +1692,7 @@ The most common cross-validation method is the \textit{$k$-fold} validation, ill
 The idea is first to split the $n$-sized dataset into several equal parts, called folds. 
 A first surrogate can be fitted on the entire datasets but the first fold, on which a validation criterion is estimated (i.e., performance metric). 
 The operation is repeated for each fold, providing a virtual validation of the entire dataset. 
-Leave-One-Out validation (LOO) is an extreme case of $k$-fold cross-validation, for which $k=n-1$. 
+Leave-One-Out validation (\abv{loo}) is an extreme case of $k$-fold cross-validation, for which $k=n-1$. 
 Note that multiple variations of these methods exist, for example by adding a permutation or shuffling step. 
 The ``bagging'' validation method (for ``bootstrap aggregating'') consists of a shuffled cross-validation repeated many times \citep{breiman_1996_bagging}. 
 
@@ -1757,7 +1757,7 @@ To ease the presentation, let us first consider the hyperparameters $\sigma, \bt
 At a given point $\bx \in \iD_\bX$ the realization of the GP is a Gaussian random variable $G(\bx) \sim \iN(m(\bx), k(\bx, \bx))$. 
 Working with Gaussian variables allows us to easily write conditioning formulas between $G(\bx)$ and the observations $\by_n$. 
 This Gaussian variable $G(\bx)$ conditioned on the observations $\by_n$ is sometimes called conditional posterior $G_n(\bx) := (G(\bx) | \by_n) \sim \iN(\eta_n(\bx), s_n^2(\bx))$. 
-The well-known ``Kriging equations'' (see e.g., \citealt{rasmussen_2006}) offer its explicit expression:
+The well-known ``Kriging equations'' (see e.g., \citealp{rasmussen_2006}) offer its explicit expression:
 \begin{equation}
     \left\{
     \begin{array}{ll}
@@ -1790,7 +1790,7 @@ In the simplest framework, the kriging model exactly interpolates the observatio
 
 
 Associated with kriging models, another validation criterion is relevant to evaluate the kriging variance $s_n^2(\bx)$. 
-The predictive variance adequation (PVA) has been introduced to confirm that the kriging variance is reliable (see e.g., \citealt{bachoc_2013}). 
+The predictive variance adequation (\abv{pva}) has been introduced to confirm that the kriging variance is reliable (see e.g., \citealp{bachoc_2013}). 
 For a validation performed by holdout, and using an independent $m$-sized test set, the PVA is defined as: 
 \begin{equation}
     \mathrm{PVA} = \left| \log\left( \frac1m \sum_{i=1}^{n} \frac{\left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)}{s_n^2(\bx^{(i)})}\right) \right|.
@@ -1800,7 +1800,7 @@ The smaller this quantity gets, the better the quality of the kriging variance.
 Gaussian process regression is an elegant solution, offering a lot of flexibility and an associated error model (i.e., the kriging variance). 
 However, well-known numerical issues appear during the estimation of the hyperparameters, especially as the learning size increases. 
 More specifically, the computation and memory allocation for the variance-covariance matrix is a recurrent issue. 
-Multiple techniques solve this issue by applying compression schemes on this matrix, e.g., based on sparse approximations (e.g., Hierarchical Matrices \citealt{geoga_2020_hmat_gp}). 
+Multiple techniques solve this issue by applying compression schemes on this matrix, e.g., based on sparse approximations (e.g., Hierarchical Matrices \citealp{geoga_2020_hmat_gp}). 
 
 This section introduced a general-purpose surrogate model, uniformly approximating a function on a domain, however, surrogates are often used for specific purposes (e.g., contour finding for reliability analysis). 
 
@@ -1911,7 +1911,7 @@ where $\yth \in R$ is a threshold defining the failure domain.
 
 \fig{fig:AK_1D} reuses the same one-dimensional function as in \fig{fig:EGO_1D} to create a rare event problem. 
 In this case, the failure domain is defined for output values below the threshold $\yth$. 
-Once again, three iterations of the active kriging (AK) algorithm are illustrated, with the corresponding learning criterion $U$ (to minimize). 
+Once again, three iterations of the active kriging (\abv{ak}) algorithm are illustrated, with the corresponding learning criterion $U$ (to minimize). 
 In this simple case, the LSF is defined by the two intersections of the function with the threshold. 
 Therefore, the AK method selects points near these intersections. 
 

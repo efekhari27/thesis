@@ -2,39 +2,30 @@
 % Use `abstract' as an option in the document class to print only the titlepage and the abstract.
 %4000 caracters
 \begin{abstract}
-\scriptsize 
+\footnotesize
 Offshore wind energy is one of the ways to reduce the share of fossil fuels in the global electricity mix. 
-This technology benefits from more consistent winds than onshore, mainly due to the absence of terrain roughness. 
-Operating offshore also allows the installation of larger and more powerful wind turbines, which poses several scaling issues including port logistics, the demand for critical natural resources, and sustainable end-of-life processes. 
-
+This technology benefits from more consistent winds than the onshore one, mainly due to the absence of terrain roughness. 
+Operating offshore also allows the installation of larger and more powerful wind turbines, which poses several scaling issues about port logistics, the demand for critical natural resources, and sustainable end-of-life processes.
+ 
 Offshore wind turbines are dynamic systems interacting with a highly uncertain environment. 
-Therefore, uncertainty quantification around their multi-physics numerical models plays an important role to propose a risk-informed design and operation.
-Methodologically, applying uncertainty quantification to these systems raises numerous questions and requires coupling data to multi-physics numerical models. 
-
-This thesis first addressed problems related to multivariate probabilistic modeling of offshore environmental conditions. 
-A semiparametric approach was proposed, mixing parametric methods for the marginals with the empirical Bernstein copula to fit the complex dependence structure between environmental variables.
-After defining a probabilistic model of the ambient metocean conditions, the perturbations caused by the turbines' wake were studied at the farm scale by creating clusters of similarly perturbed turbines.
-This preliminary clustering aims to reduce the number loading studies at the farm scale (e.g., fatigue assessment).
-
-The second methodological axis of this work concerns uncertainty propagation for mean or rare event estimation. 
-As an alternative to the design load cases recommended by international standards for mean cumulative damage estimation, the kernel herding proved to be an efficient and flexible solution for given-data uncertainty propagation (i.e., directly subsampling from a large dataset without inference).
-This Bayesian quadrature method has also been adapted to the construction of test sets for the estimation of the mean predictivity of statistical learning models.
-
-For rare event estimation, a new method incorporating nonparametric copula into an adaptive importance sampling mechanism was proposed. 
-This method showed equivalent results to splitting methods as the subset simulation, while avoiding Markov Chain Monte Carlo sampling and generating independently distributed samples. 
-Finally, a fatigue reliability of an offshore wind turbine considered as uncertain the environmental variables but also other variables related to soil stiffness, yaw misalignment, stress-number of cycles curve, and critical damage resistance. 
-To compensate for the lack of information on the distributions of these variables, a robustness analysis was performed to examine the impact of density perturbations on the turbine's reliability.
-For reproducibility purposes, most numerical developments related to this work are documented and openly accessible. 
-
-\vspace{20pt}
-
-%L'énergie éolienne en mer est l'un des moyens de réduire la part des combustibles fossiles dans le mix électrique mondial. Cette technologie bénéficie de vents plus réguliers que l'éolien terrestre, principalement en raison de l'absence de rugosité du terrain. L'exploitation en mer permet également d'installer des éoliennes plus grandes et plus puissantes, ce qui pose plusieurs problèmes d'échelle, notamment en ce qui concerne la logistique portuaire, la demande de ressources naturelles essentielles et les processus durables de fin de vie. 
-%Les éoliennes offshore sont des systèmes dynamiques qui interagissent avec un environnement très incertain. Par conséquent, la quantification de l'incertitude autour de leurs modèles numériques multi-physiques joue un rôle important pour proposer une conception et une exploitation tenant compte des risques. D'un point de vue méthodologique, l'application de la quantification de l'incertitude à ces systèmes soulève de nombreuses questions et nécessite le couplage de données à des modèles numériques multi-physiques. 
-%Cette thèse a d'abord abordé les problèmes liés à la modélisation probabiliste multivariée des conditions environnementales offshore. Une approche semi-paramétrique a été proposée, mélangeant des méthodes paramétriques pour les marginales avec la copule empirique de Bernstein pour s'adapter à la structure de dépendance complexe entre les variables environnementales. Après avoir défini un modèle probabiliste des conditions métocéaniques ambiantes, les perturbations causées par le sillage des turbines ont été étudiées à l'échelle de la ferme en créant des grappes de turbines présentant des perturbations similaires. Ce regroupement préliminaire vise à réduire le nombre d'études de chargement à l'échelle de la ferme (par exemple, l'évaluation de la fatigue).
-
-%Le deuxième axe méthodologique de ce travail concerne la propagation de l'incertitude pour l'estimation des événements moyens ou rares. Comme alternative aux cas de charge de conception recommandés par les normes internationales pour l'estimation des dommages cumulés moyens, la méthode du kernel herding s'est avérée être une solution efficace et flexible pour la propagation de l'incertitude à partir de données données données (c.-à-d., sous-échantillonnage direct à partir d'un grand ensemble de données sans inférence).
-%Cette méthode de quadrature bayésienne a également été adaptée pour construire les ensembles de test estimant la prédictivité moyenne des modèles d'apprentissage statistique. 
-%En ce qui concerne l'estimation des événements rares, une nouvelle méthode a été proposée, incluant une copule non paramétrique à un mécanisme d'échantillonnage d'importance adaptatif. Cette méthode a donné des résultats équivalents aux méthodes de fractionnement comme la simulation de sous-ensembles, tout en évitant l'échantillonnage de Monte Carlo par chaîne de Markov et en générant des échantillons distribués de manière indépendante. Enfin, une étude de la fiabilité en fatigue d'une éolienne offshore a considéré comme incertaines les variables environnementales mais aussi d'autres variables liées à la rigidité du sol, au désalignement en lacet, à la courbe contrainte-nombre de cycles et à la résistance critique à l'endommagement. Pour compenser le manque d'informations sur les distributions de ces variables, une analyse de robustesse a étudié l'impact des perturbations de la densité sur la fiabilité de l'éolienne. 
-%À des fins de reproductibilité, la plupart des développements numériques liés à ce travail sont documentés et accessibles à tous.
-
+Uncertainty quantification of the multi-physics numerical models used to simulate them is therefore essential to propose risk-informed design and operation. 
+However, developing a dedicated uncertainty quantification strategy for these systems raises numerous questions and requires coupling data with multi-physics numerical models.
+ 
+This thesis first addresses the problems related to the multivariate probabilistic modeling of offshore environmental conditions. 
+A semiparametric approach is suggested, mixing parametric methods for marginals fitting with the empirical Bernstein copula to fit the complex dependence structure among environmental variables. 
+After defining a probabilistic model of the ambient metocean conditions, the perturbations caused by the turbines' wake effect are studied at the farm scale by creating clusters of similarly perturbed turbines. 
+This preliminary clustering aims to reduce the number of loading studies at the farm scale (e.g., for fatigue assessment).
+ 
+The second methodological axis of this work concerns uncertainty propagation for both central study and rare event estimation. 
+As an alternative to the design load cases recommended by international standards for the mean cumulative damage estimation, the kernel herding method proved to be an efficient and flexible solution for given-data uncertainty propagation (i.e., directly subsampling from a large dataset without inference). 
+This Bayesian quadrature method is also well-suited for the construction of test samples for the estimation of the mean predictivity of statistical learning models.
+ 
+For rare event estimation, a new method incorporating a nonparametric copula into an adaptive importance sampling mechanism is proposed. 
+This method displays equivalent results to splitting methods as the subset simulation while avoiding any Markov Chain Monte Carlo sampling and thus generating independent and identically distributed samples. 
+Then, the fatigue reliability of an offshore wind turbine is studied with respect to uncertain environmental variables while considering other variables related to soil stiffness, yaw misalignment, stress-number of cycles curve, and critical damage resistance. 
+The robustness of the estimated reliability is then studied using perturbed-law based indices. 
+Finally, to ensure the reproducibility of the numerical results, most of the developments presented in this work are open source and documented.
 \end{abstract}
+
+
+

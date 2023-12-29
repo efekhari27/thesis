@@ -67,7 +67,7 @@ Different strategies to model the dependence for multivariate distributions are 
     \item \textbf{Vine copulas} (also known as pair copula) decompose the joint distribution as a product of conditioned bivariate copulas organized in a tree-like structure called a vine. 
     This approach proved to be very efficient, but it requires the definition of the vine and the bivariate parametric copulas \citep{joe2011dependence}. 
     \item \textbf{Conditional modeling} defines the joint distribution as a product of univariate conditional distributions. 
-    In practice, the parameter of a marginal is defined as a function of other marginals (see e.g., \citealt{vanem_fekhari_2023}). 
+    In practice, the parameter of a marginal is defined as a function of other marginals (see e.g., \citealp{vanem_fekhari_2023}). 
     %This approach is widely used to model metocean conditions, but its implementation is not always straightforward. 
     \item \textbf{Multivariate KDE} is another way to capture the dependence together with marginal effects. As the dimension and the size of the dataset increase, this method becomes less tractable \citep{wand_jones_1994_kde}.  
     \item \textbf{Nonparametric copulas} are methods uniformly approximating an empirical copula without any assumption on a dependence structure. They will be further described and used for metocean conditions inference in the present chapter.    
@@ -186,7 +186,7 @@ Considering a sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \sim \b
     C_n(u_1, \dots, u_d) = \frac1n \sum_{i=1}^{n} \prod_{j=1}^{d} \1 \left\{ \frac{r_j^{(i)}}{n} \leq u_j \right\}, \quad  \bu = (u_1, \dots, u_d) \in [0, 1]^d
     \label{eq:empirical_copula}
 \end{equation}
-Even if this function converges uniformly towards the copula $C$ (according to the Glivenko-Cantelli theorem), it does not fulfill the conditions to be a copula (see e.g., \citealt{gonzalez_2021_checkerboard_copula}). 
+Even if this function converges uniformly towards the copula $C$ (according to the Glivenko-Cantelli theorem), it does not fulfill the conditions to be a copula (see e.g., \citealp{gonzalez_2021_checkerboard_copula}). 
 
 In this context, different methods may be applied to smooth the empirical copula into a genuine copula. 
 This problem can be perceived as a functional approximation of the underlying copula $C$, which is unique for continuous variables (according to Sklar's Theorem \ref{thm:sklar}). 
@@ -196,13 +196,13 @@ Let us consider a discretization of the unit hypercube as a grid:
 \end{equation}
 
 The \textit{checkerboard copula} is a simple approximation of the empirical copula using the discretization $G$. 
-This method is comparable to a multivariate histogram of the empirical density copula $c_n$ (see the formal multivariate definition proposed by \citealt{cottin_2014_bernstein}).
+This method is comparable to a multivariate histogram of the empirical density copula $c_n$ (see the formal multivariate definition proposed by \citealp{cottin_2014_bernstein}).
 In the particular case for which $m_j=m, \, \forall j \in \{1, \dots, d\}$, the checkerboard copula is called the ``rook'' copula, and expressed by \citet{segers_2017} as: 
 \begin{equation}
     C_n^{\#m}(u_1, \dots, u_d) = \frac1n \sum_{i=1}^{n} \prod_{j=1}^{d} \min\left(\max(n\, u_j - r_j^{(i)} +1, \, 0), \, 1\right).
 \end{equation}
 
-This empirical copula has a low complexity (see \citealt{rose_2015}) and efficient results for large samples \citep{gonzalez_2021_checkerboard_copula}, however, its variance is comparable to the empirical copula for small-sized samples \citep{segers_2017}. 
+This empirical copula has a low complexity (see \citealp{rose_2015}) and efficient results for large samples \citep{gonzalez_2021_checkerboard_copula}, however, its variance is comparable to the empirical copula for small-sized samples \citep{segers_2017}. 
 It is proven to be a genuine copula and its asymptotic behavior was studied by various authors such as \citet{li_1998_checkerboard,genest_2017_asymptotic_checkerboard}. 
 In the following, an approximation of the empirical copula with Bernstein polynomials is presented. 
 
@@ -238,14 +238,14 @@ The Bernstein polynomials approximate $f$ such that $\lim_{m\to\infty} B_{m}(f) 
 %------------------------------------------------------------%
 Copulas are continuous and bounded functions defined on a compact set (the unit hypercube). 
 Therefore, they are good candidates to be approximated by Bernstein polynomials. 
-The Bernstein approximation applied on an empirical copula $C_n$ was introduced as \emph{empirical Bernstein copula} (EBC) by \cite{sancetta_satchell_2004} for applications in economics and risk management: 
+The Bernstein approximation applied on an empirical copula $C_n$ was introduced as \emph{empirical Bernstein copula} (\abv{ebc}) by \cite{sancetta_satchell_2004} for applications in economics and risk management: 
 \begin{equation}
     B_{\bm}(C_n)(\bu) = \sum_{t_1=0}^{m_1} \dots \sum_{t_d=0}^{m_d} C_n\left(\frac{t_1}{m_1}, \dots, \frac{t_d}{m_d}\right) \prod_{j=1}^d b_{m_j, t_j}(u_j) \, , \quad  \bu = (u_1, \dots, u_d) \in [0, 1]^d.
     \label{eq:ebc}
 \end{equation}
 In this expression, the evaluations of the empirical copula on the vertices of the grid are smoothed by the product of Bernstein polynomials. 
 A respective approximation of the copula density can be directly expressed by deriving the previous formula. 
-The EBC delivers a genuine copula, if and only if all the polynomial degrees $\{m_j\}_{j=1}^d$ are divisors of $n$ (see \citealt{segers_2017}, Proposition 2.5). 
+The EBC delivers a genuine copula, if and only if all the polynomial degrees $\{m_j\}_{j=1}^d$ are divisors of $n$ (see \citealp{segers_2017}, Proposition 2.5). 
 
 In the particular case of regular grids, $\{m_j=m\}_{j=1}^d$, the EBC can be expressed as a mixture of beta distributions \citep{segers_2017}. 
 Let us consider an $n$-sized rank sample, $\bR=(\br_1, \dots, \br_d) \in \N^{n}$, and the degree $m$ taken as divisor of $n$. 
@@ -280,7 +280,7 @@ The seminal work of \citet{sancetta_satchell_2004} proves in Theorem 3 that:
     \item The optimal polynomial order in terms of AMISE is\footnotemark: $m \lesssim m_{\mathrm{AIMSE}} = n^{2/(d+4)}, \forall u_j \in \left]0, 1\right[$.    
 \end{itemize}
 \footnotetext{The sign $\lesssim$ stands for ``less than or approximately''.}
-To illustrate the previous theorem, \fig{fig:hmise} represents the evolution of the $m_{\mathrm{AMISE}}$ for different dimensions and sample sizes (adapted from \citealt{lasserre_2022}). 
+To illustrate the previous theorem, \fig{fig:hmise} represents the evolution of the $m_{\mathrm{AMISE}}$ for different dimensions and sample sizes (adapted from \citealp{lasserre_2022}). 
 In medium dimension, the values of $m_{\mathrm{IMSE}}$ tend towards one, which is equivalent to the independent copula. 
 Therefore, high-dimensional problems should rather be divided into a product of smaller problems on which the EBC is tractable.
 
@@ -291,7 +291,7 @@ Therefore, high-dimensional problems should rather be divided into a product of 
     \label{fig:hmise}
 \end{figure}
 
-The polynomial order for EBC estimation is still a bottleneck that was studied over the years by different authors (see e.g., \citealt{janssen_2012_ebc,bouezmarni_2013_EBC_convergence,rose_2015,segers_2017}).  
+The polynomial order for EBC estimation is still a bottleneck that was studied over the years by different authors (see e.g., \citealp{janssen_2012_ebc,bouezmarni_2013_EBC_convergence,rose_2015,segers_2017}).  
 Meanwhile, other nonparametric approaches such as the ``penalized Bernstein'' and the ``penalized B-spline'' estimators were compared to the EBC and vine copulas in a benchmark realized by \citet{nagler_2017}. 
 The results showed that the most performant methods vary depending on the problem studied (for different dimensions, sample sizes, and strength of dependence). 
 Regarding tail dependence modeling, nonparametric approaches are generally limited, but recent contributions introduced Bootstrap procedures to better this aspect \citep{kiriliouk_2021_resampling}.
@@ -299,7 +299,7 @@ Regarding tail dependence modeling, nonparametric approaches are generally limit
 
 \subsubsection{Illustrative example on a Clayton copula}
 %------------------------------------------------------------%
-Let us consider a bivariate Clayton copula $C$ with parameter $\theta=2.5$ (see \citealt{nelsen_2006_copulas})
+Let us consider a bivariate Clayton copula $C$ with parameter $\theta=2.5$ (see \citealp{nelsen_2006_copulas})
 A Monte Carlo sample with size $n=10$ is generated on it, which is then used to build an empirical copula $C_n$ as defined in \eq{eq:empirical_copula}. 
 \fig{fig:ebc_illustration} (a) illustrates the empirical copula corresponding to the sample, with the shade of grey matching the CDF values. 
 Then, the Bernstein approximation of the empirical copula (i.e., the EBC)  is represented in \fig{fig:ebc_illustration} (b), (c), (d) according to the \eq{eq:ebc}. 
@@ -457,8 +457,8 @@ Metocean conditions have been long studied in coastal and offshore engineering.
 Inferring multivariate probabilistic models on metocean data became essential in wind energy. 
 
 Numerous approaches are proposed in the literature to fit a model on environmental data. 
-Among them, let us mention the use of parametric methods as the conditional modeling (e.g., \citealt{bitner_2015_joint,vanem_fekhari_2023}), or the construction of vine copulas (e.g., \citealt{vanem_2016,montes_2016_cvines_metocean,lin_2019_cvines_waves}). 
-Nonparametric methods as the KDE were also applied in this context (e.g., \citealt{han_2018_kde_metocean}). 
+Among them, let us mention the use of parametric methods as the conditional modeling (e.g., \citealp{bitner_2015_joint,vanem_fekhari_2023}), or the construction of vine copulas (e.g., \citealp{vanem_2016,montes_2016_cvines_metocean,lin_2019_cvines_waves}). 
+Nonparametric methods as the KDE were also applied in this context (e.g., \citealp{han_2018_kde_metocean}). 
 The nonparametric techniques generally struggle to model the distributions' tails, even if the tails are essential to qualify structures for ultimate events. 
 However, they are highly flexible and often easier to implement than parametric methods.
 

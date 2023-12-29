@@ -59,7 +59,7 @@ When the goal is to assess the quality of a model learned using a known training
 As this chapter shows, test sets built in this manner do enable a good assessment of the quality of models learned with the training set if the observed residuals are appropriately weighted. 
 Moreover, the incremental augmentation of a design can be useful when the assessed model turns out to be of poor quality, or when an additional computational budget is available after a first study~\citep{sheraz17,shang_apley_2020}. 
 Different empirical strategies have been proposed for incremental space-filling design \citep{ioobou10,crolae11,lilu17}, which basically entail the addition of new points in the zones poorly covered by the current design. 
-\citet{shang_apley_2020} have recently proposed an improvement of the CADEX algorithm, called the ``fully-sequential space-filling'' (FSSF) design. 
+\citet{shang_apley_2020} have recently proposed an improvement of the CADEX algorithm, called the ``fully-sequential space-filling'' (\abv{fssf}) design. 
 \citet{NogalesPR2021} also proposed an improved version of such design enforcing boundary avoidance. 
 Although they are developed for different purposes, nested space-filling designs~\citep{qiaai09} and sliced space-filling designs~\citep{qiawu09} can also be used to build sequential designs. 
 
@@ -645,7 +645,7 @@ In contrast with \citet{josvak21}, the observations $y(\bx^{(i)})$, $i=1,\ldots,
 
 An ML model is fitted to the training data, and the data collected on the test set are used to assess the predictivity of the model. 
 The influence of the ratio $r_n=n/N=1-m/N$ on the quality assessment is investigated. 
-Random Cross-Validation (RCV) is also considered, where $n$ points are chosen at random among the $N$ points of the dataset: for each $n$, there are $N \choose n$ possible choices, and $R=1\,000$ designs were randomly selected among them. 
+Random Cross-Validation (\abv{rcv}) is also considered, where $n$ points are chosen at random among the $N$ points of the dataset: for each $n$, there are $N \choose n$ possible choices, and $R=1\,000$ designs were randomly selected among them. 
 A model is fitted on the $m$ complementary points ($m=N-n$), which yields an empirical distribution of $Q^2$ values for each ratio $n/N$ considered. 
 
 %============================================================%
@@ -685,7 +685,7 @@ The screened dataset only includes $10$ influential inputs, over which the candi
 The marginal distributions are shown as histograms along the axes of the plots.
 
 To include RCV in the methods to be compared, many (here, $R=1\,000$) different models $\eta_m$ must be constructed for each considered design size $m$. 
-Since Gaussian Process regression proved to be too expensive for this purpose, the comparatively cheaper Partial Least Squares (PLS) method \citep{wolsjo01} is used. 
+Since Gaussian Process regression proved to be too expensive for this purpose, the comparatively cheaper Partial Least Squares (\abv{pls}) method \citep{wolsjo01} is used. 
 For each given training set, the model obtained is a sum of monomials in the 10 input variables. 
 Note that models constructed with different training sets may involve different monomials and have different numbers of monomial terms. 
 

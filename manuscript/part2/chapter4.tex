@@ -199,7 +199,7 @@ It gives a synthetic and empirical decomposition of the dataset that was impleme
 \end{figure}
 
 On \fig{fig:envi_pairplot}, a large sample $\iS \subset \iD_{\bX}$ (with size $N=10^4$) is randomly drawn from the entire Teesside data (with size $N_{\mathrm{Teesside}} = 2\times 10^5$), and plotted in grey. 
-In the same figure, the orange matrix plot is a subsample of the sample $\iS$, selected by kernel herding, a method minimizing some discrepancy measure with the sample $\iS$ that will be presented in Section~\ref{sec:sec43}). 
+In the same figure, the orange matrix plot is a subsample of the sample $\iS$, selected by kernel herding, a method minimizing some discrepancy measure with the sample $\iS$ that will be presented in Section~\ref{sec:sec43}. 
 For this example, generating the kernel herding subsample takes under one minute, which is negligible compared with the simulation time of OWT models. 
 Visually, this orange subsample seems to be representative of the original sample both in terms of marginal distributions and dependence structure. 
 In the following study, the large samples $\iS$ will be considered as an empirical representation of the distribution of the random vector $\bX \in \iD_{\bX}$, with probability density function $f_{\bX}$, and called \textit{candidate set}. 
@@ -247,7 +247,7 @@ The present section recalls the main concepts but fatigue assessment is further 
 The foundation and the tower of an OWT are a succession of tubes with various sections connected by bolted or welded joints. 
 Our work focuses on the welded joints at the mudline level, identified as a critical area for the structure. 
 This hypothesis is confirmed in the literature by different contributions, see e.g., the results of \citet{muller_cheng_2018} in Figure 12, or \citet{katsikogiannis_2021_owt_fatigue}. 
-At the top of the turbine, the fatigue is commonly studied at the blade root, which was not studied here since the blades in composite material have different properties (see e.g., \cite{dimitrov_2013}). 
+At the top of the turbine, the fatigue is commonly studied at the blade root, which was not studied here since the blades in composite material have different properties (see e.g., \citealp{dimitrov_2013}). 
 Note that the OWT simulations provide outputs allowing us to similarly study any node along the structure (without any additional computational effort).
 
 To compute fatigue in a welded joint, the external circle of the welding ring is discretized for a few azimuth angles $\theta \in \R_+$ (see the red points in the monopile cross-section on the right in \fig{fig:wind_wave_roses}). 
@@ -280,7 +280,7 @@ As defined by the DNV standards for OWT fatigue design \citep{dnv_fatigue_2016},
 \end{equation}
 
 To get a preview of the distribution of this output random variable $g_{i, \theta}(\bX)$, a histogram of a large Monte Carlo simulation ($N_{\mathrm{ref}}=2000$) is represented in \fig{fig:histo_mc} (with a log scale). 
-In this case, the log-damage histogram presents a little asymmetry but it is frequently modeled by a normal distribution (see e.g., \citet{teixeira_2019}). 
+In this case, the log-damage histogram presents a little asymmetry but it is frequently modeled by a normal distribution (see e.g., \citealp{teixeira_2019}). 
 
 \begin{figure}[!h]
 \begin{center}
@@ -355,10 +355,10 @@ In this manuscript, the MMD was employed as a tool for statistical testing and q
 Herin, the MMD is used to build a quadrature rule by sampling from a known measure. 
 In other words, to quantize a known target measure $\pi$ by a design sample $\bX_n$. 
 For practical reasons, the design construction is done sequentially. 
-Sequential strategies have also been used to learn and validate regression models for statistical learning (see \cite{fekhari_iooss_2023}). 
+Sequential strategies have also been used to learn and validate regression models for statistical learning (see \citealp{fekhari_iooss_2023}). 
 Moreover, since each realization is supposed to be obtained at the same unitary cost, the quadrature weights are first fixed as uniform during the construction of the design $\bX_n$.
 
-\emph{Kernel herding} (KH), proposed by \cite{chen_welling_2010}, is a sampling method that offers a quantization of the measure $\pi$ by minimizing a squared MMD when adding points iteratively. 
+\emph{Kernel herding} (\abv{kh}), proposed by \cite{chen_welling_2010}, is a sampling method that offers a quantization of the measure $\pi$ by minimizing a squared MMD when adding points iteratively. 
 With a current design $\bX_n$ and its corresponding discrete distribution with uniform weights $\zeta_n= \frac{1}{n} \sum_{i=1}^{n} \delta(\bx^{(i)})$, a KH iteration is as an optimization of the following criterion, selecting the point $\bx^{(n+1)} \in \iD_{\bX}$:
 \begin{align}
    \bx^{(n+1)} \in \argmin_{\bx \in \iD_{\bX}} \left\{\MMD\left(\pi, \frac{1}{n+1} \left(\delta(\bx) + \sum_{i=1}^{n} \delta(\bx^{(i)})\right)\right)^2\right\}.
@@ -367,7 +367,7 @@ With a current design $\bX_n$ and its corresponding discrete distribution with u
 \end{align}
 
 In the literature, two formulations of this optimization problem can be found. 
-The first one uses the Frank-Wolfe algorithm (or ``conditional gradient algorithm'') to compute a linearization of the problem under the convexity hypothesis (see \cite{lacoste_2015} and \cite{briol_2015} for more details). 
+The first one uses the Frank-Wolfe algorithm (or ``conditional gradient algorithm'') to compute a linearization of the problem under the convexity hypothesis (see \citealp{lacoste_2015} and \citealp{briol_2015} for more details). 
 The second one is a straightforward greedy optimization. Due to the combinatorial complexity, the greedy formulation is tractable for sequential construction only. 
 Let us develop the MMD criterion from \eq{eq:mmd_design}:
 \begin{subequations}
@@ -416,7 +416,7 @@ This second configuration is practical when the analyst must include some charac
 As explained previously, choosing the kernel defines the function space on which the worst-case function is found (see \eq{eq:mmd_c4}). 
 Therefore, this sampling method is sensitive to the kernel's choice. 
 A kernel is defined, both by the choice of its parametric family (e.g., Matérn, squared exponential) and the choice of its tuning. 
-The so-called ``support points'' method developed by \cite{mak_joseph_2018} is a special case of kernel herding that uses the characteristic and parameter-free ``energy-distance'' kernel (introduced by \cite{szekely_rizzo_2013}). 
+The so-called ``support points'' method developed by \cite{mak_joseph_2018} is a special case of kernel herding that uses the characteristic and parameter-free ``energy-distance'' kernel (introduced by \citealp{szekely_rizzo_2013}). 
 In the following numerical experiments, the energy-distance kernel will be compared with an isotropic tensor product of a Matérn kernel (with regularity parameter $\nu = 5/2$ and correlation lengths $\theta_i$), or a squared exponential kernel (with correlation lengths $\theta_i$) defined in Table \ref{tab:kernels}. 
 Since the Matérn and squared exponential kernels are widely used for Gaussian process regression \citep{rasmussen_2006}, they were naturally picked to challenge the energy-distance kernel. 
 The correlation lengths for the squared exponential and Matérn kernels are set using the heuristic given in \cite{fekhari_iooss_2023}, $\theta_i = n^{-1/d}, i \in \{1, \dots, d\}$. 
@@ -439,7 +439,7 @@ The correlation lengths for the squared exponential and Matérn kernels are set 
 
 \fig{fig:kernels} represents the covariance structure of the three kernels. 
 One can notice that the squared exponential and Matérn $\nu = 5/2$ kernels are closer to one another than they are to the energy-distance. 
-In fact, as $\nu$ tends to infinity, the Matérn kernel tends toward the squared exponential kernel (which has infinitely differentiable sample paths, see \cite{rasmussen_2006}). 
+In fact, as $\nu$ tends to infinity, the Matérn kernel tends toward the squared exponential kernel (which has infinitely differentiable sample paths, see \citealp{rasmussen_2006}). 
 For these two stationary kernels, the correlation length controls how fast the correlation between two points decreases as their distance from one another increases. 
 
 Meanwhile, the energy distance is not stationary (but still positive and semi-definite). 
@@ -485,14 +485,14 @@ To solve a probabilistic integration problem, the concept of Bayesian quadrature
 \paragraph{Gaussian processes for Bayesian quadrature}%------%
 
 Kernel methods and Gaussian processes present a lot of connections and equivalences, thoroughly reviewed by \cite{motonobu_2018}. 
-In numerical integration, Gaussian processes have been used to build quadrature rules in the seminal paper of \cite{ohagan_1991}, introducing the concept of \emph{Bayesian quadrature} (BQ). 
+In numerical integration, Gaussian processes have been used to build quadrature rules in the seminal paper of \cite{ohagan_1991}, introducing the concept of \emph{Bayesian quadrature} (\abv{bq}). 
 Let us recall the probabilistic integration problem $I_\pi(g) = \int_{\iD_\bX} g(\bx) \dd \pi(\bx)$ (stated in \eq{eq:quadrature_rule}). 
 From a general point of view, this quantity could be generalized by composing $g$ with another function $\psi$ (e.g., other moments, quantiles, exceedance probabilities). 
 The quantity of interest then becomes, $I_\pi(\psi(g))$, for example when $\psi$ is a monomial, it gives a moment of the output distribution.
 
 Let us assume, adopting a Bayesian point of view, that $G$ is a stochastic process describing the uncertainty affecting the knowledge about the true function $g$. 
 Let $G$ be a Gaussian process (GP) prior with a zero trend (denoted by $\textbf{0}$) to ease the calculation, and a stationary covariance kernel (denoted by $k(\cdot, \cdot)$). 
-The conditional posterior $G_n := (G | \by_n) \sim \GP(\eta_n, s_n^2)$ has been conditioned on the function observations $\by_n = \left[g\left(\bx^{(1)}\right), \ldots, g\left(\bx^{(n)}\right)\right]\TT$ computed from the input design $\bX_n$ and is fully defined by the well-known ``Kriging equations'' (see e.g., \cite{rasmussen_2006}):
+The conditional posterior $G_n := (G | \by_n) \sim \GP(\eta_n, s_n^2)$ has been conditioned on the function observations $\by_n = \left[g\left(\bx^{(1)}\right), \ldots, g\left(\bx^{(n)}\right)\right]\TT$ computed from the input design $\bX_n$ and is fully defined by the well-known ``Kriging equations'' (see e.g., \citealp{rasmussen_2006}):
 \begin{equation}
     \left\{
     \begin{array}{ll}
@@ -529,7 +529,7 @@ This plot was inspired by the paper of \cite{husar_duvenaud_2012}.
 \paragraph{Optimal weights computed by Bayesian quadrature}%---------------------%
 Taking the random process $G_n$ as Gaussian conveniently implies that its posterior distribution $a_\pi(G_n)$ is also Gaussian. 
 This comes from the linearity of the infinite sum of realizations of a Gaussian process. 
-The posterior distribution is described in a closed form through its mean and variance by applying Fubini's theorem (see the supplementary materials from \cite{briol_oates_2019} for the proof regarding the variance): 
+The posterior distribution is described in a closed form through its mean and variance by applying Fubini's theorem (see the supplementary materials from \citealp{briol_oates_2019} for the proof regarding the variance): 
 \begin{equation}
      \overline{y}_n^{\mathrm{BQ}} := \E\left[I_{\pi}(G_n) | \by_n \right] 
      = \int_{\iD_\bX} \eta_n(\bx) \dd \pi(\bx)
@@ -569,22 +569,22 @@ In the following numerical experiments, the expression with a hypothesis of cons
 
 \paragraph{Variance-based Bayesian quadrature rule}%----------------%
 The link between the posterior variance and the squared MMD has been first made by \cite{husar_duvenaud_2012} in their Proposition 1: the expected variance in the Bayesian quadrature $\var\left(I_{\pi}(G_n)\right)$ is the MMD between the target distribution $\pi$ and $\zeta_n = \sum_{i=1}^n \wBQ^{(i)} \delta(\bx^{(i)})$. 
-The proof is reproduced below (as well as in Proposition 6.1 from \cite{motonobu_2018}): 
+The proof is reproduced below (as well as in Proposition 6.1 from \citealp{motonobu_2018}): 
 \begin{subequations}
 \begin{align}
     \var\left(I_{\pi}(G_n)\right) &= \E\left[ \left(I_{\pi}(G_n) - I_{\zeta_n}(G_n)\right)^2\right]\\
-    &= \E\left[ \left( \left\langle G_n, P_{\pi} \right\rangle_{\iH(k)} - \left\langle G_n, P_{\zeta_n}\right\rangle_{\iH(k)} \right)^2\right]\\
-    &= \E\left[ \left\langle G_n, P_{\pi} - P_{\zeta_n} \right\rangle_{\iH(k)}^2\right]\\
+    &= \E\left[ \left( \left\langle G_n, P_{\pi} \right\rangle_{\iH(k)} - \left\langle G_n, P_{\zeta_n}\right\rangle_{\iH(k)} \right)^2\right]\\ \label{eq:bq_v1}
+    &= \E\left[ \left\langle G_n, P_{\pi} - P_{\zeta_n} \right\rangle_{\iH(k)}^2\right]\\ \label{eq:bq_v2}
     %&= \E\left[ \lVert G_n \lVert^2 + \lVert P_{\pi}(\bx) - P_{\zeta_n}(\bx) \lVert^2 - 2 \left\langle G_n, P_{\pi}(\bx) - P_{\zeta_n}(\bx) \right\rangle_{\iH(k)}\right]\\
     &= \lVert P_{\pi} - P_{\zeta_n} \lVert^2_{\iH(k)}\\ 
     &= \MMD(\pi, \zeta_n)^2.
 \end{align}
 \end{subequations}
-Note that the transition from equation (27c) to (27d) relies on the property stating that if $G$ is a standard Gaussian process then $\forall g \in \iH(k) : \left\langle G, g \right\rangle_{\iH(k)} \sim \iN(0, \lVert g \lVert^2_{\iH(k)}$). 
-The method that sequentially builds a quadrature rule by minimizing this variance is called by the authors ``Sequential Bayesian Quadrature'' (SBQ). 
+Note that the transition from equation \eq{eq:bq_v1} to \eq{eq:bq_v2} relies on the property stating that if $G$ is a standard Gaussian process then $\forall g \in \iH(k) : \left\langle G, g \right\rangle_{\iH(k)} \sim \iN(0, \lVert g \lVert^2_{\iH(k)}$). 
+The method that sequentially builds a quadrature rule by minimizing this variance is called by the authors ``sequential Bayesian quadrature''. 
 According to the previous proof, this criterion can be seen as an optimally-weighted version of the kernel herding criterion, as stated in the title of the paper from \cite{husar_duvenaud_2012}. 
 Later, \cite{briol_2015} proved the weak convergence of $I_{\pi}(G_n)$ towards the target integral. 
-Closer to wind turbine applications, \cite{huchet_2019} and \cite{huchet_mattrand_2019} introduced the ``Adaptive Kriging Damage Assessment'' method: a Kriging-based method for mean damage estimation that is very close to SBQ. 
+Closer to wind turbine applications, \cite{huchet_2019} and \cite{huchet_mattrand_2019} introduced the ``Adaptive Kriging Damage Assessment'' method: a Kriging-based method for mean damage estimation that is very close to sequential Bayesian quadrature. 
 However, This type of method inherits the limits from both KH and BQ since it searches for optimal design points among a candidate set and computes an inverse variance-covariance matrix. 
 These numerical operations both scale hardly in high dimension. 
 
@@ -710,7 +710,7 @@ This workflow simply estimates the mean damage by computing an arithmetic averag
 Alternatively, one can respectively fit a joint distribution and sample from it. 
 In our case, this distribution is only known empirically via the candidate set. 
 Since its dependence structure is complex (see \fig{fig:envi_pairplot}), a parametric method might fit the distribution poorly (and therefore lead to a poor estimation of the quantity). 
-Then, a nonparametric fit using the empirical Bernstein copula (introduced in Section~\ref{sec:4ebc}) coupled with a kernel density estimation on each marginal is applied to the candidate set (with the EBC parameter $m=100 > m_{\mbox{MISE}}$ to avoid bias, see \citet{lasserre_2022} p.117). 
+Then, a nonparametric fit using the empirical Bernstein copula (introduced in Section~\ref{sec:4ebc}) coupled with a kernel density estimation on each marginal is applied to the candidate set (with the EBC parameter $m=100 > m_{\mbox{MISE}}$ to avoid bias, see \citealp[p.117]{lasserre_2022}). 
 The sampling on this hybrid joint distribution is realized with a quasi-Monte Carlo method. 
 A Sobol' low-discrepancy sequence generates a uniform sample in the unit hypercube, which can then be transformed according to a target distribution. 
 Remember that quasi-Monte Carlo sampling is also sensitive to the choice of a low-discrepancy sequence, each presenting different properties (e.g., Sobol', Halton, Faure, etc.). 

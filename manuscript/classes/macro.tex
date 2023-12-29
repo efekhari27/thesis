@@ -4,6 +4,7 @@
 \usepackage[french,english]{babel}
 \selectlanguage{english}
 \usepackage[dvipsnames,table]{xcolor}
+\usepackage[acronym,toc]{glossaries}
 \usepackage{bbm}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
@@ -12,7 +13,6 @@
 \usetikzlibrary{arrows.meta, arrows, calc, shapes.geometric, backgrounds, fit, positioning, matrix, scopes}
 \usepackage{array}
 \usepackage{footnote}
-\usepackage[acronym]{glossaries}
 \usepackage{cancel}
 \usepackage{listings}%including code
 \usepackage{pifont}
@@ -35,9 +35,6 @@
   {20pt}
   {\thispagestyle{epigraph}}
 \makeatother
-
-
-
 
 % ******************************************************************************
 % ********************************* COMMANDS ***********************************
@@ -98,7 +95,8 @@
   before skip=\topsep,
   after skip=\topsep,
   }
-  
+
+\newcommand{\abv}[1]{\acrshort*{#1}}
 
 
 % ******************************************************************************
@@ -226,11 +224,8 @@
 
 % ******************************************************************************
 % ********************************* Acronyms ***********************************
-\newacronym{UQ}{UQ}{Ucerainty Quantification}
-\newacronym{OWT}{OWT}{Offshore Wind Turbine}
-\newacronym{FOWT}{FOWT}{Floating Offshore Wind Turbine}
 
-\makeglossaries
+
 
 % ******************************************************************************
 % ********************************* Listings ***********************************
