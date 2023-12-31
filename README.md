@@ -1,4 +1,5 @@
 # PhD thesis manuscript :mortar_board:
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 General repository of the following PhD thesis in Computer Science:
 
@@ -11,11 +12,11 @@ This repository is divided into two folders:
 
 :open_file_folder: **manuscript**: containing the LaTex sources of the manuscript.
 
-:open_file_folder: **numerical_experiments**: holding the Python/OpenTURNS code generating most figures from the manuscript. 
+:open_file_folder: **numerical_experiments**: holding the Python/OpenTURNS code generating some figures from the manuscript. 
 
 ## Related publications :newspaper: 
 
-:newspaper: E. Fekhari, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). "Model predictivity assessment: incremental test-set selection and accuracy evaluation". In: *Studies in Theoretical and Applied Statistics*, pages 315--347. Springer.
+:newspaper: E. Fekhari, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). "Model predictivity assessment: incremental test-set selection and accuracy evaluation". In: *Studies in Theoretical and Applied Statistics*, pages 315-347. Springer.
 
 :newspaper: E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2023). "Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature". In: *Data-Centric Engineering*, to appear.
 
@@ -25,7 +26,7 @@ This repository is divided into two folders:
 
 :newspaper: E. Vanem, E. Fekhari, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2023). "A joint probability distribution model for multivariate wind and wave conditions". In: *Proceedings of the ASME 2023 42th International Conference on Ocean, Offshore and Arctic Engineering (OMAE 2023)*, Melbourne, Australia. 
 
-:newspaper: A. Lovera, E. Fekhari, B. Jézéquel, M. Dupoiron, M. Guiton and E. Ardillon (2023). ``Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis". In: *Journal of Physics: Conference Series (WAKE 2023)*, Visby, Sweden.
+:newspaper: A. Lovera, E. Fekhari, B. Jézéquel, M. Dupoiron, M. Guiton and E. Ardillon (2023). "Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis". In: *Journal of Physics: Conference Series (WAKE 2023)*, Visby, Sweden.
 
 :newspaper: E. Vanem, Ø. Lande and E. Fekhari, (2024, to appear). "A simulation study on the usefulness of the Bernstein copula for statistical modeling of metocean variables". In: *Proceedings of the ASME 2024 43th International Conference on Ocean, Offshore and Arctic Engineering*.
 

@@ -6,13 +6,11 @@
 %*******************************************************************************
 
 This appendix recalls the main methods to infer a univariate distribution considering a $n$-sized i.i.d. sample $X_n = \left\{x^{(1)}, \dots, x^{(n)}\right\} \in \R^{n}$. 
-The goal is to use this finite set of observations of the random variable $X$ to approach its underlying distribution by an estimated distribution.
-The inference techniques are split into two main groups, the methods assuming that the underlying distribution belongs to a family of parametric distributions are called parametric. 
-Otherwise, the fitting method falls into the nonparametric group. 
-Nonparametric methods often require a larger amount of data but allow more flexibility. 
-In fact, nontrivial distributions (e.g., multimodal) might be easier to model using nonparametric approaches.
-To assess the quality of this estimation regarding the sample, a panel of goodness-of-fit methods are proposed \elias{add ref}, this appendix recalls a few of them. 
-Note that the following tools can be used to estimate the marginals of a multivariate distribution.
+Inference techniques are split into two main groups, the parametric ones assuming that the underlying distribution belongs to a parametric distribution, and the nonparametric ones otherwise. 
+In general, nonparametric methods require a large amount of data but allow more flexibility. 
+In practice, nontrivial distributions (e.g., multimodal) might be easier to model using nonparametric approaches.
+
+To assess the quality of this inference, a panel of goodness-of-fit methods are proposed \citep{saporta_2006}, this appendix recalls a few of them. 
 
 %============================================================%
 %============================================================%
@@ -23,44 +21,41 @@ Note that the following tools can be used to estimate the marginals of a multiva
 %============================================================%
 \subsection*{Moments method}
 %============================================================%
-The moment's method aims at looking for a parametric distribution with density $f_X(\btheta)$, whose first moments (e.g., $m(\btheta)$ and $\sigma^2(\btheta)$) match 
+The moment's method looks for a parametric distribution with density $f_X(\btheta)$, whose first moments (e.g., $m(\btheta)$ and $\sigma^2(\btheta)$) match 
 the empirical moments of the sample $X_n$ (e.g., $\what{m}_{X_n}$ and $\what{\sigma}^2$). After computing the empirical moments: 
 \begin{equation}
     \what{m}_{n} = \frac1n \sum_{i=1}^{n} x^{(i)}, \qquad \what{\sigma}^2_n = \frac{1}{n-1} \sum_{i=1}^{n} \left(x^{(i)} - \what{m}_{X_n}\right)^2,
 \end{equation} 
 one can solve the system of equations $\left(m(\btheta) = \what{m}_{n}; \ \sigma^2(\btheta) = \what{\sigma}_n^2\right)$ to determine the optimal set of parameters $\btheta$ in this situation. 
-Some families of distributions are more suited to this method (i.e., ) because of the analytical expression of their moments. 
-Moreover, this technique is sensitive to the possible biases in the estimation of the sample moments.
+Note that some families of distributions might be more suited to this method because of the analytical expression of their moments. 
+However, this technique is sensitive to the possible biases in the estimation of the sample moments.
 
 %============================================================%
 \subsection*{Maximum likelihood estimation}
 %============================================================%
 Maximum likelihood estimation (MLE) is a popular alternative to the moments method. 
-Similarly, it aims at maximizing a given correspondence metric between the dataset $X_n$ and a parametric distribution with density $f_X(\btheta)$.
+Similarly, maximizes a given correspondence metric between the dataset $X_n$ and a parametric distribution with density $f_X(\btheta)$.
 This metric is the \textit{likelihood} function, defined as:
 \begin{equation}
     \mathcal{L}(\btheta|X_n) = \prod_{i=1}^{n} f_X(x^{(i)}; \btheta), 
 \end{equation}
-with the PDF taking the set of parameters $\btheta$ written: $f_X(x^{(i)}; \btheta)$. For numerical reasons, the optimization is often performed on the natural logarithm of the likelihood function, called \textit{log-likelihood}. 
+with the PDF taking the set of parameters $\btheta$ written: $f_X(x^{(i)}; \btheta)$. 
+For numerical reasons, the optimization is often performed on the natural logarithm of the likelihood function, called \textit{log-likelihood}. 
 The goal is then finding the optimal vector $\what{\btheta}^*$ of parameters minimizing the following expression: 
 \begin{equation}
     \what{\btheta}^* = \argmin_{\btheta \in \iD_{\btheta}} \left(-\sum_{i=1}^{n} \ln(f_X(x^{(i)}; \btheta)) \right).
 \end{equation}
 
-Remark that the quick analytical results from the moment method can be used as a starting point of the MLE optimization. 
-\elias{Asymptotic behaviors of this method are described in: add ref}
-\elias{This method can be applied to censored data in the field of survival analysis. Add ref}
+\fig{fig:MLE} illustrates the MLE by considering the fit of two distinct Weibull distributions w.r.t. a small set of observations $X_n = \{1, 2, 3, 4, 6\}$ (represented by the black bars on the x-axis).
+Note that the quick analytical results from the moment method can be used as a starting point of the MLE optimization. 
 
-\begin{example}
-    \label{ex:mle}
-    Considering a small set of observations $X_n = \{1, 2, 3, 4, 6\}$, the following figure xx represents 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.5\textwidth]{../numerical_experiments/chapter1/figures/MLE.png}
-        \caption{Adequation of two different Weibull models using their likelihood with a sample of observations (black crosses). }
-        \label{fig:MLE}
-    \end{figure}
-\end{example}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../numerical_experiments/chapter1/figures/MLE.png}
+    \caption{Adequation of two different Weibull models using their likelihood with a sample of observations (black crosses).}
+    \label{fig:MLE}
+\end{figure}
 
 
 %============================================================%
@@ -80,10 +75,7 @@ The empirical CDF is a cumulative stair-shaped representation of the sorted samp
 
 A histogram consists of sorting and gathering the observations in a sample $X_n$ into a finite number of categories. 
 These categories are called bins and each regroups the same number of observations (identical binwidth). 
-The number of bins is the only tunning parameter of this method. 
-Its definition has a great impact on the visual consistency of the plot, therefore, many rules exist to define it.
-Note that the empirical CDF can be seen as a cumulative histogram with the number of bins equal to the number of observations.
-
+The number of bins is the only tuning parameter of this method.
 
 %============================================================%
 \subsection*{Kernel density estimation}
@@ -94,19 +86,17 @@ After setting a kernel $k: \R \rightarrow \R_+$ and a scaling parameter $h>0$, a
     \what{f}_X(x) = \frac{1}{n h}\sum_{i=1}^{n} k\left(\frac{x - x^{(i)}}{h}\right)
 \end{equation}
 
-Different types of kernels are used for KDE, such as the uniform, triangular, squared exponential or Epachnikov. 
+Different types of kernels are used for KDE, such as the standard normal, triangular, Epachnikov or uniform. 
 The choice of bandwidth results in a bias-variance trade-off, that has been extensively discussed in the literature \citep{wand_jones_1994_kde}.
+\fig{fig:KDE} illustrates the KDE for three different scaling parameters $h\in\{0.1, 0.2, 0.4\}$ applied on a set of observations (represented by the black bars on the x-axis). 
 
-\begin{example}
-    \label{ex:kde}
-    Considering a small set of observations $X_n = \{1, 2, 3, 4, 6\}$, the following figure xx represents three fits obtained by. 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.5\textwidth]{../numerical_experiments/chapter1/figures/KDE.png}
-        \caption{Fit of a bimodal density by KDE using different tuning parameters.}
-        \label{fig:KDE}
-    \end{figure}
-\end{example}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../numerical_experiments/chapter1/figures/KDE.png}
+    \caption{Fit of a bimodal density by KDE using different tuning parameters.}
+    \label{fig:KDE}
+\end{figure}
+
 
 %============================================================%
 %============================================================%
@@ -119,9 +109,8 @@ The choice of bandwidth results in a bias-variance trade-off, that has been exte
 %============================================================%
 Two quantitative goodness-of-fit criteria are commonly used to assess parametric inference: the \textit{Akaike information criterion} (AIC) and the \textit{Bayesian information criterion} (BIC). 
 The likelihood as a goodness-of-fit criterion should only be applied to the same family of distributions. 
-Otherwise, the comparison would unfairly advantage distributions with a large number of degrees of freedom.
+Otherwise, the comparison would unfairly advantage distributions with many degrees of freedom.
 The two following criteria are metrics based on the likelihood with a correction related to the number of degrees of freedom of the distribution. 
-Moreover, let us remember that more flexible models will require more data to provide a robust estimation. 
 
 The AIC and BIC are expressed as follows:
 \begin{equation}
@@ -134,7 +123,7 @@ The best inference will be given by the model with the smallest AIC or BIC.
 Note that an additional correction can be applied in a small data context.
 
 %============================================================%
-\subsection*{Kolmogorov-Smirnov adequacy test}
+%\subsection*{Kolmogorov-Smirnov adequacy test}
 %============================================================%
 
 
@@ -147,12 +136,13 @@ The quantile-quantile plot (also called QQ-plot) is a graphical tool providing a
 It compares the CDF of the fitted model with the empirical CDF of the sample $X_n$.
 To do so, it represents a scatterplot of the empirical quantiles (i.e., the ranked observations), against the quantiles of the fitted model at the levels 
 $\left\{\alpha^{(i)}\right\}_{i=1}^n = \left\{\what{F}_X(x^{(i)})\right\}_{i=1}^n$.
-The following \fig{fig:qqplot_kde} is a QQ-plot of the model fitted in \elias{Example xx}. The closer the scatter plot gets to the first bisector line the better the fit is.
+The following \fig{fig:qqplot_kde} is a QQ-plot of the KDE model fitted in \fig{fig:KDE}. 
+The closer the scatter plot gets to the first bisector line the better the fit is.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\textwidth]{../numerical_experiments/chapter1/figures/qqplot.png}
-    \caption{QQ-plot between the data from Example \ref{ex:kde} and a KDE model.}
+    \caption{QQ-plot between the data from \fig{fig:KDE} and a KDE model.}
     \label{fig:qqplot_kde}
 \end{figure}
 

@@ -5,14 +5,11 @@
 \label{apx:D}
 %*******************************************************************************
 
-
-\elias{Add short introduction to the motivation}
-
-\elias{Should I print the results?}
+The present Appendix presents minimalistic Python/\ot examples implementing some of the uncertainty quantification methods presented in Chapter~\ref{chpt:1}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/copulas.ipynb}{Bivariate distribution}]
-    The following Python code proposes a minimalistic \ot example of a probabilistic uncertainty modeling. 
+\begin{otexample_apx}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/copulas.ipynb}{Bivariate distribution}]
+    Definition of a probabilistic uncertainty model. 
     \lstset{style=mystyle, language=python}
 %
 \begin{lstlisting}
@@ -30,12 +27,12 @@
     a_quantile=distribution.computeQuantile([0.9])# alpha=0.9
 \end{lstlisting}
 %
-\end{otexample}
+\end{otexample_apx}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/integration.ipynb}{Numerical integration}]
-    The following Python code presents a minimalistic \ot example to build multivariate quadrature rules.
+\begin{otexample_apx}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/integration.ipynb}{Numerical integration}]
+    Construction of multivariate quadrature rules.
 %
 \lstset{style=mystyle, language=python}
 \begin{lstlisting}
@@ -56,14 +53,13 @@
     qmc_nodes=qmc_experiment.generate()
 \end{lstlisting}
 %
-\end{otexample}
+\end{otexample_apx}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/designofexperiments.ipynb}{Design of experiments}]
-    The following Python code is a minimalistic \ot example to build an LHS and 
-    an LHS optimized w.r.t. to a space-filling metric (here the L2-centered discrepancy) using the simulated annealing algorithm. 
+\begin{otexample_apx}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/designofexperiments.ipynb}{Design of experiments}]
+    Construction of LHS and optimized LHS w.r.t. to a space-filling metric (e.g., L2-centered discrepancy) by simulated annealing algorithm. 
     \lstset{style=mystyle, language=python}
 %
 \begin{lstlisting}
@@ -84,17 +80,15 @@
     LHS_design=LHS_opt.getResult().getOptimalDesign()
 \end{lstlisting}
 %
-\end{otexample}
+\end{otexample_apx}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/reliability.ipynb}{Rare event estimation}]
-    The following Python code proposes a minimalistic \ot implementation of rare event estimation algorithms. 
+\begin{otexample_apx}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/reliability.ipynb}{Rare event estimation}]
+    Estimation of rare events with various methods. 
     \lstset{style=mystyle, language=python}
 %
 \begin{lstlisting}
-    #!/usr/bin/python3
     import openturns as ot
     marginals=[ot.Normal(0.0, 1.0), ot.Exponential(1.0)]
     distribution=ot.ComposedDistribution(marginals)
@@ -102,8 +96,7 @@
     g=ot.SymbolicFunction(["x1", "x2"], ["(x1 - x2) ^ 2"])
     X=ot.RandomVector(distribution)
     Y=ot.CompositeRandomVector(g, X)
-    th=0.0
-    failure_event=ot.ThresholdEvent(Y, ot.LessOrEqual(), th)
+    failure_event=ot.ThresholdEvent(Y, ot.LessOrEqual(), 0.)
     # Estimate pf using FORM
     starting_p=distribution.getMean()
     FORM_algo=ot.FORM(ot.Cobyla(), failure_event, starting_p)
@@ -135,13 +128,13 @@
     SS_pf_confidence=SS_results.getConfidenceLength(0.95)
 \end{lstlisting}
 %
-\end{otexample}
+\end{otexample_apx}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/sensitivity_analysis.ipynb}{Sobol' indices}]
-    The following Python code gives a minimalistic \ot implementation of the Sobol' indices to assess global sensitivity analysis on the Ishigami analytical problem. 
+\begin{otexample_apx}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/sensitivity_analysis.ipynb}{Sobol' indices}]
+    Estimation of the Sobol' indices to assess global sensitivity analysis on the Ishigami analytical problem. 
     \lstset{style=mystyle, language=python}
 %
 \begin{lstlisting}
@@ -163,14 +156,14 @@
     sobol_tolal=SA.getTotalOrderIndices()
 \end{lstlisting}
 %
-\end{otexample}
+\end{otexample_apx}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/surrogates.ipynb}{Gaussian process regression}]
-    The following Python code gives a minimalistic \ot implementation of an ordinary kriging model fitting. 
+\begin{otexample_apx}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/surrogates.ipynb}{Gaussian process regression}]
+    Fit of an ordinary kriging model fitting. 
     \lstset{style=mystyle, language=python}
 %
 \begin{lstlisting}
@@ -187,5 +180,5 @@
     kriging_predictor=kriging_results.getMetaModel()
 \end{lstlisting}
 %
-\end{otexample}
+\end{otexample_apx}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

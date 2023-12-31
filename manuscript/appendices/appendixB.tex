@@ -5,7 +5,8 @@
 \label{apx:B}
 %*******************************************************************************
 
-Beyond the discrepancy measure to the uniform distribution, this section introduces different dissimilarity measures between probability distributions. 
+Beyond the discrepancy measure to the uniform distribution presented in Section~\ref{sec:central_propagation}, this Appendix introduces two families of measures commonly used to quantify the dissimilarity between probability distributions.  
+
 
 %============================================================%
 %============================================================%
@@ -13,13 +14,19 @@ Beyond the discrepancy measure to the uniform distribution, this section introdu
 %============================================================%
 %============================================================%
 
-\elias{General definition}
+\begin{itemize}
+    \item General definition
+    \item Different examples depending on the function choosen
+    \item Link between KL and mutual information
+    \item Problems generated in the estimation
+    \item Further explainations 
+\end{itemize}
 
-\elias{Numerous examples depending on the function choosen: see the book culte}
+\begin{itemize}
+    \item Links between f-div and IPM (check its references): https://www.jmlr.org/papers/volume22/20-867/20-867.pdf
+    \item Book including a presentation of f-divs: https://www.routledge.com/Statistical-Inference-The-Minimum-Distance-Approach/Basu-Shioya-Park/p/book/9781032477633
+\end{itemize}
 
-\elias{Link between KL and mutual information}
-\elias{Further inputs in the review from Rahman, maybe some in the PhD subject from A.Dutfoy.}
-\elias{Problems generated in the estimation}
 
 %============================================================%
 %============================================================%
@@ -27,17 +34,21 @@ Beyond the discrepancy measure to the uniform distribution, this section introdu
 %============================================================%
 %============================================================%
 
-\elias{general definition}
-
-\elias{Numerous examples see the book culte}
-
-\elias{No closed form expression unlike the $f$-divergence but the use of RKHS goes around this issue.}
+\begin{itemize}
+    \item General definition 
+    \item Different examples, see Book culte + on the estimation of IPMs: https://doi.org/10.1214/12-EJS722
+    \item No closed form expression unlike the $f$-divergence but the use of RKHS goes around this issue.
+    \item A particular focus is put on a kernel-based distance: the MMD.
+\end{itemize}
 
 
 
 %------------------------------------------------------------%
 \subsection*{Kernel discrepancy}
 %------------------------------------------------------------%
+
+\elias{Rewrite transitions / Change notation of $\mu$ / add points after each paragraphs}
+
 Quasi-Monte Carlo sampling methods widely rely on a uniformity metric, called \textit{discrepancy}. 
 This section first presents the link between discrepancy and numerical integration. 
 Then it introduces a kernel-based discrepancy, generalizing the concept to non-uniform measures. 
@@ -134,11 +145,10 @@ Taking a discrete distribution with uniform weights $\zeta_n= \frac{1}{n} \sum_{
 
 
 
-
-
 %============================================================%
 \subsection*{Maximum discrepancy measure}
 %============================================================%
+\elias{This paragraph is redundant with the previous one and should be removed}
 
 A metric of discrepancy between distributions is introduced as the \emph{maximum mean discrepancy} (MMD). 
 This distance between two probability distributions $\mu$ and $\zeta$ is defined as the worst-case error for any function within a unit ball of a function space $\iH$:
@@ -169,7 +179,7 @@ The reproducing property from the RKHS allows to express the squared MMD as expe
     \MMD_k(\mu, \zeta)^2 = \int_{\iD_{\bX}} P_{\mu}(\bx)\, \dd\mu(\bx) - 2 \int_{\iD_{\bX}} P_{\mu}(\bx) \, \dd\zeta(\bx) + \int_{\iD_{\bX}} P_{\zeta}(\bx)\, \dd\zeta(\bx).
 \end{equation}
 
-\elias{Add a sentence on estimation}
+\elias{Add a sentence on estimation maybe including the paper from Sriperumbudur 2012}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

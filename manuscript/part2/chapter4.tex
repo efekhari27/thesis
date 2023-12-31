@@ -112,7 +112,7 @@ As for the waves, they are modeled in DIEGO using a JONSWAP spectrum (named afte
 The considered use case here consists of a DIEGO model of a Siemens SWT 2.3MW bottom-fixed turbine on a monopile foundation (see the datasheet in Table \ref{tab:owt_datasheet}), currently operating in Teesside, UK (see the wind farm layout and wind turbine diagram in \fig{fig:teesside_layout}). 
 Although wind farms are subject to the wake effect, affecting the behavior and performance of some turbines in the farm, this phenomenon is not considered in this chapter. 
 To avoid numerical perturbations and reach the stability of the dynamical system, our simulation period is extended to 1000 seconds and the first 400 seconds are cropped in the post-processing step. 
-This chained OWT numerical simulation model has been deployed on an EDF R\&D HPC facility to benefit from parallel computing speed up (a single simulation on one CPU takes around 20 minutes).
+This chained OWT numerical simulation model has been deployed on an EDF R\&D HPC facility to benefit from parallel computing speed up (a single simulation on one \abv{cpu} takes around 20 minutes).
 
 \footnotetext{In English, ``Integrated Dynamics of Wind Turbines and Offshore Generators''.}
 
@@ -256,8 +256,8 @@ According to \cite{li_zhan_2020} and our own experience, the most critical azimu
 Looking at these illustrations, the wind and wave conditions have a very dominant orientation, which is explained by the closeness of the wind farm to the shore. 
 Then, it is assumed that azimuth angles in these directions will be more solicited, leading to higher fatigue damage. 
 To assess fatigue damage, rainflow counting \citep{dowling_1972} first identifies the stress cycles and their respective amplitudes (using the implementation of the ASTM E1049-85 rainflow cycle counting algorithm from the Python package \texttt{rainflow}\footnote{\href{https://github.com/iamlikeme/rainflow}{https://github.com/iamlikeme/rainflow}}). 
-For each identified stress cycle of amplitude, $s \in \R_+$, the so-called ``Stress vs. Number of cycles'' curve (also called the ``SN curve'' or ``W\"ohler curve'') allows one to estimate the number $N_{\mathrm{c}}$ of similar stress cycles necessary to reach fatigue ruin. 
-The SN curve, denoted by $W(\cdot)$ is an affine function in the log-log scale with slope $-m$ and y-intercept $a$:
+For each identified stress cycle of amplitude, $s \in \R_+$, the so-called ``Stress vs. Number of cycles'' curve (also called the ``S-N curve'' or ``W\"ohler curve'') allows one to estimate the number $N_{\mathrm{c}}$ of similar stress cycles necessary to reach fatigue ruin. 
+The S-N curve, denoted by $W(\cdot)$ is an affine function in the log-log scale with slope $-m$ and y-intercept $a$:
 \begin{equation}
     N_{\mathrm{c}}(s) = a s^{-m}, \, a\in\R_+, \, m\in\R_+.
     \label{eq:wohler}
