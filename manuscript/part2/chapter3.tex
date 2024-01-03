@@ -34,7 +34,7 @@ Extreme value theory develops specific methods to model the far tails of distrib
 Modeling the tails is not the priority in the present work since the focus is on mean fatigue estimation.   
 
 The environmental random variables studied present different particularities. 
-First, an offshore wind turbine project leads to the collection of an important amount of metocean data (possibly merged with data from mesoscale simulations). 
+First, an offshore wind turbine project leads to the collection of an large amount of metocean data (possibly merged with data from mesoscale simulations). 
 Second, their dependence structure is complex, making the probabilistic modeling more complicated. 
 
 This chapter explores different aspects of the environmental conditions' uncertainty quantification. 
@@ -43,7 +43,7 @@ A semiparametric approach is applied to the South Brittany data, mixing parametr
 To visually analyze multivariate distributions, the \textit{copulogram} is a new tool that decomposes the marginal effects and the dependence structure of a joint distribution. 
 
 At the scale of a wind farm, each turbine perceives different metocean conditions as the wake of other turbines creates wind perturbations. 
-To study this perturbation, an engineering wake model (see Section~\ref{sec:222}) was used to obtain one perturbed environmental distribution per turbine. 
+To study this perturbation, an engineering wake model (see Subsection~\ref{sec:222}) was used to obtain one perturbed environmental distribution per turbine. 
 This work applies a kernel-based discrepancy (the maximum mean discrepancy) to compare wake-induced perturbations. 
 In a second phase, this discrepancy is used to gather wind turbines perceiving similar perturbations. 
 This clustering can be used to perform uncertainty propagation at the farm scale by considering a few turbines with are representative of a cluster. 
@@ -365,7 +365,7 @@ Altogether, this matrix plot became known as the ``scatter plot of matrices'' (S
 
 However, the linear correlation coefficient is known to give a poor description of the dependence in nonlinear cases. 
 When analyzing a continuous sample $\bX_n \sim \bX$, the Sklar theorem states that the dependence structure within the random vector $\bX$ has a unique expression with its $d$-copula $C$. 
-As mentioned in Section~\ref{sec:copula_prelims}, the component-wise normalized ranks of the original sample $\bX_n$ define the empirical copula density $c_n$ (converging towards $C$ as $n$ increases).
+As mentioned in Subsection~\ref{sec:copula_prelims}, the component-wise normalized ranks of the original sample $\bX_n$ define the empirical copula density $c_n$ (converging towards $C$ as $n$ increases).
 
 To the best of our knowledge, the \textit{copulogram} is a new multivariate data visualization tool improving the SPLOM by representing the empirical copula density $c_n$ on the upper triangle of the matrix plot. 
 This plot is an empirical decomposition of a multivariate sample in the vein of the Sklar theorem between marginals on the diagonal and copula on the upper triangle.
@@ -548,7 +548,7 @@ A joint distribution $\what{F}_\bX$ is then build using $\bX_n$, by combining th
 \begin{equation}
     \what{F}_\bX(\bx) = B_{\bm}(C_n)\left(\what{F}_{X_1}(x_1), \dots, \what{F}_{X_d}(x_d)\right).
 \end{equation}
-Where $\what{F_{X_j}}$ stand for the model of the marginal $j$, just inferred in Section~\ref{sec:marginal_inference}. 
+Where $\what{F_{X_j}}$ stand for the model of the marginal $j$, just inferred in Subsection~\ref{sec:marginal_inference}. 
 While $C_n$ is the empirical copula associated with the sample $\bX_n$, and all the polynomial orders of the EBC are equal, $\bm = \{m, \dots, m\}, m\in\N$.
 
 Then, one could compare a sample $\what{\bX_n}$, generated from the fitted joint distribution $\what{F}_\bX$, with the learning set $\bX_n$. 
@@ -617,7 +617,7 @@ The author recommends using nonparametric copulas when the marginals are well-be
 After defining a probabilistic model based on ambient metocean data, the present section studies the impact of the wake on the wind conditions within a farm. 
 The wake arises from extracting kinetic energy from the wind, leading to a decrease in wind speed and an increase in turbulence downstream of the turbines. 
 In a wind farm, the wake mostly depends on the turbines' layout, the ambient wind speed, and the ambient turbulence intensity. 
-The resulting heterogeneous wind field in a wind farm can be simulated by numerical models with different fidelities (as discussed in Section~\ref{sec:222}). 
+The resulting heterogeneous wind field in a wind farm can be simulated by numerical models with different fidelities (as discussed in Subsection~\ref{sec:222}). 
 
 In our case, simplified wake models (sometimes called ``dynamic wake meandering'', or ``engineering'' models, see e.g., \citealp{doubrawa_2020_benchmark}) are used to simulate the wind speed deficit and the added turbulence at each turbine.
 To recover a wake-perturbed wind distribution at each turbine, the ambient wind distribution is propagated through a wake model. 

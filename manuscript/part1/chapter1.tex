@@ -27,7 +27,7 @@ Section~\ref{sec:uq} presents a classification of the input uncertainties and th
 Section~\ref{sec:central_propagation} and \ref{sec:reliability} introduce various methods to propagate the input uncertainties through the numerical model for different purposes; 
 Section~\ref{sec:gsa} presents the main inverse methods to perform sensitivity analysis in our framework; 
 Finally, Section~\ref{sec:surrogate} introduces the concept of surrogate models to emulate a model by realizing statistical learning on a limited dataset.
-Additionally, numerical examples of the important methods are implemented during this chapter using \texttt{OpenTURNS}, a Python package for uncertainty quantification.    
+Additionally, numerical examples of the notable methods are implemented during this chapter using \texttt{OpenTURNS}, a Python package for uncertainty quantification.    
 
 
 \paragraph*{\href{https://openturns.github.io/www/}{\textbf{\texttt{OpenTURNS}}}\footnotemark.} 
@@ -71,7 +71,7 @@ Let us then define the following numerical model $\iM$, with its respective inpu
 \end{equation}
 
 Unlike the typical machine learning input-output dataset framework, the UQ analyst can simulate the output image of any inputs (in the input domain), using a numerical model. 
-However, numerical simulations often come with an important computational cost. 
+However, numerical simulations often come with a large computational cost. 
 Therefore, UQ methods should be efficient and require as few simulations as possible. 
 In this context, surrogate models (or metamodels) are statistical approximations of the costly numerical model, that can be used to perform tractable UQ. 
 Surrogate models are built and validated on a limited number of simulations (in a \textit{supervised learning} framework). 
@@ -94,7 +94,7 @@ The analyst should construct a list of uncertain inputs as exhaustive as possibl
 Even if these uncertainties might have different origins, they should all be considered jointly in the UQ study. 
 Numerous authors proposed to classify them for practical purposes into two groups:
 \begin{itemize}
-    \item \textbf{aleatory uncertainty} regroups the uncertainties arising from natural randomness (e.g., wind turbulence). 
+    \item \textbf{aleatory uncertainty} regroups the uncertainties arising from natural randomness (e.g., soil properties). 
     From a risk management point of view, these uncertainties are qualified as \textit{irreducible} since the industrials facing them will not be able to acquire additional information to reduce them (e.g., additional measures).     
     \item \textbf{epistemic uncertainty} gathers the uncertainties resulting from a lack of knowledge (e.g., material properties). 
     Contrarily to the aleatory ones, epistemic uncertainties might be reduced by investigating their origin (often at a certain cost). 
@@ -264,7 +264,7 @@ Conversely, the copula can be defined by using the joint CDF and the marginal CD
 \end{equation}
 This equation allows us to extract a copula from a joint distribution by knowing its marginals.
 Additionally, copulas are invariant under increasing transformations. 
-This property is important to understand the use of rank transformation to display the copula without the marginal effects.     
+This property is essential to understand the use of rank transformation to display the copula without the marginal effects.     
 
 Identically to the univariate continuous distributions, a large catalog of families of copulas exists (e.g., independent, Normal, Clayton, Frank, Gumbel copula, etc.). 
 Note that the independent copula $\Pi$ implies that the distribution is defined as the product of its marginals $\Pi = \prod_{j=1}^d u_j$. 
@@ -962,7 +962,7 @@ However, this added complexity implies the computation of Hessian matrices, whic
 \end{figure}
 
 
-When the MPFP is not unique, the application of these methods might lead to important errors. 
+When the MPFP is not unique, the application of these methods might lead to large errors. 
 From a geometrical point of view, having more than one MPFP means that more than one failure zone is at the same Euclidean distance of the origin. 
 Applying a FORM or SORM resolution in this particular case leads to the estimation of only one of the failure areas. 
 The \textit{muti-FORM} algorithm (see \citet{derkiureghian_1998}) prevents this situation by applying successive FORM. 
@@ -983,7 +983,7 @@ For this reason, they have been widely used in the practical context of limited 
 \citet{straub_2014_fatigue_form} illustrates the efficiency of FORM approaches on industrial cases such as probabilistic fatigue damage. 
 However, these methods present serious limits as the dimension increases (see the discussion in Chapter 1 from \citealp{chabridon_2018_thesis}). 
 Additionally, their main drawback is the lack of complementary information concerning the confidence of the results. 
-The textbook example illustrated in \fig{fig:multi_FORM} shows that the method might miss some important areas of the failure domain, leading to poor estimations. 
+The textbook example illustrated in \fig{fig:multi_FORM} shows that the method might miss some significant areas of the failure domain, leading to poor estimations. 
 As an alternative to approximation methods, simulation-based methods often provide the analyst with an assessment of the estimation's confidence. 
 
 
@@ -1495,7 +1495,7 @@ Chapter 5 of \citet{daveiga_iooss_2021} reviews four of these approaches.
 For example, \citet{mara_tarantola_2012} proposed two extra Sobol' indices, called ``full indices'', detecting the contributions associated with the inputs' dependence. 
 Note that the interpretation and estimation of this solution becomes complicated. 
 Moreover, unlike the independent case, the four Sobol' indices do not divide the output variance between the inputs. 
-Beyond Sobol' indices, another important GSA method was adapted from the theory of Shapley values by \citet{owen_2014_shapley}, allowing to work with dependent inputs.   
+Beyond Sobol' indices, another notable GSA method was adapted from the theory of Shapley values by \citet{owen_2014_shapley}, allowing to work with dependent inputs.   
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/sensitivity_analysis.ipynb}{Sobol' indices}]
@@ -1653,7 +1653,7 @@ generalized linear regression, polynomial chaos expansion (PCE) \citep{soize_200
 Gaussian processes (GP) \citep{rasmussen_2006}, low-rank tensor approximations \citep{grasedyck_2013}, and artificial neural network (ANN) \citep{tibshirani_2009}.
 The following section will provide a short focus on Gaussian process regression. %\elias{Add BST's table including names/shape/parameters/reference?}
 
-Validating the accuracy and precision of a surrogate model is an important step to guarantee its fidelity with regard to the numerical model. 
+Validating the accuracy and precision of a surrogate model is an crutial step to guarantee its fidelity with regard to the numerical model. 
 When an $m$-sized input-output set is dedicated to validating the surrogate model, independently of the learning set, 
 it is called \textit{test set} and denoted by $\left\{\bX_m, \by_m\right\} = \left\{\bx^{(i)}, g\left(\bx^{(i)}\right)\right\}_{i=1}^m$. 
 Note that the analyst may work in two different frameworks, affecting the regression and validation method's choice: 
@@ -1662,7 +1662,7 @@ Note that the analyst may work in two different frameworks, affecting the regres
     \item Computer experiment context: allowing to generate simulated data points (often at a certain cost).
 \end{itemize}
 
-Validating surrogate models in a small-data context appears to be an important challenge. 
+Validating surrogate models in a small-data context appears to be a challenge. 
 Different validation criteria and techniques exist. 
 The \textit{coefficient of validation}, denoted by $R^2$, is the first validation metric that can be directly computed on the learning set:
 \begin{equation}
@@ -1771,7 +1771,7 @@ where $\bk(\bx)$ is the column vector of the covariance kernel evaluations $[k(\
 variance-covariance matrix such that the $(i, j)$-element is $\left\{\bK \right\}_{i, j}=k(\bx^{(i)}, \bx^{(j)})$.
 
 In practice, the surrogate model is defined by the \textit{predictor} function $\eta_n(\cdot)$. 
-This regression model provides important complementary information with the \textit{kriging variance} $s_n^2(\bx)$, reaching zero at the learning points. 
+This regression model provides remarkable complementary information with the \textit{kriging variance} $s_n^2(\bx)$, reaching zero at the learning points. 
 Let us remark that the kriging variance fully depends on the covariance model (defined by its parametric structure and hyperparameters). 
 In practice, the hyperparameters are unknown, therefore, their estimation is a key step in the construction of a kriging model. 
 This estimation can be done using different approaches, most commonly using maximum likelihood estimation or cross-validation.
@@ -1947,7 +1947,7 @@ Such methods are relevant for models with a very high computational cost (typica
 
 In UQ, surrogate models are used for uncertainty propagation (step C) and inverse analysis (step C'). 
 Surrogate modeling is made difficult when the functions present discontinuities (or strong nonlinearities), high dimension, stochasticity, or nonscalar inputs or outputs. 
-To deal with high dimensional problems, unimportant inputs can be screened using sensitivity analysis (see Section~\ref{sec:screening}), otherwise, model order reduction methods might be used \citep{schilders_2008}. 
+To deal with high dimensional problems, unimportant inputs can be screened using sensitivity analysis (see Subsection~\ref{sec:screening}), otherwise, model order reduction methods might be used \citep{schilders_2008}. 
 When the function is stochastic, different approaches allow fitting the function and its intrinsic variability \citep{binois_2019_replication,baker_2022_stochastic_surrogates_review,zhu_2023_thesis}. 
 
 Provided a strict validation process, surrogate models are a great opportunity for uncertainty quantification. 

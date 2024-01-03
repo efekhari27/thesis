@@ -210,7 +210,7 @@ As examples of works that followed this path, one can mention the work of \citet
 
 
 For a similar purpose and to avoid some limits imposed by the parametric framework, 
-a nonparametric approach coupling empirical Bernstein copula fitting with kernel density estimation of the marginals is proposed in subSection~\ref{sec:4ebc}.
+a nonparametric approach coupling empirical Bernstein copula fitting with kernel density estimation of the marginals is proposed in Subsection~\ref{sec:4ebc}.
 
 
 %------------------------------------------------------------%
@@ -242,7 +242,7 @@ As discussed in Chapter~\ref{chpt:3}, this method is sensitive to the chosen pol
 %------------------------------------------------------------%
 As described in \fig{fig:bloc_diagram}, a typical DIEGO simulation returns a 10-minute multiaxial stress time series at each node $i \in \N$ of the 1D meshed structure. 
 Since classical fatigue laws are established for uniaxial stresses, the first step is to compute one equivalent Von Mises stress time series at each structural node.
-The present section recalls the main concepts but fatigue assessment is further discussed in Section~\ref{sec:235}. 
+The present section recalls the main concepts but fatigue assessment is further discussed in Subsection~\ref{sec:235}. 
 
 The foundation and the tower of an OWT are a succession of tubes with various sections connected by bolted or welded joints. 
 Our work focuses on the welded joints at the mudline level, identified as a critical area for the structure. 
@@ -265,9 +265,9 @@ The S-N curve, denoted by $W(\cdot)$ is an affine function in the log-log scale 
 
 Finally, a usual approach to compute the damage is to aggregate the fatigue contribution of each stress cycle identified using Miner’s rule. 
 Damage occurring during a 10-minute operating time is simulated and then scaled up to the OWT lifetime. 
-More details regarding damage assessment and the W\"ohler curve used are available in Section 2.4.6 from \citep{dnv_fatigue_2016}. 
+More details regarding damage assessment and the W\"ohler curve used are available in \citet[Sec. 2.4.6]{dnv_fatigue_2016}. 
 For a realization $\bx \in \iD_{\bX}$ of environmental conditions, at a structural node $i$, an azimuth angle $\theta$; $k \in \N$ stress cycles of respective amplitude $\{s_{i, \theta}^{(j)}(\bx)\}_{j=1}^k$ are identified. 
-Then, Miner's rule (see Section~\ref{sec:235}) defines the damage function $g_{i, \theta}(\bx): \iD_{\bX} \rightarrow \R_+$ by:
+Then, Miner's rule (see Subsection~\ref{sec:235}) defines the damage function $g_{i, \theta}(\bx): \iD_{\bX} \rightarrow \R_+$ by:
 \begin{equation}
     g_{i, \theta}(\bx) = \sum_{j=1}^{k} \frac{1}{N_{\mathrm{c}}\left(s_{i, \theta}^{(j)}(\bx)\right)}.
     \label{eq:miner1}
@@ -710,7 +710,7 @@ This workflow simply estimates the mean damage by computing an arithmetic averag
 Alternatively, one can respectively fit a joint distribution and sample from it. 
 In our case, this distribution is only known empirically via the candidate set. 
 Since its dependence structure is complex (see \fig{fig:envi_pairplot}), a parametric method might fit the distribution poorly (and therefore lead to a poor estimation of the quantity). 
-Then, a nonparametric fit using the empirical Bernstein copula (introduced in Section~\ref{sec:4ebc}) coupled with a kernel density estimation on each marginal is applied to the candidate set (with the EBC parameter $m=100 > m_{\mbox{MISE}}$ to avoid bias, see \citealp[p.117]{lasserre_2022}). 
+Then, a nonparametric fit using the empirical Bernstein copula (introduced in Subsection~\ref{sec:4ebc}) coupled with a kernel density estimation on each marginal is applied to the candidate set (with the EBC parameter $m=100 > m_{\mbox{MISE}}$ to avoid bias, see \citealp[p.117]{lasserre_2022}). 
 The sampling on this hybrid joint distribution is realized with a quasi-Monte Carlo method. 
 A Sobol' low-discrepancy sequence generates a uniform sample in the unit hypercube, which can then be transformed according to a target distribution. 
 Remember that quasi-Monte Carlo sampling is also sensitive to the choice of a low-discrepancy sequence, each presenting different properties (e.g., Sobol', Halton, Faure, etc.). 

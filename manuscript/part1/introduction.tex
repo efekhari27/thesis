@@ -8,7 +8,7 @@
 \chaptermark{Introduction}
 %********************************** %First Section  **************************************
 
-
+\elias{Find a way to introduce HIPERWIND}
 %============================================================%
 %============================================================%
 \section*{Industrial context and motivation}
@@ -18,25 +18,25 @@
 The current challenge of energy transition involves, among other things, reducing the share of fossil fuels in the global electricity mix. 
 In this context, offshore wind energy offers several advantages \citep{eolien_en_mer_2022}. 
 Offshore energy benefits from more consistent winds than onshore, mainly due to the absence of terrain roughness, it also makes possible the installation of larger and more powerful wind turbines. 
-Since the construction of the first offshore wind farm in Vindeby, Denmark, in 1991, the industry has experienced rapid growth, with a total capacity of 56 GW in operation worldwide in 2021. 
+Since the construction of the first offshore wind farm in Vindeby, Denmark, in 1991, the industry has experienced rapid growth, with a total worldwide capacity of 56 GW in operation in 2021. 
 Over time, offshore wind technology has matured, resulting in significant achievements such as securing projects in Europe through ``zero-subsidy bids'' where the electricity produced is directly sold on the wholesale market \citep{eolien_en_mer_2022}. 
 
-However, despite the progress of this sector, scaling limitations and numerous scientific challenges emerge. 
-To meet ambitious national and regional development targets, the wind energy industry must address various scaling issues, including port logistics, the demand for critical natural resources, and sustainable end-of-life processes. 
-Furthermore, the field presents several scientific challenges that often involve coupling data with numerical simulations of physical systems and their surrounding environment. 
+However, despite the progress of this sector, scaling limitations and numerous scientific questions emerge. 
+To meet ambitious national and regional development targets, the wind energy industry must address various scaling issues, including port logistics, the critical demand for natural resources, and the lack of sustainable end-of-life processes. 
+Furthermore, the field presents scientific challenges that often involve coupling data with numerical simulations of physical systems and their surrounding environment. 
 The wind energy community is focused on different objectives, including enhancing the design of floating offshore wind turbines, refining wind resource estimation techniques, and optimizing maintenance operations. 
-In general, several decisions are made throughout the lifespan of a wind turbine by its designer, installer, and operator, all while having only partial knowledge of certain physical phenomena. 
-Therefore, modeling and controlling the various sources of uncertainties associated with offshore wind energy proved to be a key success factor in this highly competitive industry.
+In general, several decisions are made throughout the lifespan of a wind turbine by its designer, installer, and operator, with only partial knowledge about specific physical phenomena. 
+Therefore, modeling and controlling the various sources of uncertainty associated with offshore wind energy could become a key success factor in this highly competitive industry.
 %The design of an offshore wind farm depends on multiple site parameters such as the water depth, soil properties, wind, waves and current conditions, and the local community acceptance. 
 %Fortunately, international standards regulate this activity and provide general engineering guidelines. 
 
-Overall, the offshore wind industry needs methods for uncertainty management regarding safety margins and industrial asset management (at the component, wind turbine, and overall wind farm levels) \citep{OWT_review_2016}. 
-For wind project developers, the primary focus is on improving the wind potential assessment of candidate sites by combining various sources of information and modeling the multivariate distribution of environmental conditions. 
+Overall, the offshore wind industry needs methods for uncertainty management \citep{OWT_review_2016} regarding design safety margins and operational asset management (at the component, wind turbine, and overall wind farm levels). 
+For wind project developers, the primary focus is on improving the wind potential assessment of candidate geographic locations by combining various sources of information for modeling the multivariate distribution of environmental conditions. 
 In the case of floating wind projects, the goal is to incorporate a probabilistic aspect from the design phase (e.g., of the floaters) to define safer, more robust, and more cost-effective solutions.
 For wind farm owners, end-of-life management is another significant concern. 
-An owner of a wind farm at the end of its life has three options: extend the operational life of assets, replace current wind turbines with newer models, or decommission and sell the wind farm. 
-The first two options require evaluating the structural reliability and residual lifespan, with quantitative assessments reviewed by certification bodies and insurers to issue operating permits. 
-To provide rigorous risk assessments, the generic methodology of \textit{uncertainty quantification methodology} is a widely accepted approach in industrial sectors facing these types of issues \citep{rocquigny_2008,blanchard_2023}.
+An owner of a wind farm reaching its end of life has three options: \textit{(i)} extend the operational life of assets, \textit{(ii)} replace current wind turbines with newer models, \textit{(iii)} or decommission and sell the wind farm. 
+The first two options require evaluating the structural reliability and residual lifespan, with quantitative assessments reviewed by certification agencies and insurers to issue operating permits. 
+To provide a rigorous and quantitative risk assessment, the generic methodology know as the \textit{uncertainty quantification methodology} is a widely accepted approach in industrial sectors facing these types of issues \citep{rocquigny_2008,blanchard_2023}.
 
 
 
@@ -46,9 +46,9 @@ To provide rigorous risk assessments, the generic methodology of \textit{uncerta
 %============================================================%
 %============================================================%
 
-Computer experiment is a discipline that emerged with the advent of informatics. 
-This practice produces numerical models that allow the simulation of complex system behavior based on initial conditions defined by the analyst. 
-Numerical models quickly became essential for the analysis, design, and certification of complex systems in cases where experiments or physical measurements are too costly or even unfeasible. 
+The field of computer experiments emerged with the formidable increase of processing power that occurred in the past decades. 
+Numerical models can simulate complex system behavior based on initial conditions defined by the analyst. 
+They quickly became essential for the analysis, design, and certification of complex systems in cases where experiments or physical measurements are too costly or even unfeasible. 
 However, such numerical models are mostly deterministic: the reproducible result of a simulation is associated with a fixed input set of parameters. 
 The issue of managing uncertainties associated with these inputs arises when performing analysis with numerical models. 
 
@@ -65,10 +65,10 @@ Figure \ref{fig:UQ_methodo} illustrates the main steps of the generic uncertaint
     In this document, the numerical model is considered a black box, in contrast to approaches that are integrated within the numerical solution schemes for the system's behavioral equations (referred to as intrusive approaches \citealp{lemaitre_2010}). 
     Generally, these numerical models are first calibrated against measured data and pass a process of validation and verification to reduce modeling errors (see e.g., \citealp{oberkampf_2010_VVUQ,damblin_2015,carmassi_2018}).  
     \item \textbf{Step B -- Uncertainty modeling}: 
-    The objective of the second step is to identify and model all the sources of uncertainty related to the input variables. 
-    Most of the time the uncertainty modeling is done in the probabilistic framework.
+    The objective of the second step is to identify and model all sources of uncertainty related to the input variables. 
+    Most of the time uncertainty is modeled in the probabilistic framework.
     \item \textbf{Step C -- Uncertainty propagation}:
-    This step consists of propagating the uncertain inputs through the computer model.  
+    This step propagates the uncertain inputs through the computer model.  
     Consequently, the output of the numerical model (commonly scalar) also becomes uncertain. 
     The goal is to estimate a quantity of interest, which is a statistic related to the studied random output variable. 
     The uncertainty propagation method may differ depending on the quantity of interest targeted (e.g., central tendency, a quantile, a rare event probability, etc.).    
@@ -76,8 +76,8 @@ Figure \ref{fig:UQ_methodo} illustrates the main steps of the generic uncertaint
     In this additional step, a sensitivity analysis can be performed to study the role allocated to each uncertain input leading to the uncertain output. 
     \item \textbf{Metamodeling}: 
     Considering the high computational cost associated with some simulations, statistical approaches emulate these expensive simulators with a limited number of simulations. 
-    Uncertainty quantification can then be carried out using a ``surrogate model'' (or metamodel) for a reduced computational cost. 
-    This optional step of statistical learning is not strictly a part of uncertainty quantification, but it often proves to be essential for enabling its practical implementation.
+    Uncertainty quantification can then be carried out using a ``surrogate model'' (or metamodel) to reduce the computational cost. 
+    This optional step of statistical learning is not strictly a part of uncertainty quantification, but it often proves essential to its practical implementation.
 \end{itemize}
 
 
@@ -100,10 +100,10 @@ This thesis aims to adapt and apply the generic uncertainty quantification metho
 As such, this use case raises scientific challenges related to its specific characteristics, described in the following:
 \begin{itemize}
     \item The numerical model exploited in the present work consists of a series of numerical models executed sequentially. 
-    This chain is divided into three parts: first, a temporal and stochastic generation of wind and wave velocity fields, 
-    followed by the simulation of the coupled hydro-aero-servo-elastic behavior of the wind turbine, 
-    and finally a post-processing phase to obtain scalar quantities of interest, aggregated over the temporal outputs. 
-    \item The complexity of this simulator, along with the high unit computational cost (about 40 minutes per simulation), requires the use of efficient sampling methods and high-performance computing systems. 
+    This chain is divided into three parts: first, stochastic wind and wave velocity spatio-temporal fields are generated, 
+    then the coupled hydro-aero-servo-elastic behavior of the wind turbine is simulated, 
+    and finally these data are post-processed to obtain scalar quantities of interest. 
+    \item The complexity of this simulator, along with the high unit computational cost (about 40 minutes per simulation), requires efficient sampling methods and high-performance computing systems. 
     In addition to the complexity associated with the numerical model, modeling the input uncertainties also represents a challenge. 
     Indeed, the joint distribution associated with environmental conditions presents a complex dependence structure.   
     The quality of the inference step is critical as it directly impacts the conclusions of uncertainty propagation.
@@ -142,21 +142,21 @@ The one about rare event probabilities introduces usual methods from the field o
 
 This chapter also covers the main methods for global sensitivity analysis \citep{daveiga_iooss_2021}. 
 This field divides its methods into two major classes: screening methods and importance measures. 
-Screening techniques typically applied in high-dimensional problems, aim to identify variables with low impact on the variability of the output of interest. 
+Screening techniques are typically applied in high-dimensional problems and aim to identify variables with low impact on the variability of the output of interest. 
 Importance measures, on the other hand, quantitatively allocate, for each input variable, a share of the output variability, enabling the ranking of variables based on their influence.
 
 Finally, this chapter presents an overview of the families of metamodels commonly used in uncertainty quantification \citep{forrester_2008}. 
-Special attention is given to the Gaussian process regression, which involves conditioning a Gaussian process on a set of observations from the numerical model. 
+Special attention is given to Gaussian process regression, which involves conditioning a Gaussian process on a set of observations from the numerical model. 
 Once conditioned, the Gaussian process provides richer information than other types of metamodels. 
 This method simultaneously offers a surrogate model (mean of the Gaussian process, also called predictor) and an error function (variance of the process). 
 Some iterative methods (called ``active'') use this additional information to progressively enrich the metamodel and improve its predictability. 
 These techniques were quite successful in the 1990s for solving optimization problems with expensive functions \citep{jones_1998}. 
-Since then, their use has expanded to solve problems in structural reliability \cite{echard_2011}.
+Since then, their use has expanded to solve structural reliability problems \citep{echard_2011}.
 
 
 \paragraph{Chapter 2 -- Introduction to wind turbine modeling and design.} 
 %------------------------------------------------------------%
-The simulation of an offshore wind turbine involves modeling multiple physical aspects interacting with random environmental conditions. 
+Simulating an offshore wind turbine involves modeling multiple physical aspects interacting with random environmental conditions. 
 This chapter first introduces spectral methods used to generate wind and wave velocity fields by applying inverse Fourier transforms (e.g., as implemented in the TurbSim tool \citealp{turbsim_2009}). 
 These simulated wind velocity fields then become the inputs of a multi-physics wind turbine numerical model. 
 Such simulation includes simplified modeling of the interactions between fluids and structures (using the blade element momentum theory), dynamic modeling of the structure using flexible multibody methods, and modeling of wind turbine control systems [source]. 
@@ -175,7 +175,7 @@ and the random vector related to the system (e.g., controller wind misalignment 
 
 \paragraph{Chapter 3 -- Kernel-based uncertainty quantification.} 
 %------------------------------------------------------------%
-This chapter examines perturbations in environmental conditions within an offshore wind farm induced by wake effects \cite{larsen_2008_wake}. 
+This chapter examines perturbations in environmental conditions within an offshore wind farm induced by wake effects \citep{larsen_2008_wake}. 
 A theoretical offshore wind farm off the southern coast of Brittany is considered as a use case, and a simplified numerical model of wake in this wind farm is used. 
 This model provides an analytical prediction of the wind speed deficit and turbulence created by the wake, taking into account the influence of the floaters' positions due to rigid body dynamics. 
 
@@ -243,7 +243,7 @@ For each subset, a ROSA is carried out with a kernel-based importance measure ca
 %============================================================%
 %============================================================%
 
-Several implementations developed in this thesis are available on different platforms, allowing the reader to reproduce some numerical results in an open-data approach:  
+Several implementations developed in this thesis are available on multiple platforms, allowing the reader to reproduce some numerical results in an open-data approach:  
 
 \begin{center}
 \footnotesize

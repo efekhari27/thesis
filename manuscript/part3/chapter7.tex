@@ -20,7 +20,7 @@ Let us recall the usual approach to assess fatigue damage over the structure's l
 First, the lifetime duration $T$ is discretized into $N_T \in \N$ 10-minutes intervals $\{t^{(i)}\}_{i=1}^{N_T}$. 
 The 10-minutes duration results from the typical wind energy distribution (see \fig{fig:wind_psd}), presenting a ``short-term'' behavior (for turbulent wind with a return period below 10 minutes) and ``long-term'' behavior (otherwise).
 Then the environmental conditions can be considered as a stochastic process $\{\bX(t, \omega), \, t \in T, \, \omega \in \Omega\}$.% \elias{illustrated in \fig{fig:wind_long_short_term}}. 
-For a realization $\bX(t^{(i)}, \omega^{(r)})$ and a given set of parameters $z$ related to the system (defined in Table~\ref{tab:sys_variables}), one can perform a 10-minutes Turbsim-DIEGO simulation and post-process it (see Section~\ref{sec:235}) to obtain a corresponding cumulative damage:
+For a realization $\bX(t^{(i)}, \omega^{(r)})$ and a given set of parameters $z$ related to the system (defined in Table~\ref{tab:sys_variables}), one can perform a 10-minutes Turbsim-DIEGO simulation and post-process it (see Subsection~\ref{sec:235}) to obtain a corresponding cumulative damage:
 \begin{equation}
     d_{\mathrm{c}}^{10\mathrm{min.}}(\bX(t^{(i)}, \omega^{(r)})|Z=z). 
 \end{equation}
@@ -52,8 +52,8 @@ To do so, a perturbation-based approach called the \textit{perturbed-law based s
 
 The present chapter is structured as follows: 
 Section~\ref{sec:owt_surrogate} presents the construction of a surrogate model of $D(\cdot)$,
-then Section~\ref{sec:owt_ra} analyses the reliability of the monopile foundation of Teesside's turbine for a nominal distribution of $\bZ$, 
-and finally Section~\ref{sec:owt_robustness} proposes a robustness analysis of $\pf$ by perturbing the law of $\bZ$ and $D_{\mathrm{cr}}$.
+then Subsection~\ref{sec:owt_ra} analyses the reliability of the monopile foundation of Teesside's turbine for a nominal distribution of $\bZ$, 
+and finally Subsection~\ref{sec:owt_robustness} proposes a robustness analysis of $\pf$ by perturbing the law of $\bZ$ and $D_{\mathrm{cr}}$.
 
 %============================================================%
 %============================================================%
@@ -140,7 +140,7 @@ However, more points could be added to complete the learning set in regions with
 \begin{remark}
     ~
     \begin{itemize}
-        \item Active learning methods for reliability (see Section~\ref{sec:active_surrogates}) could be a great option for such costly function. 
+        \item Active learning methods for reliability (see Subsection~\ref{sec:active_surrogates}) could be a great option for such costly function. 
         However, the stochasticity of the function would disturb the learning criterion. Since the nonlinearities seem restricted to a small area, the present approach should be more robust. 
         \item Another approach could be to fit a stochastic surrogate \citep{binois_2019_replication,baker_2022_stochastic_surrogates_review,zhu_2023_thesis} on a learning set before averaging on the pseudo-random seed repetitions.  
     \end{itemize} 
@@ -197,7 +197,7 @@ Afterwards, the robustness of this reliability analysis is studied by applying p
 \subsection{Nominal reliability analysis}\label{sec:owt_ra}
 %============================================================%
 
-The surrogate model of the lifetime cumulative damage $\widetilde{D}$ is first modified to include the S-N curve uncertainty $\varepsilon$, defined in Section~\ref{sec:probabilistic_sn}:
+The surrogate model of the lifetime cumulative damage $\widetilde{D}$ is first modified to include the S-N curve uncertainty $\varepsilon$, defined in Subsection~\ref{sec:probabilistic_sn}:
 \begin{equation}
     \widetilde{D}'(\bz) = \widetilde{D}'(k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}, \varepsilon) = \frac1\varepsilon \, \widetilde{D}(k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}).
 \end{equation} 

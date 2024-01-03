@@ -4,7 +4,7 @@
 %*******************************************************************************
 %*******************************************************************************
 \cleardoublepage
-\chapter{Kernel-based surrogate models validation}
+\chapter{Kernel-based surrogate model validation}
 \label{chpt:5}
 %*******************************************************************************
 \hfill
@@ -94,7 +94,7 @@ Remember that the intersection between these two samples is empty, $\bX_m \cap \
 
 Let us denote by $\eta_m(\bx)$ the prediction at point $\bx$ of a model learned using $(\bX_m,\by_m)$ \citep{tibshirani_2009,rasmussen_2006}. 
 A classical measure for assessing the predictive ability of $\eta_m$, in order to evaluate its validity, is the \textit{predictivity coefficient}. 
-Considering the probability measure $\pi$ that weights how comparatively important it is to accurately predict $y$ over the different regions of $\iD_\bx$. 
+Considering the probability measure $\pi$ that weights how comparatively significant it is to accurately predict $y$ over the different regions of $\iD_\bx$. 
 For example, the input could be a random vector with a known distribution: in that case, this distribution would be a reasonable choice for $\pi$. 
 The true (i.e., ideal) value of the predictivity is defined as the following normalization of the Integrated Square Error (ISE): 
 \begin{equation}\label{eq:Q2th}
@@ -350,7 +350,7 @@ $P_{\pi_N}(\bx) = (1/N)\, \sum_{k=1}^N K(\bx, \bx'^{(k)})$, which gives
 \end{eqnarray*}
 When $K$ is the energy-distance kernel \eq{eq:kE} the greedy support points from \eq{eq:GreedySP} are recovered with a factor $1/i$ instead of $1/(i+1)$ in the second sum. 
 
-The candidate set $\iS$ in \eq{eq:KH} is arbitrary and can be chosen as in Section~\ref{sec:FSSF}. 
+The candidate set $\iS$ in \eq{eq:KH} is arbitrary and can be chosen as in Subsection~\ref{sec:FSSF}. 
 A neat advantage of kernel herding over support points is that the potential $P_{\pi}(\bx)$ is sometimes explicitly available. 
 When $\iS=\bX_N$, this avoids the need to calculate the $N(N-1)/2$ distances $\|\bx^{(i)}-\bx^{(j)}\|$ and thus allows application to very large sample sizes. 
 This is the case in particular when $\iD_\bx$ is the cross product of one-dimensional sets $\X_{x_i}$, $\iD_\bx=\X_{x_1}\times\cdots\times\X_{x_d}$, $\pi$ is the product of 
@@ -380,7 +380,7 @@ Figures~\ref{fig:uniform_validation_designs} and \ref{fig:normal_validation_desi
 All methods are applied to the same candidate set $\iS$. 
 
 The initial designs $\bX_m$ are chosen in the class of space-filling designs, well suited to initialize sequential learning strategies \citep{sanwil03}. 
-When $\pi$ is uniform, the initial design is a maximin Latin hypercube design (introduced in Section~\ref{sec:LHS}) with $m=10$ and the candidate set is given by the $N=2^{12}$ first points $\Sb_N$ of a Sobol sequence in $[0,1]$. 
+When $\pi$ is uniform, the initial design is a maximin Latin hypercube design (introduced in Subsection~\ref{sec:LHS}) with $m=10$ and the candidate set is given by the $N=2^{12}$ first points $\Sb_N$ of a Sobol sequence in $[0,1]$. 
 When $\pi$ is normal, the inverse probability transform method is first applied to $\Sb_N$ and $\bX_m$ (this does not raise any difficulty here as $\pi$ is the product of its marginals). 
 The candidate points $\iS$ are marked in gray on \fig{fig:uniform_validation_designs} and \fig{fig:normal_validation_designs} and the initial design is indicated by the red crosses. 
 The index $i$ of each added test point $\bx^{(m+i)}$ is indicated (the font size decreases with $i$). 
@@ -438,20 +438,20 @@ In the next section, these designs are used for estimating the quality of the pr
 \section{Numerical experiments I: construction of a training set and a test set}\label{sec:val_res1}
 %============================================================%
 %============================================================%
-This section presents numerical results obtained on three different test cases, in dimension 2 (test cases 1 and 2) and 8 (test case 3), for which $y(\bx)=f(\bx)$ with $f(\bx)$ has an easy to evaluate analytical expression, see Section \ref{sec:testCases}. 
+This section presents numerical results obtained on three different test cases, in dimension 2 (test cases 1 and 2) and 8 (test case 3), for which $y(\bx)=f(\bx)$ with $f(\bx)$ has an easy to evaluate analytical expression, see Subsection~\ref{sec:testCases}. 
 This allows a good estimation of $Q_\pi^2$ (see \eq{eq:Q2th}) by a large Monte Carlo sample (with size $M=10^6$), which will serve as a reference when assessing the performance of each of the other estimators. 
 
-The validation designs are built by FSSF, support points and kernel herding, presented in Sections~\ref{sec:FSSF}, \ref{sec:SP}, and \ref{sec:C5_KH}, 
-and the performances obtained are compared for each one, considering the uniform and the weighted estimator of Section~\ref{sec:weighting}. 
+The validation designs are built by FSSF, support points and kernel herding, presented in Subsections~\ref{sec:FSSF},~\ref{sec:SP}, and~\ref{sec:C5_KH}, 
+and the performances obtained are compared for each one, considering the uniform and the weighted estimator of Subsection~\ref{sec:weighting}. 
 
 %============================================================%
 \subsection{Test cases} \label{sec:testCases}
 %============================================================%
 
-The training design $\bX_m$ and the set $\iS$ of potential test set points are as in Section~\ref{sec:numerical-1}. 
+The training design $\bX_m$ and the set $\iS$ of potential test set points are as in Subsection~\ref{sec:numerical-1}. 
 For test cases 1 and 3, $\pi$ is the uniform measure on $\iD_\bx=[0,1]^d$, with $d=2$ and $d=8$, respectively; $\bX_m$ is a maximin Latin hypercube design in $\iD_\bx$, and $\iS$ corresponds to the first $N$ points $\Sb_N$ of Sobol' sequence in $\iD_\bx$, complemented by the $2^d$ vertices. 
-In the second test case, $d=2$, $\pi$ is the normal distribution $\SN(\0b,\Ib_2)$, and the sets $\bX_m$ and $\Sb_N$ must be transformed as explained in section \ref{sec:FSSF}. 
-There are $N=2^{14}$ candidate points for test cases 1 and 2 and $N=2^{15}$ for test case 3 (this value is rather moderate for a problem in dimension 8, but using a larger $N$ yields numerical difficulties for support points; see Section~\ref{sec:SP}). 
+In the second test case, $d=2$, $\pi$ is the normal distribution $\SN(\0b,\Ib_2)$, and the sets $\bX_m$ and $\Sb_N$ must be transformed as explained in Subsection~\ref{sec:FSSF}. 
+There are $N=2^{14}$ candidate points for test cases 1 and 2 and $N=2^{15}$ for test case 3 (this value is rather moderate for a problem in dimension 8, but using a larger $N$ yields numerical difficulties for support points; see Subsection~\ref{sec:SP}). 
 
 For each test case, a GP regression model is fitted to the $m$ observations using ordinary Kriging \citep{rasmussen_2006} (a GP model with constant mean), with an anisotropic Matérn kernel with regularity parameter $5/2$, and the correlation lengths $\theta_i$ are estimated by maximum likelihood via a truncated Newton algorithm. 
 All calculations were done using the Python package OpenTURNS for uncertainty quantification \citep{baudin_dutfoy_2017}. 
@@ -700,7 +700,7 @@ Consider RCV first. For each value of $r_n=n/N$, the empirical distribution of $
 Depending on $r_n$, three behaviors are roughly distinguished. 
 For $0.1 \leq r_n \lesssim 0.3$ the distribution is bi-modal, with the lower mode corresponding to unlucky test-set selections leading to poor performance evaluations. 
 When $0.3 \lesssim n/N \lesssim 0.7$, the distribution looks uni-modal, revealing a more stable performance evaluation. 
-Note that this is (partly) in line with the recommendations discussed in section \ref{sec:c5_intro}. 
+Note that this is (partly) in line with the recommendations discussed in Section~\ref{sec:c5_intro}. 
 For $r_n \gtrsim 0.7$, the variance of the distribution increases with $r_n$: many unlucky training sets lead to poor models. 
 Note that the median of the empirical distribution slowly decreases as $r_n$ increases, which is consistent with the intuition that the model predictivity should decrease when the size of the training set decreases. 
 
@@ -719,7 +719,7 @@ However, for $r_n \geq 0.5$, the dominance is reversed, support points estimatin
 As $r_n$ increases up to $r_n \lesssim 0.7$ the solid orange and blue curves crossover, and it is now $\widehat Q^2_n$ for kernel herding that approximates the RCV empirical median, while the value obtained with support points underestimates the predictivity index. 
 Also, note that for (irrealistic) very large values of $r_n$ both support points and kernel herding estimate lower $Q^2$ values, which are smaller than the median of the RCV estimates.
 
-Let us now focus on the effect of residual weighting, i.e., in estimators $Q_{n*}^2$ which use the weights computed by the method of Section~\ref{sec:weighting}, shown in dashed lines in Figure \ref{fig:cathareC2_benchmark}. 
+Let us now focus on the effect of residual weighting, i.e., in estimators $Q_{n*}^2$ which use the weights computed by the method of Subsection~\ref{sec:weighting}, shown in dashed lines in Figure \ref{fig:cathareC2_benchmark}. 
 First, note that while kernel herding weighting leads, as in the previous section, to higher estimates of the predictivity (compare solid and dashed blue lines), this is not the case for support points (solid and dashed orange curves), which, for small split ratios, produces smaller estimates when weighting is introduced. 
 In the large $r_n$ region, the behavior is consistent with what was previously presented, weighting inducing an increase of the estimated predictivity. 
 It is remarkable -- and rather surprising -- that $Q_{n*}^2$ for support points (the dashed orange line) does not present the discontinuity of the uncorrected curve. 
@@ -727,7 +727,7 @@ It is remarkable -- and rather surprising -- that $Q_{n*}^2$ for support points 
 The sum $\sum_{i=1}^n w_i^*$ of the optimal weights of support points and kernel herding \eq{Eq:weights} is shown in \fig{fig:catharec2_weights} (orange and blue curves, respectively). 
 The slow increase with $n/N$ of the sum of kernel-herding weights (blue line) is consistent with the increase of the volume of the input region around each validation point when the size of the training set decreases. 
 The behavior of the sum of weights is more difficult to interpret for support points (orange line) but is consistent with the behavior of $Q_{n*}^2$ on \fig{fig:cathareC2_benchmark}. 
-Note that the energy-distance kernel \eq{eq:kE} used for support points cannot be used for the weighting method of Section~\ref{sec:weighting} as $K_E$ is not positive definite but only conditionally positive definite. 
+Note that the energy-distance kernel \eq{eq:kE} used for support points cannot be used for the weighting method of Subsection~\ref{sec:weighting} as $K_E$ is not positive definite but only conditionally positive definite. 
 A full understanding of the observed curves would require a deeper analysis of the geometric characteristics of the designs generated by the two MMD methods, in particular of their interleaving with the training designs, which is not compatible with the space constraints of this manuscript. 
 
 While a number of unanswered points remain, in particular how deeply the behaviors observed may be affected by the poor predictivity resulting from the chosen PLS modeling methodology, the example presented in this section shows that the construction of test sets via MMD minimization and estimation of the predictivity index using the weighted estimator $Q_{n*}^2$ is promising as an efficient alternative to RCV: at a much lower computational cost, it builds performance estimates based on independent data the model developers may not have access to. 
@@ -771,7 +771,7 @@ At the same time, estimation by $Q_{n*}^2$ involves a much smaller computational
 
 To each of the design methods considered to select a test set a downside can be attached. 
 FSSF requires knowledge of the input distribution to be able to apply an iso-probabilistic transformation if necessary; it tends to select many points along the boundary of the candidate set considered. 
-Support points require the computation of the $N(N-1)/2$ distances between all pairs of candidate points, which implies important memory requirements for large $N$; the energy-distance kernel on which the method relies cannot be used for the weighting procedure. 
+Support points require the computation of the $N(N-1)/2$ distances between all pairs of candidate points, which implies significant memory requirements for large $N$; the energy-distance kernel on which the method relies cannot be used for the weighting procedure. 
 Finally, the efficient implementation of kernel herding relies on analytical expressions for the potentials $P_{\pi}$, see Appendices A and B, which are available for particular distributions (like the uniform and the normal) and kernels (like Matérn) only. 
 The great freedom in the choice of the kernel $K$ gives a lot of flexibility, but at the same time implies that some non-trivial decisions have to be made; also, the internal parameters of $K$, such as its correlation lengths, must be specified. 
 Future work should go beyond empirical rules of thumb and study the influence of these choices.
@@ -782,10 +782,10 @@ Note only incremental constructions were considered, as they allow to stop the v
 
 Further developments around this work could be as follows. 
 Firstly, the incremental construction of a test set could be coupled with the definition of an appropriate stopping rule, in order to decide when it is necessary to continue improving the model (possibly by supplementing the initial design with the test set, which seems well suited to this). 
-The $\MMD_{\Kbarbar}(\zeta_n^*,\pi)$ of Section~\ref{sec:weighting} could play an important role in the derivation of such a rule. 
+The $\MMD_{\Kbarbar}(\zeta_n^*,\pi)$ of Subsection~\ref{sec:weighting} could play an important role in the derivation of such a rule. 
 Secondly, the approach presented gives equal importance to all the $d$ inputs. 
 However, it seems that inputs with a negligible influence on the output should receive less attention when selecting a test set. 
-A preliminary screening step that identifies the important inputs would allow the test-set selection algorithm to be applied to these variables only. 
+A preliminary screening step that identifies the significant inputs would allow the test-set selection algorithm to be applied to these variables only. 
 For example, when a $\bX_N\subset\R^d$ dataset is to be partitioned into $\bX_m\cup\bX_n$, one could use only $d'<d$ components to define the partition, but still use all $d$ components to build the model and estimate its (weighted) $Q^2$. 
 Note, however, that this would imply a slight violation of the conditions mentioned in the introduction, as it renders the test set dependent on the function observations. 
 
