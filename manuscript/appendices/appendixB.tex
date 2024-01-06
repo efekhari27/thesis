@@ -71,12 +71,12 @@ This framework allows us to embed a continuous or discrete probability measure i
 For any measure $\pi$, let us define its \emph{kernel mean embedding} \citep{sejdinovic_2013}, also called ``potential'' $P_{\pi}(\bx)$ in \cite{pronzato_zhigljavsky_2020}, associated with the kernel $k$ as:
 
 \begin{equation}
-   P_{\pi}(\bx) := \int_{\iD_{\bX}} k(\bx, \bx') \dd \pi(\bx').
+   P_{\pi}(\bx) = \int_{\iD_{\bX}} k(\bx, \bx') \dd \pi(\bx').
 \end{equation}
 
 Respectively, the potential $P_{\zeta_n}(\bx)$ of a discrete distribution $\zeta_n = \sum_{i=1}^{n} w_i \delta(\bx^{(i)}), w_i \in \R$ associated with the kernel $k$ can be written as:
 \begin{equation}\label{eq:potential}
-    %P_{\pi}(\bx) := \int_{\iD_{\bX}} k(\bx, \bx') \d \pi(\bx'), \qquad 
+    %P_{\pi}(\bx) = \int_{\iD_{\bX}} k(\bx, \bx') \d \pi(\bx'), \qquad 
     P_{\zeta_n}(\bx) =  \int_{\iD_{\bX}} k(\bx, \bx') \dd \zeta_n(\bx') = \sum_{i=1}^{n} w_i k(\bx, \bx^{(i)}).
 \end{equation}
 The potential $P_{\pi}(\bx)$ of the targeted measure $\pi$ will be referred to as ``target potential'' and the potential $P_{\zeta_n}(\bx)$ associated with the discrete distribution $\zeta_n$ called ``current potential'' when its support is the current design $\bX_n$. 
@@ -88,7 +88,7 @@ However, in most cases, the target potentials must be estimated on a large and r
 
 The \emph{energy} of a measure $\pi$ is defined as the integral of the potential $P_\pi$ against the measure, which leads to the following scalar quantity:
 \begin{equation}
-    \varepsilon_\pi:= \int_{\iD_{\bX}} P_{\pi}(\bx) \dd \pi(\bx) = \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\pi(\bx) \dd\pi(\bx').
+    \varepsilon_\pi= \int_{\iD_{\bX}} P_{\pi}(\bx) \dd \pi(\bx) = \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\pi(\bx) \dd\pi(\bx').
 \end{equation}
 \label{eq:target_energy}
 
@@ -114,7 +114,7 @@ Finally, using the reproducing property and writing the Cauchy-Schwarz inequalit
 A metric of discrepancy is offered by the \emph{maximum mean discrepancy} (MMD). 
 This distance between two probability distributions $\pi$ and $\zeta$ is given by the worst-case error for any function within a unit ball of the Hilbert space $\iH(k)$, associated with the kernel $k$:
 \begin{equation}
-    \MMD(\pi, \zeta) := %\\ 
+    \MMD(\pi, \zeta) = %\\ 
     \sup_{\lVert g \lVert_{\iH(k)} \leq 1}
             \left | \int_{\iD_{\bX}} g(\bx) \dd \pi(\bx) - \int_{\iD_{\bX}} g(\bx) \dd \zeta(\bx) \right| %= \left\lVert P_{\pi}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH(k)}.
     \label{eq:mmd_c4}  

@@ -5,7 +5,7 @@
 \label{apx:D}
 %*******************************************************************************
 
-The present Appendix presents minimalistic Python/\ot examples implementing some of the uncertainty quantification methods presented in Chapter~\ref{chpt:1}.
+The present Appendix presents minimalistic Python/\ots examples implementing some of the uncertainty quantification methods presented in Chapter~\ref{chpt:1}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample_apx}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/copulas.ipynb}{Bivariate distribution}]
@@ -163,7 +163,7 @@ The present Appendix presents minimalistic Python/\ot examples implementing some
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{otexample_apx}[\href{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/surrogates.ipynb}{Gaussian process regression}]
-    Fit of an ordinary kriging model fitting. 
+    Fit of an ordinary Kriging model fitting. 
     \lstset{style=mystyle, language=python}
 %
 \begin{lstlisting}
@@ -176,8 +176,8 @@ The present Appendix presents minimalistic Python/\ot examples implementing some
     cov_model=ot.MaternModel([1.], 1.5)
     algo=ot.KrigingAlgorithm(x_train,y_train,cov_model,basis)
     algo.run()
-    kriging_results=algo.getResult()
-    kriging_predictor=kriging_results.getMetaModel()
+    Kriging_results=algo.getResult()
+    Kriging_predictor=Kriging_results.getMetaModel()
 \end{lstlisting}
 %
 \end{otexample_apx}

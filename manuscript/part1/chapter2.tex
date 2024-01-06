@@ -486,7 +486,7 @@ The S-N curve is also called the ``W\"ohler curve'' after the pioneer work of Au
 As a result of repeated fatigue experiments, this tool determines the number of similar stress cycles necessary to reach a fatigue ruin for a defined stress cycle amplitude. 
 Its values depend on the material studied and on external conditions (in the offshore industry, various S-N curves distinguish the case in the air, underwater, with cathodic protection, etc.). 
 
-A well-admitted simplification of the S-N curve is to consider it as log-linear\footnotemark on two segments:
+A well-admitted simplification of the S-N curve is to consider it as log-linear\footnotemark~on two segments:
 \begin{equation}
 \log(N_{\mathrm{c}}(s)) = \left\{
     \begin{array}{ll}
@@ -564,13 +564,13 @@ A common practice when using Palmgren-Miner's rule is to gather the stress cycle
 This practice induces an integration error, which becomes significant as the number of bins is reduced. 
 In the following, the cumulative damage is computed without binning, as defined in \eq{eq:miner}.
 
-Spectral methods were also introduced to quantify fatigue damage in the late 80s. 
+Spectral methods were also introduced to quantify fatigue damage in the late 1980s. 
 The main idea is to infer a PDF over the amplitudes of the stress cycles identified by rainflow counting, typically using a mixture of parametric distributions. 
 From this PDF, one can derive the fatigue endurance and the cumulated damage (see further details in the review of \citealp{dirlik_2021}). 
 Spectral approaches showed to be well suited at early design phases but not ideal for some tasks (e.g., for blades' fatigue \citealp{ragan_2007_dirlik_vs_miner}). 
 %Overall, fatigue estimation in the time domain does not represent a large computational effort compared to the simulation of the wind turbine's physics. 
 
-Finally, nonlinear fatigue models were developed in the 90s \citep{fatemi_1998} to take into account the order in which the loading cycles were applied to the structure. 
+Finally, nonlinear fatigue models were developed in the 1990s \citep{fatemi_1998} to take into account the order in which the loading cycles were applied to the structure. 
 For OWT applications, the recent work of \citet{rocher_2020_nonlinear_fatigue} studied a probabilistic version of nonlinear fatigue models. 
 Unfortunately, this refined approach requires a larger computational effort and a calibration step over experimental tests of various parameters \citep{freyssinet_2023_nonlinear_fatigue}.  
 
@@ -915,7 +915,7 @@ In light of the previous elements, the variables considered as random in this wo
 
 This growing industry faces various challenges, for example, related to the massive use of primary commodities, the cohabitation of offshore dynamic structures with an ecosystem, composite materials recycling, etc. 
 UQ is a tool for understanding some of these problems, however, many uncertainties are hard to characterize and quantify. 
-For example, manufacturing quality issues were recently revealed by Siemens Gamesa\footnotemark~ regarding wrinkles on the surface of some blades, illustrating the considerable uncertainties present in wind energy. 
+For example, manufacturing quality issues were recently revealed by Siemens Gamesa\footnotemark~regarding wrinkles on the surface of some blades, illustrating the considerable uncertainties present in wind energy. 
 
 
 \footnotetext{L. Pitel and R. Millard. (August 7, 2023). Siemens Energy warns of €4.5bn loss from ailing wind turbine division. \textit{Finacial Times}. \url{https://www.ft.com/content/df8947cd-4bab-46ff-804e-b28de4b5a0f0}}

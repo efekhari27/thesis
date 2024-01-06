@@ -18,7 +18,7 @@ Since univariate marginals are usually well-fitted with nonparametric tools (e.g
 %============================================================%
 In practice, considering a sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \in \R^{np}$ and the associated ranked sample $\bR_n = \left\{\br^{(1)}, \dots, \br^{(n)}\right\}$, the corresponding empirical copula writes: 
 \begin{equation}
-    C_n(\bu) := \frac1n \sum_{i=0}^{n} \prod_{j=1}^{p} \1 \left\{ \frac{r_j^{(i)}}{n} \leq u_j \right\},
+    C_n(\bu) = \frac1n \sum_{i=0}^{n} \prod_{j=1}^{p} \1 \left\{ \frac{r_j^{(i)}}{n} \leq u_j \right\},
 \end{equation}
 with $\bu = (u_1, \dots, u_d) \in [0, 1]^d$. In the following, the polynomial order is set as equal in each dimension: $\{m_i = m\}_{j=1}^d$. 
 
@@ -31,11 +31,11 @@ Bernstein polynomials allow us to uniformly approximate as closely as desired an
 Therefore, they are good candidates to approximate unknown copulas. 
 This concept was introduced as \emph{empirical Bernstein copula} (EBC) by \cite{sancetta_satchell_2004} for applications in economics and risk management. 
 Later on, \cite{segers_2017} offered further asymptotic studies. 
-Formally, the multivariate Bernstein polynomial for a function $C: [0, 1]^d \rightarrow \R$ on a grid over the unit hypercube $G:=\left\{\frac{0}{m_1}, \dots, \frac{m_1}{m_1}\right\} \times \dots \times \left\{\frac{0}{m_d}, \dots, \frac{m_d}{m_d}\right\}, \bm = (m_1, \dots, m_d) \in \N^d$, writes: 
+Formally, the multivariate Bernstein polynomial for a function $C: [0, 1]^d \rightarrow \R$ on a grid over the unit hypercube $G=\left\{\frac{0}{m_1}, \dots, \frac{m_1}{m_1}\right\} \times \dots \times \left\{\frac{0}{m_d}, \dots, \frac{m_d}{m_d}\right\}, \bm = (m_1, \dots, m_d) \in \N^d$, writes: 
 \begin{equation}
-    B_{\bm}(C)(\bu) := \sum_{t_1=0}^{m_1} \dots \sum_{t_d=0}^{m_d} C\left(\frac{t_1}{m_1}, \dots, \frac{t_d}{m_d}\right) \prod_{j=1}^d P_{m_j, t_j}(u_j),\label{eq:ebc}
+    B_{\bm}(C)(\bu) = \sum_{t_1=0}^{m_1} \dots \sum_{t_d=0}^{m_d} C\left(\frac{t_1}{m_1}, \dots, \frac{t_d}{m_d}\right) \prod_{j=1}^d P_{m_j, t_j}(u_j),\label{eq:ebc}
 \end{equation}
-with $\bu = (u_1, \dots, u_d) \in [0, 1]^d$, and the Bernstein polynomial $P_{m, t}(u):= \frac{t!}{m!(t-m)!}u^m(1-u)^{t-m}$. 
+with $\bu = (u_1, \dots, u_d) \in [0, 1]^d$, and the Bernstein polynomial $P_{m, t}(u)= \frac{t!}{m!(t-m)!}u^m(1-u)^{t-m}$. 
 Notice how the grid definition implies the polynomial's order. 
 When $C$ is a copula, then $B_{\bm}(C)$ is called ``Bernstein copula''. 
 Therefore, the empirical Bernstein copula is an application of the Bernstein polynomial in \eq{eq:ebc} to the so-called ``empirical copula''.

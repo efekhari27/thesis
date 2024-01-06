@@ -21,7 +21,6 @@
 \usepackage{comment}
 \usepackage{changepage}
 
-
 \usepackage{etoc} %chapter table of contents
 \usepackage[Lenny]{fncychap} %fancy chapters
 \usepackage{epigraph} 
@@ -180,7 +179,8 @@
 
 \newcommand{\eq}[1]{Eq.~\eqref{#1}}
 \newcommand{\fig}[1]{Fig.~\ref{#1}}
-\newcommand{\ot}{\href{https://openturns.github.io/www/}{\texttt{OpenTURNS}~}}
+\newcommand{\ots}{\href{https://openturns.github.io/www/}{\texttt{OpenTURNS}~}}
+\newcommand{\ot}{\href{https://openturns.github.io/www/}{\texttt{OpenTURNS}}}
 
 \newcommand*\what[1]{\widehat{#1}}
 \newcommand*\wtilde[1]{\widetilde{#1}}
@@ -368,10 +368,12 @@
 \usepackage{multirow}
 
 %\usepackage{multicol}
-%\usepackage{longtable}
+\usepackage{longtable}
 \usepackage{tabularx}
 \renewcommand\tabularxcolumn[1]{m{#1}}
-
+\usepackage{ltablex}
+\usepackage{booktabs}% http://ctan.org/pkg/booktabs
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
 % *********************************** SI Units *********************************
 \usepackage{siunitx} % use this package module for SI units
 

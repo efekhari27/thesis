@@ -17,19 +17,19 @@
 %============================================================%
 
 Assessing the reliability of systems such as offshore wind turbines, often involves the estimation of rare event probabilities. 
-In the reliability analysis framework introduced in Section~\ref{sec:reliability}, the performance of a system is typically modeled by a deterministic scalar function, denoted by $g: \iD_\bx \subseteq \R^d \rightarrow \R$, and referred to as the \textit{limit-state function}. 
-A critical threshold on the system's output, written $\yth \in \R$, then defines the \textit{failure domain}, expressed as $\iF_{\bx} := \{\bx \in \iD_\bx \, | \,  g(\bx) \leq \yth\}$. 
+In the reliability analysis framework introduced in Section~\ref{sec:reliability}, the performance of a system is typically modeled by a deterministic scalar function, denoted by $g: \iD_\bx \subseteq \R^d \rightarrow \R$, and referred to as the \textit{limit-state function} (LSF). 
+A critical threshold on the system's output, written $\yth \in \R$, then defines the \textit{failure domain}, expressed as $\iF_{\bx} = \{\bx \in \iD_\bx \, | \,  g(\bx) \leq \yth\}$. 
 Considering a probabilistic framework, the uncertain inputs are modeled by a continuous random vector $\bX \in \iD_\bx$, with a joint probability density function $f_\bX$ (PDF). 
 In this scenario, uncertainty propagation consists in composing the random vector $\bX$ with the function $g$ to obtain the output variable of interest $Y = g(\bX) \in \R$. 
 Then, a common risk measure in reliability analysis is the \textit{failure probability}, denoted by $\pf$, representing the probability of the system exceeding the threshold $\yth$:
 \begin{equation}
     \label{eq:failure_proba_c6}
-    \pf := \P(g(\bX) \leq \yth)
+    \pf = \P(g(\bX) \leq \yth)
         %&= \int_{\iF_\bx} f_\bX(\bx) \, \d\bx\\
-        = \int_{\iD_\bx} \1_{\iF_\bx}(\bx) f_\bX(\bx) \, \dd\bx.
+        = \int_{\iD_\bx} \1_\{\iF_\bx\}(\bx) f_\bX(\bx) \, \dd\bx.
 \end{equation}
-The usual convention presented in Section~\ref{sec:reliability} allows to modify the limit-state function in order to set the threshold to zero. 
-%where $\1_{\iF_\bx}(\cdot)$ is the indicator function of the failure domain such that $\1_{\iF_\bx}(\bx) = 1$ if $\bx \in \iF_\bx$ and $\1_{\iF_\bx}(\bx) = 0$ otherwise. 
+The usual convention presented in Section~\ref{sec:reliability} allows to modify the LSF in order to set the threshold to zero. 
+%where $\1_\{\iF_\bx\}(\cdot)$ is the indicator function of the failure domain such that $\1_\{\iF_\bx\}(\bx) = 1$ if $\bx \in \iF_\bx$ and $\1_\{\iF_\bx\}(\bx) = 0$ otherwise. 
 
 %Rare event problems are usually solved in the so-called \emph{standard normal space} after applying an ``iso-probabilistic transformation'' which can be either the Rosenblatt or the generalized Nataf one \citep{Lebrun_PHD_2013}.
 %Additionally, the limit-state function $g$ can be viewed as an input-output ``black-box'' model which can be costly to evaluate (e.g., multi-physics wind turbine model), making the failure probability estimation nontrivial. 
@@ -38,7 +38,7 @@ The usual convention presented in Section~\ref{sec:reliability} allows to modify
 %Moreover, their validation as well as their behavior with respect to large input dimension case make also their use quite complex (see, e.g.,  \citealp{marrel_iscream_2022}).
 
 In reliability analysis, the main methods for rare event estimation (see Section~\ref{sec:reliability}) can be divided into two groups \citep{MorioBalesdent2015}: 
-\textit{(i)} geometric approaches, such as the first-/second-order reliability method (FORM/SORM) whose aim is to approximate the limit-state function by a first-/second-order Taylor expansion at the most probable failure point; 
+\textit{(i)} geometric approaches, such as the first-/second-order reliability method (FORM/SORM) whose aim is to approximate the LSF by a first-/second-order Taylor expansion at the most probable failure point; 
 \textit{(ii)} simulation-based techniques such as the crude Monte Carlo method. 
 Unfortunately, FORM/SORM methods do not provide a lot of statistical information as they are purely geometric approaches.
 Meanwhile, estimating a rare event probability by crude Monte Carlo becomes rapidly intractable for engineering applications. 
@@ -95,10 +95,10 @@ Then, the last section present some conclusions and research perspectives.
 %    \pf = \P(\iF_{\bx}) = \P(\cap_{k=1}^{k_\#} \iF_{[k]}) = \prod_{k=1}^{k_\#} \P(\iF_{[k]} | \iF_{[k-1]}).
 %\end{equation}
 %From a practical point of view, the analyst tunes the algorithm by setting the intermediary probabilities $\P(\iF_{[k]} | \iF_{[k-1]}) = p_0, \forall k \in \{1, \dots, k_\# \}$. 
-%Then, the corresponding quantiles $q_{[1]}^{p_0} > \dots > q_{[k_\#]}^{p_0}$ are estimated for each conditional subset samples $\bX_{[k], N}$ of size $N$. 
+%Then, the corresponding quantiles $q_{[1]}^{\, p_0} > \dots > q_{[k_\#]}^{\, p_0}$ are estimated for each conditional subset samples $\bX_{[k], N}$ of size $N$. 
 %Note that the initial quantile is estimated by crude Monte Carlo sampling on the input PDF $f_{\bX}$. 
 %Following conditional subset samples are generated by MCMC sampling of $f_{\bX}(\bx |\iF_{[k-1]})$, using as seeds initialisation points the $n= N p_0$ samples given by $\mathbf{A}_{[k], n}=\{\bX_{[k-1]}^{(j)} \subset \bX_{[k-1], N}| g(\bX_{[k-1]}^{(j)}) > \widehat{q}_{[k-1]}^\alpha \}_{j=1}^n$. 
-%This process is repeated until an intermediary quantile exceeds the threshold: $\widehat{q}_{[k_\#]}^{p_0} < \yth$. 
+%This process is repeated until an intermediary quantile exceeds the threshold: $\widehat{q}_{[k_\#]}^{\, p_0} < \yth$. 
 %Finally, the failure probability is estimated by:
 %\begin{equation}
 %    \pf \approx \widehat{\pf}^{\mathrm{SS}} = p_0^{k_\# -1} \frac1N \sum_{j=1}^N \1_{\{g(\bx) \leq \yth\}} (\bX_{[k_\#],N}^{(j)}).
@@ -142,7 +142,7 @@ Then, the last section present some conclusions and research perspectives.
 %============================================================%
 
 The BANCS algorithm uses the same structure as other adaptive importance sampling methods (e.g., NAIS or CE-AIS introduced in Section~\ref{sec:reliability}) while employing a different approach to fit the intermediate conditional distributions. 
-As described in Algorithm \ref{alg:bancs}, at iteration $k$, after estimating the intermediary $p_0$-quantile $\widehat{q}_{[k]}^{p_0}$, a nonparametric model is fitted on the set $\mathbf{A}_{[k+1]}$ of all samples leading to values below $\widehat{q}_{[k]}^{p_0}$.  
+As described in Algorithm \ref{alg:bancs}, at iteration $k$, after estimating the intermediary $p_0$-quantile $\widehat{q}_{[k]}^{\, p_0}$, a nonparametric model is fitted on the set $\mathbf{A}_{[k+1]}$ of all samples leading to values below $\widehat{q}_{[k]}^{\, p_0}$.  
 This inference is done by coupling a set of marginals each fitted by KDE, with a copula fitted by EBC. 
 The generation of the next i.i.d. $N$-sized sample $\bX_{[k+1], N}$ on the conditional distributions is straightforward and does not require MCMC sampling like in SS. 
 Note that the BANCS method does not require iso-probabilistic transform either.
@@ -154,7 +154,7 @@ Note that the BANCS method does not require iso-probabilistic transform either.
     \begin{algorithmic}[1]
         \State \Comment{\textbf{Inputs:}}\hfill~
         \State $f_\bX$, joint PDF of the inputs
-        \State $g(\cdot)$, limit-state function
+        \State $g(\cdot)$, LSF
         \State $\yth \in \R$, threshold defining the failure event 
         \State $N$, number of samples per iteration
         \State $m \in \N$, parameter of the EBC fitting
@@ -163,9 +163,9 @@ Note that the BANCS method does not require iso-probabilistic transform either.
         \State Set $k = 0$ and $f_{[0]} = f_\bX$
         \State Sample $\bX_{[0], N} = \{\bx_{[0]}^{(i)}\}_{i=1}^N \overset{\text{i.i.d.}}{\sim} f_{[0]}$
         \State Evaluate $Y_{[0], N} = \{g(\bx_{[0]}^{(i)})\}_{i=1}^N$
-        \State Estimate the empirical $p_0$-quantile $\widehat{q}_{[0]}^{p_0}$ of the set $Y_{[0], N}$
+        \State Estimate the empirical $p_0$-quantile $\widehat{q}_{[0]}^{\, p_0}$ of the set $Y_{[0], N}$
         
-        \While{$\widehat{q}_{[k]}^{p_0} > \yth$}
+        \While{$\widehat{q}_{[k]}^{\, p_0} > \yth$}
         \State Compute IS weights $\{w_{[k]}^{(i)}\}_{i=1}^N = \left\{\frac{f_\bX(\bx_{[k]}^{(i)})}{\widehat{f}_{[k]}(\bx_{[k]}^{(i)})}\right\}_{j=1}^N$
         \State Build a weighted elite-set $\mathbf{A}_{[k+1]}=\sum_{l=1}^{k} \sum_{i=1}^N w_{[k]}^{(j)} \, \1_{\{g(\bx_{[l]}^{(i)}) \leq \widehat{q}_{[k]} \}}(\bx_{[k]}^{(i)})$
         \State Fit marginals of the set $\mathbf{A}_{[k+1]}$ by KDE $\{\widehat{F}_j\}_{j=1}^d$
@@ -173,7 +173,7 @@ Note that the BANCS method does not require iso-probabilistic transform either.
         \State Build a CDF $\widehat{F}_{[k+1]}(\bx) = B_m(C_n)(\widehat{F}_1(x_1), \dots, \widehat{F}_d(x_d))$
         \State Sample $\bX_{[k+1], N} = \{\bx_{[k+1]}^{(i)}\}_{i=1}^N \overset{\text{i.i.d.}}{\sim} \widehat{f}_{[k+1]}$
         \State Evaluate $Y_{[k+1], N} = \{g(\bx_{[k+1]}^{(i)})\}_{i=1}^N$
-        \State Estimate the empirical $p_0$-quantile $\widehat{q}_{[k+1]}^{p_0}$ of $Y_{[k+1], N}$
+        \State Estimate the empirical $p_0$-quantile $\widehat{q}_{[k+1]}^{\, p_0}$ of $Y_{[k+1], N}$
 \State Set $k = k+1$
 \EndWhile
 \State Set $k_\# = k$
@@ -223,10 +223,10 @@ This estimator also benefits from an IS variance, which can also be estimated, u
 \end{equation}
 
 \fig{fig:bancs_illustration} illustrates the nonparametric fit and conditional sampling in BANCS method on a two-dimensional reliability problem (later introduced as ``toy-case \#1''). 
-At the iteration $k=0$, the conditional distribution fitted (with PDF represented by the blue isolines) slightly overlays below the quantile border $\widehat{q}_{[0]}^{p_0}$. 
+At the iteration $k=0$, the conditional distribution fitted (with PDF represented by the blue isolines) slightly overlays below the quantile border $\widehat{q}_{[0]}^{\, p_0}$. 
 Ideally, the conditional distribution fitted should be sharp around this border without overfitting the data
 At the second iteration, the PDF of the second conditional distribution fitted is represented by the brown isolines. 
-This second fit is realized on all the samples above the second quantile $\widehat{q}_{[1]}^{p_0}$, weighted by their respective distribution (see lines 14 and 15 from Algorithm~\ref{alg:bancs}). 
+This second fit is realized on all the samples above the second quantile $\widehat{q}_{[1]}^{\, p_0}$, weighted by their respective distribution (see lines 14 and 15 from Algorithm~\ref{alg:bancs}). 
 Including the samples from the previous iterations tends to make the fit sharper around the quantile border. 
 
 
@@ -260,7 +260,7 @@ Including the samples from the previous iterations tends to make the fit sharper
 
 In the present section, the performances of BANCS algorithm are compared with the ones from subset simulation (SS) and the nonparametric adaptive importance sampling (NAIS). 
 The efficiency of SS depends on the choice and tuning of the MCMC algorithm \citep{Papaioannou_PEM_2015}. 
-Our work uses the \texttt{OpenTURNS} implementation of the SS\footnotemark (integrating a component-wise Metropolis-Hastings algorithm), 
+Our work uses the \texttt{OpenTURNS} implementation of the SS\footnotemark~(integrating a component-wise Metropolis-Hastings algorithm), 
 \footnotetext{SS: \url{https://openturns.github.io/openturns/latest/user_manual/_generated/openturns.SubsetSampling.html}} 
 and the \texttt{OpenTURNS} implementation of NAIS\footnotemark. 
 \footnotetext{NAIS: \url{https://openturns.github.io/openturns/latest/user_manual/_generated/openturns.NAIS.html}} 
@@ -365,7 +365,7 @@ Note that the color scale associated to the output values is log-transformed to 
 
 In the present section, the BANCS algorithm is applied to three analytical toy-cases and its performances are compared with SS and NAIS. 
 After representing the two first iterations of BANCS on toy-case \#1 in \fig{fig:bancs_illustration}, all BANCS iterations from this case are illustrated in \fig{fig:2D_toycase_reliability} (a). 
-This figure shows the intermediate quantiles $\{\widehat{q}_{[k]}^{p_0}\}_{k=1}^{k_\#}$ which are estimated over conditional samples of size $N=10^4$. 
+This figure shows the intermediate quantiles $\{\widehat{q}_{[k]}^{\, p_0}\}_{k=1}^{k_\#}$ which are estimated over conditional samples of size $N=10^4$. 
 The points of each sample exceeding their respective $p_0$-quantile are also represented in the same color as their $p_0$-quantile border. 
 \fig{fig:2D_toycase_reliability} (b) provides the same kind of illustration for BANCS applied to test-case \#2, a well-known system problem. 
 On these two-dimensional cases, one can visualize the empirical quantiles driving the conditional distributions towards the failure domain(s), and the ability of the nonparametric inference to capture multi-modal patterns.  
@@ -412,7 +412,7 @@ In general, BANCS showed equivalent or better performances than SS and NAIS (on 
     \centering
     \includegraphics[width=0.7\textwidth]{part3/figures/BANCS/crosscut_oscillator.png}
     \caption{Cross-cut visualization of the function of test-case \#5 through FORM's most-probable failure point $P^*$. 
-    The limit-state function (full line) delimits the safe domain (in blue) and the failure domain (in red). 
+    The LSF (full line) delimits the safe domain (in blue) and the failure domain (in red). 
     FORM produces the Taylor approximation around $P^*$ (dashed lines).}
     \label{fig:crosscut_oscillator}
 \end{figure}
@@ -491,7 +491,7 @@ Then, the computation of the target-HSIC (respectively conditional-HSIC) is pres
 %============================================================%
 
 A first approach for TSA is to directly apply any SA measure to the binary variable $\1_{\{g(\bX) \leq \yth\}} = \1_{\{Y \leq \yth\}}$. 
-This strategy does not distinguish points in the vicinity of the limit-state function from points far from this border. 
+This strategy does not distinguish points in the vicinity of the LSF from points far from this border. 
 In the present work, a threshold relaxation using the weight transformation from \citet{marrel_chabridon_2021} is applied to gather more information. 
 Let us consider the weight function $w_{\iF}: \R \rightarrow [0, 1]$ such that $w_{\iF}(y) = \exp(-d_{\iF}(y)/s)$, where $d_{\iF} = \mathrm{inf}_{y'\in \iF} \Vert y -y' \Vert$ is a distance to the border and $s\in\R$ is a smoothing parameter. 
 
@@ -544,8 +544,8 @@ This property allows us to apply HSIC TSA and CSA to the samples evaluated durin
 
 After assessing a rare event probability using BANCS, a nested set of samples moving towards the failure domain is available.
 This setup is the opportunity to study the evolution of the ROSA as the problem gets rarer.
-At iteration $k$, a TSA is conducted on the sample $S_k$ with the intermediary threshold $\what{q}^{p_0}_k$ to study which random variables lead below this threshold. 
-Then the CSA is assessed on the sample $S_{k+1}$, drawn according to the distribution $\what{f}_{[k+1]}$ which is conditional to the threshold $\what{q}^{p_0}_k$. 
+At iteration $k$, a TSA is conducted on the sample $S_k$ with the intermediary threshold $\what{q}^{\, p_0}_k$ to study which random variables lead below this threshold. 
+Then the CSA is assessed on the sample $S_{k+1}$, drawn according to the distribution $\what{f}_{[k+1]}$ which is conditional to the threshold $\what{q}^{\, p_0}_k$. 
 
 The target and conditional sensitivity analysis are presented via their respective HSIC and the p-value of their independence test.  
 These quantities are plotted as function of the consecutive samples $S_k$ to study the ROSA evolution. 

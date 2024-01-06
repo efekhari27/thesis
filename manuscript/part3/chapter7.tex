@@ -124,7 +124,7 @@ This composite design, denoted by $\bZ_{n_\bZ}$, has a size of $n_\bZ=50$, which
 \subsection{Gaussian process regression}
 %============================================================%
 
-A Gaussian process regression with Matérn $5/2$ and constant trend is fitted on the composited design $\bZ_{n_\bZ}$ according to the kriging equation introduced in Section~\ref{sec:surrogate}. 
+A Gaussian process regression with Matérn $5/2$ and constant trend is fitted on the composited design $\bZ_{n_\bZ}$ according to the Kriging equation introduced in Section~\ref{sec:surrogate}. 
 The resulting surrogate model $\widetilde{D}:\R^2 \rightarrow \R$, is represented by the blue three-dimensional surface in \fig{fig:3d_owt_surrogate}, and its learning set  $\bZ_{n_\bZ}$ by the black crosses.  
 A complementary visualization of this surrogate is proposed for cross-sections with fixed values $\theta_{\mathrm{yaw}}=0$ on \fig{fig:owt_surrogate}.a, and $k_{\mathrm{soil}}=1$ on \fig{fig:owt_surrogate}.b. 
 On these two figures, learning points are plotted in a gray scale and the surrogate model in a blue scale. 
@@ -209,7 +209,7 @@ The probability introduced in \eq{eq:owt_pf} then becomes:
 Table~\ref{tab:pf_result_table} presents the estimates of this quantity by different methods (FORM, FORM-importance sampling and subset simulation, see Section~\ref{sec:reliability}) and for two hypotheses regarding the distribution of the resistance variable. 
 $D_{\mathrm{cr}}$ either follows a lognormal distribution (which has a short left tail), or a normal distribution (with a heavier left tail). 
 All the methods deliver similar values of $\pf$ even if subset simulation requires more time. 
-The adequation of FORM with the simulation methods reveals that the limit-state function in this case is almost linear. 
+The adequation of FORM with the simulation methods reveals that the LSF in this case is almost linear. 
 Such a conclusion might differ depending on the OWT model studied (e.g., a floating model could present a different behavior). 
 The probabilities are, as expected, much lower under the hypothesis of lognormal distribution for $D_{\mathrm{cr}}$ than for a normal distribution. 
 However, this significant difference questions the robustness of this result to the probabilistic model of $D_{\mathrm{cr}}$ and $\bZ$.  
