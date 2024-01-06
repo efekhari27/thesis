@@ -244,10 +244,6 @@ The advantage of using an iterative construction is that it can be stopped as so
 In case the conclusion is that model predictions are not reliable enough, the full design $\bX_{m+n}=\bX_m\cup\bX_n$ and the associated observations $\by_{m+n}$ can be used to update the model. 
 This updated model can then be tested at additional design points, elements of a new test set to be constructed. 
 This section introduces different space-filling methods, later compared for test set construction. 
-%All methods presented in this section (except the Fully Sequential Space-Filling method) are implemented in the Python package \texttt{otkerneldesign} \footnote{\url{https://pypi.org/project/otkerneldesign/}} which is based on the OpenTURNS library for uncertainty quantification \cite{baudut17}.
-
-%Below we give an overview of the three methods used in this chapter, all relying on the concept of space-filling design \cite{fanli06, pronzato_2012}. 
-%While most methods for the construction of such designs choose all points simultaneously, the methods we consider are incremental, selecting one point at a time.
  
 
 %============================================================%
@@ -454,7 +450,7 @@ In the second test case, $d=2$, $\pi$ is the normal distribution $\SN(\0b,\Ib_2)
 There are $N=2^{14}$ candidate points for test cases 1 and 2 and $N=2^{15}$ for test case 3 (this value is rather moderate for a problem in dimension 8, but using a larger $N$ yields numerical difficulties for support points; see Subsection~\ref{sec:SP}). 
 
 For each test case, a GP regression model is fitted to the $m$ observations using ordinary Kriging \citep{rasmussen_2006} (a GP model with constant mean), with an anisotropic Matérn kernel with regularity parameter $5/2$, and the correlation lengths $\theta_i$ are estimated by maximum likelihood via a truncated Newton algorithm. 
-All calculations were done using the Python package OpenTURNS for uncertainty quantification \citep{baudin_dutfoy_2017}. 
+All calculations were done using the Python package \ot for uncertainty quantification \citep{baudin_dutfoy_2017}. 
 The kernel used for kernel herding is different and corresponds to the tensor product of one-dimensional Matérn kernels \eq{eq:Matern5/2}, so that the potentials $P_{\pi}(\cdot)$ are known explicitly (see Appendix~\ref{apx:B}); the correlations lengths are set to $\theta=0.2$ in test cases 1 and 3 ($d=2$) and to $\theta=0.7$ in test case 3 ($d=8$).
 
 Assuming that a model is classified, in terms of the estimated value of its predictivity index $Q^2$ as ``poor fitting'' if $Q^2\in[0.6, 0.8]$, ``reasonably good fitting'', when $Q^2\in(0.8,0.9]$, and ``very good fitting'' if $Q^2>0.9$, for each test case, three different sizes $m$ of the training set are selected such that the corresponding models cover all three possible situations. 

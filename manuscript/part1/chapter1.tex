@@ -6,7 +6,7 @@
 \chapter{Uncertainty quantification in computer experiments}
 \label{chpt:1}
 %*******************************************************************************
-\vspace{-5pt}
+\vspace{-20pt}
 \localtableofcontents
 \newpage
 
@@ -27,7 +27,7 @@ Section~\ref{sec:uq} presents a classification of the input uncertainties and th
 Sections~\ref{sec:central_propagation} and \ref{sec:reliability} introduce various methods to propagate the input uncertainties through the numerical model for different purposes; 
 Section~\ref{sec:gsa} presents the main inverse methods to perform sensitivity analysis in our framework; 
 Finally, Section~\ref{sec:surrogate} introduces the concept of surrogate models to emulate a model by realizing statistical learning on a limited dataset.
-Additionally, numerical examples of the notable methods are implemented during this chapter using \texttt{OpenTURNS}, a Python package for uncertainty quantification.    
+Additionally, numerical examples of the notable methods are implemented during this chapter using \ot, a Python package for uncertainty quantification.    
 
 %============================================================%
 %============================================================%
@@ -709,7 +709,7 @@ In the same vein, the uniform projection designs from \citet{sun_2019} also opti
 \footnotetext{\url{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter1/designofexperiments.ipynb}}
 
 %============================================================%
-\subsection*{Summary and discussion}
+\subsection{Summary and discussion}
 %============================================================%
 A wide panel of sampling techniques exists for numerical integration or design of experiments purposes. 
 In both cases, the studied domain is bounded and the targeted measure is uniform. 
@@ -773,13 +773,13 @@ The quantile of order $\alpha$, also called $\alpha$-quantile, denoted by $q_\al
     q_\alpha(Y) = \inf_{y\in\R}{\left\{F_Y(y) \geq \alpha\right\}}, \quad \alpha \in [0, 1].    
 \end{equation}
 As an alternative, one can define a scalar safety threshold $\yth \in \R$ that should not be exceeded to keep the system safe. 
-Then, another risk measure is the probability of exceeding this safety threshold, also called \textit{failure probability}, and given by: 
+Then, another risk measure is the probability of crossing this safety threshold, also called \textit{failure probability}, and given by: 
 \begin{equation}
     \pf = \P\left(Y \geq \yth\right).
     \label{eq:failure_proba}
 \end{equation}
 To illustrate this quantity, \fig{fig:1D_reliability} shows the one-dimensional propagation of a normal distribution (represented by the PDF on the left), through a function $g(\cdot)$.
-The probability of exceeding a given threshold $\yth$ is represented by the area in red under the output PDF on top.
+The probability of crossing a given threshold $\yth$ is represented by the area in red under the output PDF on top.
 More information about the use and the interpretation of risk measures including measures from the finance domain such as the \textit{conditional value-at-risk} (also called ``superquantile'') is presented in \citet{rockafellar_2015}. 
 
 \begin{figure}
@@ -798,7 +798,7 @@ Note however that the present work will not address the problems of time-depende
 %============================================================%
 
 Following the UQ methodology, the behavior of the system is modeled by $\iM(\cdot)$. 
-Considering the problem of exceeding a safety threshold in \eq{eq:failure_proba}, the system's performance is commonly defined as the difference between the model's output and the safety threshold $\yth\in\R$. 
+Considering the problem of crossing a safety threshold in \eq{eq:failure_proba}, the system's performance is commonly defined as the difference between the model's output and the safety threshold $\yth\in\R$. 
 Formally, the \textit{limit-state function} (\abv{lsf}) is a deterministic function $g:\iD_{\bX}\rightarrow\R$ quantifying this performance: 
 \begin{equation}
     g(\bx) = \yth - \iM(\bx).
@@ -864,7 +864,7 @@ The fact that the failure probability is invariant by this transformation allows
 
 Different types of transformations exist, such as the Rosenblatt or the generalized Nataf transformation introduced by \citet{Lebrun_PHD_2013}. 
 In practice, the transformation choice depends on the properties of the input distribution studied. 
-For example in OpenTURNS, depending on the three following cases, different types of transformations are applied:
+For example in \ot, depending on the three following cases, different types of transformations are applied:
 \begin{itemize}
     \item for elliptical distributions, a linear Nataf transformation is applied;
     \item for distributions with an elliptical copula, the generalized Nataf transformation is used \citep{lebrun_2009};
@@ -1189,7 +1189,7 @@ At the step $k$, the intermediate failure probability is written as:
     = \frac{1}{k n} \sum_{j=1}^{k} \sum_{i=1}^{n} \1_{\{g(\bx) \leq q_{[j]}^{\, p_0}\}}\left(\bx^{(i)}_{[j]}\right) w^{(i)}_{[j]} \, , 
 \end{equation}
 with $\left\{\bX_{[j]}^{(i)}\right\}_{i=1}^n \simiid h_{[j-1]}$. 
-Then, an intermediate instrumental density is inferred by KDE on the samples exceeding the threshold $q_{[k]}^{\, p_0}$ such that:
+Then, an intermediate instrumental density is inferred by KDE on the samples cross the threshold $q_{[k]}^{\, p_0}$ such that:
 \begin{equation}
     \what{h}_{[k+1]}(\bx) = \frac{\mathrm{det}(\bH_{[k]})^{-1/2}}{k n \, \what{\pf}_{[k]}} \sum_{j=1}^{k} \sum_{i=1}^{n} 
             \1_{\{g(\bx) \leq q_{[j]}^{\, p_0}\}}\left(\bx^{(i)}_{[j]}\right) w^{(i)}_{[j]} \, K\left(\bH_{[k]}^{-1/2} \left(\bx - \bx^{(i)}_{[j]}\right)\right).
@@ -1253,10 +1253,6 @@ More recently, alternative MCMC methods including physical system dynamics (e.g.
 The SS is a versatile method, presenting consistent performances even for rare probabilities. 
 Its flexibility allows it to deal with highly nonlinear LSFs, but its drawbacks arise from the use of MCMC sampling. 
 For example, the convergence of MCMC is complex to control and depends on its tuning \citep{roy_2020_mcmc_convergence}. %, in addition, the MCMC samples are dependent. 
-%Unlike the methods derived from IS, the variance of $\widehat{\pf}^{\mathrm{SS}}$ is only approximated. 
-
-%Our work uses the SS implementation from \texttt{OpenTURNS}\footnote{\href{https://openturns.github.io/www/index.html}{https://openturns.github.io/www/index.html}} \citep{baudin_dutfoy_2017} which integrates a component-wise Metropolis-Hastings algorithm. 
-%As an alternative to generating samples on a conditional distribution by MCMC, one could try to fit this conditional distribution.
 
 \begin{figure}
     \centering
@@ -1267,7 +1263,7 @@ For example, the convergence of MCMC is complex to control and depends on its tu
 
 
 %============================================================%
-\subsection*{Summary and discussion}
+\subsection{Summary and discussion}
 %============================================================%
 
 This section introduces a generic formulation and various methods for rare event estimation. 
@@ -1604,7 +1600,7 @@ Note that the HSIC decomposition requires a specific hypothesis on the structure
 
 
 %============================================================%
-\subsection*{Summary and discussion}
+\subsection{Summary and discussion}
 %============================================================%
 
 This section introduces the GSA methods commonly used in UQ. 
@@ -1928,7 +1924,7 @@ If this method was proven to be theoretically more consistent \citep{bect_ginsbo
 \end{figure}
 
 %============================================================%
-\subsection*{Summary and discussion}
+\subsection{Summary and discussion}
 %============================================================%
 
 This section brought attention to surrogate modeling in the context of computer experiments. 
@@ -1956,7 +1952,7 @@ When the function is stochastic, several approaches allow fitting the function a
 
 This section gives a literature overview of the main steps in UQ. 
 From uncertainty modeling, uncertainty propagation, and global sensitivity analysis to surrogate modeling. 
-To ease the methodological presentation, all the illustrations from this section are reproducible using the Python/OpenTURNS scripts available on the GitHub repository mentioned earlier. 
+To ease the methodological presentation, all the illustrations from this section are reproducible using the Python/\ot scripts available on the GitHub repository mentioned earlier. 
 
 Finally in this work, the numerical models exploited are supposed to be accurate, but they obviously carry some modeling uncertainty \citep{oberkampf_2010_VVUQ}. 
 In fact, prior to UQ, the model should be calibrated to make it match some physical information (e.g., measurements). 

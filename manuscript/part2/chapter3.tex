@@ -13,9 +13,9 @@
 
 \begin{tcolorbox}[colback=gray!5!white, colframe=gray!5!white, coltitle=gray, coltext=gray, fontupper=\footnotesize, fontlower=\footnotesize, title=\textbf{Parts of this chapter are adapted from the following publications:}]
     \begin{itemize}
-        \item[\ding{125}] A. Lovera, E. Fekhari, B. Jézéquel, M. Dupoiron, M. Guiton and E. Ardillon (2023). ``Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis". In: \textit{Journal of Physics: Conference Series (WAKE 2023)}.
         \item[\ding{125}] E. Vanem, E. Fekhari, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2024). ``A joint probability distribution model for multivariate wind and wave conditions''. In: \textit{Journal of Offshore Mechanics and Arctic Engineering}, In press. 
         \item[\ding{125}] E. Vanem, \O{}. Lande and E. Fekhari, (2024). ``A simulation study on the usefulness of the Bernstein copula for statistical modeling of metocean variables''. In: \textit{Proceedings of the ASME 2024 43th International Conference on Ocean, Offshore and Arctic Engineering (to appear)}.
+        \item[\ding{125}] A. Lovera, E. Fekhari, B. Jézéquel, M. Dupoiron, M. Guiton and E. Ardillon (2023). ``Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis". In: \textit{Journal of Physics: Conference Series (WAKE 2023)}.
     \end{itemize}
 \end{tcolorbox}
 
@@ -368,7 +368,7 @@ When analyzing a continuous sample $\bX_n \sim \bX$, the Sklar theorem states th
 As mentioned in Subsection~\ref{sec:copula_prelims}, the component-wise normalized ranks of the original sample $\bX_n$ define the empirical copula density $c_n$ (converging towards $C$ as $n$ increases).
 
 To the best of our knowledge, the \textit{copulogram} is a new multivariate data visualization tool improving the SPLOM by representing the empirical copula density $c_n$ on the upper triangle of the matrix plot. 
-This plot is an empirical decomposition of a multivariate sample in the vein of the Sklar theorem between marginals on the diagonal and copula on the upper triangle.
+This plot is an empirical decomposition of a multivariate sample following the Sklar theorem between marginals on the diagonal and copula on the upper triangle.
 
 %============================================================%
 \subsection{Implementation in a Python package}
