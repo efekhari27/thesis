@@ -622,7 +622,7 @@ Finally, note that the numerical experiments for the toy cases are available in 
 
 
 %------------------------------------------------------------%
-\subsection{Benchmark results on analytical toy-cases}
+\subsection{Benchmark results on analytical test cases}
 %------------------------------------------------------------%
 The toy cases were chosen to cover a large panel of complex probabilistic integration problems, completing the ones from \cite{fekhari_renew_2022}.
 To assess the complexity of numerical integration problems, \cite{owen_2003} introduced the concept of the ``effective dimension'' of an integrand function (number of the variables that actually impact the integral). 
@@ -634,18 +634,18 @@ In the same vein, \cite{kucherenko_feil_2011} build three classes of integrand s
 \end{itemize}
 The 10-dimensional ``GSobol function'' (toy case \#2) with a set of coefficient $\{a_i=2\}_{i=1}^{10}$ has an effective dimension equal to 10 and belongs to the hardest class C from \cite{kucherenko_feil_2011}. 
 In the case of the two-dimensional Gaussian mixture problem, the complexity is carried by the mixture of Gaussian distributions with highly nonlinear dependencies.
-Probabilistic integration results are presented in \fig{fig:toy-case1} (toy case \#1) and \fig{fig:toy-case2} (toy case \#2). 
+Probabilistic integration results are presented in \fig{fig:test case1} (toy case \#1) and \fig{fig:test case2} (toy case \#2). 
 Kernel herding samples using the energy-distance kernel are in red, while quasi-Monte Carlo samples built from Sobol' sequences are in grey. 
 Convergences of the arithmetic means are plotted on the left and MMDs on the right. 
 The respective BQ estimators of the means are plotted in dashed lines. 
 
 \begin{table*}
     \centering
-    \caption{Analytical toy-cases}
+    \caption{Analytical test cases}
     \begin{tabular}{llll}
      \hline
-        \textbf{Toy-case \#1} & $dim = 2$ & $g_1(\bx)= x_1 + x_2$ & Gaussian mixture from \fig{fig:KH_mixture} \\
-        \textbf{Toy-case \#2} & $dim = 10$ & $g_2(\bx) = \prod_{i=1}^{10} \frac{|4 x_i - 2| + a_i}{1 + a_i}, \{a_i=2\}_{i=1}^{10}$ & Gaussian $\iN(\mathbf{0.5},\mathbf{I}_{10})$\\
+        \textbf{Test case \#1} & $dim = 2$ & $g_1(\bx)= x_1 + x_2$ & Gaussian mixture from \fig{fig:KH_mixture} \\
+        \textbf{Test case \#2} & $dim = 10$ & $g_2(\bx) = \prod_{i=1}^{10} \frac{|4 x_i - 2| + a_i}{1 + a_i}, \{a_i=2\}_{i=1}^{10}$ & Gaussian $\iN(\mathbf{0.5},\mathbf{I}_{10})$\\
     \end{tabular}
     \label{tab:toycases}
 \end{table*}
@@ -659,13 +659,13 @@ The respective BQ estimators of the means are plotted in dashed lines.
 \end{remark}
 \medskip
 
-\noindent\emph{Results analysis for toy case \#1.} Convergence plots are provided in \fig{fig:toy-case1}. 
+\noindent\emph{Results analysis for toy case \#1.} Convergence plots are provided in \fig{fig:test case1}. 
 KH consistently converges faster than quasi-Monte Carlo in this case, especially for small sizes in terms of MMD. 
 BQ weights tend to reduce the fluctuations in the mean convergence, which ensures better performance for any size. 
 Overall, applying the weights enhances the convergence rate.
 
 \smallskip
-\noindent\emph{Results analysis for toy case \#2.} Convergence plots are provided in \fig{fig:toy-case2}. 
+\noindent\emph{Results analysis for toy case \#2.} Convergence plots are provided in \fig{fig:test case2}. 
 Although quasi-Monte Carlo is known to suffer the ``curse of dimensionality'', KH does not outperform it drastically in this example. 
 In fact, KH with uniform weights performs worse than quasi-Monte Carlo while optimally-weighted KH does slightly better. 
 Moreover, the results confirm that $\MMD_{\mathrm{BQ}}< \MMD_{\mathrm{unif}}$ for all our experiments. 
@@ -683,7 +683,7 @@ In these two toy cases, the MMD is shown to quantify numerical integration conve
     \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian_Mixture_convergence_ED.pdf}
     \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian_Mixture_convergence_MMD_ED.pdf}\\
 \end{center}
-\caption{Analytical benchmark results on the toy-case \#1} \label{fig:toy-case1}
+\caption{Analytical benchmark results on the test case \#1} \label{fig:test case1}
 \end{figure}
 
 \begin{figure}[!h]
@@ -695,7 +695,7 @@ In these two toy cases, the MMD is shown to quantify numerical integration conve
     \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol_10D_(normal_input)_convergence_ED.pdf}
     \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol_10D_(normal_input)_convergence_MMD_ED.pdf}\\
 \end{center}
-\caption{Analytical benchmark results on the toy-case \#2} \label{fig:toy-case2}
+\caption{Analytical benchmark results on the test case \#2} \label{fig:test case2}
 \end{figure}
 
 %----------------------------------------------------------------------%

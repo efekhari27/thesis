@@ -227,7 +227,7 @@ Using similar developments as previously it is possible to also apply a weightin
 in order to make it resemble its integral version $V'_\pi(\by_m) = \int_{\iD_\bx} \left[y(\bx)- \overline{y}_m \right]^2 \, \dd\pi(\bx)$ (see \citealp{fekhari_iooss_2023}). 
 \end{remark}
 
-%The previous estimator applies optimal weights to a given test set with respect to a targeted measure $\pi$. 
+%The previous estimator applies optimal weights to a given test set w.r.t. a targeted measure $\pi$. 
 %However, selecting the points to be in the test set should also be done carefully. 
 
 %============================================================%
@@ -266,7 +266,7 @@ The algorithm is as follows:
   \begin{equation}\label{eq:FSSF-fr}
     \bx^{(i+1)} \in \argmax_{\bx \in \iS \setminus \bX_i} \left[ \min\left( \min_{j \in \{1,\ldots,i\}} \|\bx-\bx^{(j)}\|, \sqrt{2}\,d \,\mbox{dist}(\bx,R(\bx)) \right) \right]\,, 
   \end{equation}
-  where $R(\bx)$ is the symetric of $\bx$ with respect to its nearest boundary of $\iD_\bx$,
+  where $R(\bx)$ is the symetric of $\bx$ w.r.t. its nearest boundary of $\iD_\bx$,
   and set $\bX_{i+1} = \bX_i \bigcup \bx^{(i+1)}$.
   
   \item Stop the algorithm when $\bX_n$ has the required size.
@@ -289,7 +289,7 @@ The other two algorithms presented in this section are able to directly choose p
 %============================================================%
 \subsection{Support points}\label{sec:SP}
 %============================================================%
-Support points \citep{mak_joseph_2018} are such that their associated empirical distribution $\xi_n$ has minimum Maximum-Mean-Discrepancy (MMD) with respect to $\pi$ for the energy-distance kernel of Sz\'ekely and Rizzo~\citep{szekely_rizzo_2013},
+Support points \citep{mak_joseph_2018} are such that their associated empirical distribution $\xi_n$ has minimum Maximum-Mean-Discrepancy (MMD) w.r.t. $\pi$ for the energy-distance kernel of Sz\'ekely and Rizzo~\citep{szekely_rizzo_2013},
 \begin{equation}\label{eq:kE}
 K_E(\bx,\bx') = \frac12\, \left(\Vert \bx \Vert + \Vert \bx' \Vert - \Vert \bx-\bx' \Vert\right)\,.
 \end{equation} 
