@@ -518,7 +518,7 @@ The baseline value of $Q_{MC}^2$, calculated with $10^6$ Monte Carlo points, is 
 Assuming that the error of $Q_{MC}^2$ is much smaller than the errors of all other estimators, this section compares the ability of the methods to approximate $Q_{MC}^2$. 
 For each sequence of nested test sets ($n\in\{4,\ldots,50\}$), the observed values of $\widehat Q^2_n$ (equation \eq{eq:Q2test}) and $Q_{n*}^2$ (equation \eq{Q2-est*}), are plotted as the solid and dashed lines, respectively. 
 
-The figures also show the value $Q^2_{LOO}$ obtained by Leave-One-Out (LOO) cross-validation, which is indicated at the left of each figure by a red diamond (values smaller than $0.25$ are not shown). 
+The figures also show the value $Q^2_{\mathrm{LOO}}$ obtained by Leave-One-Out (LOO) cross-validation, which is indicated at the left of each figure by a red diamond (values smaller than $0.25$ are not shown). 
 Note that, contrarily to the other methods considered, for LOO the test set is not disjoint from the training set, and thus the method does not satisfy the conditions set in the Introduction. 
 As the complete model-fitting procedure is repeated for each training sample of size $m-1$, including the maximum-likelihood estimation of the correlation lengths of the Matérn kernel, the closed-form expressions of \citet{Dubrule83} cannot be used, making the computations rather intensive. 
 The three figures show, and as expected, that the $Q_{LOO}^2$ tends to under-estimate $Q_{\mathrm{ideal}}^2$: by construction of the training set, LOO cross-validation relies on model predictions at points $\bx^{(i)}$ far from the other $m-1$ design points used to build the model, and thus tends to systematically overestimate the prediction error at $\bx^{(i)}$. 
@@ -700,7 +700,7 @@ Note that this is (partly) in line with the recommendations discussed in Section
 For $r_n \gtrsim 0.7$, the variance of the distribution increases with $r_n$: many unlucky training sets lead to poor models. 
 Note that the median of the empirical distribution slowly decreases as $r_n$ increases, which is consistent with the intuition that the model predictivity should decrease when the size of the training set decreases. 
 
-For completeness, the red diamond represented on the left of \fig{fig:cathareC2_benchmark} the value of $Q^2_{LOO}$ computed by LOO cross-validation. 
+For completeness, the red diamond represented on the left of \fig{fig:cathareC2_benchmark} the value of $Q^2_{\mathrm{LOO}}$ computed by LOO cross-validation. 
 In principle, being computed using the entire dataset, this value should establish an upper bound on the quality of models computed with smaller training sets. 
 This is indeed the case for small training sets (rightmost values in the figure), for which the predictivity estimated by LOO is above the majority of the predictivity indexes calculated. 
 But at the same time, LOO cross-validation tends to overestimate the errors, which explains the higher predictivity estimated by some other methods when $m=N-n$ is large enough.
@@ -732,7 +732,7 @@ Moreover, kernel herding proved, in the examples studied in this manuscript, to 
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{./part2/figures/SIS/cathareC2.pdf}
-  \caption{test case CATHARE: estimated $Q^2$. The box plots are for random cross-validation, and the red diamond (left) is for $Q^2_{LOO}$.}
+  \caption{test case CATHARE: estimated $Q^2$. The box plots are for random cross-validation, and the red diamond (left) is for $Q^2_{\mathrm{LOO}}$.}
   \label{fig:cathareC2_benchmark}
 \end{figure}
 
