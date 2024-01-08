@@ -398,7 +398,8 @@ This idea was further explored by \citet{marrel_chabridon_2021} who distinguishe
     \item \textit{Target sensitivity analysis} (\abv{tsa}), measuring the influence of input variables w.r.t. exceeding a threshold on the output; 
     \item \textit{Conditional sensitivity analysis} (\abv{csa}), studying the impact of input variables within the restricted domain (i.e., conditionally to this domain).
 \end{itemize}
-Finally, several new indices have been proposed in the ROSA context to deal with dependent inputs, such as the ``target Shapley effects'' by \citet{ilidrissi_2021_rosa}, whose estimation has been further improved by \citet{demange_2023_ijuq}. More recently, \citet{ehre_2024_vb_rosa} proposed a new set of Sobol' indices on the indicator function suited to this context via extending the previous work of \citet{mara_tarantola_2012}.
+Finally, several new indices have been proposed in the ROSA context to deal with dependent inputs, such as the ``target Shapley effects'' by \citet{ilidrissi_2021_rosa}, whose estimation has been further improved by \citet{demange_2023_ijuq}. 
+More recently, \citet{ehre_2024_vb_rosa} proposed a new set of Sobol' indices on the indicator function suited to this context via extending the previous work of \citet{mara_tarantola_2012}.
 
 All in all, this section aims at illustrating the estimation of HSIC-based TSA and CSA indices as a simple post-processing of BANCS. 
 After estimating a rare event probability with BANCS, a set of i.i.d. samples (each with size $N$) is available. 
@@ -449,17 +450,26 @@ Using this expression, the following conditional HSIC is proposed by \citet{marr
 \end{subequations}
 Note that the conditional indices defined hereabove may rely on both a filtering of the output (as in TSA) through the use of the $w_{\iF}$ function, which thus induces a weighting of the samples in the estimator (see \citet{marrel_chabridon_2021} for more details about these estimators).
 
-As a remark, one can notice that the $R^2_{\HSIC}$ indices (either in their global, target or conditional versions) are normalized indices (i.e., lying in $[0,1]$) which can be useful for a pragmatic ranking of the most influential variables. However, from a theoretical perspective, the observed values of these indices (and thus, sometimes, the rankins) may vary with respect to the kernel choice (i.e., the family and the estimated parameters) which can be disturbing for the analyst.
+As a remark, one can notice that the $R^2_{\HSIC}$ indices (either in their global, target or conditional versions) are normalized indices (i.e., lying in $[0,1]$) which can be useful for a pragmatic ranking of the most influential variables. 
+However, from a theoretical perspective, the observed values of these indices (and thus, sometimes, the rankings) may vary with respect to the kernel choice (i.e., the family and the estimated parameters) which can be disturbing for the analyst.
 
-In addition, from the estimation point of view, HSIC measures are computed, in practice, from a finite set of realizations. Therefore, the estimates might fluctuate, and the obtained values could be close to zero, but not properly equal to zero. As shown in \citet{delozzo_2016_hsic_test}, statistical hypothesis testing can be used in order to strengthen the decision process regarding the values of the indices (and thus make the screening more robust). Without going too much into details (see, e.g., \citet{chabridon_iooss_marrel_2020} for a brief presentation of these tests), depending on the nature of the analysis and the sample size, two kinds of tests are available. On the one hand, tn both TSA or CSA contexts, and even for samples that are of low or moderate sizes, the so-called ``permutation-based test'' proposed by \citet{delozzo_2016_hsic_test} is available. It consists in repeating several estimation of HSIC indices while permutating the output values. On the other hand, as soon as the sample size is large enough (this assumption needs to be considered carefully), the ``asymptotic regime'' lead to an asymptotic version of the test, which consists in approximating the law of test statistic as a gamma random variable. Thus, the test reduces to the evalutation of an analytic equation to compute the p-value. However, such a result is only valid for global and target analyses, not for the conditional one.
+In addition, from the estimation point of view, HSIC measures are computed, in practice, from a finite set of realizations. 
+Therefore, the estimates might fluctuate, and the obtained values could be close to zero, but not properly equal to zero. 
+As shown in \citet{delozzo_2016_hsic_test}, statistical hypothesis testing can be used in order to strengthen the decision process regarding the values of the indices (and thus make the screening more robust). 
+Without going too much into details (see, e.g., \citet{chabridon_iooss_marrel_2020} for a brief presentation of these tests), depending on the nature of the analysis and the sample size, two kinds of tests are available. 
+On the one hand, in both TSA or CSA contexts, and even for samples that are of low or moderate sizes, the so-called ``permutation-based test'' proposed by \citet{delozzo_2016_hsic_test} is available. 
+It consists in repeating several estimations of HSIC indices while permutating the output values. 
+On the other hand, as soon as the sample size is large enough (this assumption needs to be considered carefully), the ``asymptotic regime'' lead to an asymptotic version of the test, which consists in approximating the law of test statistic as a gamma random variable. 
+Thus, the test reduces to the evalutation of an analytic equation to compute the p-value. 
+However, such a result is only valid for global and target analyses, not for the conditional one.
 %Thus, as discussed in \citet{chabridon_bepu_2020}, the ranking should be assessed by combining both information from the indices and the p-values obtained from 
 %Statistical tests are the only robust way of screening variables w.r.t. the quantity of interest. 
 %In the context of TSA, the asymptotic tests proposed by \citet{gretton_2006} are well suited to the sample sizes encountered in reliability analysis. 
 %However, the asymptotic approach no longer holds for CSA, which is replaced by the permutation-based statistical test proposed by \citet{delozzo_2016_hsic_test}.
 %Note that the HSIC generally do not require independence of the samples but the permutation tests do. 
 
-The respective estimators of all indices are provided in \citet{marrel_chabridon_2021} and their implementation is available in \ot.
-Unlike Sobol' indices, the HSIC estimation is realized on the same sample for every variable $X_j$. 
+HSIC indices can be computed either using their U-statistic or V-statistic estimator, which are recalled in \citet{marrel_chabridon_2021} and implemented in \ot.
+Besides, this technique is qualified as ``given-data'', since it relies on only one sample. 
 This property allows us to apply HSIC TSA and CSA to the samples evaluated during the BANCS reliability analysis.
 
 
