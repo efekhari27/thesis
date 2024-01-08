@@ -713,7 +713,7 @@ Since its dependence structure is complex (see \fig{fig:envi_pairplot}), a param
 Then, a nonparametric fit using the empirical Bernstein copula (introduced in Subsection~\ref{sec:4ebc}) coupled with a kernel density estimation on each marginal is applied to the candidate set (with the EBC parameter $m=100 > m_{\mbox{MISE}}$ to avoid bias, see \citealp[p.117]{lasserre_2022}). 
 The sampling on this hybrid joint distribution is realized with a quasi-Monte Carlo method. 
 A Sobol' low-discrepancy sequence generates a uniform sample in the unit hypercube, which can then be transformed according to a target distribution. 
-Remember that quasi-Monte Carlo sampling is also sensitive to the choice of a low-discrepancy sequence, each presenting different properties (e.g., Sobol', Halton, Faure, etc.). 
+Remember that quasi-Monte Carlo sampling is also sensitive to the choice of a low-discrepancy sequence, each presenting different properties (Sobol', Halton, Faure, etc.). 
 Finally, the estimation by an arithmetic mean can be replaced by an optimally weighted mean. 
 To do so, optimal weight must be computed, using the formulas introduced in \eq{eq:bq_weights}.
 

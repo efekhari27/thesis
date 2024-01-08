@@ -26,7 +26,7 @@
 %============================================================%
 The main sources of solicitation in offshore design reside in the metocean conditions. 
 To accurately verify a structural design against the joint wind and wave conditions, these random excitations must be carefully modeled. 
-Offshore structures are usually certified against ultimate limit states (related to the occurrence of extreme metocean conditions) and fatigue limit states (related to the average fatigue over the metocean conditions). 
+Offshore structures are usually certified against ULS (related to the occurrence of extreme metocean conditions) and FLS (related to the average fatigue over the metocean conditions). 
 In this context, the probabilistic framework is typically used to model the joint distribution of random variables describing the metocean conditions (listed in Section~\ref{sec:owt_uncertainties}). 
 
 Note that a given probabilistic model might describe well the central behavior of the environmental distribution but not its tail behavior (and vice-versa).   
@@ -294,7 +294,7 @@ Therefore, high-dimensional problems should rather be divided into a product of 
 The polynomial order for EBC estimation is still a bottleneck that was studied over the years by different authors (see e.g., \citealp{janssen_2012_ebc,bouezmarni_2013_EBC_convergence,rose_2015,segers_2017}).  
 Meanwhile, other nonparametric approaches such as the ``penalized Bernstein'' and the ``penalized B-spline'' estimators were compared to the EBC and vine copulas in a benchmark realized by \citet{nagler_2017}. 
 The results showed that the most performant methods vary depending on the problem studied (for different dimensions, sample sizes, and strength of dependence). 
-Regarding tail dependence modeling, nonparametric approaches are generally limited, but recent contributions introduced Bootstrap procedures to better this aspect \citep{kiriliouk_2021_resampling}.
+Regarding tail dependence modeling, nonparametric approaches are generally limited, but recent contributions introduced bootstrap procedures to better this aspect \citep{kiriliouk_2021_resampling}.
 
 
 \subsubsection{Illustrative example on a Clayton copula}

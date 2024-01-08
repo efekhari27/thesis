@@ -26,15 +26,15 @@ For reproducibility purposes, most numerical developments related to this work a
 The first contribution to this topic is a study on the efficiency of a semiparametric inference on the metocean data. 
 In the proposed strategy, the copula is approximated by EBC, while the marginals can either be fitted by parametric or nonparametric methods.   
 The flexibility of the EBC suits the complex dependence structures found in metocean datasets. 
-As perspectives, a more extensive numerical comparison (e.g., with vine copula \citealp{vanem_2016,lin_2019_cvines_waves}) could be performed, for example using the MMD as a statistic for multivariate testing. 
+As a perspective, a more extensive numerical comparison (e.g., with vine copula \citealp{vanem_2016,lin_2019_cvines_waves}) could be performed, for example using the MMD as a statistic for multivariate testing. 
 Note that the MMD could also serve as a metric to optimize the Bernstein polynomial order. 
 Then, the goodness-of-fit for nonparametric methods might be studied in the same fashion as the validation of machine learning models (by wisely choosing a set of points to test the model).
 Finally, EBC could also be studied in the context of extreme conditions assessment, which is usually in favor of parametric approaches \citep{vanem_fekhari_2024}. 
 
 After defining a probabilistic model of the ambient metocean conditions, the influence of the turbines' wake was studied. 
-An uncertainty propagation of the ambient conditions through a simplified wake model of a wind farm provided the wake-perturbed metocean distribution at each turbine.  
+Uncertainty propagation of the ambient conditions through a simplified wake model of a wind farm provided the wake-perturbed metocean distribution at each turbine.  
 Then the MMD was proposed as a dissimilarity measure between these distributions. 
-A matrix of dissimilarities was obtained by computing the MMD between every pair of turbines, later used in a clustering to gather turbines with similar conditions.  
+A matrix of dissimilarities was obtained by computing the MMD between every pair of turbines, later used to cluster turbines with similar conditions.  
 By creating clusters of turbines solicited with similar environmental conditions, this approach aims at reducing the number loading studies at the farm scale (e.g., fatigue assessment).
 These contributions are related to the following publications:
 \begin{itemize}
@@ -50,15 +50,15 @@ These contributions are related to the following publications:
 
 This work is related to uncertainty propagation on the multi-physics numerical model of an offshore wind turbine DIEGO. 
 A first contribution concerns the estimation of lifetime cumulative fatigue damage as a mean against the environmental conditions (see e.g., \citealp{muller_cheng_2018}). 
-The use of Bayesian quadrature methods such as the kernel herding \citep{chen_welling_2010,husar_duvenaud_2012} is an efficient and flexible solution for given-data uncertainty propagation (i.e., directly subsampling from a large dataset without inference). 
+The use of Bayesian quadrature methods such as kernel herding \citep{chen_welling_2010,husar_duvenaud_2012} is an efficient and flexible solution for given-data uncertainty propagation (i.e., directly subsampling a large dataset without inference). 
 Our numerical experiments showed conclusive results in comparison to Monte Carlo and quasi-Monte Carlo sampling. 
 This development was gathered in a Python package named \texttt{otkerneldesign}. 
 
-As a perspective, the damage surrogate modeling could be further studied (e.g., following the work of \citealp{slot_sorensen_2020}). 
+As a perspective, the damage surrogate modeling could be further studied (e.g., extending the work of \citealp{slot_sorensen_2020}). 
 Recent techniques for stochastic emulators could be tested on this case \citep{baker_2022_stochastic_surrogates_review,zhu_2023_stochastic_pce,luthen_2023_stochastic_pce}.
 However, the method used should also be robust to the highly skewed distribution of the output variable. 
-From a mechanical aspect, other cumulative models for fatigue rule could be considered rather Miner's rule. 
-For example, nonlinear models \citep{rocher_2020_nonlinear_fatigue} take into account the order of apparition of the cyclic solicitations.  
+The mechanics could be approximated more accurately by considering other cumulative models for fatigue rule rather than Miner's rule. 
+For example, nonlinear models \citep{rocher_2020_nonlinear_fatigue} take the order of apparition of the cyclic solicitations into account.  
 
 Using kernel herding to estimate lifetime cumulative damage over the environmental conditions, variables related to the system could be modified. 
 Therefore, a second contribution deals with the reliability analysis on few system variables: soil stiffness, S-N curve parameters, yaw misalignment, and the damage resistance.   
@@ -67,8 +67,8 @@ Beyond the evaluation of a monopile foundation's failure probability, this thesi
 The perturbed-law based sensitivity indices \citep{lemaitre_2015_PLI} were applied to assess the relative influence of perturbating the inputs' moments. 
 
 An industrial perspective regarding the reliability analysis is its application to a floating wind turbine case. 
-This setup could introduce more nonlinearitites arising from the stronger impact of the waves on a floating structure. 
-Along with the fatigue reliability, the connection with other failure modes such as extreme loading could be studied (see for example the recent study on ultimate limit states by \citealp{wang_schar_2023_uls}). 
+This setup could introduce additional nonlinearitites arising from the stronger impact of the waves on a floating structure. 
+Along with fatigue reliability, the connection with other failure modes such as extreme loading could be studied (see for example the recent study on ultimate limit states by \citealp{wang_schar_2023_uls}). 
 These contributions are related to the following publications:
 \begin{itemize}
     \footnotesize
@@ -84,7 +84,7 @@ In the validation process of a surrogate model, cross-validation may be costly t
 The use of space-filling designs of experiments to define a complementary test set to the learning set was proposed. 
 Additionally, a method to compute optimal weights using Bayesian quadrature allows to improve the estimation of coefficients of predictivity. 
 
-To extend the incremental construction of test sets, the definition of a MMD-based stopping rule could be developed. 
+To extend the incremental construction of test sets, the definition of an MMD-based stopping rule could be developed. 
 Additionally, the computational effort could be reduced by only performing the validation on variables with a significant impact on the output, determined by screening techniques. 
 This contribution is related to the following publication:
 \begin{itemize}
@@ -93,7 +93,7 @@ This contribution is related to the following publication:
 \end{itemize}
 
 %============================================================%
-\subsection*{Adaptive rare event estimation using Bernstein copula}
+\subsection*{Adaptive rare event estimation using Bernstein copulas}
 %============================================================%
 
 A new method for rare event estimation was proposed in this work. 
@@ -101,7 +101,7 @@ This adaptive importance sampling method, named Bernstein adaptive nonparametric
 Decomposing this inference between copula and marginals brings more flexibility and showed good performances compared to NAIS \citep{zhang_1996_NIS} and SS \citep{AuBeck2001}. 
 This contribution offers numerous research perspectives. 
 Rather than Monte Carlo sampling on the conditional distributions, other methods could help speed-up the quantile estimation (e.g., randomized QMC \citep{tuffin_2019}). 
-Instead of fixing a sampling size to each subset, a stopping criteria could arise from the accuracy in the quantile estimation. 
+Instead of fixing a sampling size to each subset, a stopping criterion could arise from the accuracy of the quantile estimation. 
 To improve the inference of the conditional distributions, further work on optimizing the EBC polynomial order should be carried on. 
 Finally, an adaptation of BANCS could be proposed for high-dimensional problems by dividing the d-dimensional copula into independent blocks.   
 
@@ -119,14 +119,15 @@ This contribution is related to the following publication:
 
 %============================================================%
 %============================================================%
-\section*{Summary of the numerical developments}
+\section*{Summary of the numerical developments and perspectives}
 %============================================================%
 %============================================================%
 
 %============================================================%
 \paragraph{\texttt{otkerneldesign}}
 %============================================================%
-This Python package could be numerically improved by improving matrix management and operation. 
+This Python package generates designs of experiments based on kernel methods such as kernel herding \citep{chen_2018_owt_diagram} and support points \citep{mak_joseph_2018}. 
+It could be numerically improved by upgrading matrix management and operation. 
 Using methods as the ``hierarchical matrices'' \citep{borm_2003_hmat} could considerably ease the manipulation of large matrices and speed-up their operations.  
 Additionally, the increasing use of \abv{cpu} for parallel computing could be useful. 
 This could for example be realized by the use of the GPU programming interface CUDA (for ``compute unified device architecture''). 
@@ -136,7 +137,8 @@ Additionally, different MMD estimators could be offered to the user \citep{grett
 %============================================================%
 \paragraph{\texttt{bancs}}
 %============================================================%
-This Python package would need a proper documentation and a more exhaustive benchmark using the Python package \href{https://github.com/mbaudin47/otbenchmark/}{\texttt{otbenchmark}}\footnotemark. 
+This Python package proposes an implementation of the ``Bernstein Adaptive Nonparametric Conditional Sampling'' method for rare event estimation. 
+It would need a proper documentation and a more exhaustive benchmark using the Python package \href{https://github.com/mbaudin47/otbenchmark/}{\texttt{otbenchmark}}\footnotemark. 
 In addition, various methodological perspectives mentioned earlier could be developed. 
 
 \footnotetext{\url{https://github.com/mbaudin47/otbenchmark/}}
@@ -144,7 +146,8 @@ In addition, various methodological perspectives mentioned earlier could be deve
 %============================================================%
 \paragraph{\texttt{copulogram}}
 %============================================================%
-This visualization tool would need a proper documentation to better illustrate the added value of this plot. 
+This Python package proposes an implementation of a synthetic visualization tool for multivariate distributions. 
+It would need a proper documentation to better illustrate the added value of this plot. 
 
 %============================================================%
 \paragraph{Offshore wind turbine reliability wrapper}
