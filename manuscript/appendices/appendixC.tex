@@ -31,10 +31,10 @@ The next algorithm describes the subset simulation methods introduced by \citet{
         \State Estimate the empirical $p_0$-quantile $\widehat{q}_{[0]}^{\, p_0}$ of the set $G_{[0], N}$
         
         \While{$\widehat{q}_{[k]}^{\, p_0} > \yth$}
-        \State Subsample $\mathbf{A}_{[k+1], n}=\{\bX_{[k]}^{(j)} \subset \bX_{[k], N}| g(\bX_{[k]}^{(j)}) > \widehat{q}_{[k]}^{\, p_0} \}_{j=1}^n$
-        \State Fit marginals of the subset $\mathbf{A}_{[k+1], n}$ by KDE $\{\widehat{F}_i\}_{i=1}^d$
-        \State Fit the copula of the subset $\mathbf{A}_{[k+1], n}$ by EBC $B_\bm(C_n)$
-        \State Build a CDF $\widehat{F}_{[k+1]}(\bx) = B_\bm(C_n)(\widehat{F}_1(x_1), \dots, \widehat{F}_d(x_d))$
+        %\State Subsample $\mathbf{A}_{[k+1], n}=\{\bX_{[k]}^{(j)} \subset \bX_{[k], N}| g(\bX_{[k]}^{(j)}) > \widehat{q}_{[k]}^{\, p_0} \}_{j=1}^n$
+        %\State Fit marginals of the subset $\mathbf{A}_{[k+1], n}$ by KDE $\{\widehat{F}_i\}_{i=1}^d$
+        %\State Fit the copula of the subset $\mathbf{A}_{[k+1], n}$ by EBC $B_\bm(C_n)$
+        %\State Build a CDF $\widehat{F}_{[k+1]}(\bx) = B_\bm(C_n)(\widehat{F}_1(x_1), \dots, \widehat{F}_d(x_d))$
         \State Sample $\bX_{[k+1], N} = \{\bX_{[k+1]}^{(j)}\}_{j=1}^N \overset{\text{i.i.d}}{\sim} \widehat{f}_{[k+1]}$
         \State Sample by MCMC $\bX_{[k+1], N} \!=\! \{\bX_{[k+1]}^{(j)}\}_{j=1}^N \!\overset{\text{i.d}}{\sim}\! f_{\bX | F_{[k+1]}}$ (with $\mathbf{A}_{[k+1], n}$ as initialization points)
         \State Evaluate $G_{[k+1], N} = \{g(\bX_{[k+1]}^{(j)})\}_{j=1}^N$

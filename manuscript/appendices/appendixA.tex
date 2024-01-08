@@ -83,7 +83,7 @@ The number of bins is the only tuning parameter of this method.
 Kernel density estimation (KDE) is a nonparametric method, it estimates a PDF by weighing a sample of observations $X_n$ with kernels.  
 After setting a kernel $k: \R \rightarrow \R_+$ and a scaling parameter $h>0$, also called bandwidth, the kernel density estimator is defined as:
 \begin{equation}
-    \what{f}_X(x) = \frac{1}{n h}\sum_{i=1}^{n} k\left(\frac{x - x^{(i)}}{h}\right)
+    \what{f}_X(x) = \frac{1}{n h}\sum_{i=1}^{n} k\left(\frac{x - x^{(i)}}{h}\right).
 \end{equation}
 
 Different types of kernels are used for KDE, such as the standard normal, triangular, Epachnikov or uniform. 
