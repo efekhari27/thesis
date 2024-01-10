@@ -31,13 +31,13 @@ La recherche appliquée à l'éolien en mer fait intervenir plusieurs discipline
 De manière générale, plusieurs décisions sont prises durant la vie d'une éolienne par son concepteur, installateur et exploitant, tout en ayant une connaissance partielle de certains phénomènes physiques. 
 Par conséquent, modéliser et maîtriser les diverses sources d'incertitudes associées à l'éolien en mer s'avère être un élément déterminant dans une industrie hautement concurrentielle.
 
-Dans l'ensemble, l'industrie de l'éolien en mer a besoin de méthodes de traitement des incertitudes pour maîtriser les marges de sûreté et la gestion des actifs industriels (à la maille des composants, de l'éolienne et du parc dans son ensemble) \citep{OWT_review_2016}. 
+Dans l'ensemble, l'industrie de l'éolien en mer a besoin de méthodes de traitement des incertitudes pour maîtriser les marges de sûreté et la gestion des actifs industriels (à la maille des composants, de l'éolienne et du parc dans son ensemble, \citealp{OWT_review_2016}). 
 Pour un développeur de projets éoliens, l'attention est d'abord portée sur l'amélioration du potentiel éolien des sites candidats en combinant différentes sources d'information et en modélisant la distribution multivariée des conditions environnementales au sein d'un parc éolien. 
 Dans le cas de projets en éolien flottant, l'objectif est d'intégrer un aspect probabiliste dès la phase de conception (par exemple, du flotteur) afin de définir des solutions plus sûres, plus robustes et plus rentables. 
 Pour un propriétaire d'un parc éolien, la gestion de la fin de vie est une autre problématique importante. 
 Un propriétaire de parc éolien en fin de vie à le choix entre trois options : prolonger la durée de vie des actifs en exploitation, remplacer les éoliennes actuelles par des modèles plus récents, ou démanteler et vendre le parc éolien. 
 Les deux premières solutions nécessitent d'évaluer la fiabilité de la structure et sa durée de vie résiduelle. Ces évaluations quantitatives sont examinées par des organismes de certification et des assureurs pour délivrer des permis d'exploitation. 
-Pour fournir des évaluations rigoureuses des risques, la méthodologie générique de \textit{traitement des incertitudes} est une démarche qui fait consensus dans les secteurs industriels confrontés à ce genre de problématique \citep{rocquigny_2008}.
+Pour fournir des évaluations rigoureuses des risques, la méthodologie générique de \textit{traitement des incertitudes} est une démarche qui fait consensus dans les secteurs industriels confrontés à ce genre de problématique \citep{rocquigny_2008,blanchard_2023}.
 
 
 %============================================================%
@@ -51,7 +51,7 @@ Cependant, ces modèles numériques s'intègrent dans une démarche déterminist
 La question de la gestion des incertitudes associées aux entrées se pose rapidement lors de l'utilisation des OCS. 
 
 Le traitement des incertitudes vise à modéliser et à traiter les incertitudes autour d'un modèle numérique. 
-Pour ce faire, une méthodologie générique a été proposée pour quantifier et analyser les incertitudes entre les variables d'entrée et de sortie d'un OCS \citep{rocquigny_2008}. 
+Pour ce faire, une méthodologie générique a été proposée pour quantifier et analyser les incertitudes entre les variables d'entrée et de sortie d'un OCS \citep{rocquigny_2008,blanchard_2023}. 
 Une présentation des outils mathématiques utilisés dans ce domaine est proposée par \citet{sullivan_2015}.
 Cette approche apporte une meilleure compréhension d'un système, ce qui contribue à une prise de décision plus robuste.   
 
@@ -63,7 +63,7 @@ La Figure \ref{fig:UQ_methodo_FR} illustre les étapes génériques de la métho
     La spécification du problème implique également de définir l'ensemble des paramètres inhérents au modèle numérique. 
     Ces paramètres comprennent aussi bien les variables d'entrée que les variables de sortie générées par la simulation. 
     Dans ce document, le modèle numérique est considéré comme une boîte-noire, par opposition à des approches qui s'intègrent à l'intérieur des schémas de résolution numérique des équations de comportement du système (approches dites intrusives \citealp{lemaitre_2010}). 
-    En général, ces modèles numériques sont au préalable calibrés par rapport à des données mesurées et suivent un processus de validation et de vérification pour réduire les erreurs de modélisation \citep{oberkampf_2010_VVUQ}.
+    En général, ces modèles numériques sont au préalable calibrés par rapport à des données mesurées et suivent un processus de validation et de vérification pour réduire les erreurs de modélisation \citep{oberkampf_2010_VVUQ,damblin_2015,carmassi_2018}.
     \item[\textbullet] \textbf{\'Etape B -- Modélisation et quantification des incertitudes.} 
     L'objectif de la deuxième étape est d'identifier et modéliser toutes les sources d'incertitude associées aux variables d'entrée. 
     Dans la plupart des cas, cette modélisation est effectuée dans un cadre probabiliste.
@@ -76,7 +76,7 @@ La Figure \ref{fig:UQ_methodo_FR} illustre les étapes génériques de la métho
     En complément de la propagation d'incertitudes, une analyse de sensibilité peut être réalisée afin d'étudier le rôle attribué à chaque entrée incertaine dans la variabilité de la sortie d'intérêt.
     \item[\textbullet] \textbf{Métamodélisation.} 
     Compte tenu du coût de calcul élevé que représentent certaines simulations, des approches statistiques visent à émuler ces simulateurs coûteux partir d'un nombre limité de simulations. 
-    La quantification de l'incertitude peut alors être réalisée avec le modèle statique de substitution (ou métamodèle) pour un moindre coût de calcul. 
+    La quantification de l'incertitude peut alors être réalisée avec le métamodèle (ou modèle de substitution) pour un moindre coût de calcul. 
     Cette étape optionnelle d'apprentissage statistique ne fait pas à proprement dit partie du traitement des incertitudes mais elle s'avère souvent essentielle pour permettre sa mise en \oe uvre pratique. 
 \end{itemize}
 
@@ -171,7 +171,7 @@ Cette thèse s'intéresse particulièrement à l'évaluation probabiliste du dom
 Le dommage en fatigue est un phénomène qui détériore les propriétés mécaniques d'un matériau suite à sa sollicitation via un grand nombre de contraintes cycliques de faible amplitude. 
 A l'heure actuelle, les standards \citep{iec_2019,dnv_loads_2016} recommandent l'utilisation de coefficients de sécurité déterministes pour faire face à ce mode de défaillance. 
 Une approche probabiliste permet d'enrichir l'analyse et parfois de mettre en évidence le conservatisme des marges de sûreté. 
-Plusieurs travaux récents se sont intéressés à cette thématique en abordant des angles méthodologiques différents \citep{huchet_2018,lataniotis_2019,cousin_2021,hirvoas_2021,petrovska_2022}.
+Plusieurs travaux récents se sont intéressés à cette thématique en abordant des angles méthodologiques différents \citep{huchet_2018,lataniotis_2019,cousin_2021,petrovska_2022}.
 
 Dans ce contexte, ce chapitre liste les paramètre d'entrée de la chaîne de calcul considérés comme incertains par la suite. 
 Ces variables aléatoires sont regroupées en deux groupes : le vecteur aléatoire lié à l'environnement (par exemple : la vitesse moyenne du vent, l'écart-type de la vitesse du vent, la direction du vent, la hauteur de houle, la période de houle, et la direction de houle), et le vecteur aléatoire lié au système (par exemple : l'erreur de d'alignement au vent du contrôleur, la rigidité du sol, les paramètres des courbes de calcul de fatigue).
@@ -191,7 +191,7 @@ La \textit{maximum mean discrepancy} (MMD) \citep{gretton_2006} est une mesure d
 \subsection*{Chapitre 3 -- Quantification des perturbations induites par les effets de sillage au sein d'un parc éolien}
 %------------------------------------------------------------%
 
-Ce chapitre étudie les perturbations sur les conditions environnementales à l'intérieur d'une ferme éolienne en mer induites par les effets de sillage (\textit{wake effect} en anglais) \citep{larsen_2008_wake}. 
+Ce chapitre étudie les perturbations sur les conditions environnementales à l'intérieur d'une ferme éolienne en mer induites par les effets de sillage (\textit{wake effect} en anglais, \citealp{larsen_2008_wake}). 
 Un parc éolien en mer théorique au large de la côte sud de la Bretagne est considéré comme cas d'usage, et un modèle numérique simulant le sillage de ce parc est exploité. 
 Ce modèle donne une prédiction analytique du déficit en vitesse de vent et de la turbulence créés par le sillage, en tenant compte de l'influence de la position des flotteurs en raison des forces moyennes du vent. 
 Une propagation de l'incertitude sur le modèle de sillage est réalisée, en considérant la loi conjointe des conditions environnementales ambiantes en entrée. 
@@ -200,17 +200,27 @@ Une mesure de dissimilarité (la MMD) est utilisée pour comparer les distributi
 Cette quantité permet de regrouper les éoliennes (phase de \textit{clustering}) exposées à des conditions environnementales similaires, entraînant une réponse structurelle identiques. 
 Compte tenu du coût de calcul élevé des simulations aéro-servo-hydro-élastiques des éoliennes en mer, cette étude préalable permet de réaliser une analyse de fiabilité à l'échelle d'une ferme éolienne sans répéter l'analyse pour chaque turbine. 
 En fin de compte, seules quatre classes sont retenues pour représenter une ferme de 25 éoliennes. 
-Ce travail a mené à la publication suivante : \\
+Ce travail a mené à la publication suivante : 
 
+\medskip
 \noindent
-\ding{125} A. Lovera, \underline{E. Fekhari}, B. Jézéquel, M. Dupoiron, M. Guiton and E. Ardillon (2023). ``Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis". In: \textit{Journal of Physics: Conference Series (WAKE 2023)}, Visby, Sweden. 
+\ding{125} E. Vanem, \underline{E. Fekhari}, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2024). ``A joint probability distribution model for multivariate wind and wave conditions''. In: \textit{Journal of Offshore Mechanics and Arctic Engineering}, In press. 
+
+\medskip
+\noindent
+\ding{125} E. Vanem, \O{}. Lande and \underline{E. Fekhari}, (2024). ``A simulation study on the usefulness of the Bernstein copula for statistical modeling of metocean variables''. In: \textit{Proceedings of the ASME 2024 43th International Conference on Ocean, Offshore and Arctic Engineering (to appear)}.
+
+\medskip
+\noindent
+\ding{125} A. Lovera, \underline{E. Fekhari}, B. Jézéquel, M. Dupoiron, M. Guiton and E. Ardillon (2023). ``Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis". In: \textit{Journal of Physics: Conference Series (WAKE 2023)}, Visby, Sweden.
+ 
 
 %------------------------------------------------------------%
 \subsection*{Chapitre 4 -- Méthodes à noyaux pour l'estimation de la tendance centrale}
 %------------------------------------------------------------%
 
-Ce chapitre présente une utilisation d'une mesure de dissimilarité basée sur des noyaux (la MMD) pour échantillonner suivant une loi de probabilité, méthode du ``\textit{kernel herding}'' introduite par \citet{chen_welling_2010}. 
-Cette technique de quadrature appartient à la famille dite des \og quadratures Bayésiennes \fg{} \citep{briol_oates_2019} qui s'interprètent comme une généralisation des méthodes de quasi-Monte Carlo \citep{hickernell_2020}. 
+Ce chapitre présente une utilisation d'une mesure de dissimilarité basée sur des noyaux (la MMD) pour échantillonner suivant une loi de probabilité, méthode du «\textit{kernel herding}» introduite par \citet{chen_welling_2010}. 
+Cette technique de quadrature appartient à la famille dite des «quadratures Bayésiennes» \citep{briol_oates_2019} qui s'interprètent comme une généralisation des méthodes de quasi-Monte Carlo \citep{hickernell_2020}. 
 Le \textit{kernel herding} est présenté en détails et plusieurs expériences numériques sur des fonctions analytiques illustrent son intérêt. 
 
 Les propriétés de cette méthode sont mises en valeur via une application industrielle dédiée à l'estimation de la moyenne du dommage en fatigue d'une structure éolienne. 
@@ -221,14 +231,17 @@ Les incertitudes des conditions environnementales en entrée sont inférées sur
 
 Dans ce cadre, une comparaison numérique avec un échantillonnage Monte Carlo et quasi-Monte Carlo révèle la performance et les avantages pratiques du \textit{kernel herding}.
 Cette méthode permet notamment sous-échantillonner directement depuis une base de données environnementales importante, sans effectuer d'inférence (étape B). 
-Ce travail a mené à la publication et au développement informatique suivant : \\
+Ce travail a mené à la publication et aux développements informatiques suivants : 
 
+\medskip
 \noindent
-\ding{125} \underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2024). ``Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature''. In: \textit{Data-Centric Engineering}, In press.\\
+\ding{125} \underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2024). ``Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature''. In: \textit{Data-Centric Engineering}, In press.
 
+\medskip
 \noindent
-\ding{43} Le module Python \href{https://github.com/efekhari27/ctbenchmark}{\texttt{ctbenchmark}} standardise les expériences numériques liées à la quadrature Bayésienne et est disponible sur la plateforme GitHub.\\
+\ding{43} Le module Python \href{https://github.com/efekhari27/ctbenchmark}{\texttt{ctbenchmark}} standardise les expériences numériques liées à la quadrature Bayésienne et est disponible sur la plateforme GitHub.
 
+\medskip
 \noindent
 \ding{43} Le module Python \href{https://github.com/efekhari27/copulogram}{\texttt{copulogram}} propose une nouvelle représentation graphique de jeux de données multivariés et est disponible sur la plateforme de téléchargement Pypi.
 
@@ -241,16 +254,22 @@ Ce travail a mené à la publication et au développement informatique suivant :
 Ce chapitre propose une utilisation des méthodes d'échantillonage à base de noyaux dans le cadre de la validation de modèles d'apprentissage (ou métamodèles). 
 L'estimation de la prédictivité des modèles d'apprentissage supervisé nécessite une évaluation de la fonction apprise sur un ensemble de points de test (non utilisés par lors de l'apprentissage). 
 La qualité de l'évaluation dépend naturellement des propriétés de l'ensemble de test et de la statistique d'erreur utilisée pour estimer l'erreur de prédiction. 
-Cette contribution propose d'une part d'utiliser des méthodes d'échantillonnage pour sélectionner de manière ``optimale'' un ensemble de test et d'autre part présente un nouveau critère de prédictivité qui pondère les erreurs observées pour obtenir une estimation globale de l'erreur. 
+Cette contribution propose d'une part d'utiliser des méthodes d'échantillonnage pour sélectionner de manière «optimale» un ensemble de test et d'autre part présente un nouveau critère de prédictivité qui pondère les erreurs observées pour obtenir une estimation globale de l'erreur. 
 Une comparaison numérique entre plusieurs méthodes d'échantillonnage basées sur des approches géométriques \citep{shang_apley_2020} ou sur des méthodes à noyaux \citep{chen_welling_2010,mak_joseph_2018} est effectuée. 
 Nos résultats montrent que les versions pondérées des méthodes à noyau offrent des performances supérieures. 
 Une application aux efforts mécaniques simulées par un modèle éolien en mer est également présentée. 
 Cette expérience illustre la pertinence pratique de cette technique comme alternative efficace aux techniques coûteuses de validation croisée. 
-Ce travail a mené à la publication et au développement informatique suivant : \\
+Ce travail a mené à la publication et au développement informatique suivant : 
 
+\medskip
 \noindent
-\ding{125} \underline{E. Fekhari}, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). ``Model predictivity assessment: incremental test-set selection and accuracy evaluation''. In: \textit{Studies in Theoretical and Applied Statistics}, pages 315--347. Springer.\\
+\ding{125} \underline{E. Fekhari}, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). ``Model predictivity assessment: incremental test-set selection and accuracy evaluation''. In: \textit{Studies in Theoretical and Applied Statistics}, pages 315--347. Springer.
 
+\medskip
+\noindent
+\ding{125} \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022). ``Efficient techniques for fast uncertainty propagation in an offshore wind turbine multi-physics simulation tool''. In: \textit{Proceedings of the 5th International Conference on Renewable Energies Offshore (RENEW 2022)}, Lisbon, Portugal.
+
+\medskip
 \noindent
 \ding{43} Le module Python \href{https://efekhari27.github.io/otkerneldesign/master/}{\texttt{otkerneldesign}} est développé en collaboration avec J.Muré. Ce module dédié à la quadrature Bayésienne est documenté et disponible sur la plateforme de téléchargement Pypi. 
 
@@ -259,36 +278,47 @@ Ce travail a mené à la publication et au développement informatique suivant :
 \subsection*{Chapitre 6 -- Estimation non-paramétrique de probabilités d'événements rares}
 %------------------------------------------------------------%
 
-L'estimation de probabilités d'événements rares est un problème courant dans la gestion des risques industriels, notamment dans le domaine de la fiabilité des structures \citep{chabridon_2018_thesis}. 
+L'estimation de probabilités d'événements rares est un problème courant dans la gestion des risques industriels, notamment dans le domaine de la fiabilité des structures \citep{MorioBalesdent2015}. 
 Pour ce faire, plusieurs techniques ont été proposées pour surmonter les limites connues de la méthode de Monte Carlo. 
-Parmi elles, la méthode de ``\textit{subset simulation}'' \citep{AuBeck2001} est une technique qui repose sur la décomposition de la probabilité de l'événement rare en un produit de probabilités conditionnelles moins rares (donc plus simples à estimer) associées à des événements de défaillance imbriqués. 
+Parmi elles, la méthode de «\textit{subset simulation}» \citep{AuBeck2001} est une technique qui repose sur la décomposition de la probabilité de l'événement rare en un produit de probabilités conditionnelles moins rares (donc plus simples à estimer) associées à des événements de défaillance imbriqués. 
 Cependant, cette technique repose sur la simulation conditionnelle à base de méthodes de Monte Carlo par chaînes de Markov (MCMC). 
 Ces algorithmes permettent, à la convergence, de simuler selon la densité cible. 
 Cependant, en pratique, ils produisent souvent des échantillons non indépendants et identiquement distribués (i.i.d.) en raison de la corrélation entre les chaînes de Markov. 
 Ce chapitre propose une autre méthode pour échantillonner conditionnellement aux événements de défaillance imbriqués afin d'obtenir des échantillons dont la propriété d'être i.i.d. est préservée. 
 La propriété d'indépendance des échantillons est particulièrement pertinente pour exploiter ces mêmes échantillons pour une analyse de sensibilité fiabiliste. 
 L'algorithme proposé repose sur l'inférence non-paramétrique de la distribution conjointe conditionnelle en utilisant une estimation par noyau des marginales combinée à une inférence de la dépendance à l'aide de la copule empirique de Bernstein \citep{sancetta_satchell_2004}. 
-L'algorithme appelé \textit{``Bernstein adaptive nonparametric conditional sampling''} (BANCS) est comparée à la méthode du \textit{subset simulation} pour plusieurs problèmes de fiabilité des structures. 
+L'algorithme appelé \textit{«Bernstein adaptive nonparametric conditional sampling»} (BANCS) est comparée à la méthode du \textit{subset simulation} pour plusieurs problèmes de fiabilité des structures. 
 Les premiers résultats sont encourageants, mais le contrôle du biais de l'estimateur doit être plus amplement investigué. 
-Ce travail a mené à la publication et au développement informatique suivant : \\
 
+Dans une deuxième partie, ce chapitre aborde l'analyse de sensibilité pour des mesures de risque (par exemple, une probabilité d'événement rare). 
+L'analyse de sensibilité globale \citep{daveiga_iooss_2021} attribue à chaque variable (ou groupe de variable) une part de variabilité globale de la sortie (le plus souvent à l'aide d'une décomposition fonctionnelle de la variance de la sortie). 
+Cependant, les variables ayant un impact sur des quantités liées à une queue de distribution peuvent être très différentes que celles ayant un impact sur la variabilité globale (pondérée par le poids associé au centre de la distribution). 
+L'analyse de sensibilité fiabiliste (en anglais «\textit{reliability-oriented sensitivity analysis}», \citealp{chabridon_2018_thesis}) permet d'expliquer le rôle des entrées vis-à-vis de probabilités d'événements rares. 
+L'idée de ce chapitre est d'étudier l'évolution de la sensibilité au fur et à mesure que l'échantillonnage se rapproche de l'événement rare. 
+Cette analyse permet ainsi d'exploiter les paquets successifs d'échantillons conditionnels générés par l'algorithme BANCS. 
+En post-traitement de l'estimation de la probabilité d'un événement rare, cette approche utilise une mesure d'importance à base de noyaux, nommée \textit{Hilbert-Schmidt Indepencence Criterion}, pour évaluer la dynamique de la sensibilité fiabiliste \citep{marrel_chabridon_2021}.
+Ce travail a mené à la publication et au développement informatique suivant : 
+
+\medskip
 \noindent
-\ding{125} \underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2023). ``Bernstein adaptive nonparametric conditional sampling: a new method for rare event probability estimation''. In: \textit{Proceedings of the 14th International Conference on Applications of Statistics and Probability in Civil Engineering (ICASP 14)}, Dublin, Ireland.\\
+\ding{125} \underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2023). ``Bernstein adaptive nonparametric conditional sampling: a new method for rare event probability estimation''. In: \textit{Proceedings of the 14th International Conference on Applications of Statistics and Probability in Civil Engineering (ICASP 14)}, Dublin, Ireland.
 
+\medskip
 \noindent
 \ding{43} Le module Python \href{https://github.com/efekhari27/bancs}{\texttt{bancs}} propose une implémentation de la méthode BANCS et est disponible sur la plateforme GitHub. 
 
 %------------------------------------------------------------%
-\subsection*{Chapitre 7 -- Analyse de sensibilité fiabiliste adaptative}
+\subsection*{Chapitre 7 -- Analyse de fiabilité et de robustesse d'une éolienne en mer sollicitée en fatigue}
 %------------------------------------------------------------%
 
-Ce chapitre traite d'analyse de sensibilité pour des mesures de risque (par exemple, une probabilité d'événement rare). 
-L'analyse de sensibilité globale \citep{daveiga_iooss_2021} attribue à chaque variable (ou groupe de variable) une part de variabilité globale de la sortie (le plus souvent à l'aide d'une décomposition fonctionnelle de la variance de la sortie). 
-Cependant, les variables ayant un impact sur des quantités liées à une queue de distribution peuvent être très différentes que celles ayant un impact sur la variabilité globale (pondérée par le poids associé au centre de la distribution). 
-L'analyse de sensibilité fiabiliste (en anglais ``\textit{reliability-oriented sensitivity analysis}'', \citealp{chabridon_2018_thesis}) permet d'expliquer le rôle des entrées vis-à-vis de probabilités d'événements rares. 
-L'idée de ce chapitre est d'étudier l'évolution de la sensibilité au fur et à mesure que l'échantillonnage se rapproche de l'événement rare. 
-Cette analyse permet ainsi d'exploiter les paquets successifs d'échantillons conditionnels générés par l'algorithme BANCS (présenté dans le Chapitre 6). 
-En post-traitement de l'estimation de la probabilité d'un événement rare, cette approche utilise une mesure d'importance à base de noyaux, nommée \textit{Hilbert-Schmidt Indepencence Criterion}, pour évaluer la dynamique de la sensibilité fiabiliste \citep{marrel_chabridon_2021}.
+Ce chapitre propose une analyse probabiliste de la fiabilité et la robustesse d'une fondation éolienne en mer. 
+Dans un premier temps, un métamodèle de l'endommagement en fatigue cumulé sur la durée de vie dépendant de plusieurs de variables liées au système est construit sur une base d'apprentissage rassemblant plus de $10^5$ simulations d'une l'éolienne en mer.
+Ce nombre considérable de simulations a été rendu possible grâce au déploiement de l'OCS sur une infrastructure de calcul haute performance. 
+En utilisant le métamodèle pour émuler l'OCS coûteux de l'éolienne, une analyse de fiabilité nominale est ensuite effectuée. 
+Pour compléter cette analyse, la robustesse de la probabilité de défaillance obtenue est évaluée en perturbant les distributions des entrées. 
+Cette approche appelée «\textit{perturbed-law based sensitivity indices}» \citep{lemaitre_2015_PLI} indique que la variable de résistance a un rôle primordial sur la fiabilité.
+
+
 
 %============================================================%
 %============================================================%
@@ -296,7 +326,9 @@ En post-traitement de l'estimation de la probabilité d'un événement rare, cet
 %============================================================%
 %============================================================%
 
-En résumé, cette thèse aborde plusieurs aspects du traitement des incertitudes à l'aide d'outils mathématiques à base de noyaux et présente un débouché industriel lié à l'enjeu de la maîtrise des risques des actifs éoliens en mer. Les contributions de cette thèse ont été principalement réalisées dans le cadre du projet européen HIPERWIND (\textit{HIghly advanced Probabilistic design and Enhanced Reliability methods for high-value, cost-efficient offshore wind.}), et de l'ANR INDEX (INcremental Design of EXperiments). Le sous-sections ci-après résument les communications, les publications dans revue à comité de lecture et les développements informatiques.
+En résumé, cette thèse aborde plusieurs aspects du traitement des incertitudes à l'aide d'outils mathématiques à base de noyaux et présente un débouché industriel lié à l'enjeu de la maîtrise des risques des actifs éoliens en mer. 
+Les contributions de cette thèse ont été principalement réalisées dans le cadre du projet européen HIPERWIND (\textit{HIghly advanced Probabilistic design and Enhanced Reliability methods for high-value, cost-efficient offshore wind.}), et de l'ANR INDEX (INcremental Design of EXperiments). 
+Le sous-sections ci-après résument les communications, les publications dans revue à comité de lecture et les développements informatiques.
 
 
 \newpage
@@ -311,14 +343,14 @@ En résumé, cette thèse aborde plusieurs aspects du traitement des incertitude
 \noindent
 \texttt{otkerneldesign}\footnote{Documentation:\url{https://efekhari27.github.io/otkerneldesign/master/}}
 \begin{itemize}
-    \item[\textbullet] Ce module Python génère des échantillons (aussi appelés plans d'expérience) en utilisant des méthodes à base de noyaux comme le \textit{kernel herding} et les \textit{support points}. Une implementation tensorisée qui améliore grandement les performances est également proposée. En complément, une méthode de pondération ``optimale'' à l'aide de quadrature Bayésienne est proposée. 
+    \item[\textbullet] Ce module Python génère des échantillons (aussi appelés plans d'expérience) en utilisant des méthodes à base de noyaux comme le \textit{kernel herding} et les \textit{support points}. Une implementation tensorisée qui améliore grandement les performances est également proposée. En complément, une méthode de pondération «optimale» à l'aide de quadrature Bayésienne est proposée. 
     \item[\textbullet] Ce module est développé en collaboration avec J. Muré, est documenté et disponible sur la plateforme de téléchargement Pypi.
 \end{itemize}
 
 \noindent
 \texttt{bancs\footnote{Dépôt: \url{https://github.com/efekhari27/bancs}}}     
 \begin{itemize}
-    \item[\textbullet] Ce module Python offre une implémentation de la méthode ``\textit{Bernstein Adaptive Nonparametric Conditional Sampling}'' mentionnée au Chapitre~\ref{chpt:6}. 
+    \item[\textbullet] Ce module Python offre une implémentation de la méthode «\textit{Bernstein Adaptive Nonparametric Conditional Sampling}» mentionnée au Chapitre~\ref{chpt:6}. 
     \item[\textbullet] Ce module est disponible sur la plateforme de GitHub et son utilisation est illustrée par des exemples analytiques.
 \end{itemize}
 

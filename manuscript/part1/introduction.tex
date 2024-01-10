@@ -190,7 +190,7 @@ Ultimately, only four classes are selected to represent a wind farm of 25 turbin
 \paragraph{Chapter 4 -- Kernel-based central tendency estimation.} 
 %------------------------------------------------------------%
 This chapter presents the use of the MMD (introduced in the previous chapter) in the context of probability distribution sampling, a method known as ``kernel herding'' introduced by \citet{chen_welling_2010}. 
-This quadrature technique belongs to the family of ``Bayesian quadratures'' \citet{briol_oates_2019}, which can be viewed as a generalization of quasi-Monte Carlo methods \citep{hickernell_2020}. 
+This quadrature technique belongs to the family of ``Bayesian quadratures'' \citep{briol_oates_2019}, which can be viewed as a generalization of quasi-Monte Carlo methods \citep{hickernell_2020}. 
 
 The properties of this method are highlighted through an industrial application dedicated to estimating the mean fatigue damage of a wind turbine structure. 
 Although this quantity is crucial in the design and certification of wind turbines, the methods used by standards to estimate it are known to be suboptimal (i.e., regular grids). 
@@ -216,12 +216,12 @@ This experiment illustrates the practical relevance of this technique as an effe
 \paragraph{Chapter 6 -- Rare event estimation using Bernstein adaptive nonparametric sampling.} 
 %------------------------------------------------------------%
 Estimating rare event probabilities is a common issue in industrial risk management, especially in the field of structural reliability \citep{MorioBalesdent2015}. 
-To overcome the well-known limitations of the Monte Carlo method, several techniques have been proposed
+To overcome the well-known limitations of the Monte Carlo method, several techniques have been proposed. 
 Among them, ``subset simulation'' \citep{AuBeck2001} is a technique based on the split of a rare probability into a product of less rare (and thus easier to estimate) conditional probabilities associated with nested failure events. 
 However, this technique relies on conditional simulation using Markov chain Monte Carlo (MCMC) methods. 
 In practice, these algorithms produce correlated chains which converge asymptotically towards the targeted distribution. 
 The issue in reliability analysis is that their convergence is usually not checked (e.g., \citealp{roy_2020_mcmc_convergence} reviews diagnostic tools for MCMC).    
-In this chapter, another method using an adaptive importance sampling structure is proposed \citep{zhang_1996_NIS}, with the advantage of preserving the i.i.d. property. 
+In this chapter, another method is proposed, using an adaptive importance sampling structure \citep{zhang_1996_NIS}, with the advantage of preserving the i.i.d. property. 
 Independent sampling is particularly relevant for reusing these samples in a posterior reliability-oriented sensitivity analysis. 
 The algorithm introduced is based on the nonparametric inference of the conditional joint distribution using kernel density estimation of marginals combined with dependence inference using the empirical Bernstein copula \citep{sancetta_satchell_2004}. 
 The so-called ``Bernstein adaptive nonparametric conditional sampling'' (BANCS), is compared to the subset simulation method for several structural reliability problems. 
