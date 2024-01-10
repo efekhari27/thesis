@@ -143,12 +143,14 @@ High residual values are mostly due to the strong nonlinearity of the code in so
 The general coefficient of predictivity of $\what{Q}^2_{\mathrm{LOO}}=0.72$ is considered acceptable in this small data context, especially as the LOO procedure was shown to underestimate the true performance metric in Chapter~\ref{chpt:5}. 
 However, the surrogate could be enhanced by adding points to the learning set in areas with high nonlinearities.
 
+\medskip
 \begin{remark}
     Active learning methods for reliability assessment (see Subsection~\ref{sec:active_surrogates}) could be a great option for a such costly computer model. 
     However, the stochasticity of the function would disturb the learning criterion. 
     Since the nonlinearities seem restricted to a small area, the present approach should be more robust. 
     Another approach could be to fit a stochastic surrogate \citep{binois_2019_replication,baker_2022_stochastic_surrogates_review,zhu_2023_thesis} on a learning set before averaging on the pseudo-random seed repetitions.  
 \end{remark}
+\medskip
 
 \begin{figure}[h!]
     \centering

@@ -5,7 +5,7 @@
 \label{apx:B}
 %*******************************************************************************
 
-Beyond the discrepancy measure to the uniform distribution presented in Section~\ref{sec:central_propagation}, this Appendix introduces two families of measures commonly used to quantify the dissimilarity between two probability distributions $\pi$ and $\zeta$.  
+Beyond the concept of discrepancy presented in Section~\ref{sec:central_propagation} to measure a distance to uniformity, this Appendix introduces two families of measures commonly used to quantify the dissimilarity between two probability distributions $\pi$ and $\zeta$.  
 
 
 %============================================================%
@@ -22,8 +22,8 @@ where $f(\cdot)$ is a convex function such that $f(1)=0$, and where $\pi$ is abs
 Let us recall some well-know divergences which are special cases of $f$-divergences:
 \begin{itemize}
     \item Kullback–Leibler \citep{kullback_1951}: $f(t)=t \, \ln(t)$;
-    \item Hellinger of order $\alpha \in \R_+ \textbackslash \{1\}$ \citep{jeffreys_1946}: $f(t)=(1 - \sqrt{t})$;
-    \item Total variation: $f(t)= \frac12 \, |t-1|$.
+    \item Hellinger distance \citep{jeffreys_1946}: $f(t)=(\sqrt{t} - 1)^2$;
+    \item Total variation: $f(t)= |t-1|$.
 \end{itemize} 
 The reader may refer to \citet{basu_2011} for further details on $f$-divergences.
 
@@ -41,11 +41,11 @@ Another family of dissimilarity measures between probability distributions calle
 \end{equation}
 where $\iH$ is a class of measurable functions on $\iD_{\bX} \subset \R^d$ that sets the type of integral probability metric.   
 For example, the total variation distance considers all the functions with value in $[-1, 1]$; 
-furthermore, the Wasserstein distance relies on a class of Lipschitz functions; 
+furthermore, the Wasserstein distance relies on a class of bounded Lipschitz functions; 
 then a kernel-based distance called the ``maximum mean discrepancy'' (MMD) uses a specific Hilbert space. 
 
 Between the wide panel of distances\footnotemark, a particular focus is dedicated in this section to the MMD. 
-This distance was successfully used in diverse contexts for the consistency of its estimators, and its closed-form expression (allowing exact computation is some cases) \citep{sriperumbudur_2012}. 
+This distance was successfully used in diverse contexts for the consistency of its estimators, and its closed-form expression (allowing exact computation is some cases, see \citealp{sriperumbudur_2012}). 
 
 \footnotetext{See the ``Taxonomy of principal distances and divergences'' proposed by F. Nielsen in: \\ \url{https://franknielsen.github.io/Divergence/Poster-Distances.pdf}}
 
@@ -98,7 +98,7 @@ The \emph{energy} of a measure $\pi$ is defined as the integral of the potential
     \caption{Kernel mean embedding of a continuous and discrete probability distribution.}
     \label{fig:kernel_mean_embedding}
 \end{figure}
-Finally, using the reproducing property and writing the Cauchy-Schwarz inequality on the absolute quadrature error leads to the following inequality, similar to the Koksma-Hlawka inequality \eq{eq:KH_inequality} (see \citealp{briol_oates_2019}): 
+Finally, using the reproducing property and writing the Cauchy-Schwarz inequality on the absolute quadrature error leads to the following inequality, similar to the Koksma-Hlawka inequality introduced in Theorem~\ref{thm:koksma_inequality} (see \citealp{briol_oates_2019}): 
 
 \begin{subequations}
 \begin{align}
@@ -128,14 +128,14 @@ It can be written as follows:
 
 \begin{subequations}
 \begin{align}
-    \MMD(\pi, \zeta)^2 &= \left\lVert P_{\pi}(\bx) - P_{\zeta}(\bx) \right\lVert^2_{\iH(k)}\\
+    \MMD^2(\pi, \zeta) &= \left\lVert P_{\pi}(\bx) - P_{\zeta}(\bx) \right\lVert^2_{\iH(k)}\\
         &= \left\langle \left(P_{\pi}(\bx) - P_{\zeta}(\bx) \right), \left(P_{\pi}(\bx) - P_{\zeta}(\bx) \right) \right\rangle_{\iH(k)}\\
         &= \left\langle P_{\pi}(\bx), P_{\pi}(\bx) \right\rangle_{\iH(k)} - 2 \left\langle P_{\pi}(\bx), P_{\zeta}(\bx) \right\rangle_{\iH(k)} + \left\langle P_{\zeta}(\bx), P_{\zeta}(\bx) \right\rangle_{\iH(k)}\\
         &= \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\pi(\bx) \dd\pi(\bx') - 2 \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\pi(\bx) \dd\zeta(\bx') + \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\zeta(\bx) \dd\zeta(\bx').
 \end{align}
 \end{subequations}
-%Taking a discrete distribution with uniform weights $\zeta_n= \frac{1}{n} \sum_{i=1}^{n} \delta(\bx^{(i)})$, the squared MMD reduces to: 
-%\begin{equation}\label{eq:mmd_design}
-%    \MMD(\pi, \zeta_n)^2 = \varepsilon_\pi - \frac{2}{n} \sum_{i=1}^n P_{\pi}\left(\bx^{(i)}\right) + \frac{1}{n^2} \sum_{i, j=1}^n k\left(\bx^{(i)}, \bx^{(j)}\right).
-%\end{equation}
+Taking a discrete distribution with uniform weights $\zeta_n= \frac{1}{n} \sum_{i=1}^{n} \delta(\bx^{(i)})$, the squared MMD reduces to: 
+\begin{equation}\label{eq:mmd_design}
+    \MMD^2(\pi, \zeta_n) = \varepsilon_\pi - \frac{2}{n} \sum_{i=1}^n P_{\pi}\left(\bx^{(i)}\right) + \frac{1}{n^2} \sum_{i, j=1}^n k\left(\bx^{(i)}, \bx^{(j)}\right).
+\end{equation}
 

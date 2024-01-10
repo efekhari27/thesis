@@ -73,6 +73,7 @@ Several strategies to model the dependence structure from multivariate distribut
     \item \textbf{Nonparametric copulas} are methods uniformly approximating an empirical copula without any assumption on a dependence structure. They will be further described and used for metocean conditions inference in the present chapter.    
 \end{itemize}
 
+\medskip
 \begin{remark}
     The strategy referred to as ``conditional modeling'' can in fact be expressed as a copula \citep{vanem_2016} for continuous variables. For example, in the bivariate case of a continuous random vector $\bX = (X_1, X_2)$ with PDF $f_\bX(\bx)$, CDF $F_\bX(\bx)$ and density copula $c$: 
     \begin{subequations}
@@ -83,6 +84,7 @@ Several strategies to model the dependence structure from multivariate distribut
         \end{align}  
     \end{subequations}
 \end{remark}
+\medskip
 
 The notions related to copula theory are introduced in details in the monographs of \citet{nelsen_2006_copulas,joe_2014,durante_2015_copula} while the key properties are introduced hereafter.
 
@@ -102,6 +104,7 @@ The functional definition of a \textit{d-dimensional copula} (or simply ``d-copu
         \item The function $C$ is ``d-increasing'', meaning that for any hyperrectangle $A \subset [0, 1]^d$, the corresponding volume induced by $C$ is positive (see \cite{durante_2015_copula} p.7). 
     \end{itemize}
 \end{definition}
+\medskip
 
 A copula is bounded by two functions according to the Fréchet-Hoeffding bounds. 
 \begin{theorem}[Fréchet-Hoeffding bounds]
@@ -299,7 +302,7 @@ Regarding tail dependence modeling, nonparametric approaches are generally limit
 %------------------------------------------------------------%
 Let us consider a bivariate Clayton copula $C$ with parameter $\theta=2.5$ (see \citealp{nelsen_2006_copulas}). 
 A Monte Carlo sample with size $n=10$ is generated according to $C$, which is then used to build an empirical copula $C_n$ as defined in \eq{eq:empirical_copula}. 
-\fig{fig:ebc_illustration} (a) illustrates the empirical copula corresponding to the sample, with the shade of grey matching the CDF values. 
+\fig{fig:ebc_illustration} (a) illustrates the empirical copula corresponding to the sample, with the shade of gray matching the CDF values. 
 Then, the Bernstein approximation of the empirical copula (i.e., the EBC)  is represented by the red surfaces in \fig{fig:ebc_illustration} (b), (c), (d) according to the \eq{eq:ebc}. 
 The three versions of the EBC correspond to different polynomial orders, assuming that $(m_1=m_2)$. 
 As the order increases (i.e., $m_1=m_2 \in \{3, 10, 20\}$), the red surface (of the EBC) increasingly matches the empirical copula $C_n$, meaning that the bias decreases. 

@@ -18,7 +18,7 @@
 %{\color{red} citer qq ref pour asseoir ce que tu dis sur le contexte}
 
 L'enjeu actuel de la transition énergétique implique, entre autres, de réduire la part des énergies fossiles au sein du mix électrique mondial. 
-Dans ce contexte, l'énergie éolienne en mer présente plusieurs avantages \cite{eolien_en_mer_2022}. 
+Dans ce contexte, l'énergie éolienne en mer présente plusieurs avantages \citep{eolien_en_mer_2022}. 
 L'éolien en mer bénéficie notamment de vents plus constants que l'éolien terrestre, notamment dû à l'absence de relief, et offre la possibilité d'installer des éoliennes plus grandes donc plus puissantes. 
 Depuis l'installation de la première ferme éolienne en mer à Vindeby, au Danemark, en 1991, l'industrie a connu une croissance rapide, avec une capacité totale de 56 GW exploitée dans le monde en 2021. 
 Au fil du temps, la technologie éolienne en mer s'est améliorée, aboutissant à des succès importants tels que la signature de projets non subventionnés en Europe (en anglais \textit{zero-subsidy bids}), pour lesquels l'électricité produite est directement vendue sur le marché de gros \citep{eolien_en_mer_2022}.
@@ -62,7 +62,7 @@ La Figure \ref{fig:UQ_methodo_FR} illustre les étapes génériques de la métho
     Cette étape consiste à déterminer le système étudié et construire un modèle numérique capable de simuler (précisément) son comportement. 
     La spécification du problème implique également de définir l'ensemble des paramètres inhérents au modèle numérique. 
     Ces paramètres comprennent aussi bien les variables d'entrée que les variables de sortie générées par la simulation. 
-    Dans ce document, le modèle numérique est considéré comme une boîte-noire, par opposition à des approches qui s'intègrent à l'intérieur des schémas de résolution numérique des équations de comportement du système (approches dites intrusives \citep{lemaitre_2010}). 
+    Dans ce document, le modèle numérique est considéré comme une boîte-noire, par opposition à des approches qui s'intègrent à l'intérieur des schémas de résolution numérique des équations de comportement du système (approches dites intrusives \citealp{lemaitre_2010}). 
     En général, ces modèles numériques sont au préalable calibrés par rapport à des données mesurées et suivent un processus de validation et de vérification pour réduire les erreurs de modélisation \citep{oberkampf_2010_VVUQ}.
     \item[\textbullet] \textbf{\'Etape B -- Modélisation et quantification des incertitudes.} 
     L'objectif de la deuxième étape est d'identifier et modéliser toutes les sources d'incertitude associées aux variables d'entrée. 
@@ -83,7 +83,7 @@ La Figure \ref{fig:UQ_methodo_FR} illustre les étapes génériques de la métho
 \begin{figure}[!h]
     \centering
     \input{part1/figures/ABC_diagram_nomaths_FR.tex}
-    \caption{Schéma générique de la quantification des incertitudes (\cite{rocquigny_2008}, adapté par \cite{ajenjo_2023}).}
+    \caption{Schéma générique de la quantification des incertitudes (\citealp{rocquigny_2008}, adapté par \citealp{ajenjo_2023}).}
     \label{fig:UQ_methodo_FR}
 \end{figure}
 
@@ -162,14 +162,14 @@ Depuis, leur utilisation s'est étendue à la résolution de problèmes de fiabi
 %------------------------------------------------------------%
 
 La simulation d'une éolienne en mer implique la modélisation de plusieurs physiques en interaction avec des conditions environnementales de nature aléatoire. 
-Ce chapitre introduit premièrement les méthodes spectrales utilisées pour générer des champs de vitesse de vent et de houle en appliquant des transformées de Fourier inverses (par exemple implémentées dans l'outil TurbSim \citep{turbsim_2009}). 
+Ce chapitre introduit premièrement les méthodes spectrales utilisées pour générer des champs de vitesse de vent et de houle en appliquant des transformées de Fourier inverses (par exemple implémentées dans l'outil TurbSim \citealp{turbsim_2009}). 
 Ces champs de vitesses de vent simulés alimentent par la suite un outil de simulation multi-physique des éoliennes. 
-Cette simulation intègre une modélisation simplifiée des interactions entre fluides et structures (méthode "BEMT" pour \textit{blade element momentum theory}), une modélisation dynamique de la structure par des éléments finis de type poutre et une modélisation du contrôle-commande de l'éolienne \cite{milano_thesis_2021}. 
+Cette simulation intègre une modélisation simplifiée des interactions entre fluides et structures (méthode "BEMT" pour \textit{blade element momentum theory}), une modélisation dynamique de la structure par des éléments finis de type poutre et une modélisation du contrôle-commande de l'éolienne \citep{milano_thesis_2021}. 
 Ce code numérique produit en sortie des séries temporelles de plusieurs grandeurs physiques décrivant le comportement du système.
 
 Cette thèse s'intéresse particulièrement à l'évaluation probabiliste du dommage en fatigue des structures éoliennes. 
 Le dommage en fatigue est un phénomène qui détériore les propriétés mécaniques d'un matériau suite à sa sollicitation via un grand nombre de contraintes cycliques de faible amplitude. 
-A l'heure actuelle, les standards \cite{iec_2019,dnv_loads_2016} recommandent l'utilisation de coefficients de sécurité déterministes pour faire face à ce mode de défaillance. 
+A l'heure actuelle, les standards \citep{iec_2019,dnv_loads_2016} recommandent l'utilisation de coefficients de sécurité déterministes pour faire face à ce mode de défaillance. 
 Une approche probabiliste permet d'enrichir l'analyse et parfois de mettre en évidence le conservatisme des marges de sûreté. 
 Plusieurs travaux récents se sont intéressés à cette thématique en abordant des angles méthodologiques différents \citep{huchet_2018,lataniotis_2019,cousin_2021,hirvoas_2021,petrovska_2022}.
 
@@ -185,13 +185,13 @@ Ces variables aléatoires sont regroupées en deux groupes : le vecteur aléatoi
 
 Après avoir dressé l'état de l'art sur ce sujet, les prochains chapitres du manuscrit présentent les nouvelles contributions de la thèse. 
 D'un point de vue méthodologique, un objet mathématique servira de fil conducteur au cours de ces travaux. 
-La \textit{maximum mean discrepancy} (MMD) \cite{oates_21} est une mesure de dissimilarité entre des lois de probabilité basée sur des noyaux qui est utilisée dans des contextes différents (tests statistiques \cite{gretton_2006}, analyse de sensibilité \cite{daveiga_2015}, échantillonnage \cite{pronzato_zhigljavsky_2020}, etc.).
+La \textit{maximum mean discrepancy} (MMD) \citep{gretton_2006} est une mesure de dissimilarité entre des lois de probabilité basée sur des noyaux qui est utilisée dans des contextes différents (tests statistiques \citealp{gretton_2006}, analyse de sensibilité \citealp{daveiga_2015}, échantillonnage \citealp{pronzato_zhigljavsky_2020}, etc.).
 
 %------------------------------------------------------------%
 \subsection*{Chapitre 3 -- Quantification des perturbations induites par les effets de sillage au sein d'un parc éolien}
 %------------------------------------------------------------%
 
-Ce chapitre étudie les perturbations sur les conditions environnementales à l'intérieur d'une ferme éolienne en mer induites par les effets de sillage (\textit{wake effect} en anglais) \cite{larsen_2008_wake}. 
+Ce chapitre étudie les perturbations sur les conditions environnementales à l'intérieur d'une ferme éolienne en mer induites par les effets de sillage (\textit{wake effect} en anglais) \citep{larsen_2008_wake}. 
 Un parc éolien en mer théorique au large de la côte sud de la Bretagne est considéré comme cas d'usage, et un modèle numérique simulant le sillage de ce parc est exploité. 
 Ce modèle donne une prédiction analytique du déficit en vitesse de vent et de la turbulence créés par le sillage, en tenant compte de l'influence de la position des flotteurs en raison des forces moyennes du vent. 
 Une propagation de l'incertitude sur le modèle de sillage est réalisée, en considérant la loi conjointe des conditions environnementales ambiantes en entrée. 
@@ -259,15 +259,15 @@ Ce travail a mené à la publication et au développement informatique suivant :
 \subsection*{Chapitre 6 -- Estimation non-paramétrique de probabilités d'événements rares}
 %------------------------------------------------------------%
 
-L'estimation de probabilités d'événements rares est un problème courant dans la gestion des risques industriels, notamment dans le domaine de la fiabilité des structures \cite{chabridon_2018_thesis}. 
+L'estimation de probabilités d'événements rares est un problème courant dans la gestion des risques industriels, notamment dans le domaine de la fiabilité des structures \citep{chabridon_2018_thesis}. 
 Pour ce faire, plusieurs techniques ont été proposées pour surmonter les limites connues de la méthode de Monte Carlo. 
-Parmi elles, la méthode de ``\textit{subset simulation}'' \cite{AuBeck2001} est une technique qui repose sur la décomposition de la probabilité de l'événement rare en un produit de probabilités conditionnelles moins rares (donc plus simples à estimer) associées à des événements de défaillance imbriqués. 
+Parmi elles, la méthode de ``\textit{subset simulation}'' \citep{AuBeck2001} est une technique qui repose sur la décomposition de la probabilité de l'événement rare en un produit de probabilités conditionnelles moins rares (donc plus simples à estimer) associées à des événements de défaillance imbriqués. 
 Cependant, cette technique repose sur la simulation conditionnelle à base de méthodes de Monte Carlo par chaînes de Markov (MCMC). 
 Ces algorithmes permettent, à la convergence, de simuler selon la densité cible. 
 Cependant, en pratique, ils produisent souvent des échantillons non indépendants et identiquement distribués (i.i.d.) en raison de la corrélation entre les chaînes de Markov. 
 Ce chapitre propose une autre méthode pour échantillonner conditionnellement aux événements de défaillance imbriqués afin d'obtenir des échantillons dont la propriété d'être i.i.d. est préservée. 
 La propriété d'indépendance des échantillons est particulièrement pertinente pour exploiter ces mêmes échantillons pour une analyse de sensibilité fiabiliste. 
-L'algorithme proposé repose sur l'inférence non-paramétrique de la distribution conjointe conditionnelle en utilisant une estimation par noyau des marginales combinée à une inférence de la dépendance à l'aide de la copule empirique de Bernstein \cite{sancetta_satchell_2004}. 
+L'algorithme proposé repose sur l'inférence non-paramétrique de la distribution conjointe conditionnelle en utilisant une estimation par noyau des marginales combinée à une inférence de la dépendance à l'aide de la copule empirique de Bernstein \citep{sancetta_satchell_2004}. 
 L'algorithme appelé \textit{``Bernstein adaptive nonparametric conditional sampling''} (BANCS) est comparée à la méthode du \textit{subset simulation} pour plusieurs problèmes de fiabilité des structures. 
 Les premiers résultats sont encourageants, mais le contrôle du biais de l'estimateur doit être plus amplement investigué. 
 Ce travail a mené à la publication et au développement informatique suivant : \\
@@ -283,12 +283,12 @@ Ce travail a mené à la publication et au développement informatique suivant :
 %------------------------------------------------------------%
 
 Ce chapitre traite d'analyse de sensibilité pour des mesures de risque (par exemple, une probabilité d'événement rare). 
-L'analyse de sensibilité globale \cite{daveiga_iooss_2021} attribue à chaque variable (ou groupe de variable) une part de variabilité globale de la sortie (le plus souvent à l'aide d'une décomposition fonctionnelle de la variance de la sortie). 
+L'analyse de sensibilité globale \citep{daveiga_iooss_2021} attribue à chaque variable (ou groupe de variable) une part de variabilité globale de la sortie (le plus souvent à l'aide d'une décomposition fonctionnelle de la variance de la sortie). 
 Cependant, les variables ayant un impact sur des quantités liées à une queue de distribution peuvent être très différentes que celles ayant un impact sur la variabilité globale (pondérée par le poids associé au centre de la distribution). 
-L'analyse de sensibilité fiabiliste (en anglais ``\textit{reliability-oriented sensitivity analysis}'', \cite{chabridon_2018_thesis}) permet d'expliquer le rôle des entrées vis-à-vis de probabilités d'événements rares. 
+L'analyse de sensibilité fiabiliste (en anglais ``\textit{reliability-oriented sensitivity analysis}'', \citealp{chabridon_2018_thesis}) permet d'expliquer le rôle des entrées vis-à-vis de probabilités d'événements rares. 
 L'idée de ce chapitre est d'étudier l'évolution de la sensibilité au fur et à mesure que l'échantillonnage se rapproche de l'événement rare. 
 Cette analyse permet ainsi d'exploiter les paquets successifs d'échantillons conditionnels générés par l'algorithme BANCS (présenté dans le Chapitre 6). 
-En post-traitement de l'estimation de la probabilité d'un événement rare, cette approche utilise une mesure d'importance à base de noyaux, nommée \textit{Hilbert-Schmidt Indepencence Criterion}, pour évaluer la dynamique de la sensibilité fiabiliste \cite{marrel_chabridon_2021}.
+En post-traitement de l'estimation de la probabilité d'un événement rare, cette approche utilise une mesure d'importance à base de noyaux, nommée \textit{Hilbert-Schmidt Indepencence Criterion}, pour évaluer la dynamique de la sensibilité fiabiliste \citep{marrel_chabridon_2021}.
 
 %============================================================%
 %============================================================%

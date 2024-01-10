@@ -191,13 +191,13 @@ All together, the copulogram gives a synthetic decomposition of the dataset, and
     \begin{center}
         \includegraphics[width=\linewidth]{part2/figures/DCE/teesside/pairplot_kh.jpg}    
     \end{center}
-    \caption{Copulogram of the Teesside measured data ($N=10^4$ in grey), kernel herding subsample ($n=500$ in orange). 
+    \caption{Copulogram of the Teesside measured data ($N=10^4$ in gray), kernel herding subsample ($n=500$ in orange). 
     Marginals are represented by univariate KDE plots (diagonal), the dependence structure with scatter plots in the rank space (upper triangle). 
     Scatter plots on the bottom triangle are set in the physical space.}
     \label{fig:envi_pairplot}
 \end{figure}
 
-On \fig{fig:envi_pairplot}, a large sample $\iS \subset \iD_{\bX}$ (with size $N=10^4$) is randomly drawn from the entire Teesside data (with size $N_{\mathrm{Teesside}} = 2\times 10^5$), and plotted in grey. 
+On \fig{fig:envi_pairplot}, a large sample $\iS \subset \iD_{\bX}$ (with size $N=10^4$) is randomly drawn from the entire Teesside data (with size $N_{\mathrm{Teesside}} = 2\times 10^5$), and plotted in gray. 
 In the same figure, the orange matrix plot is a subsample of the sample $\iS$, selected by kernel herding, a method minimizing some discrepancy measure with the sample $\iS$ that will be formally presented in Section~\ref{sec:sec43}. 
 For this example, generating the kernel herding subsample takes under one minute, which is negligible compared with the simulation time of OWT models. 
 Visually, this orange subsample seems to be representative of the original sample both in terms of marginal distributions and dependence structure. 
@@ -348,7 +348,7 @@ Moreover, since each realization is supposed to be obtained at the same unitary 
 \emph{Kernel herding} (\abv{kh}), proposed by \cite{chen_welling_2010}, is a sampling method that offers a quantization of the measure $\pi$ by minimizing a squared MMD when adding points iteratively. 
 With a current design $\bX_n$ and its corresponding discrete distribution with uniform weights $\zeta_n= \frac{1}{n} \sum_{i=1}^{n} \delta\left(\bx^{(i)}\right)$, a KH iteration consists in solving an optimization of the following criterion, selecting the point $\bx^{(n+1)} \in \iD_{\bX}$ as follows:
 \begin{align}
-   \bx^{(n+1)} \in \argmin_{\bx \in \iD_{\bX}} \left\{\MMD\left(\pi, \frac{1}{n+1} \left(\delta(\bx) + \sum_{i=1}^{n} \delta\left(\bx^{(i)}\right)\right)\right)^2\right\}.
+   \bx^{(n+1)} \in \argmin_{\bx \in \iD_{\bX}} \left\{\MMD^2\left(\pi, \frac{1}{n+1} \left(\delta(\bx) + \sum_{i=1}^{n} \delta\left(\bx^{(i)}\right)\right)\right)\right\}.
    % = \argmin_{\bx \in \iD_{\bX}} \MMD\left(\pi, \frac{1}{n+1} \left(n \zeta_n  + \delta(\bx)\right)\right)
    \label{eq:mmd_criterion}
 \end{align}
@@ -356,14 +356,16 @@ With a current design $\bX_n$ and its corresponding discrete distribution with u
 In the literature, two formulations of this optimization problem can be found. 
 The first one uses the Frank-Wolfe algorithm (or ``conditional gradient algorithm'') to compute a linearization of the problem under the convexity hypothesis (see \citealp{lacoste_2015} and \citealp{briol_2015} for more details). 
 The second one is a straightforward greedy optimization. Due to the combinatorial complexity, the greedy formulation is tractable for sequential construction only. 
-Let us develop the MMD criterion from \eq{eq:mmd_design}:
+Let us develop the MMD estimator introduced in \eq{eq:mmd_design}:
 \begin{subequations}
 \begin{align}
-    \MMD\left(\pi, \frac{1}{n+1} \left(\delta(\bx) + \sum_{i=1}^{n} \delta\left(\bx^{(i)}\right)\right)\right)^2
+    \MMD^2\left(\pi, \frac{1}{n+1} \left(\delta(\bx) + \sum_{i=1}^{n} \delta\left(\bx^{(i)}\right)\right)\right)
     &= \varepsilon_\pi - \frac{2}{n+1} \sum_{i=1}^{n+1} P_{\pi}\left(\bx^{(i)}\right) + \frac{1}{(n+1)^2} \sum_{i,j=1}^{n+1} k\left(\bx^{(i)}, \bx^{(j)}\right)\\
-    &= \varepsilon_\pi - \frac{2}{n+1} \left(P_\pi(\bx) + \sum_{i=1}^n P_{\pi}\left(\bx^{(i)}\right)\right)\\ &+ \frac{1}{(n+1)^2} \left(\sum_{i,j=1}^n k\left(\bx^{(i)}, \bx^{(j)}\right) + 2\sum_{i=1}^n k\left(\bx^{(i)}, \bx\right) - k(\bx, \bx) \right).
+    &= \varepsilon_\pi - \frac{2}{n+1} \left(P_\pi(\bx) + \sum_{i=1}^n P_{\pi}\left(\bx^{(i)}\right)\right)\\ &+ \frac{1}{(n+1)^2} \left(\sum_{i,j=1}^n k\left(\bx^{(i)}, \bx^{(j)}\right) + 2\sum_{i=1}^n k\left(\bx^{(i)}, \bx\right) - k(\bx, \bx) \right)\, ,
 \end{align}
 \end{subequations}
+where the ``potential'', also called kernel mean embedding, of a measure $\pi$ is given by $P_{\pi}(\bx) = \int_{\iD_{\bX}} k(\bx, \bx') \dd \pi(\bx')$
+, and the energy of the measure $\pi$ is defined as $\varepsilon_\pi = \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\pi(\bx) \dd\pi(\bx')$.
 In the previously developed expression, only a few terms actually depend on the next optimal point $\bx^{(n+1)}$ since the target energy, denoted by $\varepsilon_\pi$, and $k(\bx, \bx)=\sigma^2$ are constant assuming a stationary kernel. 
 Therefore, the greedy minimization of the MMD can be equivalently written as: 
 \begin{equation}
@@ -429,7 +431,7 @@ One can notice that the squared exponential and Matérn $\nu = 5/2$ kernels are 
 In fact, as $\nu$ tends to infinity, the Matérn kernel tends toward the squared exponential kernel (which has infinitely differentiable sample paths, see \citealp{rasmussen_2006}). 
 For these two stationary kernels, the correlation length controls how fast the correlation between two points decreases as their distance from one another increases. 
 
-Meanwhile, the energy distance is not stationary (but still positive and semi-definite). 
+Meanwhile, the energy-distance is not stationary (but still positive and semi-definite). 
 Therefore, its value does not only depend on the distance between two points but also on the norm of each of the points.
 Interestingly, the energy-distance kernel is almost similar to the kernel used by \citet{hickernell_1998} to define a widely-used space-filling metric called the centered $L^2$-discrepancy (defined in Subsection~\ref{sec:1qmc}). 
 A presentation of these kernel-based discrepancies from the design of experiment point of view is also provided in Chapter Two from \citet{fang_liu_2018}.  
@@ -445,7 +447,7 @@ A presentation of these kernel-based discrepancies from the design of experiment
 
 To illustrate the KH sampling of a complex distribution, \fig{fig:KH_mixture} shows three nested samples (orange crosses for various sizes $n\in\{10, 20, 40\}$) of a mixture of Gaussian distributions with complex nonlinear dependencies (with density represented by the black isoprobability contours). 
 In this example, the method seems to build a parsimonious design between each mode of the distribution (by subsampling directly without any transformation). 
-The candidate set (in light grey) was generated by a large quasi-Monte sample of the underlying Gaussian mixture. 
+The candidate set (in light gray) was generated by a large quasi-Monte sample of the underlying Gaussian mixture. 
 In this two-dimensional case, this candidate set is sufficient to estimate the target potential $P_{\pi}$. 
 However, the main bottleneck of KH is the estimation of the potentials, which becomes costly in high dimensions.
 
@@ -498,7 +500,7 @@ Following the denomination of \citet{briol_oates_2019}, its distribution on $\R$
 \label{eq:posterior}
 \end{equation}
 
-\fig{fig:bayesian_quad} provides a one-dimensional illustration of the BQ of an unknown function (dashed black curve) against a given input measure $\pi$ (with corresponding grey distribution at the bottom). 
+\fig{fig:bayesian_quad} provides a one-dimensional illustration of the BQ of an unknown function (dashed black curve) against a given input measure $\pi$ (with corresponding gray distribution at the bottom). 
 For an arbitrary design, one can fit a Gaussian process model, interpolating the function observations (black crosses). 
 Then, multiple trajectories of this conditioned Gaussian process $G_n$ are drawn (orange curves) whilst its mean function, also called ``predictor'', is represented by the red curve. 
 Therefore, the input measure $\pi$ is propagated through the conditioned Gaussian process to obtain the random variable $I_{\pi}(G_n)$, with distribution represented on the right plot (brown curve). 
@@ -528,11 +530,10 @@ The posterior distribution is described in a closed form through its mean and va
 \begin{equation}
     \left(\sigma_n^{\mathrm{BQ}}\right)^2 = \var\left(I_{\pi}(G_n) \right) 
     = \iint_{\iD_{\bX^2}} k_n(\bx, \bx') \dd \pi(\bx) \dd \pi(\bx') 
-    = \varepsilon_\pi - P_\pi(\bX_n) \bK_n^{-1} P_\pi(\bX_n)\TT.
+    = \varepsilon_\pi - P_\pi(\bX_n) \bK_n^{-1} P_\pi(\bX_n)\TT \, ,
 \label{eq:var_post}
 \end{equation}
-\noindent
-Where $P_\pi(\bX_n)$ is the row vector of potentials $\left[\int k_n(\bx, \bx^{(1)}) \dd \pi(\bx), \dots, \int k_n(\bx, \bx^{(n)}) \dd \pi(\bx)\right]$, and $\varepsilon_\pi$ is given in \eq{eq:target_energy}. 
+where $P_\pi(\bX_n)$ is the row vector of potentials $\left[\int k_n(\bx, \bx^{(1)}) \dd \pi(\bx), \dots, \int k_n(\bx, \bx^{(n)}) \dd \pi(\bx)\right]$, and $\varepsilon_\pi$ is given in \eq{eq:target_energy}. 
 As in the one-dimensional example presented in \fig{fig:bayesian_quad}, the expected value of $I_{\pi}(G_n)$ expressed in \eq{eq:mean_post} is a direct estimator of the quantity of interest expressed in \eq{eq:quadrature_rule}. 
 The so-called ``Bayesian quadrature estimator'' appears to be a simple linear combination of the observations by taking the row vector of ``optimal weights'' as: 
 \begin{equation}
@@ -549,7 +550,7 @@ In the following numerical experiments, the expression with a hypothesis of cons
      \label{eq:mean_post_cst}
 \end{equation}
 
-\noindent Then, an a posteriori 95\% prediction interval around the mean Bayesian estimator is directly given by: 
+Then, an a posteriori 95\% prediction interval around the mean Bayesian estimator is directly given by: 
 \begin{equation}
    \overline{y}_n^{\mathrm{BQ}} \in \left[\overline{y}_n^{\mathrm{BQ}} - 2\sigma_n^{\mathrm{BQ}}, \overline{y}_n^{\mathrm{BQ}} + 2\sigma_n^{\mathrm{BQ}} \right].
 \end{equation}
@@ -564,7 +565,7 @@ The proof is reproduced below (as well as in Proposition 6.1 from \citealp{moton
     &= \E\left[ \left\langle G_n, P_{\pi} - P_{\zeta_n} \right\rangle_{\iH(k)}^2\right]\\ \label{eq:bq_v2}
     %&= \E\left[ \lVert G_n \lVert^2 + \lVert P_{\pi}(\bx) - P_{\zeta_n}(\bx) \lVert^2 - 2 \left\langle G_n, P_{\pi}(\bx) - P_{\zeta_n}(\bx) \right\rangle_{\iH(k)}\right]\\
     &= \lVert P_{\pi} - P_{\zeta_n} \lVert^2_{\iH(k)}\\ 
-    &= \MMD(\pi, \zeta_n)^2.
+    &= \MMD^2(\pi, \zeta_n).
 \end{align}
 \end{subequations}
 Note that the transition from \eq{eq:bq_v1} to \eq{eq:bq_v2} relies on the property stating that if $G$ is a standard Gaussian process then $\forall g \in \iH(k) : \left\langle G, g \right\rangle_{\iH(k)} \sim \iN(0, \lVert g \lVert^2_{\iH(k)}$). 
@@ -611,18 +612,18 @@ Finally, note that the numerical experiments for the test cases are available in
 %------------------------------------------------------------%
 \subsection{Benchmark results on analytical test cases}
 %------------------------------------------------------------%
-The test cases summarized in Table~\ref{tab:toycases} were chosen to cover a large panel of complex probabilistic integration problems, completing the ones from \cite{fekhari_renew_2022}.
+The test cases summarized in Table~\ref{tab:toycases} were chosen to cover a panel of complex probabilistic integration problems, completing the ones from \cite{fekhari_renew_2022}.
 To assess the complexity of numerical integration problems, \cite{owen_2003} introduced the concept of the ``effective dimension'' of an integrand function (number of the variables that actually impact the integral). 
 The author showed that functions built on sums yield a low effective dimension (unlike functions built on products). 
 In the same vein, \cite{kucherenko_feil_2011} build three classes of integrand sorted by difficulty depending on their effective dimension: \begin{itemize}
-    \item \emph{class A problems}: problem with a few dominant variables.
-    \item \emph{class B problems}: problem without unimportant variables, and important low-order interaction terms.
+    \item \emph{class A problems}: problem with a few dominant variables;
+    \item \emph{class B problems}: problem without unimportant variables, and important low-order interaction terms;
     \item \emph{class C problems}: problems without unimportant variables, and important high-order interaction terms. 
 \end{itemize}
 In the case of the two-dimensional Gaussian mixture problem (test case \#1), the complexity is carried by the mixture of Gaussian distributions with highly nonlinear dependencies.
 Then, the 10-dimensional ``GSobol function'' (test case \#2) with a set of coefficient $\{a_i=2\}_{i=1}^{10}$ has an effective dimension equal to 10 and belongs to the hardest class C from \cite{kucherenko_feil_2011}. 
 Probabilistic integration results are presented in \fig{fig:test case1} (test case \#1) and \fig{fig:test case2} (test case \#2). 
-Kernel herding samples using the energy-distance kernel are in red, while quasi-Monte Carlo samples built from Sobol' sequences are in grey. 
+Kernel herding samples based on the squared exponential kernel are in green, those using the Matérn kernel are in orange, those using the energy-distance kernel are in red, while quasi-Monte Carlo samples built from Sobol' sequences are in gray. 
 Convergences of the arithmetic means are plotted on the left and MMDs on the right. 
 The respective BQ estimators of the means are plotted in dashed lines. 
 
@@ -658,7 +659,8 @@ Moreover, the results confirm that $\MMD_{\mathrm{BQ}}< \MMD_{\mathrm{unif}}$ fo
 The application of optimal weights to the quasi-Monte Carlo sample slightly improves the estimation in this case. Note that the prediction interval around the BQ estimator is not plotted for the sake of readability. 
 Finally, one can note that the prediction interval around th BQ estimator is not plotted for the sake of readability. 
 
-In these two test cases, the MMD is shown to quantify numerical integration convergence well, which illustrates the validity of the inequality given in \eq{eq:quad_error}, similar to the Koksma-Hlawka inequality (as recalled in \eq{eq:KH_inequality}).
+In these two test cases, the MMD is shown to quantify numerical integration convergence well, which illustrates the validity of the inequality given in \eq{eq:quad_error}, similar to the Koksma-Hlawka inequality (as recalled in Theorem~\ref{thm:koksma_inequality}). 
+Between the three kernels employed for KH, the energy-distance kernel performs slightly better and presents the advantage of not needing tuning.
 
 \begin{figure}[!h]
 \begin{center}
@@ -688,7 +690,7 @@ In these two test cases, the MMD is shown to quantify numerical integration conv
 \subsection{Application to the Teesside wind turbine fatigue estimation}
 %----------------------------------------------------------------------%
 In order to summarize the mean damage estimation strategies studied in this chapter, the diagram represented in \fig{fig:sampling_diagram} describes the different workflows computed. 
-The simplest workflow is represented by the grey horizontal sequence. 
+The simplest workflow is represented by the gray horizontal sequence. 
 It directly subsamples a design of experiments from a large and representative dataset (previously referred to as candidate set). 
 This workflow simply estimates the mean damage by computing an arithmetic average of the outputs. 
 

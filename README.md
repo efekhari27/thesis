@@ -18,13 +18,13 @@ This repository is divided into two folders:
 
 :newspaper: E. Fekhari, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). "Model predictivity assessment: incremental test-set selection and accuracy evaluation". In: *Studies in Theoretical and Applied Statistics*, pages 315-347. Springer.
 
-:newspaper: E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2023). "Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature". In: *Data-Centric Engineering*, to appear.
+:newspaper: E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2024). "Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature". In: *Data-Centric Engineering*, In press.
 
-:newspaper: :mega: E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2023). "Bernstein adaptive nonparametric conditional sampling: a new method for rare event probability estimation". In: *Proceedings of the 13th International Conference on Applications of Statistics and Probability in Civil Engineering (ICASP 14)*, Dublin, Ireland.
+:newspaper: E. Vanem, E. Fekhari, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2024). "A joint probability distribution model for multivariate wind and wave conditions". In: \textit{Journal of Offshore Mechanics and Arctic Engineering}, In press.
 
 :newspaper: :mega: E. Fekhari, B. Iooss, V. Chabridon and J. Muré (2022). "Efficient techniques for fast uncertainty propagation in an offshore wind turbine multi-physics simulation tool". In: *Proceedings of the 5th International Conference on Renewable Energies Offshore (RENEW 2022)*, Lisbon, Portugal.
 
-:newspaper: E. Vanem, E. Fekhari, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2023). "A joint probability distribution model for multivariate wind and wave conditions". In: *Proceedings of the ASME 2023 42th International Conference on Ocean, Offshore and Arctic Engineering (OMAE 2023)*, Melbourne, Australia. 
+:newspaper: :mega: E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2023). "Bernstein adaptive nonparametric conditional sampling: a new method for rare event probability estimation". In: *Proceedings of the 13th International Conference on Applications of Statistics and Probability in Civil Engineering (ICASP 14)*, Dublin, Ireland.
 
 :newspaper: A. Lovera, E. Fekhari, B. Jézéquel, M. Dupoiron, M. Guiton and E. Ardillon (2023). "Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis". In: *Journal of Physics: Conference Series (WAKE 2023)*, Visby, Sweden.
 
@@ -41,7 +41,6 @@ This repository is divided into two folders:
 :mega: E. Fekhari, B. Iooss, V. Chabridon and J. Muré (2023). "Rare event estimation using nonparametric Bernstein adaptive sampling". In: *Proceedings of the Mascot-Num 2023 Annual Conference (MASCOT-NUM 2023)*, Le Croisic, France. 
 
 :mega: E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2024). "Sensitivity-Informed Nonparametric Adaptive Conditional Sampling for Robust Reliability Analysis". In: *SIAM Conference on Uncertainty Quantification (SIAM UQ24)*, Trieste, Italy.
-
 
 :mega: *Le Printemps de la Recherche 2022*, Nantes, France. "Traitement des incertitudes pour la gestion d’actifs éoliens". 
 

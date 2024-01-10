@@ -102,7 +102,7 @@ A new method for rare event estimation was proposed in this work.
 This adaptive importance sampling method, named Bernstein adaptive nonparametric conditional sampling (BANCS), relies on the EBC to infer consecutive conditional distributions. 
 Decomposing this inference between copula and marginals brings more flexibility and showed good performances compared to usual strategies such as NAIS \citep{zhang_1996_NIS} or SS \citep{AuBeck2001}. 
 This contribution offers numerous research perspectives. 
-Rather than Monte Carlo sampling on the conditional distributions, other methods could help speed-up the quantile estimation (e.g., randomized QMC \citep{tuffin_2019}). 
+Rather than Monte Carlo sampling on the conditional distributions, other methods could help speed-up the quantile estimation (e.g., randomized QMC \citealp{tuffin_2019}). 
 Instead of fixing a sampling size to each subset, a stopping criterion could arise from the accuracy of the quantile estimation. 
 To improve the inference of the conditional distributions, further work on optimizing the EBC polynomial order should be carried on. 
 Finally, an adaptation of BANCS could be proposed for high-dimensional problems by dividing the d-dimensional copula into independent blocks.   
@@ -131,7 +131,7 @@ This contribution is related to the following publication:
 This Python package generates designs of experiments based on kernel methods such as kernel herding \citep{chen_2018_owt_diagram} and support points \citep{mak_joseph_2018}. 
 It could be numerically improved by upgrading matrix management and operation. 
 Using methods as the ``hierarchical matrices'' \citep{borm_2003_hmat} could considerably ease the manipulation of large matrices and speed-up their operations.  
-Additionally, the increasing use of \abv{cpu} for parallel computing could be useful. 
+Additionally, the increasing use of CPU for parallel computing could be useful. 
 This could for example be realized by the use of the GPU programming interface CUDA (for ``compute unified device architecture''). 
 Additionally, different MMD estimators could be offered to the user \citep{gretton_2006}. 
 
