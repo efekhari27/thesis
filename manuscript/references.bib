@@ -192,7 +192,7 @@ author={L'Ecuyer, P.},
 title={{Randomized Quasi-Monte Carlo: An Introduction for Practitioners}},
 booktitle={Monte Carlo and Quasi-Monte Carlo Methods},
 year={2018},
-publisher={Springer International Publishing},
+publisher={Springer},
 address={Cham},
 pages={29--52},
 }
@@ -208,7 +208,7 @@ pages={29--52},
 }
 
 @article{mckay_beckman_1979,
-    author = {Mckay, M. and Beckman, R. and Conover, W.},
+    author = {McKay, M. and Beckman, R. and Conover, W.},
     year = {1979},
     month = {05},
     pages = {239 -- 245},
@@ -245,6 +245,14 @@ pages={29--52},
   pages={681--701},
   year={2012},
   publisher={Springer}
+}
+
+@article{sacks_1989,
+  title={{Designs for computer experiments}},
+  author={Sacks, J. and Schiller, S. B. and Welch, W. J.},
+  journal={Technometrics},
+  pages={41--47},
+  year={1989},
 }
 
 @article{sun_2019,
@@ -354,6 +362,7 @@ year = {2019},
    author = {A.B. Owen},
    year = {2013},
    title = {{Monte Carlo theory, methods and examples}},
+   note={\url{https://artowen.su.domains/mc/}},
    note={Stanford University}
 }
 
@@ -816,10 +825,11 @@ journal = {ASCE-ASME Journal of Risk and Uncertainty in Engineering Systems, Par
   year={2017},
 }
 
-@inbook{straub_2014_fatigue_form,
+@incollection{straub_2014_fatigue_form,
   title={{Engineering Risk Assessment}},
   author={Straub, D.},
-  journal={Risk -- A multidisciplinary introduction},
+  booktitle={Risk -- A multidisciplinary introduction},
+  editor={Kl{\"u}ppelberg, C. and Straub, D. and Welpe, I. M.},
   pages={333--362},
   year={2014},
   publisher={Springer}
@@ -1225,15 +1235,6 @@ author = {E. Vanem},
   school={Ludwig Maximilian University of Munich}
 }
 
-@phdthesis{Lebrun_PHD_2013,
-	author = {Lebrun, R.},
-	year = 2013,
-	title = {{Contributions \`a la mod\'elisation de la d\'ependance stochastique}},
-	school = {Universit\'e Paris-Diderot -- Paris VII},
-	note = {(in English)},
-    address = {}
-}
-
 @book{nelsen_2006_copulas,
   title={{An introduction to copulas}},
   author={Nelsen, R.B.},
@@ -1323,6 +1324,16 @@ author = {E. Vanem},
     booktitle={Mathematics of Planet Earth},
     year={2014},
     pages={119 -- 122},
+}
+
+@article{demay_2022,
+  title={{Model selection based on validation criteria for Gaussian process regression: An application with highlights on the predictive variance}},
+  author={Demay, C. and Iooss, B. and Le Gratiet, L. and Marrel, A.},
+  journal={Quality and Reliability Engineering International},
+  volume={38},
+  number={3},
+  pages={1482--1500},
+  year={2022},
 }
 
 @article{fau_2021,
@@ -1472,6 +1483,7 @@ author = {E. Vanem},
   journal={International Journal for Uncertainty Quantification},
   volume={13},
   number={2},
+  pages= {31--52},
   year={2023},
 }
 
@@ -1905,10 +1917,9 @@ author = {J.P. Jensen and K. Skelton},
 @inproceedings{matha_2011_ISOPE,
   author={Matha, D. and Schlipf, M. and Pereira, R. and Jonkman, J.},
   year = {2011},
-  month = {01},
-  pages = {},
+  organization={ISOPE},
   title = {{Challenges in Simulation of Aerodynamics, Hydrodynamics, and Mooring-Line Dynamics of Floating Offshore Wind Turbines}},
-  journal = {Proceedings of the International Offshore and Polar Engineering Conference}
+  booktitle = {Proceedings of the International Offshore and Polar Engineering Conference}
 }
 
 @article{marty_2021_cable_marine_growth,
@@ -2012,7 +2023,7 @@ author = {J.P. Jensen and K. Skelton},
 }
 
 @article{montes_2016_cvines_metocean,
-  title={'Multivariate environmental contours using C-vine copulas'},
+  title={{Multivariate environmental contours using C-vine copulas}},
   author={Montes-Iturrizaga, R. and Heredia-Zavoni, E.},
   journal={Ocean engineering},
   volume={118},
@@ -2740,9 +2751,9 @@ author = {L. Wang and A. Kolios and X. Liu and D. Venetsanos and R. Cai},
     title = {{Development of a data assimilation method for the calibration and continuous update of wind turbines digital twins.}}
 }
 
-@phdthesis{huchet_2019,
+@phdthesis{huchet_2018,
     author = {Huchet, Q.},
-    year = {2019},
+    year = {2018},
     school={Universit\'{e} Blaise Pascal},
     title = {{Kriging based methods for the structural damage assessment of offshore wind turbines}},
 }
@@ -2862,10 +2873,10 @@ year  = {2015},
 @unpublished{pronzato_rendas_2021,
   TITLE = {{Validation of Machine Learning Prediction Models}},
   AUTHOR = {Pronzato, L. and Rendas, M.-J.},
-  NOTE = {preprint, \url{https://hal.science/hal-03818234}},
-  YEAR = {2023},
-  KEYWORDS = {Model Validation ; Bayesian Quadrature ; Maximum Mean Discrepancy ; Experimental Design},
-  HAL_ID = {hal-03818234},
+  journal = {The New England Journal of Statistics in Data Science},
+  volume = {1},
+  year = {2023},
+  pages = {394--414},
 }
 
 @article{pronzato_zhigljavsky_2020,
@@ -3227,7 +3238,7 @@ author = {Lamboni, M. and Iooss, B. and Popelin, A.-L. and Gamboa, F.},
 
 @article{marrel_iscream_2022,
 	author = {Marrel, A. and Iooss, B. and Chabridon, V.},
-	title = {{The ICSCREAM methodology: Identification of penalizing configurations in computer experiments using screening and metamodel – Applications in thermal-hydraulics}},
+	title = {{The ICSCREAM methodology: Identification of penalizing configurations in computer experiments using screening and metamodel -- Applications in thermal-hydraulics}},
 	volume = {196},
 	pages = {301--321},
 	journal = {Nuclear Science and Engineering},
@@ -3375,19 +3386,21 @@ year = {2017},
   year={1993}
 }
 
-@article{sobol_1995_DGSM,
+@InProceedings{sobol_1995_DGSM,
   title={{On an alternative global sensitivity estimators}},
-  author={Sobol', I. M. and Gresham, A.},
-  journal={Proceedings of SAMO},
+  author={Sobol', I. M. and Greshman, A.},
+  booktitle={Proceedings of SAMO 1995, Belgirate, Italy},
   pages={40--42},
   year={1995}
 }
 
-@article{shapley_1953,
+@InProceedings{shapley_1953,
   title={{A value for n-person games}},
-  author={Shapley, L. S. and others},
+  author={Shapley, L. S.},
   year={1953},
-  publisher={Princeton University Press Princeton}
+  publisher={Princeton University Press Princeton},
+  booktitle = {Contributions to the theory of games II, Annals of mathematic studies},
+  editor = {H.W. Kuhn and A.W. Tucker},
 }
 
 @article{song_2016_shapley,
@@ -3400,10 +3413,10 @@ year = {2017},
   year={2016},
 }
 
-@unpublished{sueur_2017_PLI,
+@inproceedings{sueur_2017_PLI,
   title={{Sensitivity analysis using perturbed-law based indices for quantiles and application to an industrial case}},
   author={Sueur, R. and Iooss, B. and Delage, T.},
-  note={preprint, \url{https://arxiv.org/abs/1707.01296}},
+  booktitle={10th International Conference on Mathematical Methods in Reliability (MMR 2017), Grenoble, France},
   year={2017}
 }
 
@@ -3425,11 +3438,11 @@ year = {2017},
 }
 
 @incollection{baudin_dutfoy_2017,
-    author =	 {M. Baudin and A. Dutfoy and B. Iooss and {A-L.} Popelin},
+    author =	 {M. Baudin and A. Dutfoy and B. Iooss and {A.-L.} Popelin},
     title = 	 {{OpenTURNS: An industrial software for uncertainty quantification in simulation}},
     editor =	 {R. Ghanem and D. Higdon and H. Owhadi},
     publisher =    {Springer},
-    booktitle = 	 {Springer Handbook on {Uncertainty Quantification}},
+    booktitle = 	 {{Handbook of Uncertainty Quantification}},
     pages = {2001--2038},
     year = 	 {2017}
 }
@@ -3464,13 +3477,12 @@ year = {2017},
     publisher = {Society for Industrial and Applied Mathematics},
 }
 
-@Inbook{kucherenko_iooss_2017,
+@incollection{kucherenko_iooss_2017,
   title = {{Derivative-Based Global Sensitivity Measures}},
   author = {Kucherenko, S. and Iooss, B.},
   booktitle = {Handbook of Uncertainty Quantification},
   year={2017},
-  publisher={Springer International Publishing},
-  address={Cham},
+  publisher={Springer},
   editor={Ghanem, R. and Higdon, D.and Owhadi, H.},
   pages={1241--1263},
 }
@@ -3505,6 +3517,13 @@ volume = {36},
 year = {2009}
 }
 
+@book{ghanem_2017,
+  title={{Handbook of uncertainty quantification}},
+  author={Ghanem, R. and Higdon, D. and Owhadi, H.},
+  year={2017},
+  publisher={Springer}
+}
+
 @book{rocquigny_2008,
     title={{Uncertainty in industrial practice: a guide to quantitative uncertainty management}},
     author={De Rocquigny, E. and Devictor, N. and Tarantola, S.},
@@ -3533,7 +3552,6 @@ year = {2009}
   publisher={Addison-Wesley Professional}
 }
 
-
 @article{silverman_1981,
   title={{Using kernel density estimates to investigate multimodality}},
   author={Silverman, B.W.},
@@ -3554,14 +3572,14 @@ year = {1996},
 author = {Sch\"{u}tz, W.},
 }
 
-@inbook{sudret_2013_fatigue,
-author = {Sudret, B.},
-publisher = {John Wiley \& Sons, Ltd},
-title = {{Probabilistic Design of Structures Submitted to Fatigue}},
-booktitle = {Fatigue of Materials and Structures},
-chapter = {5},
-pages = {223--263},
-year = {2013},
+@incollection{sudret_2013_fatigue,
+  title = {{Probabilistic Design of Structures Submitted to Fatigue}},
+  author = {Sudret, B.},
+  booktitle = {Fatigue of Materials and Structures},
+  editor={Bathias, C. and Pineau, A.},
+  pages = {223--263},
+  year = {2013},
+  publisher = {John Wiley \& Sons, Ltd},
 }
 
 @book{sullivan_2015,

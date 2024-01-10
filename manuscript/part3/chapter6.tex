@@ -34,7 +34,7 @@ Then, a common risk measure in reliability analysis is the \textit{failure proba
 \begin{equation}
     \label{eq:failure_proba_c6}
     \pf = \P(g(\bX) \leq \yth)
-        = \int_{\iD_\bx} \1_\{\iF\}(\bx) f_\bX(\bx) \, \dd\bx.
+        = \int_{\iD_\bx} \1_{\{\iF\}}(\bx) f_\bX(\bx) \, \dd\bx.
 \end{equation}
 The usual convention presented in Section~\ref{sec:reliability} allows to modify the LSF in order to set the threshold to zero. 
 Moreover, as presented previously, the main methods for rare event estimation can be divided into two groups \citep{MorioBalesdent2015}: 
@@ -42,11 +42,12 @@ Moreover, as presented previously, the main methods for rare event estimation ca
 \textit{(ii)} second the simulation-based techniques such as the crude Monte Carlo method and many other variance reduction techniques. 
 Unfortunately, FORM/SORM methods do not provide much statistical information as they are purely geometric approaches. 
 Meanwhile, estimating a rare event probability by crude Monte Carlo becomes rapidly intractable for engineering applications. 
-To overcome this limit, advanced simulation techniques have been developed: among others, one can mention several variance reduction methods such as the nonadaptive and adaptive versions of the importance sampling \citep{RubinsteinKroese1981} and splitting techniques \citep{cerou2012sequential} such as subset simulation (SS) \citep{AuBeck2001}.
+To overcome this limit, advanced simulation techniques have been developed (see Section~\ref{sec:rare_event}). 
+Among others, one can mention several variance reduction methods such as the nonadaptive and adaptive versions of the importance sampling \citep{RubinsteinKroese1981} and splitting techniques \citep{cerou2012sequential} such as subset simulation (SS) \citep{AuBeck2001}.
 
 In SS, the idea is to write the rare event probability $\pf$ as a product of larger conditional probabilities, each one of them being easier to estimate. 
 To generate intermediary conditional samples, this method uses Markov chain Monte Carlo (MCMC) sampling, which presents a large panel of dedicated algorithms \citep{Papaioannou_PEM_2015}. 
-However, MCMC algorithms are known to be highly tunable algorithms and to produce non-i.i.d. samples, which consequently, cannot always be used for direct unbiased statistical estimation (e.g., for $\pf$ but also for sensitivity indices). 
+However, MCMC algorithms are known to be difficult to tune and to produce non-i.i.d. samples, which consequently, cannot always be used for direct unbiased statistical estimation (e.g., for estimating $\pf$ but also for sensitivity indices). 
 
 Adaptive importance sampling infers conditional distributions before using an importance sampling estimator of the failure probability. 
 The set of auxiliary distributions converging towards the failure domain is either fitted by parametric approaches (e.g., using the cross-entropy method \citealp{rubinstein_2004_CE}), or nonparametric methods (e.g., using multivariate KDE \citealp{zhang_1996_NIS, Morio_RESS_2011}). 
@@ -81,7 +82,8 @@ Then, the last section present some conclusions and research perspectives.
 %============================================================%
 
 The BANCS algorithm uses the same structure as other adaptive importance sampling methods (e.g., NAIS or CE-AIS introduced in Section~\ref{sec:reliability}) while employing a different approach to fit the intermediate conditional distributions. 
-The proposed algorithm is described in Algorithm \ref{alg:bancs} at iteration $k$, after estimating the intermediary $p_0$-quantile $\widehat{q}_{[k]}^{\, p_0}$, a nonparametric model is fitted on the set $\mathbf{A}_{[k+1]}$ of all samples leading to values below $\widehat{q}_{[k]}^{\, p_0}$ (also called ``elite set'').  
+The proposed algorithm is described in Algorithm \ref{alg:bancs}. 
+At iteration $k$, after estimating the intermediary $p_0$-quantile $\widehat{q}_{[k]}^{\, p_0}$, a nonparametric model is fitted on the set $\mathbf{A}_{[k+1]}$ of all samples leading to values below $\widehat{q}_{[k]}^{\, p_0}$ (also called ``elite set'').  
 This inference is done by coupling a set of marginals fitted by univariate KDE, with a copula fitted using the EBC. 
 The generation of the next i.i.d. $N$-sized sample $\bX_{[k+1], N}$ from the conditional distributions is straightforward and does not require any MCMC sampling like in SS. 
 Note that the BANCS method does not require any iso-probabilistic transform either.
@@ -105,8 +107,8 @@ Note that the BANCS method does not require any iso-probabilistic transform eith
         \State Estimate the empirical $p_0$-quantile $\widehat{q}_{[0]}^{\, p_0}$ of the set $Y_{[0], N}$
         
         \While{$\widehat{q}_{[k]}^{\, p_0} > \yth$}
-        \State Compute IS weights $\left\{w_{[k]}^{(i)}\right\}_{i=1}^N = \left\{\frac{f_\bX(\bx_{[k]}^{(i)})}{\widehat{f}_{[k]}(\bx_{[k]}^{(i)})}\right\}_{j=1}^N$
-        \State Build a weighted elite set $\mathbf{A}_{[k+1]}=\sum_{l=1}^{k} \sum_{i=1}^N w_{[k]}^{(j)} \, \1_{\left\{g(\bx_{[l]}^{(i)}) \leq \widehat{q}_{[k]} \right\}}\left(\bx_{[k]}^{(i)}\right)$
+        \State Compute IS weights $\left\{w_{[k]}^{(i)}\right\}_{i=1}^N = \left\{\frac{f_\bX(\bx_{[k]}^{(i)})}{\widehat{f}_{[k]}(\bx_{[k]}^{(i)})}\right\}_{i=1}^N$
+        \State Build a weighted elite set $\mathbf{A}_{[k+1]}=\sum_{l=1}^{k} \sum_{i=1}^N w_{[k]}^{(i)} \, \1_{\left\{g(\bx_{[l]}^{(i)}) \leq \widehat{q}_{[k]} \right\}}\left(\bx_{[k]}^{(i)}\right)$
         \State Fit marginals of the set $\mathbf{A}_{[k+1]}$ by KDE $\left\{\widehat{F}_j\right\}_{j=1}^d$
         \State Fit the copula of the set $\mathbf{A}_{[k+1]}$ by EBC $B_\bm(C_n)$
         \State Build a CDF $\widehat{F}_{[k+1]}(\bx) = B_m(C_n)\left(\widehat{F}_1(x_1), \dots, \widehat{F}_d(x_d)\right)$
@@ -123,22 +125,6 @@ Note that the BANCS method does not require any iso-probabilistic transform eith
 \State $\widehat{\pf}^{\mathrm{BANCS}}$, estimate of $\pf$
 \end{algorithmic}
 \end{algorithm}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[!ht]
-    \centering
-    \begin{subfigure}[b]{0.49\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{part3/figures/BANCS/bancs_illustration0.jpg}
-        \caption{Iteration $k=0$.}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.49\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{part3/figures/BANCS/bancs_illustration1.jpg}
-        \caption{Iteration $k=1$.}
-    \end{subfigure}
-    \caption{BANCS algorithm applied to test case \#1: illustration of conditional sampling and nonparametric fit at the first and second iterations.}
-    \label{fig:bancs_illustration}
-\end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Nonparametric inference requires to tune the scaling parameters for KDE and the polynomial order $m$ (considered equal for all the input dimensions) for EBC. 
@@ -168,8 +154,24 @@ At the iteration $k=0$, the conditional distribution fitted (with PDF represente
 Ideally, the conditional distribution fitted, with PDF denoted by $\what{f}_{[1]}$, should be bounded by this border. 
 At the second iteration, the PDF of the conditional distribution denoted by $\what{f}_{[2]}$, is represented by the brown isolines. 
 Unlike the inference of $\what{f}_{[1]}$, the fit of $\what{f}_{[2]}$ is realized on the samples from $\bX_{[1], N} \sim \what{f}_{[1]}$ and $\bX_{[0], N} \sim \what{f}_{[0]}$ which crossed the quantile $\widehat{q}_{[1]}^{\, p_0}$. 
-Indeed, the samples $\bX_{[0], N} \sim \what{f}_{[0]}$ are weighted according to an IS procedure (see the lines 14 and 15 from Algorithm~\ref{alg:bancs}). 
+Indeed, the samples $\bX_{[0], N} \sim \what{f}_{[0]}$ are weighted according to an IS procedure (see the lines 12 and 13 from Algorithm~\ref{alg:bancs}). 
 Including the samples from the previous iterations refines the goodness-of-fit near the quantile border and significantly improves BANCS performances. 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{part3/figures/BANCS/bancs_illustration0.jpg}
+        \caption{Iteration $k=0$.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{part3/figures/BANCS/bancs_illustration1.jpg}
+        \caption{Iteration $k=1$.}
+    \end{subfigure}
+    \caption{BANCS algorithm applied to test case \#1: illustration of conditional sampling and nonparametric fit at the first and second iterations (with $p_0=0.2$ and $N=10^3$).}
+    \label{fig:bancs_illustration}
+\end{figure}
 
 
 %============================================================%
@@ -186,8 +188,8 @@ An implementation of the BANCS method and the following numerical experiments ar
 In the following analytical numerical experiments, the intermediary probabilities were set to $p_0=0.1$ (following the recommendations from \citealp{AuBeck2001}), allowing a fair comparison with the usual SS implementation. 
 The following intermediate sample sizes $N \in \{300, 500, 700, 1000, 2000, 5000, 10000\}$ are simulated.
 Let us recall that the EBC tuning is set to minimize the AMISE, such that $m = 1 + N^{\frac{2}{d+4}}$. 
-Finally, in order to take into account the variability of the method's results, each experiment is repeated 100 times, allowing the computation of a coefficient of variation $\widehat{\delta} = \frac{\sigma_{\widehat{\pf}}}{\mu_{\widehat{\pf}}}$. 
-Since the SS estimator only provide an approximated value of its dispersion, an empirical estimation on repetitions is the most neutral way to compare the variability of several methods. 
+Finally, in order to take into account the variability of the method's results, each experiment is repeated 100 times, allowing to empirically compute the first moments of the estimators $(\sigma_{\widehat{\pf}}, \mu_{\widehat{\pf}})$ and their coefficient of variation $\widehat{\delta} = \frac{\sigma_{\widehat{\pf}}}{\mu_{\widehat{\pf}}}$. 
+Since the SS estimator only provides an approximated value of its dispersion, an empirical estimation on repetitions is the most neutral way to compare the variability of several methods. 
 
 
 %============================================================%
@@ -263,18 +265,19 @@ Note that the color scale associated to the output values is log-transformed to 
 \centering
 \begin{tabular}{ lcccccccc }
     \hline
-    Variable            & $m_p$ & $m_s$ & $k_p$ & $k_s$ & $\zeta_p$ & $\zeta_s$ & $F_s$ & $S_0$ \\
+    Variable                     & $m_p$ & $m_s$ & $k_p$ & $k_s$ & $\zeta_p$ & $\zeta_s$ & $F_s$ & $S_0$ \\
     \hline          
-    Distribution        &  \multicolumn{8}{c}{Lognormal} \\ 
-    Mean                & 1.5 & 0.01 & 1.0 & 0.01 & 0.05 & 0.02 & 27.5 & 100.0\\ 
-    Coeff. of variation & 0.1 & 0.1 & 0.2 & 0.2 & 0.4 & 0.5 & 0.1 & 0.1\\
+    Distribution                 &  \multicolumn{8}{c}{Lognormal} \\ 
+    Mean $\mu$                   & 1.5 & 0.01 & 1.0 & 0.01 & 0.05 & 0.02 & 27.5 & 100.0\\ 
+    Coeff. of variation $\delta$ & 0.1 & 0.1 & 0.2 & 0.2 & 0.4 & 0.5 & 0.1 & 0.1\\
     \hline
 \end{tabular}
-\caption{Input probabilistic model for test case \#5.}
+\caption{Input probabilistic model for test case \#5. Each variable $X_j$ follows a lognormal distributions such that $\ln(X_j)\sim \iN\left(\mu, (\delta \mu)^2 \right)$.}
 \label{tab:oscillator}
 \end{table}
 
-The problems introduced in the present section will be used in a numerical benchmark of BANCS (test cases \#2, \#4, and \#4) and to study the ROSA as a post-processing of BANCS (test cases \#3 and \#5). 
+Among the problems introduced in the present subsection, test case \#1 is used to illustrate the algorithm while more challenging reliability problems (i.e., test cases \#2, \#4, and \#5) are part of the numerical benchmark of BANCS. 
+To study the ROSA as a post-processing of BANCS, numerical experiments are performed on a well-know function in GSA (test case \#3) and the most challenging reliability problem in the group (test case \#5). 
 
 %============================================================%
 \subsection{Benchmark results and analysis}
@@ -309,12 +312,23 @@ In general, BANCS shows equivalent or better performances than SS and NAIS (on t
 
 \begin{figure}
     \centering
+    \includegraphics[width=0.7\textwidth]{part3/figures/BANCS/crosscut_oscillator.png}
+    \caption{Cross-cut visualization of the limit-state function in test case \#5. 
+    FORM's most-probable failure point $P^*$ is given by the black cross. 
+    The LSF (full line) delimits the safe domain (in blue) and the failure domain (in red). 
+    FORM approximation around $P^*$ is represented by the dashed lines.}
+    \label{fig:crosscut_oscillator}
+\end{figure}
+
+
+\begin{figure}
+    \centering
     \begin{subfigure}[b]{0.49\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/bancs_parabolic.jpg}
         \caption{Test case \#1.}
     \end{subfigure}
-    \begin{subfigure}[b]{0.49\linewidth}
+    \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/bancs_4branch.jpg}
         \caption{Test case \#2.}
@@ -324,16 +338,6 @@ In general, BANCS shows equivalent or better performances than SS and NAIS (on t
     \label{fig:2D_toycase_reliability}
 \end{figure}
 
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.7\textwidth]{part3/figures/BANCS/crosscut_oscillator.png}
-    \caption{Cross-cut visualization of the limit-state function in test case \#5. 
-    FORM's most-probable failure point $P^*$ is given by the black cross. 
-    The LSF (full line) delimits the safe domain (in blue) and the failure domain (in red). 
-    FORM approximation around $P^*$ (represented by the dashed lines).}
-    \label{fig:crosscut_oscillator}
-\end{figure}
 
 
 \begin{figure}
@@ -487,6 +491,7 @@ These quantities are plotted as function of the consecutive samples $S_k$ to stu
 \fig{fig:rosa_ishigami} represents these results for the test case \#3 while \fig{fig:rosa_oscillator} shows the results for test case \#5. 
 To make sure that the estimation is coherent and ease the interpretation, a variable without any relation to the output was added. 
 This variable always follows a standard normal distribution and is called the control variable (abbreviated ``ctrl.'' in the figures). 
+Thus, the estimated T-HSIC and C-HSIC indices that present values equal to the control variable are not worth interpreting. 
 The present ROSA study is realized with the following simulation settings:
 \begin{itemize}
     \item BANCS takes a sample size $N=5000$ and a probability $p_0=0.25$ (to get a more progressive convergence of the algorithm). Compared to the reference results, the estimated probabilities have a relative error of $2.46\%$ for test case \#3 and 1.86$\%$ for test case \#5; 
@@ -503,8 +508,10 @@ The present ROSA study is realized with the following simulation settings:
 From \fig{fig:rosa_ishigami}, one can see that the variable $X_2$ has the least influential TSA while the variable $X_3$ has the least influence on the CSA. 
 The p-value obtained asymptotically for the TSA and by permutations for the CSA, confirm the interpretation of the HSICs. 
 One can conclude that the three variables all have a distinct impact on the failure probability. 
-The variable $X_1$ has an interesting behavior as the problem becomes rarer, its impact from the TSA decreases while its influence from the CSA viewpoint increases.      
-It is overall the most influential variable identified from this ROSA study.  
+The variable $X_1$ has an interesting behavior as the problem becomes rarer, its impact from the TSA decreases.      
+This TSA result is in line with the analysis from \citet{lemaitre_2015_PLI}, who showed that the rarer the event, the more its occurrence is due to the combined influence of all the variables (via their interaction). 
+Interestingly, this phenomenon does not impact the CSA, which shows an increasing influence of the variable $X_1$. 
+
 
 %------------------------------------------------------------%
 \paragraph{Result analysis from test case \#5:}

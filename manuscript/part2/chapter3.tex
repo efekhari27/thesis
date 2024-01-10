@@ -84,7 +84,7 @@ Several strategies to model the dependence structure from multivariate distribut
     \end{subequations}
 \end{remark}
 
-The notions related to copula theory are introduced in deatils in the monographs of \citet{nelsen_2006_copulas,joe_2014,durante_2015_copula} while the key properties are introduced hereafter.
+The notions related to copula theory are introduced in details in the monographs of \citet{nelsen_2006_copulas,joe_2014,durante_2015_copula} while the key properties are introduced hereafter.
 
 
 %============================================================%
@@ -207,9 +207,8 @@ In the following, an approximation of the empirical copula with Bernstein polyno
 
 
 %============================================================%
-\subsection{Empirical Bernstein and Beta copulas}
+\subsection{Empirical Bernstein and Beta copulas}\label{sec:3ebc}
 %============================================================%
-
 A few elements about Bernstein polynomials and their corresponding approximation are mentioned before introducing the empirical Bernstein copula.
 
 \subsubsection{Bernstein polynomials and approximation}
@@ -559,7 +558,7 @@ These figures show that this complex dependence patterns are generally well capt
 However, despite its apparent flexibility, this tool should be used when inferring the distributions' tails. 
 For example, the upper tail of the $H_s$ vs. $T_p$ scatter plot typically studied in ocean engineering is not very well captured.
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{../numerical_experiments/chapter3/figures/SB_MMD_goodness.png}
     \caption{Empirical distributions of the maximum mean discrepancy between the validation sample $\bX_n'$ and the sample $\widetilde{\bX}_n \simiid \what{F}_\bX$ (repeated for 100 samples $\widetilde{\bX}_n$).}
@@ -610,7 +609,7 @@ The wake arises from extracting kinetic energy from the wind, leading to a decre
 In a wind farm, the wake mostly depends on the turbines' layout, the ambient wind speed, and the ambient turbulence intensity. 
 The resulting heterogeneous wind field in a wind farm can be simulated by numerical models with different fidelities (as discussed in Subsection~\ref{sec:222}). 
 
-In the present work, simplified wake models (sometimes called ``dynamic wake meandering'', or ``engineering'' models, see e.g., \citealp{doubrawa_2020_benchmark}) are used to simulate the wind speed deficit and the added turbulence at each turbine.
+In the present work, simplified wake models (sometimes called ``dynamic wake meandering'', or ``engineering'' models, see e.g., \citealp{doubrawa_2020_benchmark}) are used to simulate the wind speed deficit and the added turbulence at each turbine. 
 To recover a wake-perturbed wind distribution at each turbine, the ambient wind distribution is propagated through a wake model. 
 Having different wind distributions naturally impacts the loading and should be considered during fatigue assessment at a farm scale. 
 Such heterogeneity is mostly considered by international standards via empirical coefficients (also called ``effective turbulence''). 
@@ -649,7 +648,7 @@ In the end, the 25 OWT are split into four groups, whose representatives can be 
 %------------------------------------------------------------%
 \paragraph{Wake model definition.}
 %------------------------------------------------------------%
-When simulating the wake effect of floating wind turbines, various studies (either using dynamic wake meandering in \citealp{wise_2020} or LES \citealp{johlas_2020_wake_LES}), showed the importance of modeling the floaters' position (translation and rotation). 
+When simulating the wake effect of floating wind turbines, various studies (either using dynamic wake meandering in \citealp{wise_2020} or large eddy simulations \citealp{johlas_2020_wake_LES}), showed the importance of modeling the floaters' position (translation and rotation). 
 Therefore, an engineering wake model based on the Farmshadow™ software (developed by IFPEN) was coupled with a hydro-static calculation to predict the floater's position, as well as the wind speed and turbulence intensity. 
 In this model, the floaters are considered to be rigid, and all degrees of freedom are considered (surge, sway and heave for the three translations and roll, pitch and yaw for the three rotations). 
 
@@ -784,7 +783,7 @@ Finally, the representative turbines are tagged with the mention ``r'' and could
 %============================================================%
 This section studied the impact of the wake on the wind conditions in a farm. 
 The ambient wind conditions were propagated on a low-fidelity wake model of a floating wind farm. 
-Even if higher-fidelity models could simulate this phenomenon more accurately, their huge computational cost would not allow uncertainty propagation (e.g., several days for some LES models, with intensive parallelization). 
+Even if higher-fidelity models could simulate this phenomenon more accurately, their huge computational cost would not allow uncertainty propagation (e.g., several days for some large eddy simulations, with intensive parallelization). 
 The present model shows a reasonable error and has a short execution time (i.e., about a few minutes on a standard computer). 
 The resulting wake-perturbed distributions at each turbine were compared to each other using the MMD as a dissimilarity measure between distributions. 
 Using this scalar metric of perturbations created by the wake, clusters were built.  

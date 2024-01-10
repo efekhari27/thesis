@@ -40,6 +40,9 @@ This repository is divided into two folders:
 
 :mega: E. Fekhari, B. Iooss, V. Chabridon and J. Muré (2023). "Rare event estimation using nonparametric Bernstein adaptive sampling". In: *Proceedings of the Mascot-Num 2023 Annual Conference (MASCOT-NUM 2023)*, Le Croisic, France. 
 
+:mega: E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2024). "Sensitivity-Informed Nonparametric Adaptive Conditional Sampling for Robust Reliability Analysis". In: *SIAM Conference on Uncertainty Quantification (SIAM UQ24)*, Trieste, Italy.
+
+
 :mega: *Le Printemps de la Recherche 2022*, Nantes, France. "Traitement des incertitudes pour la gestion d’actifs éoliens". 
 
 :mega: *Journées Scientifiques de l’Eolien 2024*, Saint-Malo, France. "Evaluation probabiliste de la fiabilité en fatigue des structures éoliennes en mer".

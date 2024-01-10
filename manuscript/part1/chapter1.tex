@@ -423,7 +423,7 @@ Finally, this technique showed great properties, but other methods offer more fl
 %------------------------------------------------------------%
 \subsubsection{Monte Carlo methods}
 %------------------------------------------------------------%
-Monte Carlo (\abv{mc}) methods were initially developed in the 1940s to solve problems in neutronics.  
+Monte Carlo methods were initially developed in the 1940s to solve problems in neutronics.  
 Ever since, this technique has been applied to the numerical resolution of integrals. 
 To integrate a function $g$ against a measure $\P_{\bX}$, it randomly generates points according to the input measure. 
 The integral is estimated by taking the uniform arithmetic mean of the nodes' images obtained. 
@@ -464,7 +464,7 @@ For further details, the reader may refer to \citet[Chap. 8,9,10]{owen_2013} and
 
 
 %------------------------------------------------------------%
-\subsubsection{Quasi-Monte Carlo and Koksma-Hlawka inequality}
+\subsubsection{Quasi-Monte Carlo and Koksma-Hlawka inequality}\label{sec:1qmc}
 %------------------------------------------------------------%
 
 Among the methods presented so far, classical deterministic quadratures are subject to the curse of dimensionality while Monte Carlo methods deliver mixed performances. 
@@ -533,7 +533,7 @@ Note that by construction, these sequences offer particularly low discrepancies 
 Typically, designs with sizes equal to powers of two or power of prime numbers will be favorable. 
 To illustrate the different repartition and properties of the methods, \fig{fig:quasi_monte_carlo_designs} represents the three Monte Carlo and QMC designs (with size $n=2^8=256$). 
 Each one is then split into the first $n_1=128$ points (in red) and the following $n_2=128$ points (in black) to show to nested properties of the QMC sequences. 
-This illustration clearly shows the way QMC sequences uniformly occupy the domain while MC sampling leaves uncovered areas.  
+This illustration clearly shows the way QMC sequences uniformly occupy the domain while Monte Carlo sampling leaves uncovered areas.  
 
 \begin{figure}[ht]
     \centering
@@ -822,7 +822,7 @@ A rare event estimation results from a particular uncertainty propagation throug
 \begin{equation}
     \begin{split}
         \pf = \P(Y \geq \yth) &= \P(g(\bX) \leq 0) = \int_{\iF_\bx} f_\bX(\bx) \, \dd\bx
-        = \int_{\iD_\bx} \1_\{\iF_\bx\}(\bx) f_\bX(\bx) \, \dd\bx .
+        = \int_{\iD_\bx} \1_{\{\iF_\bx\}}(\bx) f_\bX(\bx) \, \dd\bx .
     \end{split}
     \label{eq:pf}
 \end{equation}
@@ -856,20 +856,21 @@ one can apply the change of variable $\bx = T(\bu)$ to express the reliability p
 \begin{equation}
     \pf = \P(\cg(\bU) \leq 0) 
         = \int_{\iF_\bu} \varphi_d(\bu) \, \dd\bu 
-        = \int_{\R^d} \1_{\iF_\bu}(\bu) \varphi_d(\bu) \, \dd\bu \,,
+        = \int_{\R^d} \1_{\{\iF_\bu\}}(\bu) \varphi_d(\bu) \, \dd\bu \,,
 \end{equation}
 with the transformed failure domain denoted by $\iF_\bu = \{\bu \in \R^d \, | \, \cg(\bu) \leq 0\}$, 
 and the $d$-dimensional standard Gaussian PDF $\varphi_d(\bu) = \frac{1}{(2\pi)^{d/2}} \exp\left(-\frac{\lVert\bu\rVert^2_2}{2}\right)$. 
 The fact that the failure probability is invariant by this transformation allows the analyst to estimate this quantity in both spaces.  
 
-Different types of transformations exist, such as the Rosenblatt or the generalized Nataf transformation introduced by \citet{Lebrun_PHD_2013}. 
+Different types of transformations exist, such as the Rosenblatt or the generalized Nataf transformation introduced by \citet{lebrun_2013_these}. 
 In practice, the transformation choice depends on the properties of the input distribution studied. 
 For example in \ot, depending on the three following cases, different types of transformations are applied:
 \begin{itemize}
     \item for elliptical distributions, a linear Nataf transformation is applied;
     \item for distributions with an elliptical copula, the generalized Nataf transformation is used \citep{lebrun_2009};
     \item otherwise, the Rosenblatt transformation is used \citep{lebrun_2009_dotheydiff}.
-\end{itemize}  
+\end{itemize} 
+
 
 
 %============================================================%
@@ -881,7 +882,7 @@ For example in \ot, depending on the three following cases, different types of t
 The main risk measure chosen for rare event estimation in this work is the previously introduced failure probability. 
 %Therefore, let us recall that the goal is to build an efficient estimation (or approximation) of the following $d$-dimensional integral: 
 %\begin{equation}
-%    \pf = \int_{\iD_\bx} \1_\{\iF_\bx\}(\bx) f_\bX(\bx) \, \dd\bx.
+%    \pf = \int_{\iD_\bx} \1_{\{\iF_\bx\}}(\bx) f_\bX(\bx) \, \dd\bx.
 %\end{equation}
 In the computer experiments context, the simulation budget is often limited to $n$ runs with $\pf \ll \frac1n$. 
 This explains the need for specific methods offering approximations or simulations targeting the unknown failure domain. 
@@ -899,7 +900,7 @@ They extrapolate a local approximation of the LSF built in the vicinity of a \te
 Working in the standard normal space, the methods first look for this MPFP, denoted by $P^*$, with coordinates $\bu^*$. 
 To find it, one can solve the following quadratic optimization problem: 
 \begin{equation}
-    \bu^* = \argmax_{\bu \in \R^d} \left(\1_{\iF_\bu}(\bu) \varphi_d(\bu)\right).
+    \bu^* = \argmax_{\bu \in \R^d} \left(\1_{\{\iF_\bu\}}(\bu) \varphi_d(\bu)\right).
 \end{equation}
 Using the properties of the standard normal space allows us to rewrite it as: 
 \begin{align}
@@ -989,7 +990,7 @@ Crude Monte Carlo sampling is a universal and empirical method for uncertainty p
 As introduced earlier, it relies on the pseudo-random generation of i.i.d. samples $\left\{\bx^{(i)}\right\}_{i=1}^n \simiid f_\bX$.   
 The estimator is written using the indicator function applied to the LSF: 
 \begin{equation}
-    \pf \approx \what{\pf}^{\textrm{MC}} = \frac1n \sum_{i=1}^{n} \1_\{\iF_\bx\}(\bx^{(i)}).
+    \pf \approx \what{\pf}^{\textrm{MC}} = \frac1n \sum_{i=1}^{n} \1_{\{\iF_\bx\}}(\bx^{(i)}).
 \end{equation} 
 
 This unbiased estimator converges towards the failure probability almost surely according to the law of large numbers. 
@@ -1029,27 +1030,27 @@ By doing so, it allows drawing more points in the failure domain, leading to a b
 The challenge in IS is to pick a relevant \textit{instrumental} distribution $h_\bX$ (also called \textit{auxiliary} distribution) to replace the initial distribution $f_\bX$. 
 Then, by introducing the \textit{likelihood ratio} $w_\bX(\bx) = \frac{f_\bX(\bx)}{h_\bX(\bx)}$, one can rewrite $f_\bX(\bx) = w_\bX(\bx) \, h_\bX(\bx)$ and inject it in the failure probability expression: 
 \begin{equation}
-    \pf = \int_{\iD_\bx} \1_\{\iF_\bx\}(\bx) \, f_\bX(\bx) \, \dd\bx
-        = \int_{\iD_\bx} \1_\{\iF_\bx\}(\bx) \, w_\bX(\bx) \, h_\bX(\bx) \, \dd\bx.
+    \pf = \int_{\iD_\bx} \1_{\{\iF_\bx\}}(\bx) \, f_\bX(\bx) \, \dd\bx
+        = \int_{\iD_\bx} \1_{\{\iF_\bx\}}(\bx) \, w_\bX(\bx) \, h_\bX(\bx) \, \dd\bx.
 \end{equation}
 This simple writing trick allows to integrate against the auxiliary distribution. 
 With a Monte Carlo method, this task should be easier than integrating directly against the initial distribution.
 
 The IS estimator of the failure probability is defined for a sample drawn from the auxiliary distribution such that $\left\{\bx^{(i)}\right\}_{i=1}^n \simiid h_\bX$: 
 \begin{equation}
-    \what{\pf}^{\mathrm{IS}} = \frac1n \sum_{i=1}^{n} \1_\{\iF_\bx\}(\bx^{(i)}) \, w_\bX(\bx^{(i)}).
+    \what{\pf}^{\mathrm{IS}} = \frac1n \sum_{i=1}^{n} \1_{\{\iF_\bx\}}(\bx^{(i)}) \, w_\bX(\bx^{(i)}).
     \label{eq:pf_IS}
 \end{equation}
 Similarly to Monte Carlo, this estimator is unbiased, however, its variance is defined as: 
 \begin{equation}
-    \var\left( \what{\pf}^{\mathrm{IS}}\right) = \frac1n \left( \E_{h_\bX}\left[\left(\1_\{\iF_\bx\}(\bX) \, \frac{f_\bX(\bX)}{h_\bX(\bX)}\right)^2\right] - \pf^2\right).
+    \var\left( \what{\pf}^{\mathrm{IS}}\right) = \frac1n \left( \E_{h_\bX}\left[\left(\1_{\{\iF_\bx\}}(\bX) \, \frac{f_\bX(\bX)}{h_\bX(\bX)}\right)^2\right] - \pf^2\right).
     \label{eq:IS_variance}
 \end{equation}
 The quality of the variance reduction associated to this technique fully depends on the choice of the instrumental distribution. 
 In fact, IS can lead to higher variance than crude Monte Carlo when the instrumental distribution is poorly chosen \citep{owen_zhou_2000_is}. 
 However, an optimal instrumental distribution $h_{\mathrm{opt}}$ theoretically gives the smallest variance by setting it equal to zero in \eq{eq:IS_variance}: 
 \begin{equation}
-    h_{\mathrm{opt}}(\bx) = \frac{\1_\{\iF_\bx\}(\bx) f_\bX(\bx)}{\pf}. 
+    h_{\mathrm{opt}}(\bx) = \frac{\1_{\{\iF_\bx\}}(\bx) f_\bX(\bx)}{\pf}. 
 \end{equation}
 The optimal expression above is unfortunately not usable in practice since it includes the targeted quantity $\pf$. 
 Considering this framework, various techniques intend to define instrumental distributions as close as possible to this theoretical result. 
@@ -1095,7 +1096,7 @@ Let us consider the distribution $h_{\blambda}$, belonging to the parametric fam
 The early work of \citet{bucher_1988_AIS} only included normal distributions to minimize the IS variance \abv{wrt} the parameter $\blambda$.
 Using \eq{eq:IS_variance} the optimization simplifies as:
 \begin{equation}
-    \blambda^* = \argmin_{\blambda \in \iD_\blambda} \, \E_{h_\blambda}\left[ \1_\{\iF_\bx\}(\bX) \, \left(\frac{f_\bX(\bx)}{h_\blambda(\bx)}\right)^2 \right]. 
+    \blambda^* = \argmin_{\blambda \in \iD_\blambda} \, \E_{h_\blambda}\left[ \1_{\{\iF_\bx\}}(\bX) \, \left(\frac{f_\bX(\bx)}{h_\blambda(\bx)}\right)^2 \right]. 
 \end{equation}
 However, this optimization strategy requires sampling w.r.t. the instrumental distribution at each optimization iteration, which can be avoided by using a different approach. 
 
@@ -1115,17 +1116,17 @@ The KL divergence is a dissimilarity measure between distributions, expressed be
 By injecting the expression in \eq{eq:KL}, the optimization problem simply becomes a function of an expected value over the initial density $f_\bX$:
 \begin{equation}
     \blambda^* = \argmax_{\blambda \in \iD_\blambda} \int_{\iD_\bx} \log\left(h_\blambda(\bx)\right) \, h_{\mathrm{opt}}(\bx) \, \dd \bx
-                = \argmax_{\blambda \in \iD_\blambda} \, \E_{f_\bX}\left[\1_\{\iF_\bx\}(\bX) \, \log\left(h_\blambda(\bX)\right) \right].
+                = \argmax_{\blambda \in \iD_\blambda} \, \E_{f_\bX}\left[\1_{\{\iF_\bx\}}(\bX) \, \log\left(h_\blambda(\bX)\right) \right].
     \label{eq:empirical_KL}
 \end{equation}
 To directly estimate this expected value, the failure probability $\pf$ should not be too rare, which allows to use an empirical estimator of the expected value:
 \begin{equation}
-        \blambda^* = \argmax_{\blambda \in \iD_\blambda} \sum_{i=1}^{n} \1_\{\iF_\bx\}\left(\bx^{(i)}\right) \, \log\left(h_\blambda\left(\bx^{(i)}\right)\right) \, , \qquad
+        \blambda^* = \argmax_{\blambda \in \iD_\blambda} \sum_{i=1}^{n} \1_{\{\iF_\bx\}}\left(\bx^{(i)}\right) \, \log\left(h_\blambda\left(\bx^{(i)}\right)\right) \, , \qquad
         \left\{ \bx^{(i)} \right\}_{i=1}^n \simiid f_\bX.
 \end{equation}
 This optimization can be solved by canceling the gradient: 
 \begin{equation}
-    \sum_{i=1}^{n} \1_\{\iF_\bx\}\left(\bx^{(i)}\right) \, \left[\nabla \log\left(h_{\blambda^*}\right)\right]\left(\bx^{(i)}\right) = \mathbf{0}.
+    \sum_{i=1}^{n} \1_{\{\iF_\bx\}}\left(\bx^{(i)}\right) \, \left[\nabla \log\left(h_{\blambda^*}\right)\right]\left(\bx^{(i)}\right) = \mathbf{0}.
 \end{equation}
 According to \citet{rubinstein_2004_CE}, this system of equations has a unique analytical solution when assuming that the instrumental distribution belongs to the ``natural exponential family''. 
 
@@ -1482,7 +1483,7 @@ The main advantage of this approach is the quantitative nature of its results, a
 When the inputs present a dependence structure, it becomes complicated to distinguish its effects from possible interactions. 
 However, many authors tried to adapt Sobol' indices to this context. 
 Chapter 5 of \citet{daveiga_iooss_2021} reviews four of these approaches. 
-For example, \citet{mara_tarantola_2012} proposed two extra Sobol' indices, called ``full indices'', detecting the contributions associated with the inputs' dependence. 
+For example, \citet{mara_tarantola_2012} proposed four Sobol' indices in total, among which the ``full indices'' detect the contributions associated with the inputs' dependence. 
 Note that the interpretation and estimation of this solution becomes complicated. 
 Moreover, unlike the independent case, the four Sobol' indices do not divide the output variance between the inputs. 
 Beyond Sobol' indices, another notable GSA method was adapted from the cooperative game theory by \citet{owen_2014_shapley}, allowing to work with dependent inputs.   
@@ -1647,7 +1648,7 @@ generalized linear regression, polynomial chaos expansion (PCE) \citep{soize_200
 Gaussian processes (GP) \citep{rasmussen_2006}, low-rank tensor approximations \citep{grasedyck_2013}, and artificial neural network \citep{tibshirani_2009}.
 The following section will provide a short focus on GP regression. %\elias{Add BST's table including names/shape/parameters/reference?}
 
-Validating the accuracy and precision of a surrogate model is an crutial step to guarantee its fidelity with regard to the numerical model. 
+Validating the accuracy and precision of a surrogate model is a crucial step to guarantee its fidelity with regard to the numerical model. 
 When an $m$-sized input-output set is dedicated to validating the surrogate model, independently of the learning set, 
 it is called \textit{test set} and denoted by $\left\{\bX_m, \by_m\right\} = \left\{\bx^{(i)}, g\left(\bx^{(i)}\right)\right\}_{i=1}^m$. 
 Note that the analyst may work in two different frameworks, affecting the regression and validation method's choice: 
@@ -1664,7 +1665,7 @@ The \textit{regression coefficient}, denoted by $R^2$, is the first validation m
 \end{equation}
 where $\overline{y}_n=(1/n)\,\sum_{i=1}^n y^{(i)}$ denotes the empirical mean of the observations in the learning sample. 
 However, such metrics are not relevant for every regression method (typically, the interpolant methods have an $R^2=1$). 
-The \textit{predictivity coefficient} is another criteria defined as a normalized \textit{integrated square error} (\abv{ise}): 
+The \textit{predictivity coefficient} \citep{NashS70} is another criteria defined as a normalized \textit{integrated square error} (\abv{ise}): 
 \begin{equation}
     \mathrm{Q}^2(\wg_n) = 1 - \frac{\ISE(\wg_n)}{\var(g(\bX))}, 
 \end{equation} 
@@ -1720,11 +1721,11 @@ The ``bagging'' validation method (for ``bootstrap aggregating'') consists of a 
 \subsection{Focus on Gaussian process regression}
 %============================================================%
 
-In this subsection, a particular focus is dedicated to GP regression which will be useful in the following chapters (GP is also called Kriging after the geostatician D.G. Krige). 
-GPs are a widely used regression method in UQ for their performance, flexibility and their associated confidence model. 
+In this subsection, a particular focus is dedicated to GP regression which will be useful in the following chapters (GP regression is also called ``Kriging'' after the mining engineer D.G. Krige). 
+GPs have been widely used regression method in UQ since the seminal paper of \citep{sacks_1989}, for their performance, flexibility and their associated confidence model. 
 In a small-data context, the way of placing the few points forming the surrogate's learning set is critical. 
 Intuitively, to build a versatile surrogate model, the learning set should collect information over the entire domain uniformly. 
-This is why space-filling designs of experiments are commonly used to build learning sets. 
+This is why space-filling designs of experiments are commonly used to build learning sets \citep{fang_li_2006}. 
 In practice, QMC and optimized LHS design introduced in Section~\ref{sec:central_propagation} are widely used.  
 
 Considering a learning set $\left\{\bX_n, \by_n\right\}$, the goal is to approximate the function $g(\cdot)$ by a scalar GP conditioned on a set of observations $\by_n = \left\{g\left(\bx^{(i)}\right)\right\}_{i=1}^n$. 
@@ -1764,7 +1765,7 @@ In practice, the surrogate model is defined by the \textit{predictor} function $
 This regression model provides remarkable complementary information with the \textit{Kriging variance} $s_n^2(\bx)$, reaching zero at the learning points. 
 Let us remark that the Kriging variance fully depends on the covariance model (defined by its parametric structure and hyperparameters). 
 In practice, the hyperparameters are unknown, therefore, their estimation is a key step in the construction of a Kriging model. 
-This estimation can be done using different approaches, most commonly using maximum likelihood estimation or cross-validation.
+This estimation can be done using different approaches, most commonly using maximum likelihood estimation (\abv{mle}) or cross-validation.
 
 The illustration in \fig{fig:kriging_1D} is a typical one-dimensional representation of an ordinary Kriging model. 
 The mean of the conditioned process is plotted in red while its variability is represented by the many trajectories drawn on the process. 
@@ -1780,10 +1781,10 @@ In the simplest framework, the Kriging model exactly interpolates the observatio
 
 
 Associated with Kriging models, another validation criterion is relevant to evaluate the Kriging variance $s_n^2(\bx)$. 
-The predictive variance adequation (\abv{pva}) has been introduced to confirm that the Kriging variance is reliable enough (see e.g., \citealp{bachoc_2013}). 
+The predictive variance adequation (\abv{pva}) has been introduced to confirm that the Kriging variance is reliable enough (see e.g., \citealp{bachoc_2013,demay_2022}). 
 For a validation performed by holdout, and using an independent $m$-sized test set, the PVA is defined as: 
 \begin{equation}
-    \mathrm{PVA} = \left| \log\left( \frac1m \sum_{i=1}^{n} \frac{\left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)}{s_n^2(\bx^{(i)})}\right) \right|.
+    \mathrm{PVA} = \left| \log\left( \frac1m \sum_{i=1}^{n} \frac{\left(y(\bx^{(i)}) - \wg(\bx^{(i)})\right)^2}{s_n^2(\bx^{(i)})}\right) \right|.
 \end{equation}
 The closer to zero this quantity gets, the better the quality of the Kriging variance. 
 
@@ -1862,7 +1863,7 @@ This learning criterion determines the location of the observation to be added t
 Bayesian optimization is an active research field, with different open problems such as constrained Bayesian optimization \citep{petit_2022}, or Bayesian optimization on stochastic functions \citep{gramacy_2020_book}. 
 Similarly, active learning strategies were also adapted for structural reliability problems. 
 
-\begin{figure}[ht]
+\begin{figure}
     \centering
     \includegraphics[width=0.32\textwidth]{../numerical_experiments/chapter1/figures/bayesian_opt_0.png}
     \includegraphics[width=0.32\textwidth]{../numerical_experiments/chapter1/figures/bayesian_opt_1.png}
@@ -1906,7 +1907,7 @@ In this simple case, the LSF is defined by the two intersections of the function
 Therefore, the AK method selects points near these intersections. 
 
 
-Unlike optimization problems, the active methods are used here for rare event estimation is the result of the approximation of the LSF and a sampling technique. 
+Unlike optimization problems, the active methods for rare event estimation should be combined with a sampling technique. 
 AK methods were coupled with most sampling techniques introduced in Section~\ref{sec:reliability} (e.g., AK-MCS, AK-IS, AK-SS). 
 In practice, note that the agnostic strategy recommended after the wide benchmark of \citet{moustapha_ss_2022}, consists in coupling an AK method (using the learning function $U$) with subset simulation (taking an intermediary probability $p_0 =0.2$). 
 
@@ -1914,7 +1915,7 @@ The AK methods present the advantages of being easily implemented and interprete
 Alternatively, \textit{stepwise uncertainty reduction} (SUR) chooses iterative points by reducing the future expected uncertainty related to the quantity of interest \citep{bect_ginsbourger_2012}. 
 If this method was proven to be theoretically more consistent \citep{bect_ginsbourger_2019}, its scaling ability is still a bottleneck.  
 
-\begin{figure}[ht]
+\begin{figure}
     \centering
     \includegraphics[width=0.32\textwidth]{../numerical_experiments/chapter1/figures/contour_find_0.png}
     \includegraphics[width=0.32\textwidth]{../numerical_experiments/chapter1/figures/contour_find_1.png}
@@ -1929,7 +1930,7 @@ If this method was proven to be theoretically more consistent \citep{bect_ginsbo
 
 This section brought attention to surrogate modeling in the context of computer experiments. 
 Statistical learning in this framework is made specific by the capacity of the analyst to choose the repartition of the learning set and the small data constraint (mostly due to the costly numerical models manipulated). 
-In this context, many methods are used, however, Gaussian processes became popular in UQ as they consider a prior structure of uncertainty that is conditioned by observations.% (at the edge between a Bayesian and a frequentist approach). 
+In this context, many methods are used, however, Gaussian processes became popular in UQ as they consider a prior structure of uncertainty that is conditioned by observations. % (at the edge between a Bayesian and a frequentist approach). 
 To enhance the learning for specific purposes (e.g., optimization or reliability analysis), active learning methods iteratively add learning points in the subdomain of interest. 
 For some applications, the system studied might be modeled for different fidelities (each presenting different computational costs). 
 Multi-fidelity surrogate modeling is an active field of research, associating observations from different fidelities to improve the learning \citep{fernandez_2016_review_multifi}. 
@@ -1950,11 +1951,10 @@ When the function is stochastic, several approaches allow fitting the function a
 %============================================================%
 %============================================================%
 
-This section gives a literature overview of the main steps in UQ. 
-From uncertainty modeling, uncertainty propagation, and global sensitivity analysis to surrogate modeling. 
+This section gives a literature overview of the following steps in UQ: uncertainty modeling, uncertainty propagation, global sensitivity analysis, and surrogate modeling. 
 To ease the methodological presentation, all the illustrations from this section are reproducible using the Python/\ot scripts available on the GitHub repository mentioned earlier. 
 
 Finally in this work, the numerical models exploited are supposed to be accurate, but they obviously carry some modeling uncertainty \citep{oberkampf_2010_VVUQ}. 
-In fact, prior to UQ, the model should be calibrated to make it match some physical information (e.g., measurements). 
+In fact, prior to UQ, the model should be calibrated \citep{ghanem_2017} to make it match some physical information (e.g., measurements). 
 %Numerical model calibration is also called data assimilation when a stream of measured data is available. 
-The aim of this work is to apply the tools presented in this chapter to offshore wind turbine models, therefore the next chapter introduces the numerical models manipulated in this thesis.  
+%The aim of this work is to apply the tools presented in this chapter to offshore wind turbine models, therefore the next chapter introduces the numerical models manipulated in this thesis.  

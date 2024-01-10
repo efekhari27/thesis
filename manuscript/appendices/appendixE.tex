@@ -171,7 +171,7 @@ Cette thèse s'intéresse particulièrement à l'évaluation probabiliste du dom
 Le dommage en fatigue est un phénomène qui détériore les propriétés mécaniques d'un matériau suite à sa sollicitation via un grand nombre de contraintes cycliques de faible amplitude. 
 A l'heure actuelle, les standards \cite{iec_2019,dnv_loads_2016} recommandent l'utilisation de coefficients de sécurité déterministes pour faire face à ce mode de défaillance. 
 Une approche probabiliste permet d'enrichir l'analyse et parfois de mettre en évidence le conservatisme des marges de sûreté. 
-Plusieurs travaux récents se sont intéressés à cette thématique en abordant des angles méthodologiques différents \citep{huchet_2019,lataniotis_2019,cousin_2021,hirvoas_2021,petrovska_2022}.
+Plusieurs travaux récents se sont intéressés à cette thématique en abordant des angles méthodologiques différents \citep{huchet_2018,lataniotis_2019,cousin_2021,hirvoas_2021,petrovska_2022}.
 
 Dans ce contexte, ce chapitre liste les paramètre d'entrée de la chaîne de calcul considérés comme incertains par la suite. 
 Ces variables aléatoires sont regroupées en deux groupes : le vecteur aléatoire lié à l'environnement (par exemple : la vitesse moyenne du vent, l'écart-type de la vitesse du vent, la direction du vent, la hauteur de houle, la période de houle, et la direction de houle), et le vecteur aléatoire lié au système (par exemple : l'erreur de d'alignement au vent du contrôleur, la rigidité du sol, les paramètres des courbes de calcul de fatigue).
@@ -298,66 +298,16 @@ En post-traitement de l'estimation de la probabilité d'un événement rare, cet
 
 En résumé, cette thèse aborde plusieurs aspects du traitement des incertitudes à l'aide d'outils mathématiques à base de noyaux et présente un débouché industriel lié à l'enjeu de la maîtrise des risques des actifs éoliens en mer. Les contributions de cette thèse ont été principalement réalisées dans le cadre du projet européen HIPERWIND (\textit{HIghly advanced Probabilistic design and Enhanced Reliability methods for high-value, cost-efficient offshore wind.}), et de l'ANR INDEX (INcremental Design of EXperiments). Le sous-sections ci-après résument les communications, les publications dans revue à comité de lecture et les développements informatiques.
 
-\subsection*{Communications et publications dans revues à comité de lecture}
-
-\begin{center}
-    \footnotesize
-    \renewcommand*{\arraystretch}{1.4}
-    \begin{tabularx}{\textwidth}{c X}
-        Book Chap.      & \underline{E. Fekhari}, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). 
-                        ``Model predictivity assessment: incremental test-set selection and accuracy evaluation''. 
-                        In: \textit{Studies in Theoretical and Applied Statistics}, pages 315--347. Springer.\\
-        \hline  
-        Jour. Pap.      & \underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2024).
-                        ``Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature''. 
-                        In: \textit{Data-Centric Engineering}.\\
-
-                        %& \elias{\underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2023).
-                        %``TO DO: Bernstein adaptive nonparametric conditional sampling''.
-                        %In: \textit{Special Issue in Honor of Professor Armen Der Kiureghian. Reliability Engineering \& System Safety}.}\\
-        \hline
-\shortstack{Int. Conf.\\Pap.}& \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022). 
-                    ``Efficient techniques for fast uncertainty propagation in an offshore wind turbine multi-physics simulation tool''.
-                    In: \textit{Proceedings of the 5th International Conference on Renewable Energies Offshore (RENEW 2022)}, Lisbon, Portugal. (Paper \& Talk)\\
-        
-                    & \underline{E. Fekhari}, V. Chabridon, J. Muré and B. Iooss (2023). 
-                    ``Bernstein adaptive nonparametric conditional sampling: a new method for rare event probability estimation''\footnote{This contribution was rewarded by the ``CERRA Student Recognition Award''}.
-                    In: \textit{Proceedings of the 14th International Conference on Applications of Statistics and Probability in Civil Engineering (ICASP 14)}, Dublin, Ireland. (Paper \& Talk)\\
-        
-                    & E. Vanem, \underline{E. Fekhari}, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2023). 
-                    ``A joint probability distribution model for multivariate wind and wave conditions''.
-                    In: \textit{Proceedings of the ASME 2023 42th International Conference on Ocean, Offshore and Arctic Engineering (OMAE 2023)}, Melbourne, Australia. (Paper)\\
-        
-                    & A. Lovera, \underline{E. Fekhari}, B. Jézéquel, M. Dupoiron, M. Guiton and E. Ardillon (2023). 
-                    ``Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis". 
-                    In: \textit{Journal of Physics: Conference Series (WAKE 2023)}, Visby, Sweden (Paper)\\
-        \hline
-\shortstack{Int. Conf.\\Short Abs.}  & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022).
-                    ``Numerical Studies of Bayesian Quadrature Applied to Offshore Wind Turbine Load Estimation''.
-                    In: \textit{SIAM Conference on Uncertainty Quantification (SIAM UQ22)}, Atlanta, USA. (Talk)\\
-        
-                    & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022). 
-                    ``Model predictivity assessment: incremental test-set selection and accuracy evaluation''.
-                    In: \textit{22nd Annual Conference of the European Network for Business and Industrial Statistics (ENBIS 2022)}, Trondheim, Norway. (Talk)\\
-        \hline
-        Nat. Conf.  & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2022).
-                    ``Kernel-based quadrature applied to offshore wind turbine damage estimation''. 
-                    In: \textit{Proceedings of the Mascot-Num 2022 Annual Conference (MASCOT NUM 2022)}, Clermont-Ferrand, France (Poster)\\
-        
-                    & \underline{E. Fekhari}, B. Iooss, V. Chabridon, J. Muré (2023).
-                    ``Rare event estimation using nonparametric Bernstein adaptive sampling''. 
-                    In: \textit{Proceedings of the Mascot-Num 2023 Annual Conference (MASCOT-NUM 2023)}, Le Croisic, France (Talk)\\
-        \hline
-        Invited Lec.& Le Printemps de la Recherche 2022, Nantes, France. ``Traitement des incertitudes pour la gestion d’actifs éoliens''. (Talk)\\
-
-                    & Journées Scientifiques de l’Eolien 2024, Saint-Malo, France. ``Evaluation probabiliste de la fiabilité en fatigue des structures éoliennes en mer''. (Talk)
-                    
-        \end{tabularx}    
-\end{center}
 
 \newpage
-\subsection*{Développements informatiques open source}
+%------------------------------------------------------------%
+\subsection*{Communications et publications dans revues à comité de lecture}
+%------------------------------------------------------------%
+\input{./part1/contrib_table.tex}
 
+%------------------------------------------------------------%
+\subsection*{Développements informatiques open source}
+%------------------------------------------------------------%
 \noindent
 \texttt{otkerneldesign}\footnote{Documentation:\url{https://efekhari27.github.io/otkerneldesign/master/}}
 \begin{itemize}

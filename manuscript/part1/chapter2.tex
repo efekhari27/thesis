@@ -55,9 +55,9 @@ This variability is expressed in space and time with different behaviors dependi
 
 Regarding large timescales, yearly seasonal fluctuations of wind conditions are well-defined using probability distributions (typically, Weibull distributions \citealp{burton_2021_wind_handbook}). 
 However, predictions at a shorter timescale are usually unreliable beyond a few days ahead. 
-Under a few days, the spectral wind energy distribution per time unit is represented by its power spectral density (\abv{psd}). 
+Under a few days, the spectral wind energy distribution per time unit is represented by its power spectral density. 
 Historically, the spectral study of horizontal wind by \citet{van_1957_wind_psd} for timescales between a few seconds and ten days revealed distinct ranges of behaviors. 
-The PSD, such as the one illustrated in \fig{fig:wind_psd}, presents three main separated peaks, explaining how the wind energy is split. 
+The power spectral density, such as the one illustrated in \fig{fig:wind_psd}, presents three main separated peaks, explaining how the wind energy is split. 
 The two first peaks are named ``synoptic'' and ``diurnal'' peaks, which respectively correspond to return periods around four days and one day. 
 While these two peaks are relatively close together, the third peak is completely separated. 
 This third peak describes the energy related to wind turbulence, which evolves in a range below ten minutes. 
@@ -73,7 +73,7 @@ Additionally, wind resource assessment over decades is made more uncertain by cl
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{./part1/figures/wind_spectrum.png}
-    \caption{Wind PSD from Brookhaven, USA (source: \citealp{burton_2021_wind_handbook}).}
+    \caption{Wind power spectral density from Brookhaven, USA (source: \citealp{burton_2021_wind_handbook}).}
     \label{fig:wind_psd}
 \end{figure}
 
@@ -144,7 +144,7 @@ These approximations generally tend to overestimate wind flows, leading to conse
 
 To ensure more realistic turbulent wind field generation, two research perspectives are actively explored. 
 Authors recently developed hybrid methods, including measurement data to enhance spectral models \citep{dimitrov_2017_constrained_turbulence}. 
-Alternatively, higher fidelity models were studied in this domain, see for example the use of vortex methods \citep{branlard_2017_book} and large eddy simulations (\abv{les}) \citep{doubrawa_2019,bui_2022_mesoscale_LES}.  
+Alternatively, higher fidelity models were studied in this domain, see for example the use of vortex methods \citep{branlard_2017_book} and large eddy simulations \citep{doubrawa_2019,bui_2022_mesoscale_LES}.  
 Such complex models allow the simulation of mesoscale conditions (e.g., at the farm scale), and extreme transient events (e.g., gusts and storms). 
 However, their computational cost is often prohibitive for UQ studies. 
 When studying the wind resources at a wind farm scale, modeling wind energy losses induced by the turbines' wake becomes essential. 
@@ -170,7 +170,7 @@ As a wind farm owner, the consequence of the wake is twofold: a loss of energy p
 The initiation of the wake is a complex physical mechanism, however, the wake almost becomes axisymmetric after two turbine diameters downstream. 
 At this stage, the wind speed deficit often presents a Gaussian profile centered on the hub \citep{burton_2021_wind_handbook}. 
 Numerical models of different fidelities aim at simulating the wake. 
-For example, computational fluid dynamics (\abv{cfd}) models give a detailed description of the wake but require high computational efforts. 
+For example, computational fluid dynamics models give a detailed description of the wake but require high computational efforts. 
 In practice, simple analytical models (often called ``engineering models'') are widely used and recommended by standards (see e.g., \citealp[Appendix E]{iec_2019}). 
 These models mostly rely on the equivalence between the thrust load and the turbine wind energy deficit. 
 Since the seminal engineering model proposed by \citet{jensen_1983_wake}, multiple enhancements were proposed. 
@@ -185,7 +185,7 @@ This concept, called ``active wake control'', introduces small yaw misalignments
 
 
 %============================================================%
-\subsection{Irregular wave generation}
+\subsection{Irregular wave generation}\label{sec:waves}
 %============================================================%
 
 The propagation of generated waves has been studied for a long time in hydrodynamics under the prism of different theories such as Airy's, and Stokes' ones \citep{goda_2010_waves}. 
@@ -377,7 +377,7 @@ DIEGO uses Morison's equation together with a first-order potential solution to 
 An extended introduction to the hydrodynamics of fixed slender structures, as well as large floating structures, is given in \citep[Chap. 1]{milano_thesis_2021}.  
 
 To design floating structures, more complex wave-loading models should be considered. 
-For this purpose, \citet{ronge_2023_hydrodynamics_fowt} reviews nonlinear theories applied to the fluid-structure interactions of floating OWT and compares them to CFD results. 
+For this purpose, \citet{ronge_2023_hydrodynamics_fowt} reviews nonlinear theories applied to the fluid-structure interactions of floating OWT and compares them to computational fluid dynamics results. 
 
 
 %============================================================%
@@ -705,7 +705,7 @@ Finally, submarine cable exposure increases the risk of damage and electrical fa
 %------------------------------------------------------------%
 In the installation and maintenance of such large-scale systems, port logistics plays a key role considering the international supply chain involved. 
 The coordination, transportation and assembly of massive wind turbine components, foundations, and supporting infrastructure requires meticulous planning and execution. 
-In accordance, the costs of handling operations and maintenance represent an large share of the \textit{levelized cost of energy} (\abv{lcoe}) \citep{shields_2021_owt_lcoe}.  
+In accordance, the costs of handling operations and maintenance represent an large share of the \textit{levelized cost of energy} \citep{shields_2021_owt_lcoe}.  
 
 In his review of OWT installation techniques, \citet{jiang_2021_owt_installation_review} describes the foundations' and components' installation processes depending on the OWT technology. 
 Because of their large scale, most structural assembly (e.g., blades, or floater) are done on dedicated port docks, making the port choice critical.  
@@ -781,7 +781,6 @@ The second group of uncertain inputs is related to the wind turbine system.
 A wide range of uncertainties can be taken into account in such systems, such as material properties, manufacturing quality, soil conditions, control error, corrosion, marine growth, aerodynamic damping, etc.  
 Among them, a restricted list of four variables is kept according to sensitivity analysis results from the literature and expert knowledge \citep{dimitrov_kelly_2018,teixeira_2019,verlade_kramhoft_2019,petrovska_2022}. 
 %The present section defines the two groups of random variables, including a focus on the definition of probabilistic S-N curves. 
-
 
 %============================================================%
 \subsection{Environmental inputs}\label{sec:metocean_uncertainties}

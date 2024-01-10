@@ -18,7 +18,7 @@ The general definition of the ``$f$-divergence'' of $\pi$ from $\zeta$, also cal
 \begin{equation}
     D_{f}\left(\pi || \zeta\right) = \int_{\Omega} f\left(\frac{\dd \pi}{\dd \zeta}\right) \, \dd \zeta, 
 \end{equation}
-with $f(\cdot)$ and convex function such that $f(1)=0$, and where $\pi$ is absolutely continuous w.r.t. $\zeta$. 
+where $f(\cdot)$ is a convex function such that $f(1)=0$, and where $\pi$ is absolutely continuous w.r.t. $\zeta$. 
 Let us recall some well-know divergences which are special cases of $f$-divergences:
 \begin{itemize}
     \item Kullback–Leibler \citep{kullback_1951}: $f(t)=t \, \ln(t)$;
@@ -34,18 +34,18 @@ The reader may refer to \citet{basu_2011} for further details on $f$-divergences
 %============================================================%
 %============================================================%
 
-Another family of dissimilarity measures between probability distributions called the ``integral probability metrics'' (\abv{ipm}) \citep{muller_1997_ipm}, is defined as: 
+Another family of dissimilarity measures between probability distributions called the ``integral probability metrics'' \citep{muller_1997_ipm}, is defined as: 
 \begin{equation}
     \gamma_{\iH}(\pi, \zeta) = \sup_{g \in \iH} \left | \int_{\iD_{\bX}} g(\bx) \dd \pi(\bx) - \int_{\iD_{\bX}} g(\bx) \dd \zeta(\bx) \right|,
     \label{eq:ipm}  
 \end{equation}
-where $\iH$ is a class of measurable functions on $\iD_{\bX} \subset \R^d$ that sets the type of IPM.   
+where $\iH$ is a class of measurable functions on $\iD_{\bX} \subset \R^d$ that sets the type of integral probability metric.   
 For example, the total variation distance considers all the functions with value in $[-1, 1]$; 
 furthermore, the Wasserstein distance relies on a class of Lipschitz functions; 
 then a kernel-based distance called the ``maximum mean discrepancy'' (MMD) uses a specific Hilbert space. 
 
 Between the wide panel of distances\footnotemark, a particular focus is dedicated in this section to the MMD. 
-This distance was successfully use in diverse contexts for the consistency of its estimators, and its closed-form expression (even allow exact computation is some cases) \citep{sriperumbudur_2012}. 
+This distance was successfully used in diverse contexts for the consistency of its estimators, and its closed-form expression (allowing exact computation is some cases) \citep{sriperumbudur_2012}. 
 
 \footnotetext{See the ``Taxonomy of principal distances and divergences'' proposed by F. Nielsen in: \\ \url{https://franknielsen.github.io/Divergence/Poster-Distances.pdf}}
 
@@ -111,7 +111,7 @@ Finally, using the reproducing property and writing the Cauchy-Schwarz inequalit
 
 \paragraph{Maximum mean discrepancy}
 %------------------------------------------------------------%
-A metric of discrepancy is offered by the \emph{maximum mean discrepancy} (MMD). 
+A metric of discrepancy is offered by the MMD. 
 This distance between two probability distributions $\pi$ and $\zeta$ is given by the worst-case error for any function within a unit ball of the Hilbert space $\iH(k)$, associated with the kernel $k$:
 \begin{equation}
     \MMD(\pi, \zeta) = %\\ 
