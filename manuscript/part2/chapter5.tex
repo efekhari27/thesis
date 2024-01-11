@@ -34,7 +34,7 @@ Using the prediction residuals on this test set, an independent evaluation of th
 The present chapter introduces methods to choose a ``good'' test set, either within a given dataset or within the input space of the model, as recently motivated in \citet{ioo21} or \citet{josvak21}. 
 The construction of test sets is studied as an uncertainty propagation of the learning model's error, on which an average error may be estimated using the Bayesian quadrature methods introduced in Chapter~\ref{chpt:4} for mean estimation. 
 
-A first choice concerns the size of the test set. No optimal choice exists, and, when only a finite dataset is available, classical machine learning (\abv{ml}) handbooks \citep{tibshirani_2009,gooben16} provide different heuristics on how to split it, e.g., $80\% / 20\%$ between the training and test samples, or $50\% / 25\% / 25\%$ between the training, validation (used for model selection) and test samples. 
+A first choice concerns the size of the test set. No optimal choice exists, and, when only a finite dataset is available, classical machine learning (ML) handbooks \citep{tibshirani_2009,gooben16} provide different heuristics on how to split it, e.g., $80\% / 20\%$ between the training and test samples, or $50\% / 25\% / 25\%$ between the training, validation (used for model selection) and test samples. 
 This point is not formally addressed in the following (see \citealp{xugoo18} for a numerical study of this issue).   
 A second issue concerns how the test sample is picked within the input space. The simplest, and most common way to build a test sample is to extract an independent Monte Carlo sample \citep{tibshirani_2009}. 
 For small test sets, these randomly chosen points may fall too close to the training points or leave large areas of the input space unsampled, and a more constructive method to select points inside the input domain is therefore preferable. 
@@ -331,10 +331,10 @@ In the sequential and uniformly weighted case, this iteration $i$ of KH is expre
 \end{eqnarray}
 with $\iS\subseteq\iD_\bx$ a given candidate set and $P_{\xi_i}(\bx) = (1/i)\, \sum_{j=1}^i K(\bx, \bx^{(j)})$. 
 
-Once the targeted measure substituted by an empirical measure $\pi_N$ based on a sample $(\bx'^{(k)})_{k=1\ldots N}$, then the complete estimation of the potential becomes: 
+Once the targeted measure substituted by an empirical measure $\pi_N$ based on a sample $(\bx'^{(k)})_{k=1\ldots N}$, then, the complete estimation of the potential becomes: 
 $P_{\pi_N}(\bx) = (1/N)\, \sum_{k=1}^N K(\bx, \bx'^{(k)})$, which gives:
 \begin{eqnarray*}
-\bx_{i+1} &\in& \argmin_{\bx\in\iS} \left[ \frac{1}{i} \sum_{j=1}^{i} K(\bx,\bx^{(j)}) - \frac{1}{N} \sum_{k=1}^N K(\bx,\bx'^{(k)}) \right] \,.
+\bx_{i+1} &\in& \argmin_{\bx\in\iS} \left[ \frac{1}{i} \sum_{j=1}^{i} K\left(\bx,\bx^{(j)}\right) - \frac{1}{N} \sum_{k=1}^N K\left(\bx,\bx'^{(k)}\right) \right] \,.
 \end{eqnarray*}
 When $K$ is the energy-distance kernel given in \eq{eq:kE}, the greedy support points from \eq{eq:GreedySP} are recovered with a factor $1/i$ instead of $1/(i+1)$ in the second sum. 
 
@@ -627,7 +627,7 @@ In particular, it may be that larger values of $m$ allow for smaller values of $
 %============================================================%
 %============================================================%
 This section illustrates the performance of the different designs and estimators considered in this chapter when applied in the context of an industrial application, to split a given dataset of size $N$ into training and test sets, with $m$ and $n$ points respectively, $m+n=N$. 
-In contrast with \citet{josvak21}, the observations $y\left(\bx^{(i)}\right)$, $i=1,\ldots,N$, are not used in the splitting mechanism, meaning that it can be performed before the observations are collected and that there cannot be any selection bias related to observations 
+In contrast with \citet{josvak21}, the observations $y(\bx^{(i)})$, $i=1,\ldots,N$, are not used in the splitting mechanism, meaning that it can be performed before the observations are collected and that there cannot be any selection bias related to observations 
 (indeed, the use of observation values in an MMD-based splitting criterion may favor the allocation of the most different observations to different sets, training versus validation).
 
 An ML model is fitted to the training data, and the data collected on the test set are used to assess the predictivity of the model. 
@@ -744,7 +744,7 @@ Moreover, KH proved, in the examples studied in this manuscript, to be a more re
 %============================================================%
 
 This work shows that ideas and tools from the design of experiments framework can be transposed to the problem of test-set selection. 
-This chapter explored approaches based on support points, KH and FSSF, considering the incremental construction of a test set (\textit{i}) either as a particular space-filling design problem, where design points should populate the holes left in the design space by the training set, or (\textit{i}) from the point of view of partitioning a given dataset into a training set and a test set. 
+This chapter explored approaches based on support points, KH and FSSF, considering the incremental construction of a test set \textit{(i)} either as a particular space-filling design problem, where design points should populate the holes left in the design space by the training set, or \textit{(i)} from the point of view of partitioning a given dataset into a training set and a test set. 
 
 A numerical benchmark has been performed for a panel of test cases of various dimensions and complexity. 
 Additionally to the usual predictivity coefficient, a new weighted metric (see \citealp{pronzato_rendas_2021}) has been proposed and shown to improve the assessment of the predictivity of a given model for a given test set. 

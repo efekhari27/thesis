@@ -176,7 +176,7 @@ This section introduces various techniques to model and infer a joint multivaria
 %Finally, a panel of tools to evaluate the goodness of fit between a probabilistic model and a dataset will be recalled. 
 %In general, the marginal effects of multivariate distributions tend to be well modeled. 
 %However, modeling the dependence structure underlying a joint distribution is often overlooked.  
-To illustrate the importance of this step, \fig{fig:joint_dist_samples} represents three \abv{iid} samples from three bivariate distributions sharing the same marginals (e.g., here two exponential distributions) but different dependence structures. 
+To illustrate the importance of this step, \fig{fig:joint_dist_samples} represents three i.i.d. samples from three bivariate distributions sharing the same marginals (e.g., here two exponential distributions) but different dependence structures. 
 Judging from this example, one can assume that the joint distribution results from the composition of the marginals, and an application governing the dependence between them. 
 \begin{figure}[ht]
     \centering
@@ -725,7 +725,7 @@ One may wonder if the properties from the uniform design are conserved after thi
 \citet{hickernell_2020} explores this question from a discrepancy point of view. 
 The authors find correspondences between discrepancies w.r.t. uniformity and discrepancies w.r.t. the target distribution. 
 %However, this result shows practical limits, sometimes making the interpretation of the last discrepancy easier. 
-This question will be further discussed in Chapter~\ref{chpt:4}, using a more general framework.
+This question will be further discussed in Chapter~\ref{chpt:4} and in \citet{fekhari_DCE_2023}, using a more general framework.
 
 %Let us also remark that, depending on the distribution, defining the inverse CDF is not always possible. 
 %For example, samples following truncated distributions or mixture distributions might sometimes be generated with a different technique. 
@@ -894,7 +894,7 @@ This section introduces the commonly used rare event methods, see \cite{MorioBal
 \subsubsection{First and second-order reliability methods (FORM/SORM)}
 %------------------------------------------------------------%
 
-The well-known first and second-order reliability methods (\abv{form} and \abv{sorm}) both rely on a geometric approximation to estimate a failure probability \citep{lemaire_2009}. 
+The well-known first and second-order reliability methods (\abv{form} and SORM) both rely on a geometric approximation to estimate a failure probability \citep{lemaire_2009}. 
 They extrapolate a local approximation of the LSF built in the vicinity of a \textit{most-probable-failure-point} (\abv{mpfp}), also called \textit{design point}.
 
 Working in the standard normal space, the methods first look for this MPFP, denoted by $P^*$, with coordinates $\bu^*$. 
@@ -1093,7 +1093,7 @@ Let us consider the distribution $h_{\blambda}$, belonging to the parametric fam
 \begin{equation}
     \iH_\blambda = \left\{h_\bX(\bx | \blambda) = h_{\blambda}(\bx), \, \blambda = (\lambda_1, \dots, \lambda_p) \in \iD_\blambda \subseteq \R^p\right\}.
 \end{equation} 
-The early work of \citet{bucher_1988_AIS} only included normal distributions to minimize the IS variance \abv{wrt} the parameter $\blambda$.
+The early work of \citet{bucher_1988_AIS} only included normal distributions to minimize the IS variance w.r.t. the parameter $\blambda$.
 Using \eq{eq:IS_variance} the optimization simplifies as:
 \begin{equation}
     \blambda^* = \argmin_{\blambda \in \iD_\blambda} \, \E_{h_\blambda}\left[ \1_{\{\iF_\bx\}}(\bX) \, \left(\frac{f_\bX(\bx)}{h_\blambda(\bx)}\right)^2 \right]. 
@@ -1351,7 +1351,7 @@ Screening methods allow to discriminate the noninfluential variables, which can 
 
 The Morris method \citep{morris_1991} is a screening method historically used in engineering applications. 
 It starts by mapping the input domain $\iD_{\bX}$ into a unit hypercube $[0, 1]^d$, which is discretized as a regular grid with step $\Delta \in \R$. 
-The algorithm computes local elementary sensitivity by building ``one at a time'' (\abv{oat}) local trajectories over the regular grid. 
+The algorithm computes local elementary sensitivity by building ``one at a time'' (OAT) local trajectories over the regular grid. 
 Each OAT design starts at a random node $\bx^{(t)} = (x^{(t)}_1, \dots, x^{(t)}_j,\dots, x^{(t)}_d)$ of the grid, and moves only in one direction by an increment equal to the elementary step such that: $\bx^{(t)} + \Delta_j = (x^{(t)}_1, \dots, x^{(t)}_j + \Delta ,\dots, x^{(t)}_d)$. 
 The elementary effect in the direction of the variable $j$ from an OAT trajectory $t$ is expressed as a finite difference: 
 \begin{equation}
@@ -1377,7 +1377,7 @@ Another disadvantage of this method is that it does not distinguish interactions
 \subsubsection{Derivative-based global sensitivity measures}
 %------------------------------------------------------------%
 
-The derivative-based global sensitivity measures (\abv{dgsm}) are a GSA method introduced in \citet{sobol_1995_DGSM} and further studied in \citet{kucherenko_2009_DGSM}. 
+The derivative-based global sensitivity measures (DGSM) are a GSA method introduced in \citet{sobol_1995_DGSM} and further studied in \citet{kucherenko_2009_DGSM}. 
 As the Morris method, it consists in computing the mean value of local derivatives of the model output w.r.t. the inputs: 
 \begin{equation}
     v_j = \int_{\iD_{\bX}} \left(\frac{\partial g(\bx)}{\partial x_j}\right)^2 f_{\bX}(\bx) \, \dd \bx = \E\left[\left(\frac{\partial g(\bX)}{\partial X_j}\right)^2\right].
@@ -1419,7 +1419,7 @@ with the previous terms defined according to this recurrence relation:
 
 Several authors proved that this decomposition is unique by exploiting the orthogonality of the terms of the decomposition \citep{efron_1981,sobol_1993}. 
 %\elias{add footnote for any input domain and the dependence see Chastaing these}
-Therefore, this decomposition can be used to derive a functional decomposition of the variance (also called ``functional analysis of variance'' or \abv{fanova}):
+Therefore, this decomposition can be used to derive a functional decomposition of the variance (also called ``functional analysis of variance'' or FANOVA):
 \begin{equation}
     \var(Y) = \sum_{j=1}^{d} V_j(Y)  + \sum_{j<l}^{d} V_{jl}(Y) + \dots + V_{1 \dots d}(Y), 
     \label{eq:fanova}
@@ -1735,8 +1735,8 @@ Let us first define a prior structure $G$ on the function approximating $g(\cdot
 \end{equation} 
 with: 
 \begin{itemize}
-    \item a \textit{trend model}: $~m(\bx) = \mathbf{f}(\bx)\TT \bbeta$, composed of a functional basis $\mathbf{f} = \left(f_1, \dots, f_d\right)\TT$ and a vector of coefficients 
-    $\bbeta = \left(\beta_1, \dots, \beta_d\right)\TT$,
+    \item a \textit{trend model}: $~m(\bx) = \mathbf{f}(\bx)\TT \bbeta$, composed of a functional basis with $p \in \N^*$ components $\mathbf{f} = \left(f_1, \dots, f_p\right)\TT$ and a vector of coefficients 
+    $\bbeta = \left(\beta_1, \dots, \beta_p\right)\TT$;
     \item a \textit{covariance model}: $~k(\bx, \bx')$, usually taken stationary, such that $k(\bx, \bx') = \sigma^2 k_{\mathrm{s}}(\bx - \bx', \btheta)$ with $\sigma^2>0$ and $\btheta \in \R^d_+$.
 \end{itemize}
 The trend model of a GP defines its general tendency, while the covariance model influences its regularity. 
@@ -1888,7 +1888,7 @@ In other words, it should accurately discriminate the points leading to the safe
 In fact, this problem can be seen as binary classification. 
 For example, active learning procedures using SVM classifiers have been adapted to this specific goal \citep{bourinet_2018}. 
 
-The following paragraphs introduce a popular Kriging-based learning criterion called the ``deviation number'' $U$ \citep{echard_2011}, which is used in a generic algorithm named ``active Kriging'' (\abv{ak}). 
+The following paragraphs introduce a popular Kriging-based learning criterion called the ``deviation number'' $U$ \citep{echard_2011}, which is used in a generic algorithm named ``active Kriging'' (AK). 
 The reader may refer to \citet{MorioBalesdent2015} for further active learning techniques dedicated to rare event estimation. 
 More recently, \citet{teixeira_2021} and \citet{moustapha_ss_2022} reviewed this topic with the presentation of wide numerical benchmarks.
 

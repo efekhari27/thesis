@@ -24,7 +24,7 @@ For reproducibility purposes, most numerical developments related to this work a
 \subsection*{Uncertainty quantification of environmental conditions}
 %============================================================%
 The first contribution to this topic is a study on the efficiency of a semiparametric inference on the metocean data. 
-In the proposed strategy, the copula is approximated using the EBC, while the marginals can either be fitted by parametric or nonparametric methods.   
+In the strategy proposed in Chapter~\ref{chpt:3}, the copula is approximated using the EBC, while the marginals can either be fitted by parametric or nonparametric methods.   
 The flexibility of the EBC suits the complex dependence structures found in metocean datasets. 
 As a perspective, a more extensive numerical comparison (e.g., with vine copula \citealp{vanem_2016,lin_2019_cvines_waves}) could be performed, for example using the MMD as a statistic for multivariate testing. 
 Note that the MMD could also serve as a metric to optimize the Bernstein polynomial order. 
@@ -50,7 +50,7 @@ These contributions are related to the following publications:
 
 This work is related to uncertainty propagation in the multi-physics numerical model of an OWT, called DIEGO. 
 A first contribution concerns the estimation of lifetime cumulative fatigue damage as a mean against the environmental conditions (see e.g., \citealp{muller_cheng_2018}). 
-The use of Bayesian quadrature methods such as kernel herding \citep{chen_welling_2010,husar_duvenaud_2012} is an efficient and flexible solution for given-data uncertainty propagation (i.e., directly subsampling a large dataset without inference). 
+In Chapter~\ref{chpt:4}, Bayesian quadrature methods such as kernel herding \citep{chen_welling_2010,husar_duvenaud_2012} proved to be an efficient and flexible solution for given-data uncertainty propagation (i.e., directly subsampling a large dataset without inference). 
 Our numerical experiments showed conclusive results in comparison to Monte Carlo and quasi-Monte Carlo sampling. 
 This development was gathered in a Python package named \texttt{otkerneldesign}. 
 
@@ -60,9 +60,7 @@ However, the method used should also be robust to the highly skewed distribution
 The mechanics could be approximated more accurately by considering other cumulative models for fatigue rule rather than Miner's rule. 
 For example, nonlinear models \citep{rocher_2020_nonlinear_fatigue} take the order of apparition of the cyclic solicitations into account.  
 
-%%
-Using kernel herding to estimate lifetime cumulative damage over the environmental conditions, variables related to the system could be modified. 
-%%
+On top of averaging the cumulative damage over the environmental conditions, other variables related to the system can are considered random in Chapter~\ref{chpt:7}. 
 Therefore, a second contribution deals with the reliability analysis based on a few system variables: soil stiffness, S-N curve parameters, yaw misalignment, and damage resistance.   
 This study was made possible by the use of HPC facilities and a surrogate model built on a space-filling design over the system variables. 
 Beyond the evaluation of a monopile foundation's failure probability, this thesis studied its robustness to the perturbation of input distributions.  
@@ -83,11 +81,11 @@ These contributions are related to the following publications:
 %============================================================%
 
 In the validation process of a surrogate model, cross-validation may be costly to implement or simply not acceptable to guarantee an independent evaluation.  
-The use of space-filling designs of experiments to define a complementary test set to the learning set was proposed. 
+The use of space-filling designs of experiments to define a complementary test set to the learning set was proposed in Chapter~\ref{chpt:5}. 
 Additionally, a method to compute optimal weights using Bayesian quadrature allows to improve the estimation of coefficients of predictivity. 
 
 To extend the incremental construction of test sets, the definition of an MMD-based stopping rule could be developed. 
-Additionally, the computational effort could be reduced by only performing the validation on variables with a significant impact on the output, determined by screening techniques. 
+Additionally, the computational effort could be reduced by only performing the validation on the influential variables on the output, determined by screening techniques. 
 This contribution is related to the following publication:
 \begin{itemize}
     \footnotesize
@@ -98,7 +96,7 @@ This contribution is related to the following publication:
 \subsection*{Rare event estimation using Bernstein adaptive nonparametric conditional sampling}
 %============================================================%
 
-A new method for rare event estimation was proposed in this work. 
+A new method for rare event estimation was proposed in Chapter~\ref{chpt:6}. 
 This adaptive importance sampling method, named Bernstein adaptive nonparametric conditional sampling (BANCS), relies on the EBC to infer consecutive conditional distributions. 
 Decomposing this inference between copula and marginals brings more flexibility and shows good performances compared to usual strategies such as NAIS \citep{zhang_1996_NIS} or SS \citep{AuBeck2001}. 
 This contribution offers numerous research perspectives. 
@@ -110,6 +108,7 @@ Finally, an adaptation of BANCS could be proposed for high-dimensional problems 
 As this method generates i.i.d. samples, they can be used in a post-processing step for ROSA.
 In the same way FORM delivers local sensitivities, a good practice could be to systematically study this ROSA to better understand the reliability. 
 When working on the interpretation of different indices, an interesting objective could be to certify that some inputs do not affect the reliability. 
+The use of these indices for high-dimensional screening in reliability assessment could be further explored. 
 This contribution is related to the following publication:
 \begin{itemize}
     \footnotesize

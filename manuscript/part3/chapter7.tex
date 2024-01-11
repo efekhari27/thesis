@@ -68,10 +68,11 @@ This section presents the specific high-performance computer (HPC) wrapper devel
 %============================================================%
 The wrapper of the numerical chain including Turbsim and Diego (illustrated in \fig{fig:owt_chained_model}) for reliability analysis has a nested double loop structure. 
 The outer loop pilots the realizations of $\bZ$ while the inner loop concerns the environmental conditions and their repetitions for $n_{\mathrm{rep}}$ different pseudo-random seeds. 
-At this stage, the goal is to approximate $D(\cdot)$ for any value of $\bz = (k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}, \varepsilon=1)$, since $\varepsilon$ is a coefficient applied to the damage as post-processing (see Subsection~\ref{sec:probabilistic_sn}). 
+Since $\varepsilon$ is a coefficient applied to the damage as post-processing (see Subsection~\ref{sec:probabilistic_sn}), one can fix it at a nominal value $\varepsilon = \varepsilon_0 =1$. 
+At this stage, the goal is to approximate $D(\cdot)$ for any value of $\bz = (k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}, \varepsilon_0)$. 
 Using a KH design to explore the environmental conditions as discussed in Chapter~\ref{chpt:4}, this approximation is written as: 
 \begin{equation}
-    D(\bz) \approx D^{\mathrm{KH}}(\bz) = N_T \frac{1}{n_\bX n_{\mathrm{rep}}} \sum_{i=1}^{n_\bX} \sum_{r=1}^{n_{\mathrm{rep}}} d_{\mathrm{c}}^{10\mathrm{min}}\left(\bx^{(i)}, \omega^{(r)} \,|\, \bZ = \bz = (k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}, \varepsilon=1)\right)\, ,
+    D(\bz) \approx D^{\mathrm{KH}}(\bz) = N_T \frac{1}{n_\bX n_{\mathrm{rep}}} \sum_{i=1}^{n_\bX} \sum_{r=1}^{n_{\mathrm{rep}}} d_{\mathrm{c}}^{10\mathrm{min}}\left(\bx^{(i)}, \omega^{(r)} \,|\, \bZ = \bz\right)\, ,
     \label{eq:hpc_cumulated_damage}
 \end{equation}
 where a KH design with size $n_\bX \in \N$ is denoted by $\left\{\bx^{(i)}\right\}_{i=1}^{n_\bX}$. 
@@ -108,7 +109,7 @@ This mixed design, denoted by $\bZ_{n_\bZ}$, has a size of $n_\bZ=50$ points, wh
     \begin{subfigure}{0.48\linewidth}
         %\vskip 0pt
         \includegraphics[width=\linewidth]{./part3/figures/OWT/initial_composite.png}
-        \caption{Composite design.}
+        \caption{Mixed design.}
     \end{subfigure}
     \caption{Learning set of the mean damage surrogate model. A Halton sequence is first built (in blue) and completed by a set KH-generated points (in orange) in a subdomain defined a priori (in gray).}
     \label{fig:initial_doe}
@@ -126,7 +127,7 @@ This mixed design, denoted by $\bZ_{n_\bZ}$, has a size of $n_\bZ=50$ points, wh
 \subsection{Gaussian process regression}\label{sec:gp_owt}
 %============================================================%
 A GP regression with Matérn $5/2$ and constant trend is fitted on the mixed design $\bZ_{n_\bZ}$ according to the Kriging equations introduced in Section~\ref{sec:surrogate}. 
-The resulting surrogate model $\widetilde{D}:\R^2 \rightarrow \R$, is represented by the blue three-dimensional surface in \fig{fig:3d_owt_surrogate}, and its learning set  $\bZ_{n_\bZ}$ by the black crosses.  
+The resulting surrogate model $\widetilde{D}_{\varepsilon_0}:\R^2 \rightarrow \R$, which approximates $D^{\mathrm{KH}}(\cdot, \, \cdot, \, \varepsilon_0)$, is represented by the blue three-dimensional surface in \fig{fig:3d_owt_surrogate}, and its learning set  $\bZ_{n_\bZ}$ by the black crosses.  
 A complementary visualization of this surrogate is proposed for cross-sections with fixed values $\theta_{\mathrm{yaw}}=0$ on \fig{fig:owt_surrogate}.a, and $k_{\mathrm{soil}}=1$ on \fig{fig:owt_surrogate}.b. 
 On these two figures, learning points are plotted in a grayscale and the surrogate model in a blue scale. 
 The darker the shade, the closer to the cross-section the points are. 
@@ -155,7 +156,7 @@ However, the surrogate could be enhanced by adding points to the learning set in
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.45\linewidth]{./part3/figures/OWT/3D_surrogate.png}
-    \caption{Three-dimensional plot of the surrogate model $\widetilde{D}$ (in blue) and learning set (in black).}
+    \caption{Three-dimensional plot of the surrogate model $\widetilde{D}_{\varepsilon_0}$ (in blue) and learning set (in black).}
     \label{fig:3d_owt_surrogate}
 \end{figure}
 
@@ -169,7 +170,7 @@ However, the surrogate could be enhanced by adding points to the learning set in
         \includegraphics[width=\linewidth]{./part3/figures/OWT/dam_vs_yaw_surrogate.png}
         \caption{$k_{\mathrm{soil}}=1$.}
     \end{subfigure}
-    \caption{Cross-section of the surrogate model $\widetilde{D}$ (in shades of blue) for given values of $K_{\mathrm{soil}}$ and $\Theta_{\mathrm{yaw}}$. The darker the shade, the closer to the cross-section.}
+    \caption{Cross-section of the surrogate model $\widetilde{D}_{\varepsilon_0}$ (in shades of blue) for given values of $K_{\mathrm{soil}}$ and $\Theta_{\mathrm{yaw}}$. The darker the shade, the closer to the cross-section.}
     \label{fig:owt_surrogate}
 \end{figure}
 
@@ -183,7 +184,7 @@ However, the surrogate could be enhanced by adding points to the learning set in
         \includegraphics[width=\linewidth]{./part3/figures/OWT/loo_squared_res.png}
         \caption{LOO Squared-residuals.}
     \end{subfigure}
-    \caption{Leave-one-out validation results of the surrogate model $\widetilde{D}$.}
+    \caption{Leave-one-out validation results of the surrogate model $\widetilde{D}_{\varepsilon_0}$.}
     \label{fig:loo_validation}
 \end{figure}
 
@@ -204,15 +205,15 @@ Afterwards, the robustness of this reliability analysis is studied by applying p
 %============================================================%
 The S-N curve uncertainty can be expressed as a simple coefficient $\varepsilon$ (see Subsection~\ref{sec:probabilistic_sn}), which is applied to the lifetime cumulative damage as follows: 
 \begin{equation}
-    D(k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}, \varepsilon) = \frac{1}{\varepsilon} \, D(k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}, \varepsilon=1).
+    D(k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}, \varepsilon) = \frac{1}{\varepsilon} \, D(k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}, \varepsilon_0).
 \end{equation}
-Therefore, the surrogate model of the lifetime cumulative damage $\widetilde{D}$ is modified without updating its learning such as:
+Therefore, the surrogate model of the lifetime cumulative damage $\widetilde{D}_{\varepsilon_0}$ is modified without updating its learning such as:
 \begin{equation}
-    \widetilde{D}'(\bz) = \widetilde{D}'(k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}, \varepsilon) = \frac1\varepsilon \, \widetilde{D}(k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}, \varepsilon=1).
+    \widetilde{D}(\bz) = \widetilde{D}(k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}, \varepsilon) = \frac1\varepsilon \, \widetilde{D}_{\varepsilon_0}(k_{\mathrm{soil}}, \theta_{\mathrm{yaw}}).
 \end{equation} 
 The probability introduced in \eq{eq:owt_pf} then becomes: 
 \begin{equation}
-    \pf' = \int_{\iD_\bZ} \1_{\{\widetilde{D}'(\bz) \geq D_{\mathrm{cr}}\}} \, f_\bZ(\bz) \, \dd z.
+    \pf' = \int_{\iD_\bZ} \1_{\{\widetilde{D}(\bz) \geq D_{\mathrm{cr}}\}} \, f_\bZ(\bz) \, \dd z.
     \label{eq:owt_pf_surrogate}
 \end{equation}
 Table~\ref{tab:pf_result_table} presents the estimates of this quantity by various methods (FORM, FORM-IS and SS, see Section~\ref{sec:reliability}) and for two different distributions of the resistance variable. 
