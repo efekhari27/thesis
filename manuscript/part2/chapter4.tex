@@ -99,8 +99,8 @@ As illustrated in \fig{fig:bloc_diagram}, a simulation over a time period is the
 \subsection{Numerical simulation model}
 %------------------------------------------------------------%
 This subsection generally describes the modeling hypotheses considered in the industrial use case. 
-Further details regarding wind turbines modeling are provided in Chapter~\ref{chpt:2} of this manuscript. 
-The first block of the chain consists in a turbulent wind field simulator called ``TurbSim'' (developed by \citealp{turbsim_2009} from the National Renewable Energy Laboratory, USA) that uses, as a turbulence model, called the Kaimal spectrum \citep{kaimal_1972}, as recommended by the \citet{iec_2019} standards. 
+Further details regarding wind turbine modeling are provided in Chapter~\ref{chpt:2} of this manuscript. 
+The first block of the chain consists of a turbulent wind field simulator called ``TurbSim'' (developed by \citealp{turbsim_2009} from the National Renewable Energy Laboratory, USA) that uses, as a turbulence model, called the Kaimal spectrum \citep{kaimal_1972}, as recommended by the \citet{iec_2019} standards. 
 Moreover, to extrapolate the wind speed vertically, the shear is modeled by a power law. 
 Since the wind field generation shows inherent stochasticity, each 10-minute long simulation is repeated with different pseudo-random seeds and one averages the estimated damage over these repetitions. 
 This question has been widely studied by some authors, (e.g., \citealp{slot_sorensen_2020}), who concluded that the six repetitions recommended by the \citet{iec_2019} may be insufficient to properly average the effect of stochasticity. 
@@ -185,7 +185,7 @@ Teesside's environmental data is illustrated by its copulogram in \fig{fig:envi_
 The copulogram exhibits the marginals with univariate KDE plots (in the diagonal), and the dependence structure with scatter plots in the normalized rank space (in the upper triangle). 
 The scatter plots of normalized ranks are actually a representation of the empirical copula density. 
 In the lower triangular matrix, the scatter plots are set in the physical space, merging the effects of the marginals and the dependencies (as in the usual visualization offered by the matrix plot). 
-All together, the copulogram gives a synthetic decomposition of the dataset, and was implemented in a new open source Python package named \texttt{\href{https://github.com/efekhari27/copulogram}{copulogram}}\footnote{GitHub repository: \url{https://github.com/efekhari27/copulogram}}.
+All together, the copulogram gives a synthetic decomposition of the dataset and was implemented in a new open source Python package named \texttt{\href{https://github.com/efekhari27/copulogram}{copulogram}}\footnote{GitHub repository: \url{https://github.com/efekhari27/copulogram}}.
 
 \begin{figure}[!h]
     \begin{center}
@@ -228,7 +228,7 @@ As discussed in Subsection~\ref{sec:3ebc}, this method is sensitive to the chose
 %------------------------------------------------------------%
 \subsection{Fatigue assessment}
 %------------------------------------------------------------%
-As described in \fig{fig:bloc_diagram}, a typical DIEGO simulation returns a 10-minute multiaxial stress time series at each node $i \in \N$ of the one-dimentional meshed structure. 
+As described in \fig{fig:bloc_diagram}, a typical DIEGO simulation returns a 10-minute multiaxial stress time series at each node $i \in \N$ of the one-dimensional meshed structure. 
 Since classical fatigue laws are established for uniaxial stresses, the first step is to compute one equivalent Von Mises stress time series at each structural node.
 The present section recalls the main concepts but fatigue assessment has been discussed in Subsection~\ref{sec:235}. 
 
@@ -541,7 +541,7 @@ The so-called ``Bayesian quadrature estimator'' appears to be a simple linear co
     \label{eq:bq_weights}
 \end{equation}
 For any given sample, an optimal set of weights can be computed, leading to the mean of the posterior distribution. 
-Remark here that this enhancement depends on the evaluation of the inverse variance-covariance matrix $\bK_n^{-1}$, which can present numerical difficulties, either when design points are too close, leading to a poor conditioning of the matrix. 
+Remark here that this enhancement depends on the evaluation of the inverse variance-covariance matrix $\bK_n^{-1}$, which can present numerical difficulties, either when design points are too close, leading to poor conditioning of the matrix. 
 Moreover, a prediction interval on the BQ estimator can be computed since the posterior distribution is Gaussian, with a variance expressed in closed-form in \eq{eq:var_post}. 
 The expressions in \eq{eq:mean_post} and \eq{eq:var_post} were extended to GPs in the case of constant and linear trends in \cite{pronzato_zhigljavsky_2020}. 
 In the following numerical experiments, the expression with a hypothesis of constant trend $\beta_n$ is used, which leads to:
@@ -647,7 +647,7 @@ The respective BQ estimators of the means are plotted in dashed lines.
 \end{remark}
 \medskip
 
-Regarding the results for the  test case \#1, the convergence plots are provided in \fig{fig:test case1}. 
+Regarding the results for the test case \#1, the convergence plots are provided in \fig{fig:test case1}. 
 KH consistently converges faster than quasi-Monte Carlo in this case, especially for small sizes in terms of MMD. 
 BQ weights tend to reduce the fluctuations in the mean convergence, which ensures better performance for any size. 
 Overall, applying the weights enhances the convergence rate.
@@ -657,7 +657,7 @@ Although quasi-Monte Carlo is known to suffer the ``curse of dimensionality'', K
 In fact, KH with uniform weights performs worse than quasi-Monte Carlo while optimally-weighted KH does slightly better. 
 Moreover, the results confirm that $\MMD_{\mathrm{BQ}}< \MMD_{\mathrm{unif}}$ for all the proposed experiments. 
 The application of optimal weights to the quasi-Monte Carlo sample slightly improves the estimation in this case. Note that the prediction interval around the BQ estimator is not plotted for the sake of readability. 
-Finally, one can note that the prediction interval around th BQ estimator is not plotted for the sake of readability. 
+Finally, one can note that the prediction interval around the BQ estimator is not plotted for the sake of readability. 
 
 In these two test cases, the MMD is shown to quantify numerical integration convergence well, which illustrates the validity of the inequality given in \eq{eq:quad_error}, similar to the Koksma-Hlawka inequality (as recalled in Theorem~\ref{thm:koksma_inequality}). 
 Between the three kernels employed for KH, the energy-distance kernel performs slightly better and presents the advantage of not needing tuning.
@@ -718,7 +718,7 @@ The copulogram in \fig{fig:pairplot_kh_teesside} illustrates the intensity of th
 Note that the numerical values of the damage scale are kept confidential since it models the state of an operating asset.
 Before analyzing the performance of the KH on this industrial application, one can notice that the copulogram \fig{fig:pairplot_kh_teesside} seems to be in line with the global sensitivity analysis presented in \cite{murcia_dimitrov_2018} and \cite{li_zhan_2020}. 
 In particular, the fact that the scatter plot of mean wind speed vs. turbulence wind speed is the main factor explaining the variance of the output $Y=g(\bX)$. 
-Judging from these references, the numerical model does not seem to have a highl effective dimension. 
+Judging from these references, the numerical model does not seem to have a highly effective dimension. 
 However, the input dependence structure is still challenging, and the damage assessment induces strong nonlinearities (see \eq{eq:wohler}). 
 
 The results presented are compared in the following to a reference Monte Carlo sample of size $n_{\mathrm{ref}} = 2000$, with a confidence interval computed by bootstrap (see \fig{fig:convergence_teesside}). 
@@ -784,7 +784,7 @@ Kernel herding and BQ both aim at finding the optimal quadrature rule minimizing
 The numerical experiments confirm that the MMD is an appropriate criterion since it leads to results being better or equivalent to quasi-Monte Carlo sampling. 
 Finally, the proposed numerical benchmark relies on a Python package, called \texttt{\href{https://efekhari27.github.io/otkerneldesign/master/index.html}{otkerneldesign}}, which implements the methods and allows anyone to reproduce the results. 
 
-The limits of the proposed method are reached when the input dimension of the problem increases, requiring a larger candidate set and therefore a to handle larger covariance matrix. 
+The limits of the proposed method are reached when the input dimension of the problem increases, requiring a larger candidate set and therefore to handle a larger covariance matrix. 
 Moreover, the numerical experiments show that the method can be sensitive to the choice of the kernel and its tuning (although good practices can still be derived). 
 From a methodological viewpoint, further interpretation of the impact of the different kernels could be explored. 
 Besides, extensions of KH sampling for quantile estimation could be investigated, in a similar fashion as the work on randomized quasi-Monte Carlo for quantiles proposed by \cite{tuffin_2019}. 

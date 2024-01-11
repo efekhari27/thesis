@@ -63,13 +63,13 @@ For example, nonlinear models \citep{rocher_2020_nonlinear_fatigue} take the ord
 %%
 Using kernel herding to estimate lifetime cumulative damage over the environmental conditions, variables related to the system could be modified. 
 %%
-Therefore, a second contribution deals with the reliability analysis based on a few system variables: soil stiffness, S-N curve parameters, yaw misalignment, and the damage resistance.   
+Therefore, a second contribution deals with the reliability analysis based on a few system variables: soil stiffness, S-N curve parameters, yaw misalignment, and damage resistance.   
 This study was made possible by the use of HPC facilities and a surrogate model built on a space-filling design over the system variables. 
-Beyond the evaluation of a monopile foundation's failure probability, this thesis studied its robustness to the perturbation of inputs distributions.  
+Beyond the evaluation of a monopile foundation's failure probability, this thesis studied its robustness to the perturbation of input distributions.  
 The perturbed-law based sensitivity indices \citep{lemaitre_2015_PLI} were applied to assess the relative influence of perturbating the inputs' moments. 
 
 An industrial perspective regarding the reliability analysis is its application to a floating wind turbine case. 
-This setup could introduce additional nonlinearitites arising from the stronger impact of the waves on a floating structure. 
+This setup could introduce additional nonlinearities arising from the stronger impact of the waves on a floating structure. 
 Along with fatigue reliability, the connection with other failure modes such as extreme loading could be studied (see, for example, the recent study on ultimate limit states by \citealp{wang_schar_2023_uls}). 
 These contributions are related to the following publications:
 \begin{itemize}
@@ -100,16 +100,16 @@ This contribution is related to the following publication:
 
 A new method for rare event estimation was proposed in this work. 
 This adaptive importance sampling method, named Bernstein adaptive nonparametric conditional sampling (BANCS), relies on the EBC to infer consecutive conditional distributions. 
-Decomposing this inference between copula and marginals brings more flexibility and showed good performances compared to usual strategies such as NAIS \citep{zhang_1996_NIS} or SS \citep{AuBeck2001}. 
+Decomposing this inference between copula and marginals brings more flexibility and shows good performances compared to usual strategies such as NAIS \citep{zhang_1996_NIS} or SS \citep{AuBeck2001}. 
 This contribution offers numerous research perspectives. 
-Rather than Monte Carlo sampling on the conditional distributions, other methods could help speed-up the quantile estimation (e.g., randomized QMC \citealp{tuffin_2019}). 
-Instead of fixing a sampling size to each subset, a stopping criterion could arise from the accuracy of the quantile estimation. 
+Rather than Monte Carlo sampling on the conditional distributions, other methods could help speed up the quantile estimation (e.g., randomized QMC \citealp{tuffin_2019}). 
+Instead of fixing a sampling size for each subset, a stopping criterion could arise from the accuracy of the quantile estimation. 
 To improve the inference of the conditional distributions, further work on optimizing the EBC polynomial order should be carried on. 
 Finally, an adaptation of BANCS could be proposed for high-dimensional problems by dividing the d-dimensional copula into independent blocks.   
 
 As this method generates i.i.d. samples, they can be used in a post-processing step for ROSA.
-The same way FORM delivers local sensitivities, a good practice could be to systematically study this ROSA to better understand the reliability. 
-Working on the interpretation of different indices, an interesting objective could be to certify that some inputs do not affect the reliability. 
+In the same way FORM delivers local sensitivities, a good practice could be to systematically study this ROSA to better understand the reliability. 
+When working on the interpretation of different indices, an interesting objective could be to certify that some inputs do not affect the reliability. 
 This contribution is related to the following publication:
 \begin{itemize}
     \footnotesize
@@ -130,7 +130,7 @@ This contribution is related to the following publication:
 %============================================================%
 This Python package generates designs of experiments based on kernel methods such as kernel herding \citep{chen_2018_owt_diagram} and support points \citep{mak_joseph_2018}. 
 It could be numerically improved by upgrading matrix management and operation. 
-Using methods as the ``hierarchical matrices'' \citep{borm_2003_hmat} could considerably ease the manipulation of large matrices and speed-up their operations.  
+Using methods such as the ``hierarchical matrices'' \citep{borm_2003_hmat} could considerably ease the manipulation of large matrices and speed up their operations.  
 Additionally, the increasing use of CPU for parallel computing could be useful. 
 This could for example be realized by the use of the GPU programming interface CUDA (for ``compute unified device architecture''). 
 Additionally, different MMD estimators could be offered to the user \citep{gretton_2006}. 
@@ -140,7 +140,7 @@ Additionally, different MMD estimators could be offered to the user \citep{grett
 \paragraph{\texttt{bancs}.}
 %============================================================%
 This Python package proposes an implementation of the ``Bernstein Adaptive Nonparametric Conditional Sampling'' method for rare event estimation. 
-It would need a proper documentation and a more exhaustive benchmark using the Python package \href{https://github.com/mbaudin47/otbenchmark/}{\texttt{otbenchmark}}\footnotemark. 
+It would need proper documentation and a more exhaustive benchmark using the Python package \href{https://github.com/mbaudin47/otbenchmark/}{\texttt{otbenchmark}}\footnotemark. 
 In addition, various methodological perspectives mentioned earlier could be developed. 
 
 \footnotetext{\url{https://github.com/mbaudin47/otbenchmark/}}
@@ -149,7 +149,7 @@ In addition, various methodological perspectives mentioned earlier could be deve
 \paragraph{\texttt{copulogram}.}
 %============================================================%
 This Python package proposes an implementation of a synthetic visualization tool for multivariate distributions. 
-It would need a proper documentation to better illustrate the added value of this plot. 
+It would need proper documentation to better illustrate the added value of this plot. 
 
 %============================================================%
 \paragraph{Offshore wind turbine reliability wrapper.}

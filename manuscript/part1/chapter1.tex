@@ -35,7 +35,7 @@ Additionally, numerical examples of the notable methods are implemented during t
 %============================================================%
 %============================================================%
 In the computer experiments context, UQ is performed around an input-output numerical simulation model. 
-This numerical model, or code, is hereafter viewed as \textit{black-box} since the physics equations remain unchaged. 
+This numerical model, or code, is hereafter viewed as \textit{black-box} since the physics equations remain unchanged. 
 Alternatively, one could consider \textit{intrusive} UQ methods, introducing uncertainties within the resolution of the equations of the physics (see e.g., \citealp{lemaitre_2010}). 
 In practice, numerical models can actually be a chain of codes executed in sequence to obtain a variable of interest, making their evaluation more complex.
 
@@ -45,7 +45,7 @@ In the following, it will be assumed that the numerical models passed a \textit{
 
 Formally, part of the problem specification is the definition of the set of $d$ input variables $\bx = \left(x_1, \dots, x_d\right)\TT$ considered as uncertain (wind speed, wave period, etc.). 
 The outputs studied are also defined at this stage, which will only be of scalar type in the present work.  
-Note that UQ method were adapted to other types of outputs (see e.g., for time series outputs the work of \citealp{lataniotis_2019}, and for other functional outputs the work of \citealp{auder_2012,rollon_2021}). 
+Note that UQ methods have been adapted to other types of outputs (see e.g., for time series outputs the work of \citealp{lataniotis_2019}, and for other functional outputs the work of \citealp{auder_2012,rollon_2021}). 
 In the following, the numerical model $\iM$, with its respective input $\iD_{\bx}$ and output domains $\iD_{\by}$ is defined as:
 \begin{equation}
 \iM : \bigg|
@@ -56,13 +56,13 @@ In the following, the numerical model $\iM$, with its respective input $\iD_{\bx
     \label{eq:numerical_model}
 \end{equation}
 
-Unlike data-scientists who work with the typical machine learning input-output dataset framework, UQ analysts can evaluate this numerical model at any input point. 
+Unlike data scientists who work with the typical machine learning input-output dataset framework, UQ analysts can evaluate this numerical model at any input point. 
 However, numerical simulations often come with a large computational cost. 
 Therefore, UQ methods should be efficient and require as few simulations as possible. 
 To solve this issue, surrogate models (or metamodels) are statistical learning algorithms emulating the costly numerical model, which can be used to make UQ studies more tractable. 
 Surrogate models are built and validated on a limited number of simulations (in a supervised learning framework). 
-In practice, note that the model specification step often necessitates with the development of a wrapper of the code. 
-It is an overlay of code allowing its execution in a parametric way, which is often associated with high-perfomance computer (\abv{hpc}) deployment.  
+In practice, note that the model specification step often necessitates the development of a wrapper of the code. 
+It is an overlay of code allowing its execution in a parametric way, which is often associated with high-performance computer (\abv{hpc}) deployment.  
 Once the model is specified, a critical step in UQ is enumerating the input uncertainties and building their associated mathematical model.
 
 
@@ -74,11 +74,11 @@ Once the model is specified, a critical step in UQ is enumerating the input unce
 \ot\footnote{{\ots installation guide and documentation are available at: \url{https://openturns.github.io/www/}}}~ (``Open source initiative for the Treatment of Uncertainties, Risks’N Statistics'') is a high-performance Python library dedicated to UQ \citep{baudin_dutfoy_2017}. 
 It is developed by industrial researchers from a consortium gathering EDF R\&D, Airbus Group, PHIMECA Engineering, IMACS and ONERA. 
 It combines high performance using C++ programming with high accessibility through a Python application programming interface. 
-Overall, this open source library provides tools for every steps of the UQ framework (e.g., UQ, uncertainty propagation, surrogate modeling, reliability, sensitivity analysis and calibration). 
+Overall, this open source library provides tools for every step of the UQ framework (e.g., UQ, uncertainty propagation, surrogate modeling, reliability, sensitivity analysis and calibration). 
 To guarantee software quality, the development follows robust processes such as exhaustive unit testing and multiplatform continuous integration. 
 A dedicated forum hosts an active community, which helps new users and discusses future developments. 
 Furthermore, no-code users can benefit from \texttt{\abv{openturns}}'s free-download graphical user interface software, named \texttt{Persalys}\footnotemark. 
-Finally, as most developments in this thesis use \ot, minimial working examples associated to the main methodological concepts are available in Appendix~\ref{apx:D}.  
+Finally, as most developments in this thesis use \ot, minimal working examples associated with the main methodological concepts are available in Appendix~\ref{apx:D}.  
 
 \footnotetext{\href{https://www.persalys.fr/obtenir.php}{\texttt{Persalys}} free-download graphical user interface is available at: \url{https://www.persalys.fr/obtenir.php}}
 
@@ -234,7 +234,7 @@ Then, the scatter plot from the distribution with independent copula (left plot)
 \end{figure}
 
 Sklar's theorem \citep{sklar_1959} states that the multivariate distribution of any random vector can be broken down into two objects. 
-First, a set of univariate marginal distributions describing the behavior of each individual variables; 
+First, a set of univariate marginal distributions describing the behavior of each variable; 
 second, a function describing the dependence structure between all variables: this function is called \textit{copula}. 
 
 \begin{theorem}[Sklar's theorem, \citealp{sklar_1959}]
@@ -262,7 +262,7 @@ This equation allows us to extract a copula from a joint distribution by knowing
 Additionally, copulas are invariant under increasing transformations. 
 This property is essential to understand the use of rank transformation to display the copula without the marginal effects.     
 
-Identically to the univariate continuous distributions, a large catalog of families of paraletric copulas exists (independent, Normal, Clayton, Frank, Gumbel copula, etc.). 
+Identically to the univariate continuous distributions, a large catalog of families of parametric copulas exists (independent, Normal, Clayton, Frank, Gumbel copula, etc.). 
 Note that the independent copula $\Pi$ implies that the distribution is defined as the product of its marginals $\Pi = \prod_{j=1}^d u_j$. 
 In an inference context, this theorem divides the fitting problem into two independent problems: fitting the marginals and fitting the copula. 
 Provided a dataset, this framework allows the potential combination of a parametric (or nonparametric) fit of marginals with a parametric (or nonparametric) fit of the copula. 
@@ -278,7 +278,7 @@ In practice, the following points can be asked at this early stage:
 \end{itemize} 
 
 Techniques designed to estimate marginal distributions are available in Appendix~\ref{apx:A}. 
-In addition, a nonparametric method are introduced in Chapter \ref{chpt:3} to infer a copula: the ``empirical Bernstein copula''. 
+In addition, a nonparametric method is introduced in Chapter \ref{chpt:3} to infer a copula: the ``empirical Bernstein copula''. 
 The adequation between a fitted probabilistic model and a dataset should be validated, therefore Appendix~\ref{apx:A} lists visual and quantitative tools for univariate goodness-if-fit evaluation.
 
 
@@ -295,13 +295,13 @@ The adequation between a fitted probabilistic model and a dataset should be vali
 \section{Uncertainty propagation for central tendency study} \label{sec:central_propagation}
 %============================================================%
 %============================================================%
-The previous section aimed at building a probabilistic model of the uncertainties considering the availableknowledge. 
+The previous section aimed at building a probabilistic model of the uncertainties considering the available knowledge. 
 This one introduces diverse methods for forward propagation of the input uncertainties through a numerical model. 
 In the present section, uncertainty propagation is dedicated to the ``central tendency'' as its goal is to study the mean and variance of the output distribution. 
 This approach contrasts with the uncertainty propagation committed to rare event probability estimation, which will be introduced in Section~\ref{sec:reliability} (e.g., used to assess reliability). 
 
 The difficulties related to any uncertainty propagation task mostly arise from the practical properties of the numerical model. 
-Its potential high dimension, irregularity and nonlinearity each represents a challenge. 
+Its potential high dimension, irregularity and nonlinearity each represent a challenge. 
 Such studies rely on a finite number of observations of the numerical model, depending on the computational affordable budget.  
 Uncertainty propagation is at the end of the generic UQ approach (step C), however, it is affected by the ``garbage in, garbage out'' concept. 
 Meaning that its conclusions depend on the accuracy of the inputs' uncertainty modeling. 
@@ -447,7 +447,7 @@ The variance of the Monte Carlo estimator results from a manipulation of the cen
     \var\left(\overline{y}_n^{\textrm{MC}}\right) = \frac{1}{n} \var\left(Y\right). 
     \label{eq:MC_variance}
 \end{equation}
-Considering the images of the sample $\bX_n$, one can also express the unbiaised empirical variance of the output random variable $\what{\sigma}^2_Y = \frac{1}{n-1} \sum_{i=1}^n \left(g(\bx^{(i)}) - \overline{y}_n^{\textrm{MC}}\right)^2$.
+Considering the images of the sample $\bX_n$, one can also express the unbiased empirical variance of the output random variable $\what{\sigma}^2_Y = \frac{1}{n-1} \sum_{i=1}^n \left(g(\bx^{(i)}) - \overline{y}_n^{\textrm{MC}}\right)^2$.
 The Monte Carlo estimator also comes with theoretical confidence intervals at $\alpha \%$, given for a known value of $\var(g(\bX))$ by: 
 \begin{equation}
     I_{\P_{\bX}}(g) \in \left[\overline{y}_n^{\textrm{MC}}  - q_\alpha \sqrt{\frac{\var\left(g(\bX)\right)}{n}}, \, \overline{y}_n^{\textrm{MC}}  + q_\alpha \sqrt{\frac{\var\left(g(\bX)\right)}{n}} \right],
@@ -639,7 +639,7 @@ Further space-filling criteria are reviewed in \citet{abtini_2018} and in \citet
 %------------------------------------------------------------%
 \subsubsection{Latin hypercube sampling}
 %------------------------------------------------------------%
-Latin hypercube sampling (LHS) is a method initially introduced in the 1970s as numerical integration method \citep{mckay_beckman_1979}. 
+Latin hypercube sampling (LHS) is a method initially introduced in the 1970s as a numerical integration method \citep{mckay_beckman_1979}. 
 In a bounded domain, this technique corresponds to a stratified sampling which aims to force the distribution of each sub-projection to be as uniform as possible. 
 To do so, for an $n$-sized design, each marginal domain is divided into $n$ identical segments. 
 This creates a regular grid of $n^{d}$ squared cells over the domain. 
@@ -647,7 +647,7 @@ Then, a latin hypercube design (LHD) does not allow more than one point within a
 That way, new LHDs can be built as a permutation of the marginals of an existing LHD. 
 Inside each selected cell from the grid, the point can either be placed at the center of the cell or randomly in the cell.
 
-Various consecutive contributions explicited the variance, then a central limit theorem to LHS (e.g., \citealp{owen_1992_tcl_lhs}). 
+Various consecutive contributions have explicited the variance, then a central limit theorem to LHS (e.g., \citealp{owen_1992_tcl_lhs}). 
 Under monotony hypothesis, the LHS variance can be expressed, when $n\rightarrow\infty$, as:
 \begin{equation}
     \var\left(\overline{y}_n^{\textrm{LHS}}\right) = \frac{1}{n} \var\left(g(\bX)\right) - \frac{C}{n} + o\left( \frac1n \right), 
@@ -655,7 +655,7 @@ Under monotony hypothesis, the LHS variance can be expressed, when $n\rightarrow
 where $C$ is a positive constant, showing that the LHS usually asymptotically reduces the variance for numerical integration (a proof is proposed in \citealp{stein_1987_lhs}), and $\overline{y}_n^{\textrm{LHS}}$ is the arithmetic mean over the LHS. 
 However, because of its stratified structure, LHS can generate poor designs from a space-filling point of view (see e.g., the illustration in \fig{fig:poor_LHS}). 
 %Note that LHS was also studied for estimating tail statistics such as quantiles \citep{cannamela_2008_LHS_quantile}.  
-The following paragraph presents various methods to at optimize LHDs.
+The following paragraph presents various methods to optimize LHDs.
 
 
 %------------------------------------------------------------%
@@ -665,14 +665,14 @@ To improve the space-filling property of a LHD, it is common to add an optimizat
 The goal of this optimization is to improve a space-filling criterion by generating a LHD from permutations of an initial LHD. 
 \citet{damblin_couplet_2013} reviewed LHS optimization using different discrepancy criteria and subprojection properties. 
 This optimization can be performed by different algorithms, such as the stochastic evolutionary algorithm or simulated annealing. 
-The results from this work show that a LHD optimized by the $L_2$ centered or wrap-around discrepancies offer strong robustness to two-dimensional projections. 
+The results from this work show that an LHD optimized by the $L_2$ centered or wrap-around discrepancies offers strong robustness to two-dimensional projections. 
 It also shows that these designs keep this property for dimensions larger than 10, while scrambled Sobol' sequences may lose it. 
 \fig{fig:LHS_designs} illustrates two LHD, optimized by the $L_2$ centered discrepancy and the geometrical $\phi_p$. 
 The space-filling difference is not obvious in two-dimensional problems, and they both spread uniformly.    
 
 More recent work developed different ways to optimize LHDs. 
 Among them, let us mention the ``maximum projection designs'' (for MaxPro) from \citet{joseph_gul_2015} which rely on the optimization of a geometrical criterion and deliver interesting performances. 
-In the same vein, the uniform projection designs from \citet{sun_2019} also optimizes LHS, but based on a criterion averaging discrepancies between each pair of marginals.
+In the same vein, the uniform projection designs from \citet{sun_2019} also optimize LHS, but based on a criterion averaging discrepancies between each pair of marginals.
 
 \begin{figure}[ht]
     \centering
@@ -714,7 +714,7 @@ In the same vein, the uniform projection designs from \citet{sun_2019} also opti
 A wide panel of sampling techniques exists for numerical integration or design of experiments purposes. 
 In both cases, the studied domain is bounded and the targeted measure is uniform. 
 However, uncertainty propagation is often performed on complex input distributions, with possibly unbounded domains. 
-In UQ, this step might be referred to as central tendency estimation (i.e., estimating of the output's mean and variance). 
+In UQ, this step might be referred to as central tendency estimation (i.e., estimating the output's mean and variance). 
 Central tendency estimation can be viewed as a numerical integration w.r.t. an input distribution, sometimes called by authors \textit{probabilistic integration} \citep{briol_oates_2019}, as part of what is called \textit{probabilistic numerics} \citep{oates_sullivan_2019}.  
 
 %To generate i.i.d. samples following any distribution (i.e., non-uniform), one may use \textit{inverse transform} sampling. 
@@ -994,7 +994,7 @@ The estimator is written using the indicator function applied to the LSF:
 \end{equation} 
 
 This unbiased estimator converges towards the failure probability almost surely according to the law of large numbers. 
-Once again, Monte Carlo offers an unbiased estimator, regardless of the intput dimension or the regularity of the function $g(\cdot)$.   
+Once again, Monte Carlo offers an unbiased estimator, regardless of the input dimension or the regularity of the function $g(\cdot)$.   
 Additionally, the variance of this estimator is given by:
 \begin{equation}
     \var\left(\what{\pf}^{\textrm{MC}}\right) = \frac1n \pf \, (1 - \pf).
@@ -1015,7 +1015,7 @@ These properties often make Monte Carlo sampling the reference technique in rare
 However, the advantages of this estimator are overshadowed by its slow convergence. 
 To estimate a target failure probability $\pf=10^{-\alpha}$, 
 a Monte Carlo estimation with a convergence level $\delta_{\what{\pf}^{\textrm{MC}}} = 10\%$ famously requires $n=10^{\alpha + 2}$ simulations. 
-Thus, in the context of rare event estimation, Monte Carlo needs a number of simulation that is often prohibitive in practice. 
+Thus, in the context of rare event estimation, Monte Carlo needs many simulations, which is often prohibitive in practice. 
 This excessive simulation budget comes from the fact that the vast majority of the samples drawn from the input distribution are too far from the failure domain.
 
 
@@ -1025,7 +1025,7 @@ This excessive simulation budget comes from the fact that the vast majority of t
 
 Importance sampling (\abv{is}) is a variance reduction method, aiming at improving the performances of crude Monte Carlo sampling. 
 In the context of rare event estimation, the main idea is to deliberately introduce a bias in the sampled density, shifting it towards a region of interest (here the failure domain). 
-By doing so, it allows drawing more points in the failure domain, leading to a better estimate of the quantity.
+Doing so allows drawing more points in the failure domain, leading to a better estimate of the quantity.
 
 The challenge in IS is to pick a relevant \textit{instrumental} distribution $h_\bX$ (also called \textit{auxiliary} distribution) to replace the initial distribution $f_\bX$. 
 Then, by introducing the \textit{likelihood ratio} $w_\bX(\bx) = \frac{f_\bX(\bx)}{h_\bX(\bx)}$, one can rewrite $f_\bX(\bx) = w_\bX(\bx) \, h_\bX(\bx)$ and inject it in the failure probability expression: 
@@ -1046,7 +1046,7 @@ Similarly to Monte Carlo, this estimator is unbiased, however, its variance is d
     \var\left( \what{\pf}^{\mathrm{IS}}\right) = \frac1n \left( \E_{h_\bX}\left[\left(\1_{\{\iF_\bx\}}(\bX) \, \frac{f_\bX(\bX)}{h_\bX(\bX)}\right)^2\right] - \pf^2\right).
     \label{eq:IS_variance}
 \end{equation}
-The quality of the variance reduction associated to this technique fully depends on the choice of the instrumental distribution. 
+The quality of the variance reduction associated with this technique fully depends on the choice of the instrumental distribution. 
 In fact, IS can lead to higher variance than crude Monte Carlo when the instrumental distribution is poorly chosen \citep{owen_zhou_2000_is}. 
 However, an optimal instrumental distribution $h_{\mathrm{opt}}$ theoretically gives the smallest variance by setting it equal to zero in \eq{eq:IS_variance}: 
 \begin{equation}
@@ -1060,7 +1060,7 @@ The most immediate solution is to combine the information provided by the result
 In practice, the instrumental distribution is defined as the initial distribution centered on the design point resulting from FORM. 
 \fig{fig:IS_reliability} illustrates in the same two-dimensional case, the estimation by Monte Carlo and IS centered on the design point. 
 On the left, it can be noticed that only a few points in red reached the failure domain. 
-Such a number their number is insufficient to estimtate the failure probability by Monte Carlo.  
+Such a number their number is insufficient to estimate the failure probability by Monte Carlo.  
 Note that comparing the results from FORM and FORM-IS allows us to assess the nonlinearity of the LSF in the vicinity of the design point.  
 This strategy is simple to implement, but it inherits the main drawbacks of FORM, such as the limits related to multiple failure areas (see the example illustrated in \fig{fig:multi_FORM}). 
 Finally, other IS schemes integrate adaptive mechanisms, progressively leading the sampling towards the failure domain \citep{bugallo_2017_AIS_review}.  
@@ -1109,7 +1109,7 @@ The KL divergence is a dissimilarity measure between distributions, expressed be
     \label{eq:KL}
     \end{align}
 \end{subequations}
-\citet{rubinstein_2004_CE} symplify the expression of the optimization problem minimizing the KL divergence, which is most often convex and differentiable w.r.t. $\blambda$:  
+\citet{rubinstein_2004_CE} simplify the expression of the optimization problem minimizing the KL divergence, which is most often convex and differentiable w.r.t. $\blambda$:  
 \begin{equation}
     \blambda^* = \argmin_{\blambda \in \iD_\blambda} D_{\mathrm{KL}}\left(h_{\mathrm{opt}} || h_\blambda\right). 
 \end{equation}
@@ -1145,7 +1145,7 @@ The final instrumental density $h_{\blambda^*_{[k_{\#}]}}$ is then used for IS a
                                                  \left\{\bX_{[k_{\#}]}^{(i)}\right\}_{i=1}^n \simiid h_{\blambda^*_{[k_{\#}]}}.
 \end{equation}
 
-The CE-AIS algorithm is widely used in rare event estimation, as it based on an adaptive technique while conserving the explicit IS variance given in \eq{eq:IS_variance}.  
+The CE-AIS algorithm is widely used in rare event estimation, as it is based on an adaptive technique while conserving the explicit IS variance given in \eq{eq:IS_variance}.  
 According to \citet{rubinstein_2004_CE}, the successive instrumental distributions $h_{\blambda^*_{[k]}}$ converge towards $h_{\mathrm{opt}}$ under a few hypotheses. 
 The most important one is that the optimal density must belong to the parametric family considered, which should offer enough flexibility to describe a wide range of distributions. 
 
@@ -1343,7 +1343,7 @@ On top of looking for the irrelevant features to the learning, feature selection
 
 Many UQ methods suffer from the curse of dimensionality, thankfully, high-dimensional problems often only depend on a few variables. 
 This observation was formalized with the concept of \textit{effective dimension} introduced by \citet{owen_2003}. 
-Screening methods allow to discriminate the noninfluential variables, which can afterwards be treated as deterministic to simplify the problem.
+Screening methods allow to discriminate the noninfluential variables, which can afterward be treated as deterministic to simplify the problem.
 
 %------------------------------------------------------------%
 \subsubsection{Morris method}
@@ -1359,7 +1359,7 @@ The elementary effect in the direction of the variable $j$ from an OAT trajector
     \label{eq:eeffect}
 \end{equation}
 
-The Morris method generates $T\in\N$ OAT trajectories and computes theirs respective elementary effects in each direction $j$. 
+The Morris method generates $T\in\N$ OAT trajectories and computes their respective elementary effects in each direction $j$. 
 To assess the global sensitivity of the function, the mean $\overline{\mathrm{EE}}_j$ and variance $\what{\var}(\mathrm{EE}_j)$ of the elementary effects are computed: 
 \begin{equation}
     \overline{\mathrm{EE}}_j = \frac1n \sum_{t=1}^{T} |\mathrm{EE}_j^{(t)}|, \qquad 
@@ -1518,7 +1518,7 @@ This importance measure offers the following decomposition:
     \sum_{j=1}^{d} \mbox{Sh}_j = 1.
 \end{equation}
 In the case of independent inputs, the Shapley effects present properties related to the Sobol' indices. 
-The following equation (see proof in \citealp{owen_2014_shapley}) reveals that the Shapley effects equally divide the interaction effects between the implicated variable:
+The following equation (see proof in \citealp{owen_2014_shapley}) reveals that the Shapley effects equally divide the interaction effects between the implicated variables:
 \begin{equation}
     S_j \leq \mbox{Sh}_j \leq S_j^T, \qquad \mbox{Sh}_j = \sum_{A \in \mathcal{P}_d, \, j \in A} \frac{S_A}{|A|}.
 \end{equation}   
@@ -1605,7 +1605,7 @@ Note that the HSIC decomposition requires a specific hypothesis on the structure
 %============================================================%
 
 This section introduces the GSA methods commonly used in UQ. 
-Either to reduce the dimension of a problem (screening) or to quantify the influence of inputs (with importance measures), GSA improves the understanding of an UQ study.   
+Either to reduce the dimension of a problem (screening) or to quantify the influence of inputs (with importance measures), GSA improves the understanding of a UQ study.   
 As for other steps of the generic UQ methodology, GSA is made more complicated for computationally costly simulation models, hence the use of surrogate models. 
 Additionally, the dependence between inputs still represents an important limit to interpreting GSA results. 
 
@@ -1615,9 +1615,9 @@ In the field of structural reliability, an overview of the reliability-oriented 
 Several techniques derive from rare event estimation (e.g., the reinterpretation of the FORM importance factors by \citet{papaioannou_2021_rosa_form}), or were adapted from GSA, like Sobol' indices \citep{wei_2012_rosa,chabridon_2018_thesis,perrin_2019_rosa,ehre_2020_rosa}, Target-HSIC \citep{marrel_chabridon_2021}, or Shapley effects \citep{ilidrissi_2021_rosa}.  
 
 Finally, sensitivity analysis may describe the effects of random inputs on the variation of the output, however, this study is done by assuming a model on the input uncertainties. 
-The role of a regulatory agency auditing an UQ approach for certification (i.e., a nuclear safety authority), might be to challenge the way to model the uncertainties on the inputs.  
+The role of a regulatory agency auditing a UQ approach for certification (i.e., a nuclear safety authority), might be to challenge the way to model the uncertainties on the inputs.  
 In this case, various tools for \textit{robustness analysis} exist to quantify the impact of mispecifying the random inputs on the quantity of interest studied. 
-Among the methods to pertubate uncertainty models, some remain in the probabilistic framework, such as the ``perturbed-law based indices'' (\abv{pli}) \citep{lemaitre_2015_PLI,iooss_2022_pli}, while other rely on extra-probabilistic methods \citep{ajenjo_2022_structural_safety}. 
+Among the methods to perturbate uncertainty models, some remain in the probabilistic framework, such as the ``perturbed-law based indices'' (\abv{pli}) \citep{lemaitre_2015_PLI,iooss_2022_pli}, while other rely on extra-probabilistic methods \citep{ajenjo_2022_structural_safety}. 
 
 
 
@@ -1634,7 +1634,7 @@ Among the methods to pertubate uncertainty models, some remain in the probabilis
 
 The aim of \textit{surrogate modeling} (or metamodeling) is to build a cheap-to-call statistical model, 
 denoted by $\wg_n(\cdot)$, to replace a costly numerical model $g(\cdot)$ over the input domain $\iD_{\bX}$. 
-To do so, a statistical learning is performed on a finite number of observations of the costly function $g$. 
+To do so, statistical learning is performed on a finite number of observations of the costly function $g$. 
 When manipulating computationally expensive simulations, the sample size can be limited (i.e., in a small-data context). 
 This $n$-sized sample is usually called \textit{learning set} and written: 
 \begin{equation}
@@ -1689,7 +1689,7 @@ A first surrogate can be fitted on the entire datasets but the first fold, on wh
 The operation is repeated for each fold, providing a virtual validation of the entire dataset. 
 Leave-One-Out validation (\abv{loo}) is an extreme case of $k$-fold cross-validation, for which $k=n-1$. 
 Note that multiple variations of these methods exist, for example by adding a permutation or shuffling step. 
-The ``bagging'' validation method (for ``bootstrap aggregating'') consists of a shuffled cross-validation repeated many times \citep{breiman_1996_bagging}. 
+The ``bagging'' validation method (for ``bootstrap aggregating'') consists of shuffled cross-validation repeated many times \citep{breiman_1996_bagging}. 
 
 %\elias{Should we mention bootstrap aggregating (bagging): ensemble meta-algorithm improving the stability and accuracy of machine learning algorithms}
 
@@ -1722,7 +1722,7 @@ The ``bagging'' validation method (for ``bootstrap aggregating'') consists of a 
 %============================================================%
 
 In this subsection, a particular focus is dedicated to GP regression which will be useful in the following chapters (GP regression is also called ``Kriging'' after the mining engineer D.G. Krige). 
-GPs have been widely used regression method in UQ since the seminal paper of \citep{sacks_1989}, for their performance, flexibility and their associated confidence model. 
+GP has been widely used as a regression method in UQ since the seminal paper of \citep{sacks_1989}, for their performance, flexibility and their associated confidence model. 
 In a small-data context, the way of placing the few points forming the surrogate's learning set is critical. 
 Intuitively, to build a versatile surrogate model, the learning set should collect information over the entire domain uniformly. 
 This is why space-filling designs of experiments are commonly used to build learning sets \citep{fang_li_2006}. 
@@ -1956,7 +1956,7 @@ When the function is stochastic, several approaches allow fitting the function a
 This section gives a literature overview of the following steps in UQ: uncertainty modeling, uncertainty propagation, global sensitivity analysis, and surrogate modeling. 
 To ease the methodological presentation, all the illustrations from this section are reproducible using the Python/\ot scripts available on the GitHub repository mentioned earlier. 
 
-Finally in this work, the numerical models exploited are supposed to be accurate, but they obviously carry some modeling uncertainty \citep{oberkampf_2010_VVUQ}. 
+Finally, the numerical models exploited are supposed to be accurate, but they obviously carry some modeling uncertainty \citep{oberkampf_2010_VVUQ}. 
 In fact, prior to UQ, the model should be calibrated \citep{ghanem_2017} to make it match some physical information (e.g., measurements). 
 %Numerical model calibration is also called data assimilation when a stream of measured data is available. 
 %The aim of this work is to apply the tools presented in this chapter to offshore wind turbine models, therefore the next chapter introduces the numerical models manipulated in this thesis.  

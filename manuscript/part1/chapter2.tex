@@ -122,7 +122,7 @@ In this thesis, the Kaimal spectrum as defined in \cite{iec_2019} is used for tu
 \end{equation} 
 such that $f$ is the frequency, $\overline{U}$ is the longitudinal mean speed at hub-height, $L_k$ are the Kaimal length scales, and $\sigma_k$ standard deviations. 
 Along with the Kaimal wind speed spectrum, a spatial coherence model is usually defined in the frequency domain. 
-Each couple of nodes in the mesh are correlated, for examçple, using an exponential coherence model (see the complete definition in \citealp[Apepndix C]{iec_2019}).
+Each couple of nodes in the mesh are correlated, for example, using an exponential coherence model (see the complete definition in \citealp[Apepndix C]{iec_2019}).
 
 In this thesis, the full-field turbulent wind fields (i.e., over a regular mesh) are generated using TurbSim, a software developed by the National Renewable Energy Laboratory (NREL) \citep{turbsim_2009}. 
 TurbSim generates time realizations by adapting the spectral method proposed in \citet{veers_1988_sandia} (relying on the inverse Fourier transforms of each axial component).   
@@ -176,7 +176,7 @@ These models mostly rely on the equivalence between the thrust load and the turb
 Since the seminal engineering model proposed by \citet{jensen_1983_wake}, multiple enhancements were proposed. 
 A wide benchmark of the wake modeling solutions for different fidelities was performed in \citet{doubrawa_2020_benchmark} and \citet{hiperwind_2023_wp3}. 
 The optimal tuning of these engineering models was studied using measurements from a Doppler wind lidar in \citet{zhan_2020_optimal_wake}. 
-Different software programs propose wake engineering models, such as, e.g. FLORIS (developed by the NREL, see \citealp{fleming_2020_FLORIS}) and FarmShadow (developed by IFPEN\footnotemark). 
+Different software programs propose wake engineering models, such as FLORIS (developed by the NREL, see \citealp{fleming_2020_FLORIS}) and FarmShadow (developed by IFPEN\footnotemark). 
 
 \footnotetext{FarmShadow: \url{https://www.ifpenergiesnouvelles.com/brief/wind-farm-optimization-wake-modeling-advances}}
 
@@ -227,9 +227,9 @@ Different methods allow building a parametric bimodal distribution, with a mode 
 %============================================================%
 
 OWT models are coupling several physics such as aerodynamics, hydrodynamics, mechanical elasticity, control, as well as mooring dynamics for floating OWT. 
-Similarly to the usual practices from the offshore oil \& gas industry, OWT models have been first built in the frequency domain. 
+Similarly to the usual practices from the offshore oil \& gas industry, OWT models were first built in the frequency domain. 
 At an early design stage, a study in the frequency domain gives a rough idea of the system's feasibility by computing its natural frequencies. 
-An OWT should not have its natural frequencies (or the baldes and rotor frequencies, latter introduced as 1P and 3P) in the same range as the main frequencies of the wave energy spectra. 
+An OWT should not have its natural frequencies (or the blades and rotor frequencies, later introduced as 1P and 3P) in the same range as the main frequencies of the wave energy spectra. 
 Otherwise, such systems can be subject to critical dynamic resonance, leading to their failure.
 
 Beyond this preliminary check, frequency-domain approaches present limits for OWT modeling. 
@@ -355,7 +355,7 @@ Finally, \textit{Blade element momentum theory} (\abv{bemt}) combines the result
 The resolution of this system of equations is often solved by iterative approaches (e.g., \citealp{dai_2011_BEMT}). 
 Global axial thrust over the blade is then computed by integrating the elementary loads over all the elements. 
 Note that various corrections are applied to the BEMT model, for example, to take into account the non-homogeneous loss of momentum over the rotor disk. 
-The BEMT also fails to model nonlinear aerodynamic effects, for example occurring with sudden changes of angle of attack, variation in wind velocity over the rotor disk, or yaw misalignment.
+The BEMT also fails to model nonlinear aerodynamic effects, for example, occurring with sudden changes in angle of attack, variation in wind velocity over the rotor disk, or yaw misalignment.
 Such effects are sometimes called ``dynamic stall'' and are represented in DIEGO by the Beddoes-Leishman model (see \citealp{burton_2021_wind_handbook} for further details).  
 
 %\elias{\paragraph{Aerodynamic damping?}}
@@ -367,7 +367,7 @@ Such effects are sometimes called ``dynamic stall'' and are represented in DIEGO
 \subsection{Hydrodynamics}
 %============================================================%
 
-As for hydrodynamic effects induces by waves, the Morison's equations are a widely-used semi-empirical model to assess the hydrodynamic forces on thin fixed structures such as offshore oil platforms and wind turbines. 
+As for hydrodynamic effects induced by waves, Morison's equations are a widely-used semi-empirical model to assess the hydrodynamic forces on thin fixed structures such as offshore oil platforms and wind turbines. 
 Considering a slender cylindrical structure of diameter $D$, a flow velocity over time $u(t)$, the drag and inertial coefficients $C_d$ and $C_m$, the axial force $F$ (parallel to the flow direction) is given by:   
 \begin{equation}
     F(t)\,=\,C_{m}\,\rho \,{\frac {\pi }{4}}D^{2}\,{\frac{\dd u(t)}{\dd t}}\,+\,C_{d}\,{\frac 12}\,\rho \,D\,u(t)\,|u(t)|.
@@ -442,7 +442,7 @@ However, modal analysis cannot be used to model transient loading phases and the
 For a higher fidelity, simulations in the time domain using flexible multibody approaches are commonly used to describe the nonlinear dynamics \citep{holm_2009_multibody,alsolihat_2018_flexible_multibody}. 
 DIEGO implements such an approach by combining rigid multibody dynamics with a deflection model based on Lagrangian equations \citep{milano_thesis_2021}. 
 Note that for the modeling of floating wind turbines, a preliminary step of rigid body dynamics is added to define the coordinate system of the floater. 
-\citet{otter_2022_owt_modeling_review} reviews the state-of-the-art of numerical and experimental modeling techniques for multi-physics OWT systems. 
+\citet{otter_2022_owt_modeling_review} reviews the state-of-the-art numerical and experimental modeling techniques for multi-physics OWT systems. 
 
 
 %============================================================%
@@ -453,7 +453,7 @@ Mechanical fatigue damage is a significant phenomenon to consider when designing
 It refers to the progressive weakening of a material subject to cyclic or repeated loading, which may be significantly lower than the material's ultimate strength. 
 Understanding the mechanisms behind mechanical fatigue damage is essential for designing durable and reliable structures. 
 To quantify the fatigue damage on OWT structures, standards \citep{dnv_fatigue_2016} recommend simulating the stresses in the time domain and identifying a series of stress cycles. 
-Then, the so called ``\abv{sn} curve'' (for ``stress-number of cycles'') of a specific material gives the number of cycles before failure at a given constant stress amplitude. 
+Then, the so-called ``\abv{sn} curve'' (for ``stress-number of cycles'') of a specific material gives the number of cycles before failure at a given constant stress amplitude. 
 After identifying the stress cycles identified on the results of the OWT simulation, an aggregation method (in our case, \textit{Miner's rule}) gathers the elementary damages over the stress time series studied. 
 
 
@@ -594,8 +594,8 @@ The multiple OWTs technologies developed over the last two decades can be gather
 At this stage, the bottom-fixed solutions present more maturity while floating technologies are still transitioning from the phase of large demonstrators to industrial wind farms. 
 In France, the current development of offshore wind energy has led to the construction of the two first industrial projects (both managed by EDF Renewables). 
 On the coast of Saint-Nazaire, 80 bottom-fixed wind turbines were built on monopile foundations, with a total power of 480 MW. 
-On the Mediterranean coast, the first French industrial floating project was recently installed at 20 km offshore from the coast of Fos-sur-Mer near Marseille. 
-This pilot project, called ``\textit{Provence grand large}'', is composed of three turbines operating on so-called ``tension-leg platforms'', delivering 25 MW of nominal power.     
+On the Mediterranean coast, the first French industrial floating project was recently installed 20 km offshore from the coast of Fos-sur-Mer near Marseille. 
+This pilot project called ``\textit{Provence grand large}'', is composed of three turbines operating on so-called ``tension-leg platforms'', delivering 25 MW of nominal power.     
 
 In order to lift water depth limitations associated with bottom fixed technologies (technical limit around 60 meters), floating pilot projects have emerged across the world. 
 However, the wind energy industry still tests different floating technologies in terms of cost efficiency and durability (as listed in \citealp{mackinnon_2022_FOWT_table}). 
@@ -603,7 +603,7 @@ An example of some farm projects with different types of technologies is describ
 \begin{itemize}
     \item \textbf{Semi-submersible}: a pilot project of three 10 MW turbines called ``\textit{les éoliennes du Golfe du Lion}'' in the south of France relies on a semi-submersible technology developed by the company Principle Power \citep{cermelli_2018_windfloat};   
     \item \textbf{Tension-leg}: a pilot project of three 8 MW turbines called ``\textit{Provence grand large}'' exploits tension-leg platforms co-developed between the IFPEN national laboratory and the company SBM \citep{caille_2017_TPL_IFPEN}; 
-    \item \textbf{Barge}: a pilot project of three 10 MW turbines called ``EOLMED'' uses the floater developped by the company Ideol \citep{guignier_2016_ideol}; 
+    \item \textbf{Barge}: a pilot project of three 10 MW turbines called ``EOLMED'' uses the floater developed by the company Ideol \citep{guignier_2016_ideol}; 
     \item \textbf{Spar}: the Norwegian oil and gas company Equinor chose the ``spar'' technology (see \fig{fig:FOWT_floating} and \citealp{driscoll_2016_hywind}) to equip its floating wind farm of 88 MW, named ``Hywind Tampen''. 
 \end{itemize}
 
@@ -694,7 +694,7 @@ To limit its impact on the reliability of OWTs, this phenomenon is addressed wit
 
 \paragraph{Global scour.}
 %------------------------------------------------------------%
-The large-scale erosion of seabed sediment around bottom-fixed offshore wind turbine foundations, also called ``scour'', rises different problems. 
+The large-scale erosion of seabed sediment around bottom-fixed offshore wind turbine foundations also called ``scour'', raises different problems. 
 As global scour is a critical element of the long-term OWT reliability, various mitigation measures are reviewed in \citet{fazeres_2021_scour}, including scour protection, and scour-robust foundation design.
 When scouring occurs, the stability of the foundation is first reduced, potentially leading to tilting. 
 Moreover, the load distribution changes, causing uneven stresses and increased fatigue. 
@@ -705,7 +705,7 @@ Finally, submarine cable exposure increases the risk of damage and electrical fa
 %------------------------------------------------------------%
 In the installation and maintenance of such large-scale systems, port logistics plays a key role considering the international supply chain involved. 
 The coordination, transportation and assembly of massive wind turbine components, foundations, and supporting infrastructure requires meticulous planning and execution. 
-In accordance, the costs of handling operations and maintenance represent an large share of the \textit{levelized cost of energy} \citep{shields_2021_owt_lcoe}.  
+In accordance, the costs of handling operations and maintenance represent a large share of the \textit{levelized cost of energy} \citep{shields_2021_owt_lcoe}.  
 
 In his review of OWT installation techniques, \citet{jiang_2021_owt_installation_review} describes the foundations' and components' installation processes depending on the OWT technology. 
 Because of their large scale, most structural assembly (e.g., blades, or floater) are done on dedicated port docks, making the port choice critical.  
@@ -738,7 +738,7 @@ Imperfections in the composite material, like air pockets or delamination, can w
 Additionally, variations in manufacturing processes can result in differences in blade weight, which impacts the turbine's performance. 
 Regarding steel components, OWTs are mostly assembled by bolted and soldered joints. 
 Inconsistent soldering, variations in material properties, and potential flaws in the joints can compromise the structural integrity of OWTs \citep{veers_2019_review}. 
-These uncertainties in manufacturing quality can rise serious challenges in ensuring the reliability and longevity of the structures. 
+These uncertainties in manufacturing quality can raise serious challenges in ensuring the reliability and longevity of the structures. 
 Note that, at the design phase, \textit{stress concentration factors} are defined by standards to take into account the local change in material properties created by soldering. 
 Rigorous quality control, material testing, and manufacturing standards are essential to maintain the safety and efficiency of wind energy installations. 
 
@@ -755,7 +755,7 @@ In most cases, the underperforming major components are replaced while the struc
 Alternatively, repowering is a strategy for reusing the foundations of a wind farm to install brand-new turbines. 
 This approach is often an opportunity to increase the scale and performance of the old turbines. 
 
-As the first generation of wind farms currently reach their end-of-life, an crucial problem arises from recycling large amounts of blades made out of composite materials. 
+As the first generation of wind farms currently reach their end-of-life, a crucial problem arises from recycling large amounts of blades made out of composite materials. 
 Different processes for recycling composite material are reviewed in \citet{jensen_2018_blade_recycling}, including mechanical, pyrolysis and chemical techniques. 
 However, recycling composites is a complex and energy-consuming operation, that needs to be further studied. 
 The recent lifecycle study of floating OWTs in the Mediterranean region by \citet{pulselli_2022_FOWT_lifecycle} showed that effective maintenance and 
@@ -910,7 +910,7 @@ A variety of software implementations exist for OWT simulation, but special atte
 
 To understand the design of OWTs, the most common technologies of bottom-fixed and floating turbines were presented. 
 Then, a focus on a few critical topics to be considered during design and exploitation was proposed. 
-In light of the previous elements, the variables considered as random in this work were listed with a particular focus on probabilistic fatigue damage assessment.   
+In light of the previous elements, the variables considered random in this work were listed with a particular focus on probabilistic fatigue damage assessment.   
 
 This growing industry faces various challenges, for example, related to the massive use of primary commodities, the cohabitation of offshore dynamic structures with an ecosystem, composite materials recycling, etc. 
 UQ is a tool for understanding some of these problems, however, many uncertainties are hard to characterize and quantify. 

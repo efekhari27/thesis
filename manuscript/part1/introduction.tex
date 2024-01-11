@@ -35,7 +35,7 @@ In the case of floating wind projects, the goal is to incorporate a probabilisti
 For wind farm owners, end-of-life management is another significant concern. 
 An owner of a wind farm reaching its end of life has three options: \textit{(i)} extend the operational life of assets, \textit{(ii)} replace current wind turbines with newer models, \textit{(iii)} or decommission and sell the wind farm. 
 The first two options require evaluating the structural reliability and residual lifespan, with quantitative assessments reviewed by certification agencies and insurers to issue operating permits. 
-To provide a rigorous and quantitative risk assessment, the generic methodology know as the \textit{uncertainty quantification methodology} is a widely accepted approach in industrial sectors facing these types of issues \citep{rocquigny_2008,blanchard_2023}.
+To provide a rigorous and quantitative risk assessment, the generic methodology known as the \textit{uncertainty quantification methodology} is a widely accepted approach in industrial sectors facing these types of issues \citep{rocquigny_2008,blanchard_2023}.
 
 
 
@@ -45,7 +45,7 @@ To provide a rigorous and quantitative risk assessment, the generic methodology 
 %============================================================%
 %============================================================%
 
-The field of computer experiments emerged after the formidable increase of processing power that occurred in the past decades. 
+The field of computer experiments emerged after the formidable increase in processing power that occurred in the past decades. 
 Numerical models can simulate complex system behavior based on initial conditions defined by the analyst. 
 They quickly became essential for the analysis, design, and certification of complex systems in cases where experiments or physical measurements are too costly or even unfeasible. 
 However, such numerical models are mostly deterministic: the reproducible result of a simulation is associated with a fixed input set of parameters. 
@@ -95,14 +95,14 @@ Figure \ref{fig:UQ_methodo} illustrates the main steps of the generic uncertaint
 %============================================================%
 
 Risk and uncertainty management in the field of wind energy is a significant concern for the electric utility Électricité de France (EDF). 
-This motivated the research and development division of EDF to participate in a EU founded project named HIPERWIND\footnotemark~(for ``HIghly advanced Probabilistic design and Enhanced Reliability methods for high-value, cost-efficient offshore wind''). 
+This motivated the research and development division of EDF to participate in a EU-founded project named HIPERWIND\footnotemark~(for ``HIghly advanced Probabilistic design and Enhanced Reliability methods for high-value, cost-efficient offshore wind''). 
 \footnotetext{HIPERWIND web page: \url{https://www.hiperwind.eu/}}
 Collaborating with various partners from the academic sector (such as DTU, ETH Zurich, University of Bergen) and the industrial domain (such as DNV, IFPEN, EPRI) brought different perspectives on this topic. 
 As a result, this thesis aims to adapt and apply the generic uncertainty quantification methodology to industrial offshore wind energy design and operation. 
 In particular to assess the structural integrity with respect to fatigue damage (caused by a large number of small amplitude solicitations). 
 As such, this use case raises scientific challenges related to its specific characteristics, described in the following:
 \begin{itemize}
-    \item The numerical model exploited in the present work consists of a serie of numerical models executed sequentially. 
+    \item The numerical model exploited in the present work consists of a series of numerical models executed sequentially. 
     This chain is divided into three parts: first, stochastic wind and wave velocity spatio-temporal fields are generated, 
     then the coupled hydro-aero-servo-elastic behavior of the wind turbine is simulated, 
     and finally these data are post-processed to obtain scalar quantities of interest. 
@@ -130,12 +130,12 @@ In order to apply the generic methodology for uncertainty quantification to the 
 
 To propose an answer to these questions, this manuscript is divided into three parts. 
 The first part recalls the principal tools for uncertainty quantification and introduces offshore wind turbine modeling and design. 
-The second part presents the contributions of this thesis associated to uncertainty quantification and propagation while the third part describes the contributions to rare event estimation. 
+The second part presents the contributions of this thesis associated with uncertainty quantification and propagation while the third part describes the contributions to rare event estimation. 
 This manuscript is divided into seven chapters, which are summarized hereafter: 
 
 \paragraph{Chapter 1 -- Uncertainty quantification in computer experiments.} 
 %------------------------------------------------------------%
-This chapter gives a brief over-view of various topics in uncertainty quantification \citep{sullivan_2015}. 
+This chapter gives a brief overview of various topics in uncertainty quantification \citep{sullivan_2015}. 
 After a reminder of some mathematical concepts, the model specification step is described, considering a black box and its input and output variables. 
 The different types and sources of uncertainties are then presented, along with their modeling within a probabilistic framework. 
 Uncertainty propagation depends on the estimated quantities of interest, therefore, one section addresses propagation methods for central tendency studies, and another focuses on risk and reliability analysis. 
@@ -148,7 +148,7 @@ Screening techniques are typically applied in high-dimensional problems and aim 
 Importance measures, on the other hand, quantitatively allocate, for each input variable, a share of the output variability, enabling the ranking of variables based on their influence.
 
 Finally, this chapter presents an overview of the families of surrogate models commonly used in uncertainty quantification \citep{forrester_2008}. 
-Special attention is given to Gaussian process regression, which consists in conditioning a Gaussian process on a set of observations from the numerical model. 
+Special attention is given to Gaussian process regression, which consists of conditioning a Gaussian process on a set of observations from the numerical model. 
 Once conditioned, the Gaussian process simultaneously offers a surrogate model (mean of the Gaussian process, also called predictor) and an error function (variance of the process). 
 Some iterative methods (called ``active'') use this additional information to progressively enrich the surrogate model and improve its predictability. 
 These techniques were quite successful in the 1990s for solving optimization problems with expensive functions \citep{jones_1998}. 
@@ -219,7 +219,7 @@ Estimating rare event probabilities is a common issue in industrial risk managem
 To overcome the well-known limitations of the Monte Carlo method, several techniques have been proposed. 
 Among them, ``subset simulation'' \citep{AuBeck2001} is a technique based on the split of a rare probability into a product of less rare (and thus easier to estimate) conditional probabilities associated with nested failure events. 
 However, this technique relies on conditional simulation using Markov chain Monte Carlo (MCMC) methods. 
-In practice, these algorithms produce correlated chains which converge asymptotically towards the targeted distribution. 
+In practice, these algorithms produce correlated chains that converge asymptotically towards the targeted distribution. 
 The issue in reliability analysis is that their convergence is usually not checked (e.g., \citealp{roy_2020_mcmc_convergence} reviews diagnostic tools for MCMC).    
 In this chapter, another method is proposed, using an adaptive importance sampling structure \citep{zhang_1996_NIS}, with the advantage of preserving the i.i.d. property. 
 Independent sampling is particularly relevant for reusing these samples in a posterior reliability-oriented sensitivity analysis. 
@@ -241,7 +241,7 @@ Considering a set of variables related to the system, a surrogate model of the l
 This huge computational effort was made possible by deploying a wrapper of the simulator on a high-performance computer.   
 Using the surrogate model to emulate the costly wind turbine model, a nominal reliability analysis is performed. 
 To complete this analysis, the robustness of the failure probability obtained is assessed by perturbating the inputs' distributions. 
-This approach called the ``perturbed-law based sensitivity indices'' \citep{lemaitre_2015_PLI} reveals that the resistance variable has a primary role on the reliability. 
+This approach called the ``perturbed-law based sensitivity indices'' \citep{lemaitre_2015_PLI} reveals that the resistance variable has a primary role in the reliability. 
 
 
 \clearpage

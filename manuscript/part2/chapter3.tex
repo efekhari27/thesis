@@ -86,7 +86,7 @@ Several strategies to model the dependence structure from multivariate distribut
 \end{remark}
 \medskip
 
-The notions related to copula theory are introduced in details in the monographs of \citet{nelsen_2006_copulas,joe_2014,durante_2015_copula} while the key properties are introduced hereafter.
+The notions related to copula theory are introduced in detail in the monographs of \citet{nelsen_2006_copulas,joe_2014,durante_2015_copula} while the key properties are introduced hereafter.
 
 
 %============================================================%
@@ -149,7 +149,7 @@ an equivalent definition exists, using the copula $C$ between the joint distribu
 %------------------------------------------------------------%
 \paragraph{Kendall's tau.} 
 %------------------------------------------------------------%
-Also referred to as the ``Kendall's rank correlation coefficient'', Kendall's tau is defined for a pair of random variables $(X_i, X_j)$ and their respective independent copies $(X_i', X_j')$ as: 
+Also referred to as ``Kendall's rank correlation coefficient'', Kendall's tau is defined for a pair of random variables $(X_i, X_j)$ and their respective independent copies $(X_i', X_j')$ as: 
 \begin{equation}
     \tau(X_i, X_j) = \P\left((X_i - X_i')(X_j - X_j') > 0 \right) - \P\left((X_i - X_i')(X_j - X_j') < 0 \right),
 \end{equation}
@@ -281,7 +281,7 @@ The seminal work of \citet[Theorem 3]{sancetta_satchell_2004} proves that:
 \end{itemize}
 \footnotetext{The sign $\lesssim$ stands for ``less than or approximately''.}
 To illustrate the previous theoretical results, \fig{fig:hmise} represents the evolution of the optimal grid step size $m_{\mathrm{AMISE}}$ w.r.t dimension. 
-Each curve corresponds to a given sample sizes $n$. 
+Each curve corresponds to a given sample size $n$. 
 As the dimension increases, the value of $m_{\mathrm{AMISE}}$ tends towards one, which is equivalent to the independent copula (see \citealp[p. 117]{lasserre_2022}). 
 Therefore, high-dimensional problems should rather be divided into a product of smaller problems on which the EBC is tractable.
 
@@ -557,7 +557,7 @@ The closer to zero the values of this dissimilarity measure are, the closer the 
 Even if further developments could be implemented to improve the squared MMD estimation, these results are sufficient to set the EBC tuning at $m=100$. 
 One can remark that the goodness-of-fit keeps improving as $m$ increases until $m=100$, but it worsens for $m=1000$, which is probably due to an overfit of the EBC beyond an optimal value $100 \leq m^* < 1000$. 
 Considering this setup, \fig{fig:sb_copulograms} represents the copulogram of a sample $\widetilde{\bX}_n$ (in red), side by side with the copulogram of the learning set $\bX_n$ (in blue). 
-These figures show that this complex dependence patterns are generally well captured by the EBC. 
+These figures show that these complex dependence patterns are generally well captured by the EBC. 
 However, despite its apparent flexibility, this tool should be used when inferring the distributions' tails. 
 For example, the upper tail of the $H_s$ vs. $T_p$ scatter plot typically studied in ocean engineering is not very well captured.
 
@@ -626,7 +626,7 @@ The MMD is then used as a statistical dissimilarity measure to compare the pertu
 
 The proposed approach is applied to a theoretical wind farm representing the recent call for tenders off the coast of South Brittany, France. 
 The turbines considered are a modified version of the floating OWT IEA-15MW (described in \citealp{kim_natarajan_2022}). 
-Figure~\ref{fig:SB-farm} illustrates the layout of the 25 OWTs modeled in the following.%, the coordinates are normalized by the rotor's diameter $D$. 
+Figure~\ref{fig:SB-farm} illustrates the layout of the 25 OWTs modeled in the following. %, the coordinates are normalized by the rotor's diameter $D$. 
 The spacing between turbines in this regular layout is equivalent to seven rotor diameters in the dominant wind direction and five rotor diameters in the orthogonal direction (i.e., crosswind). 
 
 To develop this approach on the South Brittany farm, the present section is structured as follows: 

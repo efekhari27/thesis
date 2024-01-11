@@ -257,7 +257,7 @@ The algorithm is as follows:
   \begin{equation}\label{eq:FSSF-fr}
     \bx^{(i+1)} \in \argmax_{\bx \in \iS \setminus \bX_i} \left\{ \min\left( \min_{j \in \{1,\ldots,i\}} \|\bx-\bx^{(j)}\|, \, \sqrt{2}\,d \; \mbox{dist}\left(\bx,R(\bx)\right) \right) \right\}\,, 
   \end{equation}
-  where $R(\bx)$ is the symetric of $\bx$ w.r.t. its nearest boundary of $\iD_\bx$,
+  where $R(\bx)$ is the symmetric of $\bx$ w.r.t. its nearest boundary of $\iD_\bx$,
   and set $\bX_{i+1} = \bX_i \bigcup \bx^{(i+1)}$.
   
   \item Stop the algorithm when $\bX_n$ has the required size.
@@ -271,7 +271,7 @@ Another scaling factor, depending on the target design size $n$ is proposed in \
 The FSSF-fr algorithm is entirely based on geometric considerations and implicitly assumes that the selected set of points should cover $\iD_\bx$ evenly. 
 However, in the context of uncertainty quantification, the distribution $\pi$ of the model inputs is frequently not uniform. 
 It is then desirable to select a test set representative of $\pi$. 
-This can be achieved through the inverse transform of the CDF: FSSF-fr constructs $\bX_n$ in the unit hypercube $[0,1]^d$, and an ``isoprobabilistic'' transform $T:[0,1]^d \rightarrow \iD_\bx$ is then applied to the points in $\bX_i$, $T$ being such that, if $\boldsymbol{U}$ is a random variable uniform on $[0,1]^d$, then $T(\boldsymbol{U})$ follows the target distribution $\pi$. 
+This can be achieved through the inverse transform of the CDF: FSSF-fr constructs $\bX_n$ in the unit hypercube $[0,1]^d$, and an ``iso-probabilistic'' transform $T:[0,1]^d \rightarrow \iD_\bx$ is then applied to the points in $\bX_i$, $T$ being such that, if $\boldsymbol{U}$ is a random variable uniform on $[0,1]^d$, then $T(\boldsymbol{U})$ follows the target distribution $\pi$. 
 The transformation can be applied to each input separately when $\pi$ is the product of its marginals but is more complicated in other cases, see \citep[Chap.~4]{lemaire_2009}. 
 Note that FSSF-fr operates in the bounded set $[0,1]^d$ even if the support of $\pi$ is unbounded. 
 The other two algorithms presented in this section are able to directly choose points representative of a given distribution $\pi$ and do not need to resort to such a transformation.
@@ -612,7 +612,7 @@ the details of the tested function do not seem to play an important role concern
 \end{figure}
 
 Let us finally observe how the methods behave for models of distinct quality ($m$ leading to poor, good or very good models), comparing the three panels in each figure. 
-On the left panels, $m$ is too small for the model $\eta_m$ to be accurate, and all methods and test-set sizes are able to detect this. 
+On the left panels, $m$ is too small for the model $\eta_m$ to be accurate, and all methods and test-set sizes can detect this. 
 For models of practical interest (good and very good), the test sets generated with support points and KH allow a reasonably accurate estimation of $Q^2$ with a few points. 
 Note, incidentally, that except for test case 2 (where the interplay with a non-uniform measure $\pi$ complicates the analysis), it is in general easier to estimate the quality of the very good model (right-most panel) than that of the good model (central panel), indicating that the expected complexity of the residual process should be a key factor determining how large the validation set must be. 
 In particular, it may be that larger values of $m$ allow for smaller values of $n$.
@@ -643,7 +643,7 @@ The test case corresponds to the computer code CATHARE2 (for ``Code Avanc\'e de 
 The studied scenario simulates a hypothetical large-break loss of primary coolant accident for which the output of interest is the peak cladding temperature \citep{decbaz08,ioobou10}. 
 The complexity of this application lies in the large run-time of the computer model (of the order of twenty minutes) and in the high dimension of the input space: the model involves $53$ input parameters $z_i$, corresponding mostly to constants of physical laws, but also coding initial conditions, material properties and geometrical modeling. 
 The $z_i$ were independently sampled according to normal or log-normal distributions. %(see axes histograms in \fig{fig:cathare_paiplot} corresponding to $10$ inputs). 
-These characteristics make this test case challenging in terms of construction of a surrogate model and validation of its predictivity.
+These characteristics make this test case challenging in terms of the construction of a surrogate model and validation of its predictivity.
 
 
 %\begin{figure}
@@ -661,7 +661,7 @@ These characteristics make this test case challenging in terms of construction o
 %  \caption{test case CATHARE: inputs output scatter plots ($N=10^3$) }
 %  \label{fig:cathare_paiplot}
 %\end{figure}
-In the following, an existing Monte Carlo sample $\bZ_N$ of $N=10^3$ points in $\R^{53}$ is used, that corresponds to $53$ independent random input configurations (see \citealp{ioobou10} for details). 
+In the following, an existing Monte Carlo sample $\bZ_N$ of $N=10^3$ points in $\R^{53}$ is used, which corresponds to $53$ independent random input configurations (see \citealp{ioobou10} for details). 
 The output of the CATHARE2 code at these $N$ points is also available. 
 To reduce the dimensionality of this dataset, a preliminary screening of the inputs has been realized in order to identify the inputs that do not impact the output significantly. 
 This dimension-reduction step relies on the HSIC indices, described in Subection~\ref{sec:gsa}, which is known as a powerful tool to perform input screening from a single sample of inputs and output values without reference to any specific ML regression model \citep{daveiga_2015}. 
@@ -715,7 +715,7 @@ The sum $\sum_{i=1}^n w_i^*$ of the optimal weights of support points and KH in 
 The slow increase with $n/N$ of the sum of KH weights (blue line) is consistent with the increase of the volume of the input region around each validation point when the size of the training set decreases. 
 The behavior of the sum of weights is more difficult to interpret for support points (orange line) but is consistent with the behavior of $Q_{n*}^2$ on \fig{fig:cathareC2_benchmark}. 
 Note that the energy-distance kernel, given in \eq{eq:kE}, cannot be used for the weighting method of Subsection~\ref{sec:weighting} as $K_E$ is not positive definite but only conditionally positive definite. 
-A full understanding of the observed curves would require a deeper analysis of the geometric characteristics of the designs generated by the two MMD methods, in particular of their interleaving with the training designs.%, which is not compatible with the space constraints of this manuscript. 
+A full understanding of the observed curves would require a deeper analysis of the geometric characteristics of the designs generated by the two MMD methods, in particular of their interleaving with the training designs. %, which is not compatible with the space constraints of this manuscript. 
 
 While a number of unanswered points remain, in particular how deeply the behaviors observed may be affected by the poor predictivity resulting from the chosen partial least squares methodology, the example presented in this section shows that the construction of test sets via MMD minimization and estimation of the predictivity index using the weighted estimator $Q_{n*}^2$ is promising as an efficient alternative to RCV: at a much lower computational cost, it builds performance estimates based on independent data the model developers may not have access to. 
 Moreover, KH proved, in the examples studied in this manuscript, to be a more reliable option for designing the test set, exhibiting a behavior that is consistent with what is expected, and a highly accurate estimation when the residuals over the design points are appropriately weighted.
@@ -743,7 +743,7 @@ Moreover, KH proved, in the examples studied in this manuscript, to be a more re
 %============================================================%
 %============================================================%
 
-This work shows that ideas and tools from the design of experiment framework can be transposed to the problem of test-set selection. 
+This work shows that ideas and tools from the design of experiments framework can be transposed to the problem of test-set selection. 
 This chapter explored approaches based on support points, KH and FSSF, considering the incremental construction of a test set (\textit{i}) either as a particular space-filling design problem, where design points should populate the holes left in the design space by the training set, or (\textit{i}) from the point of view of partitioning a given dataset into a training set and a test set. 
 
 A numerical benchmark has been performed for a panel of test cases of various dimensions and complexity. 

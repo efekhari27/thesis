@@ -19,7 +19,7 @@ The general definition of the ``$f$-divergence'' of $\pi$ from $\zeta$, also cal
     D_{f}\left(\pi || \zeta\right) = \int_{\Omega} f\left(\frac{\dd \pi}{\dd \zeta}\right) \, \dd \zeta, 
 \end{equation}
 where $f(\cdot)$ is a convex function such that $f(1)=0$, and where $\pi$ is absolutely continuous w.r.t. $\zeta$. 
-Let us recall some well-know divergences which are special cases of $f$-divergences:
+Let us recall some well-known divergences which are special cases of $f$-divergences:
 \begin{itemize}
     \item Kullback–Leibler \citep{kullback_1951}: $f(t)=t \, \ln(t)$;
     \item Hellinger distance \citep{jeffreys_1946}: $f(t)=(\sqrt{t} - 1)^2$;
@@ -45,7 +45,7 @@ furthermore, the Wasserstein distance relies on a class of bounded Lipschitz fun
 then a kernel-based distance called the ``maximum mean discrepancy'' (MMD) uses a specific Hilbert space. 
 
 Between the wide panel of distances\footnotemark, a particular focus is dedicated in this section to the MMD. 
-This distance was successfully used in diverse contexts for the consistency of its estimators, and its closed-form expression (allowing exact computation is some cases, see \citealp{sriperumbudur_2012}). 
+This distance was successfully used in diverse contexts for the consistency of its estimators, and its closed-form expression (allowing exact computation in some cases, see \citealp{sriperumbudur_2012}). 
 
 \footnotetext{See the ``Taxonomy of principal distances and divergences'' proposed by F. Nielsen in: \\ \url{https://franknielsen.github.io/Divergence/Poster-Distances.pdf}}
 
@@ -81,7 +81,7 @@ Respectively, the potential $P_{\zeta_n}(\bx)$ of a discrete distribution $\zeta
 \end{equation}
 The potential $P_{\pi}(\bx)$ of the targeted measure $\pi$ will be referred to as ``target potential'' and the potential $P_{\zeta_n}(\bx)$ associated with the discrete distribution $\zeta_n$ called ``current potential'' when its support is the current design $\bX_n$. 
 When $P_{\zeta_n}(\bx)$ is close to $P_{\pi}(\bx)$, it can be interpreted as $\zeta_n$ being an adequate quantization or representation of $\pi$. %(which leads to a good estimation of a quantity such as $I_{\pi}(g)$ from \eq{eq:quadrature_rule}). 
-Potentials can be computed in closed forms for specific pairs of distribution and associated kernel. 
+Potentials can be computed in closed forms for specific pairs of distributions and associated kernels. 
 Summary tables of some of these cases are detailed in \cite[Sec. 3.4]{briol_phd_2019}, \cite[Sec. 4]{pronzato_zhigljavsky_2020}, and extended in \cite{fekhari_iooss_2023}. 
 However, in most cases, the target potentials must be estimated on a large and representative sample, typically a large quasi-Monte Carlo sample of $\pi$.
 
