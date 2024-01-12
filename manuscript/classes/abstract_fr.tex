@@ -1,29 +1,34 @@
-\begin{otherlanguage}{french} 
-    \begin{abstract}
-        \footnotesize
-        L'éolien en mer est l'un des moyens de réduire la part des énergies fossiles dans le mix électrique mondial. 
-        Cette technologie bénéficie de vents plus réguliers que l'éolien terrestre, principalement en raison de l'absence de relief. 
-        L'exploitation en mer permet également d'installer des éoliennes plus grandes et plus puissantes, ce qui pose plusieurs problèmes concernant la logistique portuaire, les besoins en ressources naturelles rares et les processus de recyclage en fin de vie.
-        
-        Les éoliennes en mer sont des systèmes dynamiques qui interagissent avec un environnement fortement incertain. 
-        Le traitement des incertitudes autour de leurs modèles de simulation numérique est donc essentiel pour proposer une conception et une exploitation fiable. 
-        Cependant, l'application d'une quantification d'incertitudes à ces systèmes soulève de nombreuses problématiques et nécessite le couplage de données avec des modèles numériques multiphysiques.
-        
-        Cette thèse traite d'abord des problèmes liés à la modélisation probabiliste multivariée des conditions environnementales en mer. 
-        Une approche semi-paramétrique est proposée, mélangeant des méthodes paramétriques pour l'ajustement des marginales avec la copule empirique de Bernstein pour approximer la structure de dépendance complexe entre les variables environnementales. 
-        Après avoir défini un modèle probabiliste des conditions environnementales, les perturbations causées par l'effet de sillage des turbines sont étudiées à l'échelle de la ferme en créant des groupes de turbines présentant des perturbations similaires. 
-        Ce regroupement préliminaire vise à réduire le nombre d'études de chargement à l'échelle d'une ferme (par exemple, pour l'évaluation de la fatigue).
-        
-        Le deuxième axe méthodologique de ce travail concerne la propagation d'incertitudes pour l'estimation de tendances centrales ou d'événements rares. 
-        Comme alternative aux cas de charge recommandés par les normes internationales pour le calcul du dommage en fatigue moyen, la méthode du kernel herding s'est avérée être une solution efficace et flexible pour réaliser ce calcul à partir de données (c'est-à-dire en sous-échantillonnant des données environnementales sans inférence). 
-        Cette méthode de quadrature Bayésienne est également adaptée à la construction de bases de test pour l'estimation de la précision moyenne de modèles d'apprentissage statistique.
-        
-        Pour estimer des événements rares, une nouvelle méthode intégrant une copule non paramétrique dans un mécanisme d'échantillonnage préférentiel adaptatif est proposée. 
-        Cette approche donne des résultats équivalents à la méthode de \textit{subset simulation} tout en évitant un échantillonnage de Monte Carlo par chaîne de Markov. 
-        Par la suite, la fiabilité en fatigue d'une éolienne en mer est étudiée en tenant compte des incertitudes liées à l'environnement, mais aussi celles d'autres variables comme la rigidité du sol, l'erreur d'alignement de la nacelle, la courbe de W\"{o}hler et la résistance critique à la fatigue. 
-        La robustesse de la fiabilité estimée est ensuite étudiée à l'aide des \textit{perturbed-law based indices}. 
-        Enfin, pour assurer la reproductibilité des résultats numériques, la plupart des développements présentés dans ce travail sont open source et documentés.
-\end{abstract}
-\end{otherlanguage}
-    
-    
+\cleardoublepage
+\setsinglecolumn
+\chapter*{\centering \Large Résumé}
+\thispagestyle{empty}
+
+{
+\footnotesize
+L'éolien en mer est l'un des moyens de réduire la part des énergies fossiles dans le mix électrique mondial. 
+Cette technologie bénéficie de vents plus réguliers que l'éolien terrestre, principalement en raison de l'absence de relief. 
+L'exploitation en mer permet également d'installer des éoliennes plus grandes et plus puissantes, ce qui pose plusieurs problèmes concernant la logistique portuaire, les besoins en ressources naturelles rares et les processus de recyclage en fin de vie.
+
+Les éoliennes en mer sont des systèmes dynamiques qui interagissent avec un environnement fortement incertain. 
+Le traitement des incertitudes autour de leurs modèles de simulation numérique est donc essentiel pour proposer une conception et une exploitation fiable. 
+Cependant, l'application d'une quantification d'incertitudes à ces systèmes soulève de nombreuses problématiques et nécessite le couplage de données avec des modèles numériques multiphysiques.
+
+Cette thèse traite d'abord des problèmes liés à la modélisation probabiliste multivariée des conditions environnementales en mer. 
+Une approche semi-paramétrique est proposée, mélangeant des méthodes paramétriques pour l'ajustement des marginales avec la copule empirique de Bernstein pour approximer la structure de dépendance complexe entre les variables environnementales. 
+Après avoir défini un modèle probabiliste des conditions environnementales, les perturbations causées par l'effet de sillage des turbines sont étudiées à l'échelle de la ferme en créant des groupes de turbines présentant des perturbations similaires. 
+Ce regroupement préliminaire vise à réduire le nombre d'études de chargement à l'échelle d'une ferme (par exemple, pour l'évaluation de la fatigue).
+
+Le deuxième axe méthodologique de ce travail concerne la propagation d'incertitudes pour l'estimation de tendances centrales ou d'événements rares. 
+Comme alternative aux cas de charge recommandés par les normes internationales pour le calcul du dommage en fatigue moyen, la méthode du kernel herding s'est avérée être une solution efficace et flexible pour réaliser ce calcul à partir de données (c'est-à-dire en sous-échantillonnant des données environnementales sans inférence). 
+Cette méthode de quadrature Bayésienne est également adaptée à la construction de bases de test pour l'estimation de la précision moyenne de modèles d'apprentissage statistique.
+
+Pour estimer des événements rares, une nouvelle méthode intégrant une copule non paramétrique dans un mécanisme d'échantillonnage préférentiel adaptatif est proposée. 
+Cette approche donne des résultats équivalents à la méthode de \textit{subset simulation} tout en évitant un échantillonnage de Monte Carlo par chaîne de Markov. 
+Par la suite, la fiabilité en fatigue d'une éolienne en mer est étudiée en tenant compte des incertitudes liées à l'environnement, mais aussi celles d'autres variables comme la rigidité du sol, l'erreur d'alignement de la nacelle, la courbe de W\"{o}hler et la résistance critique à la fatigue. 
+La robustesse de la fiabilité estimée est ensuite étudiée à l'aide des \textit{perturbed-law based indices}. 
+Enfin, pour assurer la reproductibilité des résultats numériques, la plupart des développements présentés dans ce travail sont open source et documentés.
+
+\vspace*{1cm}
+\noindent
+\textbf{Mots clés :} quantification d'incertitudes, plans d'expériences, faibilité des structures, endommagement en fatigue, énergie éolienne.
+}
