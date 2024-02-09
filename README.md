@@ -20,7 +20,7 @@ This repository is divided into two folders:
 
 :newspaper: E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2024). "Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature". In: *Data-Centric Engineering*, In press.
 
-:newspaper: E. Vanem, E. Fekhari, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2024). "A joint probability distribution model for multivariate wind and wave conditions". In: \textit{Journal of Offshore Mechanics and Arctic Engineering}, In press.
+:newspaper: E. Vanem, E. Fekhari, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2024). "A joint probability distribution model for multivariate wind and wave conditions". In: *Journal of Offshore Mechanics and Arctic Engineering*, In press.
 
 :newspaper: :mega: E. Fekhari, B. Iooss, V. Chabridon and J. Muré (2022). "Efficient techniques for fast uncertainty propagation in an offshore wind turbine multi-physics simulation tool". In: *Proceedings of the 5th International Conference on Renewable Energies Offshore (RENEW 2022)*, Lisbon, Portugal.
 
