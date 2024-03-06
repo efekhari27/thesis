@@ -132,7 +132,7 @@ Nonparametric inference requires tuning the scaling parameters for KDE and the p
 In the current implementation of BANCS, the KDE is tuned using Silverman's rule\footnotemark~\citep{silverman_1981} while the EBC is tuned to minimize an asymptotic mean integrated squared error (AMISE). 
 As discussed in Chapter~\ref{chpt:3}, for a dataset with size $n$ and dimension $d$, the AMISE tuning for the EBC was defined by \citet{sancetta_satchell_2004} as:
 \begin{equation}\label{eq:amise_tuning}
-    m_{\mathrm{AIMSE}} = 1 + N^{2/(d+4)}
+    m_{\mathrm{AIMSE}} = 1 + N^{2/(d+4)}.
 \end{equation}
 In our experience, EBC tuning in \eq{eq:amise_tuning} works well for the BANCS algorithm and will be systematically used in the following. 
 This tuning sets a rather low polynomial order to the EBC, which avoids overfitting issues. 
@@ -147,7 +147,7 @@ Ultimately, the estimator of the probability from \eq{eq:failure_proba_c6} is wr
 \end{equation}
 This estimator also benefits from an IS variance, estimated using the same sample as previously:
 \begin{equation}
-    \what{\var}\left(\widehat{\pf}^{\mathrm{BANCS}}\right) = \frac{1}{N-1} \left[\frac1N \sum_{i=1}^N \left(\frac{f_\bX\left(\bx_{[k_\#]}^{(i)}\right)}{\widehat{f}_{[k_\#]}\left(\bx_{[k_\#]}^{(i)}\right)}\right)^2 \, \1_{\left\{g(\bx_{[k_\#]}^{(i)}) \leq \yth \right\}}\left(\bx_{[k_\#]}^{(i)}\right) \, - \, \left(\widehat{\pf}^{\mathrm{BANCS}}\right)^2\right]
+    \what{\var}\left(\widehat{\pf}^{\mathrm{BANCS}}\right) = \frac{1}{N-1} \left[\frac1N \sum_{i=1}^N \left(\frac{f_\bX\left(\bx_{[k_\#]}^{(i)}\right)}{\widehat{f}_{[k_\#]}\left(\bx_{[k_\#]}^{(i)}\right)}\right)^2 \, \1_{\left\{g(\bx_{[k_\#]}^{(i)}) \leq \yth \right\}}\left(\bx_{[k_\#]}^{(i)}\right) \, - \, \left(\widehat{\pf}^{\mathrm{BANCS}}\right)^2\right]\, .
 \end{equation}
 
 \fig{fig:bancs_illustration} illustrates the nonparametric fit and conditional sampling in the BANCS method on a two-dimensional reliability problem (later introduced as ``test case \#1'', see Subsection~\ref{sec:testcases}). 

@@ -586,7 +586,7 @@ supported!}
   \RequirePackage{amsfonts}
   \RequirePackage{amsmath}
   \RequirePackage{amssymb}
-  % \RequirePackage{amsthm}
+  \RequirePackage{amsthm}
   %\RequirePackage{mathrsfs}
 \fi
 

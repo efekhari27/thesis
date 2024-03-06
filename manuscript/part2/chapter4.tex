@@ -102,7 +102,7 @@ This subsection generally describes the modeling hypotheses considered in the in
 Further details regarding wind turbine modeling are provided in Chapter~\ref{chpt:2} of this manuscript. 
 The first block of the chain consists of a turbulent wind field simulator called ``TurbSim'' (developed by \citealp{turbsim_2009} from the National Renewable Energy Laboratory, USA) that uses, as a turbulence model, called the Kaimal spectrum \citep{kaimal_1972}, as recommended by the \citet{iec_2019} standards. 
 Moreover, to extrapolate the wind speed vertically, the shear is modeled by a power law. 
-Since the wind field generation shows inherent stochasticity, each 10-minute long simulation is repeated with different pseudo-random seeds and one averages the estimated damage over these repetitions. 
+Since the wind field generation shows inherent stochasticity, each 10-minute long simulation is repeated with different pseudorandom seeds and one averages the estimated damage over these repetitions. 
 This question has been widely studied by some authors, (e.g., \citealp{slot_sorensen_2020}), who concluded that the six repetitions recommended by the \citet{iec_2019} may be insufficient to properly average the effect of stochasticity. 
 Thus, in the following, the simulations are repeated eleven times (picking an odd number also directly provides the median value over the repetitions). 
 This number of repetitions was chosen to suit the maximum number of simulations and the storage capacity of the generated simulations.

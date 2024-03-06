@@ -2,20 +2,23 @@
     \node [style={grey_rect}] (0) at (0.5, 0) {Turbulent wind generation};
     \node [style={grey_rect}] (1) at (5, 0) {Wind turbine simulation};
     \node [style={grey_rect}] (2) at (9.5, 0) {Damage \\assessment};
-    \node [style={grey_full_rect}] (3) at (0.5, 0.55) {TurbSim};
-    \node [style={grey_full_rect}] (4) at (5, 0.55) {DIEGO};
-    \node [style={grey_full_rect}] (5) at (9.5, 0.55) {Rainflow, Miner};
+    \node [style={grey_full_rect}] (3) at (0.5, 0.55) {\textbf{TurbSim}};
+    \node [style={grey_full_rect}] (4) at (5, 0.55) {\textbf{DIEGO}};
+    \node [style={grey_full_rect}] (5) at (9.5, 0.55) {\textbf{Rainflow, Miner}};
 
-    \node [style=texte] (8) at (2.75, 0.3) {Wind speed\\field};
-    \node [style=texte] (6) at (7.25, 0.1) {Multi-axial stress\\time series\\[3pt](structural node $i$)};
+    \node [style=texte] (8) at (2.75, 0.4) {Wind speed\\field};
+    \node [style=texte] (6) at (7.25, 0.4) {Multi-axial stress\\time series};
+    \node [style=texte] (9) at (-2, 0) {Wind\\variables};
     \node [style=texte] (9) at (4.6, -1) {Wave\\variables};
     \node [style=texte] (10) at (6.2, -1) {System\\variables};
     \node (11) at (4.2, -1) {};
     \node (12) at (4.2, -0.4) {};
     \node (13) at (5.7, -1.) {};
     \node (14) at (5.7, -0.4) {};
+    \node (A) at (-1.5, 0) {};
     \draw [style=arrow] (13.center) to (14.center);
     \draw [style=arrow] (11.center) to (12.center);
     \draw [style=arrow] (1) to (2);
     \draw [style=arrow] (0) to (1);
+    \draw [style=arrow] (A) to (0);
 \end{tikzpicture}

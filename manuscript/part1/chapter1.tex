@@ -240,13 +240,13 @@ second, a function describing the dependence structure between all variables: th
 \begin{theorem}[Sklar's theorem, \citealp{sklar_1959}]
     Let $\mathbf{X} \in \R^d$ be a random vector and its joint CDF $F_{\bX}$ with marginals $\{F_{X_j}\}_{j=1}^d$. There exists a funtion $C: [0, 1]^d \rightarrow [0, 1]$, such that:
     \begin{equation}
-        F_{\bX}(x_1, \dots, x_d) = \P\left(X_1\leq x_1,\dots ,X_d\leq x_d\right) = C\left(F_{X_1}(x_1), \dots, F_{X_d}(x_d)\right), 
+        F_{\bX}(x_1, \dots, x_d) = \P\left(X_1\leq x_1,\dots ,X_d\leq x_d\right) = C\left(F_{X_1}(x_1), \dots, F_{X_d}(x_d)\right)\,, 
     \end{equation}
     called the ``copula''. 
     If the marginals $F_{X_i}$ are continuous, then this copula is unique. 
     If the multivariate distribution admits a PDF $f_{\bX}$, it can also be expressed as follows:
     \begin{equation}
-        f_{\bX}(x_1, \dots, x_d) = c\left(F_{X_1}(x_1), \dots, F_{X_d}(x_d)\right) \times f_{X_1}(x_1) \times \dots \times f_{X_d}(x_d),
+        f_{\bX}(x_1, \dots, x_d) = c\left(F_{X_1}(x_1), \dots, F_{X_d}(x_d)\right) \times f_{X_1}(x_1) \times \dots \times f_{X_d}(x_d) \,,
     \end{equation}
     where $c$ is the density of the copula, sometimes also called ``copula'' by abuse of terminology. 
     \label{thm:sklar}
@@ -256,7 +256,7 @@ The reader might refer to \citet[Chap. 2]{durante_2015_copula} for three differe
 Theorem \ref{thm:sklar} expresses the joint CDF by combining marginal CDFs and a copula, which is practical for sampling joint distributions. 
 Conversely, the copula can be defined by using the joint CDF and the marginal CDFs: 
 \begin{equation}
-    C(u_1, \dots, u_d) = F_{\bX}(F^{-1}_{X_1}(u_1), \dots, F^{-1}_{X_d}(u_d)).
+    C(u_1, \dots, u_d) = F_{\bX}\left(F^{-1}_{X_1}(u_1), \dots, F^{-1}_{X_d}(u_d)\right) \,.
 \end{equation}
 This equation allows us to extract a copula from a joint distribution by knowing its marginals.
 Additionally, copulas are invariant under increasing transformations. 
@@ -521,7 +521,7 @@ Therefore, using these sequences as a quadrature rule with uniform weights provi
 %    \left| \int_{[0, 1]^d} g(\bx) \ddx - \frac1n \sum_{i=1}^n g\left(\bx^{(i)}\right)\right|  > D^*(\bX_n) - \epsilon.
 %\end{equation} 
 
-The generation of such sequences does not necessarily require more effort than pseudo-random sampling. 
+The generation of such sequences does not necessarily require more effort than pseudorandom sampling. 
 In \citet[Chap. 15]{owen_2013}, an extended presentation is offered about the various ways of generating low-discrepancy sequences. 
 For example, the van der Corput and Halton sequences rely on congruential generators. 
 %Then, scrambling procedures are sometimes implemented to correct pathologies famously observed on Halton sequences. 
@@ -560,7 +560,7 @@ This illustration clearly shows the way QMC sequences uniformly occupy the domai
 
 Crude Monte Carlo estimators provide guarantees associated with the estimate. 
 This complementary information is essential to deliver an end-to-end UQ, which is missed in deterministic QMC methods.  
-\textit{randomized quasi-Monte Carlo} extends the usual QMC methods by introducing some randomness in order to compute confidence intervals while benefiting from a low variance. 
+\textit{Randomized quasi-Monte Carlo} extends the usual QMC methods by introducing some randomness in order to compute confidence intervals while benefiting from a low variance. 
 A specific review of the randomized (also called ``scrambled'') QMC is proposed by \citet{lecuyer_2018}. 
 Various authors recommend the use of randomized QMC by default instead of QMC as a good practice (e.g., \citealp{owen_2013}). 
 Recent works aim at exploring the use of these methods to estimate different quantities of interest, such as an expected value similar to $I_{\P_{\bX}}(g)$ \citep{gobet_2022} or a quantile \citep{tuffin_2019}. 
@@ -725,7 +725,7 @@ One may wonder if the properties from the uniform design are conserved after thi
 \citet{hickernell_2020} explores this question from a discrepancy point of view. 
 The authors find correspondences between discrepancies w.r.t. uniformity and discrepancies w.r.t. the target distribution. 
 %However, this result shows practical limits, sometimes making the interpretation of the last discrepancy easier. 
-This question will be further discussed in Chapter~\ref{chpt:4} and in \citet{fekhari_DCE_2023}, using a more general framework.
+This question will be further discussed in Chapter~\ref{chpt:4} and in \citet{fekhari_DCE_2023}, using a more general dissimilarity measure.
 
 %Let us also remark that, depending on the distribution, defining the inverse CDF is not always possible. 
 %For example, samples following truncated distributions or mixture distributions might sometimes be generated with a different technique. 
@@ -778,7 +778,7 @@ Then, another risk measure is the probability of crossing this safety threshold,
     \pf = \P\left(Y \geq \yth\right).
     \label{eq:failure_proba}
 \end{equation}
-To illustrate this quantity, \fig{fig:1D_reliability} shows the one-dimensional propagation of a normal distribution (represented by the PDF on the left), through a function $g(\cdot)$.
+To illustrate this quantity, \fig{fig:1D_reliability} shows the one-dimensional propagation of a normal distribution (represented by the PDF on the left), through a function $\iM(\cdot)$ such that $Y=\iM(X)$.
 The probability of crossing a given threshold $\yth$ is represented by the area in red under the output PDF on top.
 More information about the use and the interpretation of risk measures including measures from the finance domain such as the \textit{conditional value-at-risk} (also called ``superquantile'') is presented in \citet{rockafellar_2015}. 
 
@@ -806,8 +806,8 @@ Formally, the \textit{limit-state function} (\abv{lsf}) is a deterministic funct
 Depending on the sign of the output realizations of $g(\bx)$, this function splits the input space into two disjoint and complementary domains called  
 the \textit{failure domain} $\iF_{\bx}$, and the \textit{safe domain} $\mathcal{S}_\bx$ which are defined as:
 \begin{equation}
-    \iF_{\bx} = \{\bx \in \iD_\bx \, | \,  g(\bx) \leq \yth\}, \qquad 
-    \mathcal{S}_\bx = \{\bx \in \iD_\bx \, | \, g(\bx) > \yth\}. 
+    \iF_{\bx} = \{\bx \in \iD_\bx \, | \,  g(\bx) \leq 0\}, \qquad 
+    \mathcal{S}_\bx = \{\bx \in \iD_\bx \, | \, g(\bx) > 0\}. 
     %\iD_\bx = \iF_{\bx} \cup \mathcal{S}_\bx 
 \end{equation}
 The border between these two domains is a hypersurface called \textit{limit-state surface}, and defined by $\iF_{\bx}^0 = \{\bx \in \iD_\bx ~|~ g(\bx) = 0\}$. 
@@ -931,7 +931,7 @@ FORM aims at approximating the LSF $\cg(\cdot)$ by its first-order Taylor expans
  
 Using $\cg_1(\cdot)$ as an approximation of the LSF, the failure probability can be approximated as: 
 \begin{equation}
-    \pf \approx \pf^{\mathrm{FORM}} = \P\left(- \balpha\TT \bu \leq -\beta\right) = \Phi(-\beta),
+    \pf \approx \pf^{\mathrm{FORM}} = \P\left(- \balpha\TT \bu \leq -\beta\right) = \Phi(-\beta)\, ,
 \end{equation} 
 with $\Phi(\cdot)$ the CDF of the standard Gaussian. 
 Depending on the properties of the LFS, this approximation will be more or less accurate. 
@@ -987,7 +987,7 @@ As an alternative to approximation methods, simulation-based methods often provi
 \subsubsection{Crude Monte Carlo sampling}
 %------------------------------------------------------------%
 Crude Monte Carlo sampling is a universal and empirical method for uncertainty propagation. 
-As introduced earlier, it relies on the pseudo-random generation of i.i.d. samples $\left\{\bx^{(i)}\right\}_{i=1}^n \simiid f_\bX$.   
+As introduced earlier, it relies on the pseudorandom generation of i.i.d. samples $\left\{\bx^{(i)}\right\}_{i=1}^n \simiid f_\bX$.   
 The estimator is written using the indicator function applied to the LSF: 
 \begin{equation}
     \pf \approx \what{\pf}^{\textrm{MC}} = \frac1n \sum_{i=1}^{n} \1_{\{\iF_\bx\}}(\bx^{(i)}).
@@ -1421,7 +1421,7 @@ Several authors proved that this decomposition is unique by exploiting the ortho
 %\elias{add footnote for any input domain and the dependence see Chastaing these}
 Therefore, this decomposition can be used to derive a functional decomposition of the variance (also called ``functional analysis of variance'' or FANOVA):
 \begin{equation}
-    \var(Y) = \sum_{j=1}^{d} V_j(Y)  + \sum_{j<l}^{d} V_{jl}(Y) + \dots + V_{1 \dots d}(Y), 
+    \var(Y) = \sum_{j=1}^{d} V_j(Y)  + \sum_{j<l}^{d} V_{jl}(Y) + \dots + V_{1 \dots d}(Y)\, , 
     \label{eq:fanova}
 \end{equation}
 where the previous terms are defined in a recurrent way, in the same fashion as \eq{eq:hoeffding_terms}:  $V_j(Y) = \var\left(\E[Y|X_j]\right), V_{jl}(Y) =$ \allowbreak $\var\left(\E[Y|X_j, X_l]\right) - V_j(Y) - V_l(Y)$, and so on for higher order interaction terms. 
@@ -1526,7 +1526,7 @@ The following equation (see proof in \citealp{owen_2014_shapley}) reveals that t
 Unlike Sobol' indices, Shapley effects are a nonnegative allocation of output variance with equitable division of the dependence. 
 This method presents an interesting alternative in the dependent case, however, estimating Shapley effects creates computational difficulties. 
 A first algorithm based on permutations was proposed by \citet{song_2016_shapley}. 
-Later on, surrogate models were also coupled to estimate Shapley effects, using Gaussian processes in \citet{nazben_2019_shapley}\footnotemark and random forests in \citet{benard_2022_shaff}. 
+Later on, surrogate models were also coupled to estimate Shapley effects, using Gaussian processes in \citet{nazben_2019_shapley}\footnotemark~ and random forests in \citet{benard_2022_shaff}. 
 
 \footnotetext{In the vein of this work, a Python implementation using \ots is available in the GitHub repository: \\\url{https://github.com/josephmure/otshapley}.}
 
@@ -1612,7 +1612,7 @@ Additionally, the dependence between inputs still represents an important limit 
 Alongside rare event estimation, some literature is dedicated to the influence of random inputs on such tail statistics. 
 The sensitivity is no longer qualified as ``global'' but becomes ``goal-oriented''. 
 In the field of structural reliability, an overview of the reliability-oriented sensitivity analysis methods is presented in \citet{chabridon_2018_thesis}. 
-Several techniques derive from rare event estimation (e.g., the reinterpretation of the FORM importance factors by \citet{papaioannou_2021_rosa_form}), or were adapted from GSA, like Sobol' indices \citep{wei_2012_rosa,chabridon_2018_thesis,perrin_2019_rosa,ehre_2020_rosa}, Target-HSIC \citep{marrel_chabridon_2021}, or Shapley effects \citep{ilidrissi_2021_rosa}.  
+Several techniques derive from rare event estimation (e.g., the reinterpretation of the FORM importance factors by \citealp{papaioannou_2021_rosa_form}), or were adapted from GSA, like Sobol' indices \citep{wei_2012_rosa,chabridon_2018_thesis,perrin_2019_rosa,ehre_2020_rosa}, Target-HSIC \citep{marrel_chabridon_2021}, or Shapley effects \citep{ilidrissi_2021_rosa}.  
 
 Finally, sensitivity analysis may describe the effects of random inputs on the variation of the output, however, this study is done by assuming a model on the input uncertainties. 
 The role of a regulatory agency auditing a UQ approach for certification (i.e., a nuclear safety authority), might be to challenge the way to model the uncertainties on the inputs.  
@@ -1703,10 +1703,10 @@ The ``bagging'' validation method (for ``bootstrap aggregating'') consists of sh
             e/.style={fill=orange!20}
           ]
           {
-            \textit{Test set}: 1\textsuperscript{st} fold & |[e]| & & & & $\Rightarrow$ Performance metric 1: $\what{Q}^2_1$\\
-            \textit{Test set}: 2\textsuperscript{nd} fold & & |[e]| & & & $\Rightarrow$ Performance metric 2: $\what{Q}^2_2$\\
-            \textit{Test set}: 3\textsuperscript{rd} fold & & & |[e]| & & $\Rightarrow$ Performance metric 3: $\what{Q}^2_3$\\
-            \textit{Test set}: 4\textsuperscript{th} fold & & & & |[e]| & $\Rightarrow$ Performance metric 4: $\what{Q}^2_4$\\
+            \textit{Test set}: 1\textsuperscript{st} fold & |[e]| & & & & $\Rightarrow$ Performance metric \#1: $\what{Q}^2_1$\\
+            \textit{Test set}: 2\textsuperscript{nd} fold & & |[e]| & & & $\Rightarrow$ Performance metric \#2: $\what{Q}^2_2$\\
+            \textit{Test set}: 3\textsuperscript{rd} fold & & & |[e]| & & $\Rightarrow$ Performance metric \#3: $\what{Q}^2_3$\\
+            \textit{Test set}: 4\textsuperscript{th} fold & & & & |[e]| & $\Rightarrow$ Performance metric \#4: $\what{Q}^2_4$\\
           };
           \draw (M-1-2.north west) ++(0,2mm) coordinate (LT) edge[|<->|, >= latex]
                      node[above]{Total data available} (LT-|M-1-5.north east);
@@ -1897,7 +1897,7 @@ A first Gaussian process $G_n(\bx) \sim \iN(\eta_n(\bx), s_n^2(\bx))$ is fitted 
 The deviation number $U$ is looking for points close to the LSF while presenting a high Kriging variance. 
 This criterion to be minimized is defined as:   
 \begin{equation}
-    \iA^{\textrm{U}}(\bx; \by_n) = \frac{\left|\yth - \eta_n(\bx)\right|}{s_n^2(\bx)}, 
+    \iA^{\textrm{U}}(\bx; \by_n) = \frac{\left|\yth - \eta_n(\bx)\right|}{s_n^2(\bx)}\, , 
     \label{eq:U}
 \end{equation}
 where $\yth \in R$ is a threshold defining the failure domain such as $\{\bx \in \iD_\bX \, | \, g(\bx) \leq \yth\}$. 

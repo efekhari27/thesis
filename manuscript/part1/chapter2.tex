@@ -838,12 +838,12 @@ Each of them is assumed independent, with a marginal probabilistic model arising
     \centering
     \begin{tabular}{llll}
         \hline
-        {\it Name} & {\it Notation} & {\it Marginal model} & {\it Description}\\
+        {\it Name} & {\it Notation} & {\it Marginal model} & {\it Remark}\\
         \hline
-        Soil stiffness coeff. & $K_{\mathrm{soil}}$ & Normal($\mu=1, \sigma^2=0.2^2$) & Truncation: $[0.5, 2]$\\
-        Yaw misalignment & $\Theta_{\mathrm{yaw}}$ & Normal($\mu=0, \sigma^2=5^2$) & Truncation: $[-10, 10]$\\
-        S-N curve coeff. & $\varepsilon$ & Lognormal($\mu=1, \sigma=0.2$) & See \cite{guede_2007}\\
-        Critical damage & $D_{\mathrm{cr}}$ & Lognormal ($\mu=1, \sigma=0.3$) & See \cite{drexler_musculus_2021}\\\hline
+        Soil stiffness coeff. & $K_{\mathrm{soil}}$ & $\iN(\mu=1, \, \sigma^2=0.2^2)$ & Truncation: $[0.5, 2]$\\
+        Yaw misalignment & $\Theta_{\mathrm{yaw}}$ & $\iN(\mu=0, \, \sigma^2=5^2)$ & Truncation: $[-10, 10]$\\
+        S-N curve coeff. & $\varepsilon$ & $\mathcal{LN}(\mu_\varepsilon=1, \, \sigma^2_\varepsilon=0.2^2)$ & --\\
+        Critical damage & $D_{\mathrm{cr}}$ & $\mathcal{LN}(\mu_{D_{\mathrm{cr}}}=1, \, \sigma^2_{D_{\mathrm{cr}}}=0.3^2)$ & --\\\hline
     \end{tabular}
     \caption{Marginal distributions of the system random variables.}
     \label{tab:sys_variables}
@@ -864,12 +864,11 @@ This variation is commonly assumed to follow a lognormal distribution in the lit
 A probabilistic model of the S-N curve naturally comes: 
 \begin{subequations}
     \begin{align}
-        \log(N_c(s, \varepsilon)) &= \log(a) - m \log(s) + \log(\varepsilon)\\
-        \Rightarrow  \quad N_c(s, \varepsilon) &= a \, s^{-m} \, \varepsilon,
+        \ln(N_c(s, \varepsilon)) &= \ln(a) - m \, \ln(s) + \ln(\varepsilon)\\
+        \Rightarrow  \quad N_c(s, \varepsilon) &= a \, s^{-m} \, \varepsilon \, ,
     \end{align}
 \end{subequations}
-where $\log(\varepsilon) \sim \mathcal{N}(0, \sigma_{N_c}=0.2)$ is assumed when no measurement is available (according to \citealp[Appendix F.5]{dnv_fatigue_2016}). 
-
+where $\varepsilon \sim \mathcal{LN}(\mu_\varepsilon=1, \, \sigma^2_\varepsilon=0.2^2)$  is assumed when no measurement is available (according to \citealp[Appendix F.5]{dnv_fatigue_2016}). 
 This uncertainty can be injected into the Miner-Palmgren rule defined in \eq{eq:miner}, leading to: 
 \begin{equation}
     d_{\mathrm{c}}(\varepsilon) = \sum_{j=1}^k \frac{1}{N_c(s^{(j)}, \varepsilon)}
@@ -880,10 +879,10 @@ which can be assessed as a pure post-processing of fatigue damage results comput
 
 In wind energy standards, S-N curves for design are actually a conservative envelope of the measured fatigue endurance. 
 \citet[Appendix F.7]{dnv_fatigue_2016} describes how to define a design S-N curve from fatigue measures. 
-Assuming that the fatigue endurance follows a Gaussian distribution (on a logarithmic scale), the design S-N curve $N_c^{\mathrm{design}}(s)$ is the curve at two standard deviations $\sigma_{N_c}$ below the median curve. 
+Assuming that the fatigue endurance follows a Gaussian distribution on a logarithmic scale, such that $\ln(\varepsilon) \sim \iN(\mu_{\ln(\varepsilon)}, \, \sigma^2_{\ln(\varepsilon)})$, the design S-N curve $N_c^{\mathrm{design}}(s)$ is the curve at two standard deviations $\sigma_{\ln(\varepsilon)}$ below the median curve. 
 Using the design S-N curve given in \citet[Sec. 2.4.6]{dnv_fatigue_2016} and the normality assumption, one can reconstruct the median S-N curve by taking: 
 \begin{equation}
-    q_{50\%}[\log(N_c(s, \varepsilon))]= \log(N_c^{\mathrm{design}}(s)) + 2 \, \sigma_{N_c}. 
+    q_{50\%}[\ln(N_c(s, \varepsilon))]= \ln\left(N_c^{\mathrm{design}}(s)\right) + 2 \, \sigma_{\ln(\varepsilon)}. 
 \end{equation}
 \fig{fig:probabilistic_SN} illustrates the design curve defined by DNV for tubular joints \citet[Sec. 2.4.6]{dnv_fatigue_2016} and the reconstructed probabilistic model according to the previous assumptions. 
 

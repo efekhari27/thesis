@@ -13,7 +13,7 @@
 
 \begin{tcolorbox}[colback=gray!5!white, colframe=gray!5!white, coltitle=gray, coltext=gray, fontupper=\footnotesize, fontlower=\footnotesize, title=\textbf{Parts of this chapter are adapted from the following publications:}]
     \begin{itemize}
-        \item[\ding{125}] E. Vanem, E. Fekhari, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2024). ``A joint probability distribution model for multivariate wind and wave conditions''. In: \textit{Journal of Offshore Mechanics and Arctic Engineering}, In press. 
+        \item[\ding{125}] E. Vanem, E. Fekhari, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2024). ``A joint probability distribution for multivariate wind-wave conditions and discussions on uncertainties''. In: \textit{Journal of Offshore Mechanics and Arctic Engineering}; 146(6): 061701. 
         \item[\ding{125}] E. Vanem, \O{}. Lande and E. Fekhari, (2024). ``A simulation study on the usefulness of the Bernstein copula for statistical modeling of metocean variables''. In: \textit{Proceedings of the ASME 2024 43th International Conference on Ocean, Offshore and Arctic Engineering (to appear)}.
         \item[\ding{125}] A. Lovera, E. Fekhari, B. J\'{e}z\'{e}quel, M. Dupoiron, M. Guiton and E. Ardillon (2023). ``Quantifying and clustering the wake-induced perturbations within a wind farm for load analysis". In: \textit{Journal of Physics: Conference Series (WAKE 2023)}.
     \end{itemize}
@@ -231,7 +231,7 @@ In the multivariate case, the \textit{Bernstein approximation} of the function $
     B_{\bm}(f)(\bu) = \sum_{t_1=0}^{m_1} \dots \sum_{t_d=0}^{m_d} f\left(\frac{t_1}{m_1}, \dots, \frac{t_d}{m_d}\right) \prod_{j=1}^d b_{m_j, t_j}(u_j) \, , \quad  \bu = (u_1, \dots, u_d) \in [0, 1]^d.
     \label{eq:bernstein_approx}
 \end{equation}
-The Bernstein polynomials approximate $f$ better with large $m$: $\lim_{m\to\infty} B_{m}(f) = f$ uniformly on $\left[0,1\right]$. 
+The Bernstein polynomials approximate $f$ better with large $m$: $\lim_{m\to\infty} B_{m}(f) = f$ uniformly on $\left[0,1\right]$ (see e.g., \citealp{davis1975interpolation}). 
 
 
 \subsubsection{Bernstein polynomials for copula approximation}
@@ -271,7 +271,7 @@ For example, the particular case of $\{m = n\}$, introduced as the \textit{empir
 In this paper, the beta copula presents interesting results compared to the Bernstein or the checkerboard copula for small sample sizes (i.e., $n\lesssim100$). 
 The tuning of the degree was first optimized to minimize an ``Asymptotic Mean Integrated Squared Error'' (AMISE) of $B_{\bm}(C_n)$: 
 \begin{equation}
-    \mathrm{AMISE}(B_{\bm}(C_n)) = \E\!\left[ \lVert B_{\bm}(C_n) - C \rVert^2_2 \right] \!=\! \E\!\left[\!\int_{\R^d}\! \left(B_{\bm}(C_n)(\bu) \!-\! C(\bu) \dd \bu \right)^2 \!\right]\!\!.
+    \mathrm{AMISE}(B_{\bm}(C_n)) = \E\left[ \lVert B_{\bm}(C_n) - C \rVert^2_2 \right] = \E\left[\int_{\R^d} \left(B_{\bm}(C_n)(\bu) - C(\bu) \dd \bu \right)^2 \right]\, .
     \label{eq:aimse}
 \end{equation}
 The seminal work of \citet[Theorem 3]{sancetta_satchell_2004} proves that: 
@@ -344,7 +344,7 @@ However, increasing the order beyond the sample size definitely overfits the cop
 In statistics, data visualization offers a wide set of tools to analyze data. 
 Multivariate data visualization is of great help in apprehending problems with dimensions higher than two. 
 In the context of continuous variables, let us consider the $n$-sized sample $\bX_n = \left\{\bx^{(i)}\right\}_{i=1}^n \sim \P_{\bX} \in \iD_{\bx}\subseteq\R^d$. 
-The marginal samples of $\bX_n$ are denoted by $X_{n, j} = \{x_j^{(1)}, \dots, x_j^{(n)}\}, j\in \{1, \dots, d\}$.
+The marginal samples of $\bX_n$ are denoted by $X_{n, j} = \{x_j^{(1)}, \dots, x_j^{(n)}\}, \, j\in \{1, \dots, d\}$.
 
 Various techniques exist to represent multivariate data, such as the ``parallel coordinate plot'' (see e.g., \citealp{heinrich_2013_cobweb}). 
 For each sample $\bx^{(i)} \in \bX_n$, this plot draws a line passing by the values of $\bx^{(i)} = [x_1^{(i)}, \dots, x_d^{(i)}]$. 
@@ -445,7 +445,7 @@ As expected, the scatter plots between the inputs in the upper triangle are unif
 
 %============================================================%
 %============================================================%
-\section{Semiparametric inference of the South Brittany metocean conditions} \label{sec:32_inference}
+\section{Hybrid inference of the South Brittany metocean conditions} \label{sec:32_inference}
 %============================================================%
 %============================================================%
 Metocean conditions have been long studied in coastal and offshore engineering. 
@@ -456,11 +456,11 @@ Nonparametric methods like KDE were also applied in this context (e.g., \citealp
 Nonparametric techniques generally struggle to model the distributions' tails, even if the tails are essential to qualify structures for ultimate events. 
 However, they are highly flexible and often easier to implement than parametric methods.
 
-In this section, a semiparametric inference strategy is presented, composing some well-known parametric models for the marginals (e.g., Weibull distribution for the wind speed), with a flexible dependence modeling by the EBC. 
+In this section, a hybrid inference strategy is presented, composing some well-known parametric models for the marginals (e.g., Weibull distribution for the wind speed), with a flexible dependence modeling by the EBC. 
 A metocean dataset is used to showcase the EBC and its representation by the copulogram. 
 This dataset from the ANEMOC (Digital Atlas of Ocean and Coastal Sea States atlas, \citealp{raoult_2018_anemoc3}) gathers 32 years of preprocessed data 
 (at an hourly resolution) from a location off the coast of South Brittany, France. 
-A subset of $10^4$ points is randomly selected among the ANEMOC data, which will be used to realize the semiparametric inference.
+A subset of $10^4$ points is randomly selected among the ANEMOC data, which will be used to realize the hybrid inference.
 The full code developed for this inference study is available on a GitHub repository\footnotemark. 
 
 \footnotetext{GitHub repository: \url{https://github.com/efekhari27/thesis/blob/main/numerical_experiments/chapter3/south_brittany_inference.ipynb}}
@@ -546,11 +546,11 @@ where $\what{F}_{X_j}$ stands for the fitted marginal CDF of $X_j$ presented in 
 and $B_{\bm}(C_n)$ is the EBC fitted from the sample $\bX_n$ with all the polynomial orders equal (i.e., $\bm = \{m, \dots, m\}, m\in\N$).
 
 Then, one could compare a sample $\widetilde{\bX}_n$, drawn from the fitted joint distribution $\what{F}_\bX$, with the learning set $\bX_n$. 
-However, to prevent an overfit from the semiparametric model, the comparison is rather done between $\bX_n$ and the independent validation set $\bX_n'$. 
+However, to prevent an overfit from the hybrid model, the comparison is rather done between $\bX_n$ and the independent validation set $\bX_n'$. 
 The statistic used is the squared maximum mean discrepancy, $\MMD^2(\widetilde{\bX}_n, \, \bX_n')$, initially introduced for multivariate two-sample testing by \cite{gretton_2006}. 
 One can recall here that the MMD becomes a metric for specific kernels called “characteristic kernels”, which offer the following property: $\MMD(\pi, \zeta)=0 \iff \pi = \zeta$. 
 For further details, a specific presentation of the MMD is developed in Appendix~\ref{apx:B}. 
-For a given fitted joint distribution, this procedure is repeated 100 times to take into account the sampling variability. 
+For a given fitted joint distribution, this validation procedure is repeated 100 times by generating 100 samples $\widetilde{\bX}_n$, to take into account their variability. 
 
 In \fig{fig:sb_ebc_mmd}, squared MMD distributions are represented for different values of the EBC polynomial order, with $m\in\{5, 10, 20, 50, 100, 1000\}$. 
 The closer to zero the values of this dissimilarity measure are, the closer the samples should be. 
@@ -558,7 +558,7 @@ Even if further developments could be implemented to improve the squared MMD est
 One can remark that the goodness-of-fit keeps improving as $m$ increases until $m=100$, but it worsens for $m=1000$, which is probably due to an overfit of the EBC beyond an optimal value $100 \leq m^* < 1000$. 
 Considering this setup, \fig{fig:sb_copulograms} represents the copulogram of a sample $\widetilde{\bX}_n$ (in red), side by side with the copulogram of the learning set $\bX_n$ (in blue). 
 These figures show that these complex dependence patterns are generally well captured by the EBC. 
-However, despite its apparent flexibility, this tool should be used when inferring the distributions' tails. 
+However, despite its apparent flexibility, this tool should be used carefully when inferring the distributions' tails. 
 For example, the upper tail of the $H_s$ vs. $T_p$ scatter plot typically studied in ocean engineering is not very well captured.
 
 \begin{figure}
@@ -572,7 +572,7 @@ For example, the upper tail of the $H_s$ vs. $T_p$ scatter plot typically studie
 %============================================================%
 \subsection{Summary and discussion}
 %============================================================%
-In this section, a semiparametric inference strategy was illustrated on a metocean dataset from a site off the coast of South Brittany, France. 
+In this section, a hybrid inference strategy was illustrated on a metocean dataset from a site off the coast of South Brittany, France. 
 This approach is pragmatic and offers a lot of flexibility. 
 In our case, the unimodal marginals are fitted by MLE while the multimodal ones are fitted by KDE. 
 Considering the complexity of the dependence, the EBC showed interesting results for large-size samples. 
@@ -589,7 +589,7 @@ Its capacity to extrapolate in the tails could be further studied \citep{heredia
         \begin{subfigure}[b]{0.49\linewidth}
             \centering
             \includegraphics[width=\linewidth]{../numerical_experiments/chapter3/figures/SB_EBC_copulogram.png}
-            \caption{Monte Carlo sample (size $n=5000$), generated from the semiparametric model fitted on the ANEMOC data (EBC $B_{\bm}(C_n)$ with $ \{m_j=100\}_{j=1}^d$).}
+            \caption{Monte Carlo sample (size $n=5000$), generated from the hybrid model fitted on the ANEMOC data (EBC $B_{\bm}(C_n)$ with $ \{m_j=100\}_{j=1}^d$).}
         \end{subfigure}
         \vspace*{5pt} 
         \caption{Copulogram of the South Brittany metocean data.}
@@ -675,7 +675,7 @@ The wake model described earlier takes as input a set of variables describing th
 
 The uncertainties associated with the ambient wind conditions are represented by a random vector $\bX$ following the joint distribution $\P_0$. 
 A parametric model has been fitted in \cite{vanem_fekhari_2023} using conditional probability density functions to capture the dependence structure, 
-but the semi-parametric inference proposed in Section~\ref{sec:32_inference} could have been an alternative. 
+but the hybrid inference proposed in Section~\ref{sec:32_inference} could have been an alternative. 
 Note that the missing turbulence intensity in the ANEMOC data from South Brittany was assumed to follow a lognormal distribution.   
 The random vector $\bX$ gathers the following random variables:
 \begin{itemize}
@@ -800,14 +800,14 @@ As perspective of this thesis to perform fatigue assessment at the farm scale, t
 %============================================================%
 
 In this chapter, different aspects of uncertainty quantification were applied to define the metocean conditions in a wind farm. 
-First, to infer a joint environmental distribution, a semiparametric approach was applied to a large dataset from a site in South Brittany, France. 
-This semiparametric approach combines parametric models for the marginals with nonparametric models for the copula, especially the EBC.  
+First, to infer a joint environmental distribution, a hybrid approach was applied to a large dataset from a site in South Brittany, France. 
+This hybrid approach combines parametric models for the marginals with nonparametric models for the copula, especially the EBC.  
 Second, to take into account the heterogeneous wind conditions inside a farm, a dynamic wake meandering model was developed for the South Brittany farm. 
 Then, the ambient joint environmental distribution was propagated through this model to recover a wake-perturbed environmental distribution per turbine.  
 
 As a contribution, this chapter presents the copulogram, a new data visualization tool using the empirical copula to improve the description of nonlinear dependencies in datasets.  
 
-Then, the MMD was either used for testing the goodness-of-fit of the semiparametric model based on the EBC, or as a measure of the perturbation occasioned by the wake on the wind conditions. 
+Then, the MMD was either used for testing the goodness-of-fit of the hybrid model based on the EBC, or as a measure of the perturbation occasioned by the wake on the wind conditions. 
 In this context, the MMD allowed building clusters of turbines witnessing the same wind conditions. 
 As perspectives, the robustness of this metric to the choice of kernel could be further investigated as well as the goodness-of-fit of the EBC over distributions' tails. 
 After defining the probabilistic model of the environmental conditions, this uncertainty is ready to be propagated in a multiphysics wind turbine model to assess the fatigue damage. 
