@@ -20,6 +20,7 @@
 \usepackage{lscape}
 \usepackage{comment}
 \usepackage{changepage}
+\usepackage{theorem}
 
 \usepackage{etoc} %chapter table of contents
 \usepackage[Lenny]{fncychap} %fancy chapters
@@ -81,7 +82,7 @@
   boxrule=0.4pt,
   rounded corners,
   before skip=\topsep,
-  after skip=\topsep,
+  after skip=\topsep
   }
 
 \newtheorem{otexample_apx}{\texttt{OpenTURNS}}
@@ -90,19 +91,19 @@
   boxrule=0.4pt,
   rounded corners,
   before skip=\topsep,
-  after skip=\topsep,
+  after skip=\topsep
   }
   
-  %%%%% THEOREM ENVIRONMENT %%%%%
-  \theoremstyle{plain}
-  \newtheorem{theorem}{Theorem}
-  \tcolorboxenvironment{theorem}{
-    colback=gray!2!white,
-  boxrule=0.4pt,
-  rounded corners,
-  before skip=\topsep,
-  after skip=\topsep,
-  }
+%%%%% THEOREM ENVIRONMENT %%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\tcolorboxenvironment{theorem}{
+  colback=gray!2!white,
+boxrule=0.4pt,
+rounded corners,
+before skip=\topsep,
+after skip=\topsep
+}
 
 \newcommand{\abv}[1]{\acrshort*{#1}}
 \algnewcommand{\LeftComment}[1]{\Statex \(\triangleright\) {\it #1}}

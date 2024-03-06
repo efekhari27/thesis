@@ -586,7 +586,7 @@ supported!}
   \RequirePackage{amsfonts}
   \RequirePackage{amsmath}
   \RequirePackage{amssymb}
-  \RequirePackage{amsthm}
+  % \RequirePackage{amsthm}
   %\RequirePackage{mathrsfs}
 \fi
 
@@ -981,11 +981,11 @@ publicly defended on March 12, 2024 in front of the following jury:
 %\begin{tabular}{lll}
 %    Pr. Mireille BOSSY, & INRIA, Sophia-Antipolis & Examiner\\
 %    Dr. Vincent CHABRIDON & EDF R\&D, Chatou & Co-advisor\\
-%    Dr. Sébastien DA VEIGA & ENSAI, Rennes & Examiner\\
+%    Dr. S\'{e}bastien DA VEIGA & ENSAI, Rennes & Examiner\\
 %    Dr. Bertrand IOOSS & EDF R\&D, Chatou & Thesis director\\
 %    Dr. Ana\"is LOVERA & EDF R\&D, Saclay& Invite\\
 %    Dr. Joseph MUR\'E & EDF R\&D, Chatou & Co-advisor\\
-%    Pr. Franck SCHOEFS & Nantes Université, Nantes & Reviewer\\
+%    Pr. Franck SCHOEFS & Nantes Universit\'{e}, Nantes & Reviewer\\
 %    Pr. Daniel STRAUB & TUM, Munich & Reviewer\\
 %    Pr. Bruno SUDRET & ETH, Zurich & Examiner\\ 
 %\end{tabular}
@@ -994,10 +994,10 @@ publicly defended on March 12, 2024 in front of the following jury:
   \begin{tabular}{llll}
     Director & Dr. Bertrand IOOSS      & Senior Researcher  & EDF R\&D, Chatou \\
     Co-advisors     & Dr. Vincent CHABRIDON   & Research Engineer         & EDF R\&D, Chatou \\
-    Reviewers       & Pr. Franck SCHOEFS      & Professor                 & Nantes Université, Nantes\\
+    Reviewers       & Pr. Franck SCHOEFS      & Professor                 & Nantes Universit\'{e}, Nantes\\
                     & Pr. Daniel STRAUB       & Professor                 & TUM, Munich\\
     Examiners       & Pr. Mireille BOSSY      & Research Director         & INRIA, Sophia-Antipolis\\
-                    & Dr. Sébastien DA VEIGA  & Associate Professor       & ENSAI, Rennes\\
+                    & Dr. S\'{e}bastien DA VEIGA  & Associate Professor       & ENSAI, Rennes\\
                     & Pr. Bruno SUDRET        & Professor                 & ETH, Zurich \\ 
     Invitees        & Dr. Ana\"is LOVERA      & Research Engineer         & EDF R\&D, Saclay\\
                     & Dr. Joseph MUR\'E       & Research Engineer         & EDF R\&D, Chatou \\

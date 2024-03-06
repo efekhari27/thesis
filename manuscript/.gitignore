@@ -319,3 +319,5 @@ TSWLatexianTemp*
 **/*.log
 **/*.ist
 **/*.mtc
+
+**/*.db

@@ -41,7 +41,7 @@ In the linear cumulative damage model typically used by the community (Miner's r
 The present chapter assesses the probability of such a rare event, considering both the environmental uncertainties (aggregated according to \eq{eq:expected_damage}) and the uncertainties related to the system itself (described by the random vector $\bZ \in \iD_\bZ$ with joint PDF $f_\bZ$). 
 Assuming that the critical damage $D_{\mathrm{cr}}$ is a random variable centered around one (equivalent to a ``resistance'' variable in the well-known ``resistance-solicitation'' paradigm in reliability analysis \citealp{lemaire_2009}), this failure probability is written as:
 \begin{equation}
-    \pf = \int_{\iD_\bZ} \1_{\{D(\bz) \geq D_{\mathrm{cr}}\}} \, f_\bZ(\bz) \, \dd z \,.
+    \pf = \int_{\iD_\bZ} \1_{\{D(\bz) \geq D_{\mathrm{cr}}\}} \, f_\bZ(\bz) \, \dd \bz \,.
     \label{eq:owt_pf}
 \end{equation}
 
@@ -126,7 +126,7 @@ This mixed design, denoted by $\bZ_{n_\bZ}$, has a size of $n_\bZ=50$ points, wh
 %============================================================%
 \subsection{Gaussian process regression}\label{sec:gp_owt}
 %============================================================%
-A GP regression with Matérn $5/2$ and constant trend is fitted on the mixed design $\bZ_{n_\bZ}$ according to the Kriging equations introduced in Section~\ref{sec:surrogate}. 
+A GP regression with Mat\'{e}rn $5/2$ and constant trend is fitted on the mixed design $\bZ_{n_\bZ}$ according to the Kriging equations introduced in Section~\ref{sec:surrogate}. 
 The resulting surrogate model $\widetilde{D}_{\varepsilon_0}:\R^2 \rightarrow \R$, which approximates $D^{\mathrm{KH}}(\cdot, \, \cdot, \, \varepsilon_0)$, is represented by the blue three-dimensional surface in \fig{fig:3d_owt_surrogate}, and its learning set  $\bZ_{n_\bZ}$ by the black crosses.  
 A complementary visualization of this surrogate is proposed for cross-sections with fixed values $\theta_{\mathrm{yaw}}=0$ on \fig{fig:owt_surrogate}.a, and $k_{\mathrm{soil}}=1$ on \fig{fig:owt_surrogate}.b. 
 On these two figures, learning points are plotted in a grayscale and the surrogate model in a blue scale. 

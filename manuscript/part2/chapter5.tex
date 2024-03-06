@@ -14,7 +14,7 @@
 
 \begin{tcolorbox}[colback=gray!5!white, colframe=gray!5!white, coltitle=gray, coltext=gray, fontupper=\footnotesize, fontlower=\footnotesize, title=\textbf{Parts of this chapter are adapted from the following publication:}]
   \begin{itemize}
-      \item[\ding{125}] E. Fekhari, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). ``Model predictivity assessment: incremental test-set selection and accuracy evaluation''. In: \textit{Studies in Theoretical and Applied Statistics}, pages 315--347. Springer.
+      \item[\ding{125}] E. Fekhari, B. Iooss, J. Mur\'{e}, L. Pronzato and M.J. Rendas (2023). ``Model predictivity assessment: incremental test-set selection and accuracy evaluation''. In: \textit{Studies in Theoretical and Applied Statistics}, pages 315--347. Springer.
   \end{itemize}
 \end{tcolorbox}
 
@@ -202,8 +202,8 @@ with $\overline{y}_n=(1/n)\,\sum_{i=1}^n y(\bx^{(m+i)})$.
 Notice that the weights $w_i^*$ do not depend on the variance parameter $\sigma^2$ of the surrogate model. 
 Moreover, this approach does not constrain the weights, which works better in our experience than the different constrained versions (e.g., nonnegativity, summing to one) studied in \citet{pronzato_rendas_2021}. 
 %\joseph{C'est pourquoi je pense qu'il ne faut pas l'introduire. En plus, on n'a jamais dit que le noyau de covariance devait être stationnaire. 
-%Luc: la présence de sigma^2 n'a pas de lien avec la stationarité. 
-%Joseph : Peut-être faudrait-il alors changer la lettre grecque utilisée, car sigma est souvent associé à un écart-type, et donc sigma^2 à une variance, ce qui voudrait dire que K est un noyau de corrélation.} 
+%Luc: la pr\'{e}sence de sigma^2 n'a pas de lien avec la stationarit\'{e}. 
+%Joseph : Peut-être faudrait-il alors changer la lettre grecque utilis\'{e}e, car sigma est souvent associ\'{e} à un \'{e}cart-type, et donc sigma^2 à une variance, ce qui voudrait dire que K est un noyau de corr\'{e}lation.} 
 
 \medskip
 \begin{remark} 
@@ -440,9 +440,9 @@ For test cases 1 and 3, $\pi$ is the uniform measure on $\iD_\bx=[0,1]^d$, with 
 In the second test case, $d=2$, $\pi$ is the Gaussian distribution $\SN(\0b,\Ib_2)$, and the sets $\bX_m$ and $\Sb_N$ have to be transformed as explained in Subsection~\ref{sec:FSSF}. 
 There are $N=2^{14}$ candidate points for test cases 1 and 2 and $N=2^{15}$ for test case 3 (this value is rather moderate for a problem in dimension 8, but using a larger $N$ yields numerical difficulties for support points; see Subsection~\ref{sec:SP}). 
 
-For each test case, a GP regression model is fitted to the $m$ observations using ordinary Kriging \citep{rasmussen_2006}, i.e., a GP model with constant mean, with an anisotropic Matérn kernel with regularity parameter $5/2$, and correlation lengths $\theta_i$ estimated by maximum likelihood via a truncated Newton algorithm. 
+For each test case, a GP regression model is fitted to the $m$ observations using ordinary Kriging \citep{rasmussen_2006}, i.e., a GP model with constant mean, with an anisotropic Mat\'{e}rn kernel with regularity parameter $5/2$, and correlation lengths $\theta_i$ estimated by maximum likelihood via a truncated Newton algorithm. 
 All calculations were done using \ot \citep{baudin_dutfoy_2017}. 
-The kernel used for KH is different and corresponds to the tensor product of one-dimensional Matérn kernels as in \eq{eq:Matern5/2}, so that the potentials $P_{\pi}(\cdot)$ are known explicitly (see Appendix~\ref{apx:B}); the correlations lengths are set to $\theta=0.2$ in test cases 1 and 3 ($d=2$) and to $\theta=0.7$ in test case 3 ($d=8$).
+The kernel used for KH is different and corresponds to the tensor product of one-dimensional Mat\'{e}rn kernels as in \eq{eq:Matern5/2}, so that the potentials $P_{\pi}(\cdot)$ are known explicitly (see Appendix~\ref{apx:B}); the correlations lengths are set to $\theta=0.2$ in test cases 1 and 3 ($d=2$) and to $\theta=0.7$ in test case 3 ($d=8$).
 
 Assuming that a model is classified, in terms of the estimated value of its predictivity index $Q^2$ as ``poor fitting'' if $Q^2\in[0.6, 0.8]$, ``reasonably good fitting'', when $Q^2\in(0.8,0.9]$, and ``very good fitting'' if $Q^2>0.9$, for each test case, three different sizes $m$ of the training set are selected such that the corresponding models cover all three possible situations. 
 For all test cases, the impact of the size $n$ of the test set is studied in the range $n\in\{4,\ldots,50\}$.
@@ -511,7 +511,7 @@ For each sequence of nested test sets ($n\in\{4,\ldots,50\}$), the observed valu
 
 The figures also show the value $Q^2_{\mathrm{LOO}}$ obtained by LOO cross-validation, which is indicated at the left of each figure by a red diamond (values smaller than $0.25$ are not shown). 
 Note that, contrarily to the other methods considered, for LOO, the test set is not disjoint from the training set, and thus the method does not satisfy the conditions set in the beginning of this chapter. 
-As the complete model-fitting procedure is repeated for each training sample of size $m-1$, including the MLE of the correlation lengths of the Matérn kernel, the closed-form expressions of \citet{Dubrule83} cannot be used, making the computations rather intensive. 
+As the complete model-fitting procedure is repeated for each training sample of size $m-1$, including the MLE of the correlation lengths of the Mat\'{e}rn kernel, the closed-form expressions of \citet{Dubrule83} cannot be used, making the computations rather intensive. 
 The three figures show, and as expected, that the $Q_{LOO}^2$ tends to under-estimate $Q_{\mathrm{ideal}}^2$: by construction of the training set, LOO cross-validation relies on model predictions at points $\bx^{(i)}$ far from the other $m-1$ design points used to build the model, and thus tends to systematically overestimate the prediction error at $\bx^{(i)}$. 
 The underestimation of $Q_{\mathrm{ideal}}^2$ can be particularly severe when $m$ is small, the training set is then necessarily sparse (see \fig{fig:irregular_benchmark} where $Q_{LOO}^2<0.3$ for $m=5$ and 15). 
 
@@ -759,7 +759,7 @@ At the same time, estimation by $Q_{n*}^2$ involves a much smaller computational
 To each of the design methods considered to select a test set a downside can be attached. 
 FSSF requires knowledge of the input distribution to be able to apply an iso-probabilistic transformation if necessary; it tends to select many points along the boundary of the candidate set considered. 
 Support points require the computation of the $N(N-1)/2$ distances between all pairs of candidate points, which implies significant memory requirements for large $N$; the energy-distance kernel on which the method relies cannot be used for the weighting procedure. 
-Finally, the efficient implementation of KH relies on analytical expressions for the potentials $P_{\pi}$, which are available for particular distributions (like the uniform and the Gaussian) and kernels (like Matérn) only (see the summary table in \citealp[p.66]{briol_phd_2019}). 
+Finally, the efficient implementation of KH relies on analytical expressions for the potentials $P_{\pi}$, which are available for particular distributions (like the uniform and the Gaussian) and kernels (like Mat\'{e}rn) only (see the summary table in \citealp[p.66]{briol_phd_2019}). 
 The great freedom in the choice of the kernel $K$ gives a lot of flexibility, but at the same time implies that some non-trivial decisions have to be made; also, the internal parameters of $K$, such as its correlation lengths, must be specified. 
 Future work should go beyond empirical rules of thumb and study the influence of these choices.
 

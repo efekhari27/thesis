@@ -344,7 +344,7 @@ In the context of a costly numerical model, defining the quadrature ahead allows
 %------------------------------------------------------------%
 
 Historically, quadrature methods have been developed for univariate integrals. 
-The Gaussian rule and the Fejér-Clenshaw-Curtis rule are two univariate deterministic quadratures that will be briefly introduced (see \citealp{sullivan_2015} for further elements). 
+The Gaussian rule and the Fej\'{e}r-Clenshaw-Curtis rule are two univariate deterministic quadratures that will be briefly introduced (see \citealp{sullivan_2015} for further elements). 
 
 %Let us first mention the Newton-Cotes quadratures, generalizing multiple rules (e.g., the trapezoidal rule, Simpson's rule, etc.).
 Gaussian quadrature is a powerful univariate quadrature building together a set of irregular nodes and a set of weights. 
@@ -359,23 +359,23 @@ Gauss-Legendre quadrature guarantees a very precise approximation provided that 
 This rule is deterministic but not sequential, meaning that two rules with sizes $n_1$ and $n_2$, $n_1 < n_2$ will not be nested (i.e., its construction is not iterative). 
 However, a sequential extension is proposed by the Gauss-Kronrod rule \citep{laurie_1997}, at the expense of a slightly lower accuracy regarding $I_{\P_{\bX}}(g)$. 
 
-To overcome this practical drawback, Fejér \citep{fejer_1933} then Clenshaw and Curtis \citep{clenshaw_1960} proposed a nested rule with mostly equivalent accuracy as Gaussian quadratures.
+To overcome this practical drawback, Fej\'{e}r \citep{fejer_1933} then Clenshaw and Curtis \citep{clenshaw_1960} proposed a nested rule with mostly equivalent accuracy as Gaussian quadratures.
 This method is usually presented to integrate a function w.r.t. the uniform measure on $[-1, 1]$ and starts with a change of variables, $x:=\cos(\theta), \, \dd x := \sin(\theta)$:
 \begin{equation}
     \int_{-1}^{1} g(x) \, \dd x = \int_{0}^{\pi} g\left(\cos(\theta)\right) \, \sin(\theta) \, \dd \theta. 
 \end{equation}
 This expression can be written as an expansion of the integrand using trigonometric series. 
 Therefore, knowing that cosine series are closely related to the Chebyshev polynomials of the first kind, 
-Fejér's ``first rule'' \citep{trefethen_2008} uses the Chebyshev polynomials roots as nodes $x^{(i)} = \cos(\theta^{(i+1/2)})$, associated with the following weights:
+Fej\'{e}r's ``first rule'' \citep{trefethen_2008} uses the Chebyshev polynomials roots as nodes $x^{(i)} = \cos(\theta^{(i+1/2)})$, associated with the following weights:
 \begin{equation}
     w_i=\frac{2}{n}\left(1-2\sum_{j=1}^{\lfloor n/2 \rfloor}\frac{1}{4j^2-1}\cos\left(j\theta^{(2i+1)}\right)\right),    
 \end{equation}
 where $\lfloor \cdot \rfloor$ denotes the floor function. 
 
 These two univariate integration schemes are both very efficient on a wide panel of functions. 
-Yet, Fejér-Clenshaw-Curtis is sequential and offers easy implementations, benefitting from powerful algorithms such as the fast Fourier transform. 
-\fig{fig:univariate_quads} illustrates the nested properties of Fejér-Clenshaw-Curtis quadrature by representing the nodes of quadrature rules with increasing size on the y-axis.  
-For example, the Fejér-Clenshaw-Curtis quadrature with size $n=13$ includes all the nodes from the quadratures with sizes $n=7$ and $n=4$. 
+Yet, Fej\'{e}r-Clenshaw-Curtis is sequential and offers easy implementations, benefitting from powerful algorithms such as the fast Fourier transform. 
+\fig{fig:univariate_quads} illustrates the nested properties of Fej\'{e}r-Clenshaw-Curtis quadrature by representing the nodes of quadrature rules with increasing size on the y-axis.  
+For example, the Fej\'{e}r-Clenshaw-Curtis quadrature with size $n=13$ includes all the nodes from the quadratures with sizes $n=7$ and $n=4$. 
 
 \begin{figure}[ht]
     \centering
@@ -609,7 +609,7 @@ While, the $L_\infty$ star discrepancy is hard to estimate in practice, \citet{w
 \begin{equation}
     D^*_2(\bX_n) = \left(\frac19 - \frac2n \sum_{i=1}^{n} \prod_{l=1}^{d} \frac{(1-x_l^{(i)})}{2} + \frac{1}{n^2}\sum_{i,j=1}^{n} \prod_{l=1}^{d} \left[1 - \max(x_l^{(i)}, x_l^{(j)})\right]\right)^{1/2}.
 \end{equation}
-One can notice that this expression is similar to the Cramér-von Mises test statistic. 
+One can notice that this expression is similar to the Cram\'{e}r-von Mises test statistic. 
 Even if this expression is tractable, \citet{fang_liu_2018} detailed its limits: 
 the star $L_2$ discrepancy generates designs that are not robust to projections in sub-spaces; 
 it is not invariant by rotation and reflection; 
@@ -1190,7 +1190,7 @@ At the step $k$, the intermediate failure probability is written as:
     = \frac{1}{k n} \sum_{j=1}^{k} \sum_{i=1}^{n} \1_{\{g(\bx) \leq q_{[j]}^{\, p_0}\}}\left(\bx^{(i)}_{[j]}\right) w^{(i)}_{[j]} \, , 
 \end{equation}
 with $\left\{\bX_{[j]}^{(i)}\right\}_{i=1}^n \simiid h_{[j-1]}$. 
-Then, an intermediate instrumental density is inferred by KDE on the samples cross the threshold $q_{[k]}^{\, p_0}$ such that:
+Then, an intermediate instrumental density is inferred by KDE on the samples crossing the threshold $q_{[k]}^{\, p_0}$ such that:
 \begin{equation}
     \what{h}_{[k+1]}(\bx) = \frac{\mathrm{det}(\bH_{[k]})^{-1/2}}{k n \, \what{\pf}_{[k]}} \sum_{j=1}^{k} \sum_{i=1}^{n} 
             \1_{\{g(\bx) \leq q_{[j]}^{\, p_0}\}}\left(\bx^{(i)}_{[j]}\right) w^{(i)}_{[j]} \, K\left(\bH_{[k]}^{-1/2} \left(\bx - \bx^{(i)}_{[j]}\right)\right).
@@ -1218,7 +1218,7 @@ In practice, the performances of NAIS significantly decrease for problems in dim
 Although the concept of ``splitting'' already existed \citep{kahn_1951_splitting}, the name of \textit{subset simulation} (\abv{ss}) was first introduced by \citet{AuBeck2001} in the structural reliability community. 
 This concept was generalized as a sequential Monte Carlo method under the name of ``adaptive multilevel splitting'', as reviewed by \citet{cerou_2019_sequentialMC}. 
 
-Subset simulation splits the failure event $\iF_{\bx}$ into an intersection of $k_\#$ intermediary events $\iF_{\bx} = \cap_{k=1}^{k_\#} \iF_{[k]}$.
+Subset simulation splits the failure event $\iF_{\bx}$ into an intersection of $k_\#$ intermediary events $\iF_{\bx} = \cap_{k=1}^{k_\#} \iF_{[k]}$. 
 Each are nested such that $\iF_{[1]} \supset \dots \supset \iF_{[k_\#]} = \iF_{\bx}$.
 The failure probability is then expressed as a product of conditional probabilities:
 \begin{equation}
@@ -1567,7 +1567,7 @@ This distance between two probability distributions $\pi$ and $\zeta$ can be def
     %= \left\lVert P_{\pi}(\bx) - P_{\zeta}(\bx) \right\lVert_{\iH(k)}.
     \label{eq:mmd_chapter1}  
 \end{equation}
-This quantity is a distance in the RKHS by taking a characteristic kernel (e.g., the Gaussian or Matérn kernel). 
+This quantity is a distance in the RKHS by taking a characteristic kernel (e.g., the Gaussian or Mat\'{e}rn kernel). 
 After a calculation developed in Appendix \ref{apx:D}, an unbiased one-sample estimator of the squared-MMD was proposed by \citet{gretton_2006}, 
 with a convergence rate of $\mathcal{O}(n^{-1/2})$ in probability. 
 Considering the two-samples $\left\{\pi^{(i)}\right\}_{i=1}^n \sim \pi$ and $\left\{\zeta^{(j)}\right\}_{j=1}^n \sim \zeta$: 
