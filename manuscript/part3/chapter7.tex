@@ -37,11 +37,12 @@ To cumulate the damage over the lifetime, one can write the sum of 10-minute dam
 
 In Chapter~\ref{chpt:4}, KH was proposed as a method for given-data subsampling to propagate the uncertain environmental conditions on Teesside's OWT model. 
 This method showed equivalent performances to QMC for estimating the lifetime damage in \eq{eq:expected_damage}, while being more flexible than QMC. 
-In the linear cumulative damage model typically used by the community (Miner's rule), a damage value higher than one leads to ruin of the structure by convention. 
+In the linear cumulative damage model typically used by the community (Miner's rule), a damage value higher than one leads to ruin of the structural detail by convention. 
 The present chapter assesses the probability of such a rare event, considering both the environmental uncertainties (aggregated according to \eq{eq:expected_damage}) and the uncertainties related to the system itself (described by the random vector $\bZ \in \iD_\bZ$ with joint PDF $f_\bZ$). 
-Assuming that the critical damage $D_{\mathrm{cr}}$ is a random variable centered around one (equivalent to a ``resistance'' variable in the well-known ``resistance-solicitation'' paradigm in reliability analysis, see e.g., \citealp{lemaire_2009}), this failure probability is written as:
+Let us assume that the critical damage $D_{\mathrm{cr}} \in \R^+$ is a random variable centered around one, with PDF $f_{D_{\mathrm{cr}}}$. 
+Then, condidering $D_{\mathrm{cr}}$ as a ``resistance'' variable (in the well-known ``resistance-solicitation'' paradigm in reliability analysis, see e.g., \citealp{lemaire_2009}), a failure probability can be written as:
 \begin{equation}
-    \pf = \int_{\iD_\bZ} \1_{\{D(\bz) \geq D_{\mathrm{cr}}\}} \, f_\bZ(\bz) \, \dd \bz \,.
+    \pf = \int_{\iD_\bZ \times \R^+} \1_{\{D(\bz) \geq D_{\mathrm{cr}}\}} \, f_\bZ(\bz) \, f_{D_{\mathrm{cr}}}(d_{\mathrm{cr}}) \, \dd \bz \, \dd d_{\mathrm{cr}} \,.
     \label{eq:owt_pf}
 \end{equation}
 
@@ -217,7 +218,7 @@ The probability introduced in \eq{eq:owt_pf} then becomes:
     \label{eq:owt_pf_surrogate}
 \end{equation}
 Table~\ref{tab:pf_result_table} presents the estimates of this quantity by various methods (FORM, FORM-IS and SS, see Section~\ref{sec:reliability}) and for two different distributions of the resistance variable. 
-$D_{\mathrm{cr}}$ either follows a lognormal distribution (which has a short left tail), or a normal distribution (with a heavier left tail). 
+$D_{\mathrm{cr}}$ either follows a lognormal distribution (which has a short left tail), or a truncated normal distribution on $[0, +\infty[$ (with a heavier left tail). 
 All methods deliver similar values of $\pf$ even if FORM-IS converges faster than SS when comparing the coefficients of variation (COV). 
 The adequation of FORM with the simulation methods reveals that the LSF in this case is almost linear. 
 This linearity is mostly due to the nature of the LSF, following a resistance-sollicitation paradigm as introduced earlier. 
@@ -341,7 +342,7 @@ The robustness of the failure probability was evaluated with the formalism of th
 This additional study mostly confirmed the importance of the critical damage definition. 
 
 From an industrial point of view, the failure probabilities obtained are lower than the risk levels targeted in current standards \citep{wang_2022_owt_reliability_review}, which is in favor of lifetime extension. 
-However, the results of this demonstrative study may be questionable with respect to several assumptions that have been made: 
+However, the results of this demonstrative study may be questionable with respect to several effects that were not considered: 
 \begin{itemize}
     \item The periods in parked position which could significantly increase the damage (see \citealp{velarde_2020_fatigue_reliability}). 
     Several studies showed that the aerodynamic damping created by the rotation of the turbine reduces tower vibrations, and therefore fatigue \citep{liu_2017_damping};

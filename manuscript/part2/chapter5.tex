@@ -162,7 +162,7 @@ for any one-dimensional normal-centered random variables $U$ and $V$, the expres
                                              &= \sigma^2\, \MMD_{\Kbarbar}^2(\xi_n,\pi).\label{eq:c5_variance}
     \end{align}
 \end{subequations}
-Interestingly, the last expression is proportional to the MMD (previously introduced in this manuscript and further defined in Appendix~\ref{apx:B}) between $\pi$ and $\xi_n$ for a given kernel $\Kbarbar(\cdot, \cdot)$. 
+Interestingly, the last expression is proportional to the squared MMD (previously introduced in this manuscript and further defined in Appendix~\ref{apx:B}) between $\pi$ and $\xi_n$ for a given kernel $\Kbarbar(\cdot, \cdot)$. 
 Note that $\sigma^2$ only appears as a multiplying factor in \eq{eq:c5_variance}, with the consequence that the choice of $\sigma^2$ does not impact the choice of a suitable $\xi_n$.
 The resulting kernel $\Kbarbar(\cdot, \cdot)$ is differently defined whether \textit{(i)} the learning model $\eta_m(\bx)$ interpolates $\by_m$, or \textit{(ii)}, it does not: 
 \begin{align}
@@ -694,7 +694,7 @@ Note that the median of the empirical distribution slowly decreases as $r_n$ inc
 For completeness, the red diamond represented on the left of \fig{fig:cathareC2_benchmark} the value of $Q^2_{\mathrm{LOO}}$ computed by LOO cross-validation. 
 In principle, being computed using the entire dataset, this value should establish an upper bound on the quality of models computed with smaller training sets. 
 This is indeed the case for small training sets (rightmost values in the figure), for which the predictivity estimated by LOO is above the majority of the predictivity indexes calculated. 
-But at the same time, LOO cross-validation tends to overestimate the errors, which explains the higher predictivity estimated by some other methods when $m=N-n$ is large enough.
+%But at the same time, LOO cross-validation tends to overestimate the errors, which explains the higher predictivity estimated by some other methods when $m=N-n$ is large enough.
 
 Compare now the behavior of the two MMD-based algorithms of Section \ref{sec:val_sampling}, $\widehat Q^2_n$ (un-weighted) and $Q_{n*}^2$ (weighted) are plotted using solid and dashed lines, respectively, for both KH (in blue) and support points (in orange). 
 FSSF test sets are not considered, as the application of an iso-probabilistic transformation imposes knowledge of the input joint distribution, which is supposed by be unknown for this example. 
@@ -704,7 +704,7 @@ support points (solid orange line) estimating a better performance than KH (soli
 However, for $r_n \geq 0.5$, the dominance is reversed, support points estimating a worse performance than KH. 
 
 As $r_n$ increases up to $r_n \lesssim 0.7$ the solid orange and blue curves crossover, and it is now $\widehat Q^2_n$ for KH that approximates the RCV empirical median, while the value obtained with support points underestimates the predictivity index. 
-Also, note that for (irrealistic) very large values of $r_n$ both support points and KH estimate lower $Q^2$ values, which are smaller than the median of the RCV estimates.
+Also, note that for unrealistically very large values of $r_n$ both support points and KH estimate lower $Q^2$ values, which are smaller than the median of the RCV estimates.
 
 Let us now focus on the effect of residual weighting, i.e., in estimators $Q_{n*}^2$ which use the weights computed by the method of Subsection~\ref{sec:weighting}, shown in dashed lines in Figure \ref{fig:cathareC2_benchmark}. 
 First, note that while KH weighting leads, as in the previous section, to higher estimates of the predictivity (compare solid and dashed blue lines), this is not the case for support points (solid and dashed orange curves), which, for small split ratios, produces smaller estimates when weighting is introduced. 

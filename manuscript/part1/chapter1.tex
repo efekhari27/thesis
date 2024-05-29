@@ -444,7 +444,7 @@ By construction, the strong law of large numbers makes this estimator unbiased a
 However, it converges relatively slowly. 
 The variance of the Monte Carlo estimator results from a manipulation of the central limit theorem:
 \begin{equation}
-    \var\left(\overline{y}_n^{\textrm{MC}}\right) = \frac{1}{n} \var\left(Y\right). 
+    \var\left(\overline{y}_n^{\textrm{MC}}\right) = \frac{1}{n} \var\left(g(\bX)\right). 
     \label{eq:MC_variance}
 \end{equation}
 Considering the images of the sample $\bX_n$, one can also express the unbiased empirical variance of the output random variable $\what{\sigma}^2_Y = \frac{1}{n-1} \sum_{i=1}^n \left(g(\bx^{(i)}) - \overline{y}_n^{\textrm{MC}}\right)^2$.
@@ -671,7 +671,7 @@ It also shows that these designs keep this property for dimensions larger than 1
 The space-filling difference is not obvious in two-dimensional problems, and they both spread uniformly.    
 
 More recent work developed different ways to optimize LHDs. 
-Among them, let us mention the ``maximum projection designs'' (for MaxPro) from \citet{joseph_gul_2015} which rely on the optimization of a geometrical criterion and deliver interesting performances. 
+Among them, let us mention the ``maximum projection designs'' (MaxPro) from \citet{joseph_gul_2015} which rely on the optimization of a geometrical criterion and deliver interesting performances. 
 In the same vein, the uniform projection designs from \citet{sun_2019} also optimize LHS, but based on a criterion averaging discrepancies between each pair of marginals.
 
 \begin{figure}[ht]
@@ -768,7 +768,7 @@ The failure of a system might be very rare, but its consequences can be severe (
 
 Different risk measures (i.e., quantities of interest related to the tail of the distributions) can be studied depending on the type of risk analysis. 
 Quantiles are a risk measure, widely used for risk analysis. 
-The quantile of order $\alpha$, also called $\alpha$-quantile, denoted by $q_\alpha$(Y), of the output random variable $Y$ is defined as:
+The quantile of order $\alpha$, also called $\alpha$-quantile, denoted by $q_\alpha$(Y), of the output random variable $Y \in \R$ is defined as:
 \begin{equation}
     q_\alpha(Y) = \inf_{y\in\R}{\left\{F_Y(y) \geq \alpha\right\}}, \quad \alpha \in [0, 1].    
 \end{equation}
@@ -979,7 +979,7 @@ For this reason, they have been widely used in the practical context of limited 
 \citet{straub_2014_fatigue_form} illustrates the efficiency of FORM approaches on industrial cases such as probabilistic fatigue damage. 
 However, these methods present serious limits as the dimension increases (see the discussion in Chapter 1 from \citealp{chabridon_2018_thesis}). 
 Additionally, their main drawback is the lack of complementary information concerning the confidence of the results. 
-The textbook example illustrated in \fig{fig:multi_FORM} shows that the method might miss some significant areas of the failure domain, leading to poor estimations. 
+The textbook example illustrated in \fig{fig:multi_FORM} shows that the method might miss some significant areas of the failure domain, leading to an estimation error (here, a relative error of 11\% for a failure probability $\pf\approx10^{-3}$). 
 As an alternative to approximation methods, simulation-based methods often provide the analyst with an assessment of the estimation's confidence. 
 
 
@@ -1041,7 +1041,7 @@ The IS estimator of the failure probability is defined for a sample drawn from t
     \what{\pf}^{\mathrm{IS}} = \frac1n \sum_{i=1}^{n} \1_{\{\iF_\bx\}}(\bx^{(i)}) \, w_\bX(\bx^{(i)}).
     \label{eq:pf_IS}
 \end{equation}
-Similarly to Monte Carlo, this estimator is unbiased, however, its variance is defined as: 
+Similarly to Monte Carlo, this estimator is unbiased (for any intrumental distribution such that $h_\bX(\bx) > 0$), however, its variance is defined as: 
 \begin{equation}
     \var\left( \what{\pf}^{\mathrm{IS}}\right) = \frac1n \left( \E_{h_\bX}\left[\left(\1_{\{\iF_\bx\}}(\bX) \, \frac{f_\bX(\bX)}{h_\bX(\bX)}\right)^2\right] - \pf^2\right).
     \label{eq:IS_variance}
@@ -1249,7 +1249,9 @@ The second one assumes the estimations of the conditional probabilities to be in
 
 As discussed in \citet{Papaioannou_PEM_2015}, the efficiency of the SS method often depends on the choice and tuning of the MCMC algorithm. 
 The ``component-wise'' Metropolis–Hastings algorithm (or ``modified Metropolis–Hastings'') is widely used in the standard normal space for SS. 
-More recently, alternative MCMC methods including physical system dynamics (e.g., Hamiltonian MCMC) showed promising results in high-dimension reliability problems \citep{papakonstantinou_2023_HMCMC}. 
+More recently, alternative MCMC methods including physical system dynamics (e.g., Hamiltonian MCMC) showed promising results \citep{papakonstantinou_2023_HMCMC}. 
+Their main drawback is the use of gradients, which can be expensive in high-dimension reliability problems.
+ 
 
 The SS is a versatile method, presenting consistent performances even for rare probabilities. 
 Its flexibility allows it to deal with highly nonlinear LSFs, but its drawbacks arise from the use of MCMC sampling. 
@@ -1323,7 +1325,7 @@ global sensitivity analysis (\abv{gsa}), typically studies the general variabili
 Two types of GSA methods exist in the literature, either proposing qualitative or quantitative approaches:  
 \begin{itemize}
     \item \textit{screening methods}: determines the noninfluential variables in a UQ study (i.e., in a qualitative way);
-    \item \textit{importance measures}: assess the contribution of inputs in the global variability of the output (i.e., in a quantitative way).
+    \item \textit{importance measures}: assess the contribution of inputs to the global variability of the output (i.e., in a quantitative way).
 \end{itemize}
 
 The global sensitivity of an output can be explained by multiple elements: the marginal effects of the inputs, their dependence, and their interactions. 

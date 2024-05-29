@@ -181,7 +181,7 @@ Note that Kendall's tau and the tail dependence coefficients both have their ass
 
 The \textit{empirical copula} was introduced by \citet{deheuvels_1979_empirical_copula}, as an estimator of the copula $C$ associated with the random vector $\bX$. 
 Since the normalized ranks are an increasing mapping that presents uniform marginals by construction, they are a natural empirical representation of the density copula. 
-Considering a sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \sim \P_{\bX}$ with the respective ranks $\bR_n = \left\{\br^{(1)}, \dots, \br^{(n)}\right\}$, its the empirical copula is defined as: 
+Considering a sample $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\} \sim \P_{\bX}$ with the respective ranks $\bR_n = \left\{\br^{(1)}, \dots, \br^{(n)}\right\}$, the associated empirical copula is defined as: 
 \begin{equation}
     C_n(u_1, \dots, u_d) = \frac1n \sum_{i=1}^{n} \prod_{j=1}^{d} \1 \left\{ \frac{r_j^{(i)}}{n} \leq u_j \right\}, \quad  \bu = (u_1, \dots, u_d) \in [0, 1]^d.
     \label{eq:empirical_copula}
@@ -222,7 +222,7 @@ Consider the \textit{Bernstein basis polynomial} of order $m \in \N$, defined as
 \end{equation}
 These polynomials present various interesting properties, such as their nonnegativity over $[0, 1]$, being bounded by one, and offering a partition of unity on $[0, 1]$ \citep{lasserre_2023_bernstein}, which means that: 
 \begin{equation}
-    1 = \sum_{t=0}^{m} b_{m, t}(x), \quad \forall x\in\R, \quad \forall m \in \N.
+    1 = \sum_{t=0}^{m} b_{m, t}(u), \quad \forall u\in\R, \quad \forall m \in \N.
 \end{equation} 
 
 Bernstein polynomials allow to uniformly approximate any continuous and real-valued function defined on a compact set $f: [0, 1]^d \mapsto \R$ (as they were used to demonstrate the Weierstrass approximation theorem). 
@@ -456,7 +456,7 @@ Nonparametric methods like KDE were also applied in this context (e.g., \citealp
 Nonparametric techniques generally struggle to model the distributions' tails, even if the tails are essential to qualify structures for ultimate events. 
 However, they are highly flexible and often easier to implement than parametric methods.
 
-In this section, a hybrid inference strategy is presented, composing some well-known parametric models for the marginals (e.g., Weibull distribution for the wind speed), with a flexible dependence modeling by the EBC. 
+In this section, a hybrid inference strategy is presented, coupling some well-known parametric models for the marginals (e.g., Weibull distribution for the wind speed), with a flexible dependence modeling by the EBC. 
 A metocean dataset is used to showcase the EBC and its representation by the copulogram. 
 This dataset from the ANEMOC (Digital Atlas of Ocean and Coastal Sea States atlas, \citealp{raoult_2018_anemoc3}) gathers 32 years of preprocessed data 
 (at an hourly resolution) from a location off the coast of South Brittany, France. 
@@ -476,21 +476,21 @@ The wind and wave directions are fitted by KDE to catch their multimodal behavio
 Note that some variations of KDE with kernels specific to circular data could be interesting to ensure the continuity of the model at the bounds \citep{bai_1989_directional_kde}. 
 
 The results of the marginals' inferences, plotted in \fig{fig:marginals_sb} against histograms, are visually satisfying. 
-To confirm this first impression, statistical Kolmogorov–Smirnov tests successfully validate the adequacy of the two parametric models (see the p-values in Table~\ref{tab:sb_marginal_fit}). 
+To confirm this first impression, statistical Kolmogorov–Smirnov tests successfully validated the adequacy of the two parametric models. 
 Considering these marginals, a study of the copula inference can be carried on. 
 
 \begin{table}[ht]
     \centering
     \caption{Marginal inference results of the South Brittany metocean data.}
-    \begin{tabular}{llll}
+    \begin{tabular}{lll}
         \hline
-        {\it Name}              & {\it Notation}            & {\it Fitted model}                            & \textit{KS p-value}  \\
+        {\it Name}              & {\it Notation}            & {\it Fitted model}                            \\
         \hline
-        Wind speed              & $U$                       & Weibull ($\beta=11.4, \alpha=2.2, \gamma=0$)  & \textcolor{OliveGreen}{$0.238 > 5\%$}\\
-        Wind direction          & $\theta_{\mathrm{wind}}$  & KDE                                           & --                                   \\ 
-        Significant wave height & $H_s$                     & Inverse Normal ($\mu=2.3, \lambda=6.8$)       & \textcolor{OliveGreen}{$0.533 > 5\%$}\\
-        Wave period             & $T_p$                     & KDE                                           & --                                   \\
-        Wave direction          & $\theta_{\mathrm{wave}}$  & KDE                                           & --                                   \\
+        Wind speed              & $U$                       & Weibull ($\beta=11.4, \alpha=2.2, \gamma=0$)  \\
+        Wind direction          & $\theta_{\mathrm{wind}}$  & KDE                                           \\ 
+        Significant wave height & $H_s$                     & Inverse Normal ($\mu=2.3, \lambda=6.8$)       \\
+        Wave period             & $T_p$                     & KDE                                           \\
+        Wave direction          & $\theta_{\mathrm{wave}}$  & KDE                                           \\
         \hline
     \end{tabular}
     \label{tab:sb_marginal_fit}
@@ -558,7 +558,7 @@ Even if further developments could be implemented to improve the squared MMD est
 One can remark that the goodness-of-fit keeps improving as $m$ increases until $m=100$, but it worsens for $m=1000$, which is probably due to an overfit of the EBC beyond an optimal value $100 \leq m^* < 1000$. 
 Considering this setup, \fig{fig:sb_copulograms} represents the copulogram of a sample $\widetilde{\bX}_n$ (in red), side by side with the copulogram of the learning set $\bX_n$ (in blue). 
 These figures show that these complex dependence patterns are generally well captured by the EBC. 
-However, despite its apparent flexibility, this tool should be used carefully when inferring the distributions' tails. 
+However, despite its apparent flexibility, this tool should not be used carefully when inferring the distributions' tails. 
 For example, the upper tail of the $H_s$ vs. $T_p$ scatter plot typically studied in ocean engineering is not very well captured.
 
 \begin{figure}

@@ -541,7 +541,7 @@ The so-called ``Bayesian quadrature estimator'' appears to be a simple linear co
     \label{eq:bq_weights}
 \end{equation}
 For any given sample, an optimal set of weights can be computed, leading to the mean of the posterior distribution. 
-Remark here that this enhancement depends on the evaluation of the inverse variance-covariance matrix $\bK_n^{-1}$, which can present numerical difficulties, either when design points are too close, leading to poor conditioning of the matrix. 
+Remark here that this enhancement depends on the evaluation of the inverse variance-covariance matrix $\bK_n^{-1}$, which can present numerical difficulties, typically when design points are too close, leading to poor conditioning of the matrix. 
 Moreover, a prediction interval on the BQ estimator can be computed since the posterior distribution is Gaussian, with a variance expressed in closed-form in \eq{eq:var_post}. 
 The expressions in \eq{eq:mean_post} and \eq{eq:var_post} were extended to GPs in the case of constant and linear trends in \cite{pronzato_zhigljavsky_2020}. 
 In the following numerical experiments, the expression with a hypothesis of constant trend $\beta_n$ is used, which leads to:
@@ -574,7 +574,7 @@ According to the previous proof, this criterion can be seen as an optimally-weig
 Later, \cite{briol_2015} proved the weak convergence of $I_{\pi}(G_n)$ towards the target integral. 
 Closer to wind turbine applications, \cite{huchet_2018} and \cite{huchet_mattrand_2019} introduced the ``Adaptive Kriging Damage Assessment'' method: a Kriging-based method for mean damage estimation that is very close to sequential Bayesian quadrature. 
 However, this type of method inherits the limits from both KH and BQ since it searches for optimal design points among a candidate set and computes an inverse variance-covariance matrix. 
-These numerical operations both scale hardly in high dimension. 
+These numerical operations both scale poorly in high dimension. 
 
 \medskip
 \begin{remark}
@@ -628,7 +628,7 @@ The respective BQ estimators of the means are plotted in dashed lines.
 
 \begin{table*}
     \centering
-    \caption{Analytical test cases}
+    \caption{Analytical test cases.}
     \begin{tabular}{llll}
      \hline
         Test case \#1 & $d = 2$ & $g_1(\bx)= x_1 + x_2$ & Gaussian mixture from \fig{fig:KH_mixture} \\

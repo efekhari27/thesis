@@ -38,7 +38,7 @@ Then, a common risk measure in reliability analysis is the \textit{failure proba
 \end{equation}
 The usual convention presented in Section~\ref{sec:reliability} allows to modify the LSF in order to set the threshold to zero. 
 Moreover, as presented previously, the main methods for rare event estimation can be divided into two groups \citep{MorioBalesdent2015}: 
-\textit{(i)} first the geometric approaches, such as the first-/second-order reliability method (FORM/SORM) whose aim is to approximate the LSF by a first-/second-order Taylor expansion at the most probable failure point; 
+\textit{(i)} first the geometric approaches, such as the first-/second-order reliability method (FORM/SORM) whose aim is to approximate the LSF by a first-/second-order Taylor expansion at the most probable failure point in the standard normal space; 
 \textit{(ii)} second the simulation-based techniques such as the crude Monte Carlo method and many other variance reduction techniques. 
 Unfortunately, FORM/SORM methods do not provide much statistical information as they are purely geometric approaches. 
 Meanwhile, estimating a rare event probability by crude Monte Carlo becomes rapidly intractable for engineering applications. 
@@ -622,7 +622,7 @@ A first perspective lies in the optimization of the EBC polynomial order by appl
 Then, instead of estimating the intermediary quantiles by Monte Carlo, other sampling methods could be tested (e.g., LHS, randomized QMC, see \citealp{tuffin_2019}). 
 To tackle high-dimensional problems, the inference of copulas by blocks could be interesting (see e.g., \citealp{lasserre_2022}).
 
-BANCS also presents multiple advantages, first, it does not require a transformation in the standard space, second, its flexibility allows to capture multimodal problems. 
+BANCS also presents multiple advantages, first, it does not require a transformation to the standard normal space, second, its flexibility allows to capture multimodal problems. 
 A third advantage is that the samples generated at each iteration are i.i.d., offering the possibility to estimate ROSA indices as a post-processing. 
 In this chapter, ROSA was investigated using the HSIC (following the work of \citealp{marrel_chabridon_2021}) but the use of target Shapley effects \citep{ilidrissi_2021_rosa} could also provide an interesting insight for problems with dependent inputs.
 Additionally, the recently developed HSIC-ANOVA indices \citep{daveiga_2021_kernel_ANOVA,sarazin_2023} could be explored to capture influences due to complex interactions between variables.
