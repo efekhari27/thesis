@@ -44,7 +44,7 @@ Then, Section~\ref{sec:copulogram} proposes a new tool to visualize multivariate
 The \emph{copulogram} decomposes the marginal effects and the dependence structure of a joint distribution; 
 Afterwards, Section~\ref{sec:32_inference} showcases the use of nonparametric copulas by inferring the metocean data of South Brittany (a wind farm project mentioned in Subsection~\ref{sec:metocean_uncertainties}). 
 
-Finally, the wake effect of turbines modifies the wind conditions in a farm; 
+Finally, the wake effect of turbines modifies the wind conditions in a farm. 
 Therefore, Section~\ref{sec:wake_clust} studies wake perturbations and proposes a statistical approach to cluster turbines subject to similar perturbations in a farm. 
 This result can later be used to perform uncertainty propagation at the farm scale by considering a few turbines which are representative of a cluster. 
 
@@ -80,7 +80,7 @@ Several strategies to model the dependence structure from multivariate distribut
         \begin{align}
             f_\bX(\bx) &= f_{X_1}(x_1) \, f_{X_2\, |\, X_1}(x_2\, |\, x_1) \\
                        &= f_{X_1}(x_1) \, f_{X_2}(x_2) \, c\left(F_{X_1}(x_1), F_{X_2}(x_2)\right)\\
-            \Leftrightarrow \quad c\left(F_{X_1}(x_1), F_{X_2}(x_2)\right) &= \frac{f_{X_1}(x_1) \, f_{X_2\, |\, X_1}(x_2\, |\, x_1)}{f_{X_1}(x_1) \, f_{X_2}(x_2)}.
+            \Leftrightarrow \quad c\left(F_{X_1}(x_1), F_{X_2}(x_2)\right) &= \frac{f_{X_2\, |\, X_1}(x_2\, |\, x_1)}{f_{X_2}(x_2)}.
         \end{align}  
     \end{subequations}
 \end{remark}
@@ -222,7 +222,7 @@ Consider the \textit{Bernstein basis polynomial} of order $m \in \N$, defined as
 \end{equation}
 These polynomials present various interesting properties, such as their nonnegativity over $[0, 1]$, being bounded by one, and offering a partition of unity on $[0, 1]$ \citep{lasserre_2023_bernstein}, which means that: 
 \begin{equation}
-    1 = \sum_{t=0}^{n} b_{m, t}(u)(x), \quad \forall x\in\R, \quad \forall n \in \N.
+    1 = \sum_{t=0}^{m} b_{m, t}(x), \quad \forall x\in\R, \quad \forall m \in \N.
 \end{equation} 
 
 Bernstein polynomials allow to uniformly approximate any continuous and real-valued function defined on a compact set $f: [0, 1]^d \mapsto \R$ (as they were used to demonstrate the Weierstrass approximation theorem). 
@@ -481,6 +481,7 @@ Considering these marginals, a study of the copula inference can be carried on.
 
 \begin{table}[ht]
     \centering
+    \caption{Marginal inference results of the South Brittany metocean data.}
     \begin{tabular}{llll}
         \hline
         {\it Name}              & {\it Notation}            & {\it Fitted model}                            & \textit{KS p-value}  \\
@@ -492,7 +493,6 @@ Considering these marginals, a study of the copula inference can be carried on.
         Wave direction          & $\theta_{\mathrm{wave}}$  & KDE                                           & --                                   \\
         \hline
     \end{tabular}
-    \caption{Marginal inference results of the South Brittany metocean data.}
     \label{tab:sb_marginal_fit}
 \end{table}
 

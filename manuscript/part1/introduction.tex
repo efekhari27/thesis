@@ -217,7 +217,7 @@ This experiment illustrates the practical relevance of this technique as an effe
 %------------------------------------------------------------%
 Estimating rare event probabilities is a common issue in industrial risk management, especially in the field of structural reliability \citep{MorioBalesdent2015}. 
 To overcome the well-known limitations of the Monte Carlo method, several techniques have been proposed. 
-Among them, ``subset simulation'' \citep{AuBeck2001} is a technique based on the split of a rare probability into a product of less rare (and thus easier to estimate) conditional probabilities associated with nested failure events. 
+Among them, ``subset simulation'' \citep{AuBeck2001} is a technique based on the split of a small probability into a product of larger (and thus easier to estimate) conditional probabilities associated with nested failure events. 
 However, this technique relies on conditional simulation using Markov chain Monte Carlo (MCMC) methods. 
 In practice, these algorithms produce correlated chains that converge asymptotically towards the targeted distribution. 
 The issue in reliability analysis is that their convergence is usually not checked (e.g., \citealp{roy_2020_mcmc_convergence} reviews diagnostic tools for MCMC).    

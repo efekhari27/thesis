@@ -39,7 +39,7 @@ In Chapter~\ref{chpt:4}, KH was proposed as a method for given-data subsampling 
 This method showed equivalent performances to QMC for estimating the lifetime damage in \eq{eq:expected_damage}, while being more flexible than QMC. 
 In the linear cumulative damage model typically used by the community (Miner's rule), a damage value higher than one leads to ruin of the structure by convention. 
 The present chapter assesses the probability of such a rare event, considering both the environmental uncertainties (aggregated according to \eq{eq:expected_damage}) and the uncertainties related to the system itself (described by the random vector $\bZ \in \iD_\bZ$ with joint PDF $f_\bZ$). 
-Assuming that the critical damage $D_{\mathrm{cr}}$ is a random variable centered around one (equivalent to a ``resistance'' variable in the well-known ``resistance-solicitation'' paradigm in reliability analysis \citealp{lemaire_2009}), this failure probability is written as:
+Assuming that the critical damage $D_{\mathrm{cr}}$ is a random variable centered around one (equivalent to a ``resistance'' variable in the well-known ``resistance-solicitation'' paradigm in reliability analysis, see e.g., \citealp{lemaire_2009}), this failure probability is written as:
 \begin{equation}
     \pf = \int_{\iD_\bZ} \1_{\{D(\bz) \geq D_{\mathrm{cr}}\}} \, f_\bZ(\bz) \, \dd \bz \,.
     \label{eq:owt_pf}
@@ -47,7 +47,7 @@ Assuming that the critical damage $D_{\mathrm{cr}}$ is a random variable centere
 
 Less information is available to define the probabilistic model of the system uncertainties than the environmental ones. 
 Therefore, the robustness analysis of the failure probability w.r.t. the probabilistic model $\bZ$ should be studied. 
-To do so, a perturbation-based approach using the \textit{perturbed-law based sensitivity indices} (PLI), originally introduced by \citep{lemaitre_2015_PLI}, is used in this chapter.   
+To do so, a perturbation-based approach using the \textit{perturbed-law based sensitivity indices} (PLI), originally introduced by \citet{lemaitre_2015_PLI}, is used in this chapter.   
 However, the reliability and robustness analysis requires a number of evaluations of the Turbsim-DIEGO simulator $D(\cdot)$ that would be prohibitive without the use of surrogate models. 
 
 The present chapter is structured as follows: 

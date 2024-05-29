@@ -18,7 +18,7 @@ This repository is divided into two folders:
 
 :newspaper: E. Fekhari, B. Iooss, J. Muré, L. Pronzato and M.J. Rendas (2023). "Model predictivity assessment: incremental test-set selection and accuracy evaluation". In: *Studies in Theoretical and Applied Statistics*, pages 315-347. Springer.
 
-:newspaper: E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2024). "Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature". In: *Data-Centric Engineering*, In press.
+:newspaper: E. Fekhari, V. Chabridon, J. Muré and B. Iooss (2024). "Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature". In: *Data-Centric Engineering*, 5, e5.
 
 :newspaper: E. Vanem, E. Fekhari, N. Dimitrov, M. Kelly, A. Cousin and M. Guiton (2024). "A joint probability distribution for multivariate wind-wave conditions and discussions on uncertainties". In: *Journal of Offshore Mechanics and Arctic Engineering*; 146(6): 061701.
 

@@ -229,7 +229,7 @@ in order to make it resemble its integral version $V'_\pi(\by_m) = \int_{\iD_\bx
 
 In the previous section, the test set was assumed as already given, and a method was proposed to estimate the $\ISE_\pi(\eta_m)$ (with the learning model $\eta_m$, built on $\bX_m$) by an optimally weighted sum of the residuals. 
 The objective in this section is to construct a test set of size $n$, denoted by $\bX_n=\left\{\bx^{(1)},\ldots,\bx^{(n)}\right\}\subset\iD_\bx$. 
-To evaluate the predictivity of a model learned on a training set $\bX_m$, a strategy is to place the test points the furthest away from the training set, to obtain a space-filling design when both gathering leaning and test set. 
+To evaluate the predictivity of a model learned on a training set $\bX_m$, a strategy is to place the test points the furthest away from the training set, to obtain a space-filling design when both gathering learning and test set. 
 The sampling methods used for building the test set should then be space-filling and incremental. 
 The advantage of using an iterative construction is that it can be stopped as soon as the predictivity estimation is considered sufficiently accurate. 
 In case the conclusion is that model predictions are not reliable enough, the full design $\bX_{m+n}=\bX_m\cup\bX_n$ and the associated observations $\by_{m+n}$ can be used to update the model. 
@@ -506,7 +506,7 @@ The numerical results obtained in this section are presented in Figures~\ref{fig
 Each figure corresponds to one of the test cases and gathers three sub-figures, corresponding to test sets with sizes $m$ yielding poor (left), reasonably good (right) or very good (bottom) fittings. 
  
 The baseline value of $Q_{\mathrm{MC}}^2$, calculated with $10^6$ Monte Carlo points, is indicated by the black diamonds (i.e., the black horizontal lines).
-Assuming that the error of $Q\mathrm{MC}^2$ is much smaller than the errors of all other estimators, this section compares the ability of the methods to approximate $Q\mathrm{MC}^2$. 
+Assuming that the error of $Q_{\mathrm{MC}}^2$ is much smaller than the errors of all other estimators, this section compares the ability of the methods to approximate $Q_{\mathrm{MC}}^2$. 
 For each sequence of nested test sets ($n\in\{4,\ldots,50\}$), the observed values of $\widehat Q^2_n$ (in \eq{eq:Q2test}) and $Q_{n*}^2$ (in \eq{Q2-est*}), are plotted as the solid and dashed lines, respectively. 
 
 The figures also show the value $Q^2_{\mathrm{LOO}}$ obtained by LOO cross-validation, which is indicated at the left of each figure by a red diamond (values smaller than $0.25$ are not shown). 
@@ -661,7 +661,7 @@ These characteristics make this test case challenging in terms of the constructi
 %  \caption{test case CATHARE: inputs output scatter plots ($N=10^3$) }
 %  \label{fig:cathare_paiplot}
 %\end{figure}
-In the following, an existing Monte Carlo sample $\bZ_N$ of $N=10^3$ points in $\R^{53}$ is used, which corresponds to $53$ independent random input configurations (see \citealp{ioobou10} for details). 
+In the following, an existing Monte Carlo sample $\bZ_N$ of $N=10^3$ points in $\R^{53}$ is used, which corresponds to $53$ independent random input variables (see \citealp{ioobou10} for details). 
 The output of the CATHARE2 code at these $N$ points is also available. 
 To reduce the dimensionality of this dataset, a preliminary screening of the inputs has been realized in order to identify the inputs that do not impact the output significantly. 
 This dimension-reduction step relies on the HSIC indices, described in Subection~\ref{sec:gsa}, which is known as a powerful tool to perform input screening from a single sample of inputs and output values without reference to any specific ML regression model \citep{daveiga_2015}. 
@@ -708,7 +708,7 @@ Also, note that for (irrealistic) very large values of $r_n$ both support points
 
 Let us now focus on the effect of residual weighting, i.e., in estimators $Q_{n*}^2$ which use the weights computed by the method of Subsection~\ref{sec:weighting}, shown in dashed lines in Figure \ref{fig:cathareC2_benchmark}. 
 First, note that while KH weighting leads, as in the previous section, to higher estimates of the predictivity (compare solid and dashed blue lines), this is not the case for support points (solid and dashed orange curves), which, for small split ratios, produces smaller estimates when weighting is introduced. 
-In the large $r_n$ region, the behavior is consistent with what was previously presented, weighting inducing an increase of the estimated predictivity. 
+In the large $r_n$ region, the behavior is consistent with what was previously presented since weighting improves the predictivity estimation. 
 It is remarkable -- and rather surprising -- that $Q_{n*}^2$ for support points (the dashed orange line) does not present the discontinuity of the uncorrected curve. 
 
 The sum $\sum_{i=1}^n w_i^*$ of the optimal weights of support points and KH in \eq{Eq:weights} is shown in \fig{fig:catharec2_weights} (orange and blue curves, respectively). 

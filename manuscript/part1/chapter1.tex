@@ -162,7 +162,7 @@ and a covariance describing their joint variability:
 The \textit{standard deviation} $\sigma_{X_j} = \sqrt{\var(X_j)}$ and \textit{coefficient of variation} (\abv{cov}) $\delta_{X_j} = \frac{\sigma_{X_j}}{\mu_{X_j}}$ are two quantities widely used in practice.
 
 Finally, note that alternative theories exist to mathematically model uncertainties. 
-For example, imprecise probability theory allows more general modeling of the uncertainties \citep{beer_2013_imprecise_proba,schobi_2019_thesis,ajenjo_2023}. 
+For example, imprecise probability theory allows more general modeling of the uncertainties \citep{beer_2013_imprecise_proba,schobi_2017_thesis,ajenjo_2023}. 
 Such approaches become useful when dealing with very limited information (e.g., expert elicitation), but they will not be used in this thesis. 
 
 
@@ -268,11 +268,11 @@ In an inference context, this theorem divides the fitting problem into two indep
 Provided a dataset, this framework allows the potential combination of a parametric (or nonparametric) fit of marginals with a parametric (or nonparametric) fit of the copula. 
 
 To infer a joint distribution over a dataset, the analyst should determine a fitting strategy. 
-Appropriate data visualization helps to choose the fitting methods susceptible to be relevant to the problem. 
+Appropriate data visualization helps to select the fitting methods that are likely to be relevant to the problem. 
 In practice, the following points can be asked at this early stage:
 \begin{itemize}
     \item Is the distribution unimodal? If not, mixture methods or nonparametric models might be required;
-    \item Is the support restrictive? If so, specific families of parametric distributions with restrictive support can be chosen or truncation can be applied;
+    \item Is the support restrictive? If so, specific families of parametric distributions with bounded support can be chosen or truncation can be applied;
     \item Is there a dependence structure among the input variables? Does it concern all the variables together or only some groups of variables? 
     \item Is the dependence structure complex (e.g., stronger dependence in the tail of the distribution)? Transforming the dataset in the ranked space gives an empirical description of the dependence. 
 \end{itemize} 
@@ -319,7 +319,7 @@ To ease the notations, the numerical model $\iM(\cdot)$ introduced in \eq{eq:num
 %Note that the measurable function $g$, in the context of computer experiments, becomes the numerical model $\iM$ introduced in \eq{eq:numerical_model}. 
 
 In practice, this integral is approximated by summing a finite $n$-sized set of realizations $\by_n = \left\{g(\bx^{(1)}), \dots, g(\bx^{(n)})\right\}$ from a set of input samples $\bX_n = \left\{\bx^{(1)}, \dots, \bx^{(n)}\right\}$. 
-A \textit{quadrature} selects the input samples $\bX_n$ (also called ``nodes'' in classical numerical integration), and an associated set of weights $\bw_n = \{w_1, \dots, w_n\} \in \R^n$. 
+A \textit{quadrature rule} selects the input samples $\bX_n$ (also called ``nodes'' in classical numerical integration), and an associated set of weights $\bw_n = \{w_1, \dots, w_n\} \in \R^n$. 
 The approximation given by a quadrature rule is defined as a weighted arithmetic mean of the realizations:
 \begin{equation}
     I_{\P_{\bX}}(g) = \E[g(\bX)] = \int_{\iD_\bX} g(\bx) \, \dd\P_{\bX}(\bx) \approx \sum_{i=1}^n w_i \, g\left(\bx^{(i)}\right).
@@ -328,7 +328,7 @@ The approximation given by a quadrature rule is defined as a weighted arithmetic
 For a given sample size $n$, the goal is to find a set of tuples $\left\{\bx^{(i)}, w_i \right\}_{i=1}^n$ (i.e., a quadrature rule), which provide the best approximation of the quantity of interest $I_{\P_{\bX}}(g)$. 
 Ideally, the approximation quality should be fulfilled for a wide class of integrands (e.g., regardless of their regularity). 
 Most quadrature rules only depend on the probability space $(\Omega, \iA, \P_{\bX})$, regardless of the integrand values. 
-In the context of a costly numerical model, defining the quadrature ahead allows the analyst to massively distribute the evaluations of the numerical model. 
+In the context of a costly numerical model, defining the quadrature rule ahead allows the analyst to massively distribute the evaluations of the numerical model. 
 
 %This section aims to present the main multivariate integration techniques. 
 %These methods encompass different properties: 
@@ -359,8 +359,8 @@ Gauss-Legendre quadrature guarantees a very precise approximation provided that 
 This rule is deterministic but not sequential, meaning that two rules with sizes $n_1$ and $n_2$, $n_1 < n_2$ will not be nested (i.e., its construction is not iterative). 
 However, a sequential extension is proposed by the Gauss-Kronrod rule \citep{laurie_1997}, at the expense of a slightly lower accuracy regarding $I_{\P_{\bX}}(g)$. 
 
-To overcome this practical drawback, Fej\'{e}r \citep{fejer_1933} then Clenshaw and Curtis \citep{clenshaw_1960} proposed a nested rule with mostly equivalent accuracy as Gaussian quadratures.
-This method is usually presented to integrate a function w.r.t. the uniform measure on $[-1, 1]$ and starts with a change of variables, $x:=\cos(\theta), \, \dd x := \sin(\theta)$:
+To overcome this practical drawback, \citet{fejer_1933} then \citet{clenshaw_1960} proposed a nested rule with mostly equivalent accuracy as Gaussian quadratures.
+This method is usually presented to integrate a function w.r.t. the uniform measure on $[-1, 1]$ and starts with a change of variables, $x:=\cos(\theta), \, \dd x := -\sin(\theta) \dd \theta$:
 \begin{equation}
     \int_{-1}^{1} g(x) \, \dd x = \int_{0}^{\pi} g\left(\cos(\theta)\right) \, \sin(\theta) \, \dd \theta. 
 \end{equation}
@@ -508,7 +508,7 @@ Knowing that the complexity of the studied integrand is fixed, this property exp
 
 Note that the design can also be considered as a discrete distribution (uniform sum of Dirac distributions).
 The discrepancy can then be expressed as a probabilistic distance between this discrete distribution and the uniform distribution. 
-A generalized discrepancy between distributions called the \textit{maximum mean discrepancy} is introduced in Appendix~\ref{apx:D} and used for efficient sampling in Chapter \ref{chpt:4} of this manuscript.
+A generalized discrepancy between distributions called the \textit{maximum mean discrepancy} is introduced in Appendix~\ref{apx:B} and used for efficient sampling in Chapter \ref{chpt:4} of this manuscript.
 
 Some famous low-discrepancy sequences (e.g., van der Corput, Halton, Sobol', Faure) can offer a bounded star discrepancy such that $D^*(\bX_n) \leq \frac{C \log(n)^d}{n}$, where the constant $C$ depends on the type of sequence.
 Therefore, using these sequences as a quadrature rule with uniform weights provides the following absolute error upper bound: 
@@ -567,7 +567,7 @@ Recent works aim at exploring the use of these methods to estimate different qua
 
 Ultimately, QMC methods generate powerful integration schemes. 
 The Koksma-Hlawka inequality associates an upper bound and a convergence rate to most integrals. 
-A randomization overlay removes the deterministic property of these designs, allowing to compute confidence intervals. 
+A randomization overlay removes the deterministic property of these designs, allowing us to compute confidence intervals. 
 In the following, sampling techniques are presented from the numerical \textit{design of experiments} point of view. 
 Even if the goal might look different from numerical integration, these two topics share many methods and concepts. 
 
@@ -908,7 +908,7 @@ Using the properties of the standard normal space allows us to rewrite it as:
           &= \argmin_{\bu \in \R^d} \, \bu\TT \bu \qquad \mathrm{s.t.} \quad \cg(\bu) \leq 0.
 \end{align}
 Such a quadratic optimization under nonlinear constraint is classically solved by gradient descent algorithms (e.g., Abdo-Rackwitz algorithm from \citealp{abdo_rack_1991}) but also by gradient-free techniques (e.g., Cobyla algorithm, see \citealp{powell_1994}). 
-The design point corresponds to the smallest Euclidian distance between the limit-state surface and the origin of the standard normal space. 
+The design point corresponds to the smallest Euclidean distance between the limit-state surface and the origin of the standard normal space. 
 To understand its role in the reliability problem, let us recall that the density of the standard normal presents an exponential decay in its radial and tangential directions. 
 Then, $P^*$ is the failure point with the largest probability density (see the illustration in \fig{fig:FORM_SORM_approx}). 
 
@@ -1033,7 +1033,7 @@ Then, by introducing the \textit{likelihood ratio} $w_\bX(\bx) = \frac{f_\bX(\bx
     \pf = \int_{\iD_\bx} \1_{\{\iF_\bx\}}(\bx) \, f_\bX(\bx) \, \dd\bx
         = \int_{\iD_\bx} \1_{\{\iF_\bx\}}(\bx) \, w_\bX(\bx) \, h_\bX(\bx) \, \dd\bx.
 \end{equation}
-This simple writing trick allows to integrate against the auxiliary distribution. 
+This simple writing trick allows one to integrate against the auxiliary distribution. 
 With a Monte Carlo method, this task should be easier than integrating directly against the initial distribution.
 
 The IS estimator of the failure probability is defined for a sample drawn from the auxiliary distribution such that $\left\{\bx^{(i)}\right\}_{i=1}^n \simiid h_\bX$: 
@@ -1288,7 +1288,6 @@ In 2019, the ``black-box reliability challenge'', was organized as a hackathon b
 This platform proposed a large catalog of reliability problems with their respective solutions. 
 Most of them were encapsulated as a Python package called \href{https://github.com/mbaudin47/otbenchmark/}{\texttt{otbenchmark}}\footnotemark$~$ \citep{fekhari_baudin_2021}, based on core \ots objects.  
 
-
 \footnotetext{\url{https://github.com/mbaudin47/otbenchmark/}}
 
 When working with computationally expensive numerical models, directly using rare event estimation methods is most often intractable. 
@@ -1391,7 +1390,7 @@ The connections between DGSM and variance-based GSA measures (i.e., Sobol' indic
 \subsection{Variance-based importance measures}
 %============================================================%
 
-Beyond the qualitative results from the screening methods, importance measures quantify the influence of inputs, allowing to rank the inputs according to their contribution to the output variability.  
+Beyond the qualitative results from the screening methods, importance measures quantify the influence of inputs, allowing us to rank the inputs according to their contribution to the output variability.  
 
 
 %------------------------------------------------------------%
@@ -1463,7 +1462,7 @@ This definition can also be generalized for a subset of inputs $A \in \mathcal{P
 \begin{equation}
     S_A^T = 1 - S_{A^{\complement}}^{\mathrm{clos}} = 1 - \frac{\var\left(\E[Y|\bX_{A^{\complement}}]\right)}{\var(Y)} \, , 
 \end{equation}
-where $A^{\complement}=\mathcal{P}_d \setminus A$.
+where $A^{\complement}=\{1, \dots, d\} \setminus A$.
 By jointly analyzing the first and total Sobol' indices, one can get an indication about the decomposition between the marginal and interaction effects. 
 Note that the total indices are only equal to the first indices when the model does not present any interactions, which means that the model is purely additive.
 %Moreover, the following inequalities hold: 
@@ -1576,14 +1575,14 @@ Considering the two-samples $\left\{\pi^{(i)}\right\}_{i=1}^n \sim \pi$ and $\le
                                 k\left(\pi^{(i)}, \pi^{(j)}\right) - k\left(\pi^{(i)}, \zeta^{(j)}\right) - k\left(\zeta^{(i)}, \pi^{(j)}\right) + k\left(\zeta^{(i)}, \zeta^{(j)}\right) \, , 
 \label{eq:mmd_ustat}
 \end{equation}
-where $k(\cdot, cdot)$ is a symmetric and positive definite kernel with specific properties (see Appendix~\ref{apx:B} for further details).
+where $k(\cdot, \cdot)$ is a symmetric and positive definite kernel with specific properties (see Appendix~\ref{apx:B} for further details).
 
 In the context of GSA, the first option is to directly use this dissimilarity measure to define the following unnormalized index: 
 \begin{equation}
     S_j^{\MMD} = \MMD(\P_Y, \P_{Y |X_j}). 
     \label{eq:mmd_gsa}
 \end{equation}
-\citet{daveiga_2021_kernel_ANOVA} remarked that the unormalized first-order Sobol' indices are recovered by taking the linear kernel on the output, such that $k_{Y}(y, y')=y\, y'$. 
+\citet{daveiga_2021_kernel_ANOVA} remarked that the unnormalized first-order Sobol' indices are recovered by taking the linear kernel on the output, such that $k_{Y}(y, y')=y\, y'$. 
 Using this non-characteristic kernel (see the definition in Appendix \ref{apx:D}) brings us back to a moment-dependent importance measure. 
 
 Alternatively, the second option consists in considering a couple of random variables $(X_j, Y)$, with probability distributions $\P_{X_j}$ and $\P_Y$, and assuming the RKHS $\iH$  
@@ -1604,8 +1603,7 @@ Note that the HSIC decomposition requires a specific hypothesis on the structure
 \subsection{Summary and discussion}
 %============================================================%
 
-This section introduces the GSA methods commonly used in UQ. 
-Either to reduce the dimension of a problem (screening) or to quantify the influence of inputs (with importance measures), GSA improves the understanding of a UQ study.   
+This section introduces the GSA methods commonly used in UQ, either to reduce the dimension of a problem (screening) or to quantify the influence of inputs (with importance measures), GSA improves the understanding of a UQ study.   
 As for other steps of the generic UQ methodology, GSA is made more complicated for computationally costly simulation models, hence the use of surrogate models. 
 Additionally, the dependence between inputs still represents an important limit to interpreting GSA results. 
 
@@ -1615,8 +1613,8 @@ In the field of structural reliability, an overview of the reliability-oriented 
 Several techniques derive from rare event estimation (e.g., the reinterpretation of the FORM importance factors by \citealp{papaioannou_2021_rosa_form}), or were adapted from GSA, like Sobol' indices \citep{wei_2012_rosa,chabridon_2018_thesis,perrin_2019_rosa,ehre_2020_rosa}, Target-HSIC \citep{marrel_chabridon_2021}, or Shapley effects \citep{ilidrissi_2021_rosa}.  
 
 Finally, sensitivity analysis may describe the effects of random inputs on the variation of the output, however, this study is done by assuming a model on the input uncertainties. 
-The role of a regulatory agency auditing a UQ approach for certification (i.e., a nuclear safety authority), might be to challenge the way to model the uncertainties on the inputs.  
-In this case, various tools for \textit{robustness analysis} exist to quantify the impact of mispecifying the random inputs on the quantity of interest studied. 
+The role of a regulatory agency auditing a UQ approach for certification (i.e., a nuclear safety authority), might be to challenge the modelling of uncertainties on the inputs.  
+In this case, various tools for \textit{robustness analysis} exist to quantify the impact of misspecifying the random inputs on the quantity of interest studied. 
 Among the methods to perturbate uncertainty models, some remain in the probabilistic framework, such as the ``perturbed-law based indices'' (\abv{pli}) \citep{lemaitre_2015_PLI,iooss_2022_pli}, while other rely on extra-probabilistic methods \citep{ajenjo_2022_structural_safety}. 
 
 
@@ -1687,7 +1685,7 @@ The most common cross-validation method is the \textit{$k$-fold} validation, ill
 The idea is first to split the $n$-sized dataset into several equal parts, called ``folds''. 
 A first surrogate can be fitted on the entire datasets but the first fold, on which a validation criterion is estimated (i.e., performance metric). 
 The operation is repeated for each fold, providing a virtual validation of the entire dataset. 
-Leave-One-Out validation (\abv{loo}) is an extreme case of $k$-fold cross-validation, for which $k=n-1$. 
+Leave-One-Out validation (\abv{loo}) is an extreme case of $k$-fold cross-validation, for which $k=n$. 
 Note that multiple variations of these methods exist, for example by adding a permutation or shuffling step. 
 The ``bagging'' validation method (for ``bootstrap aggregating'') consists of shuffled cross-validation repeated many times \citep{breiman_1996_bagging}. 
 
@@ -1775,7 +1773,7 @@ In the simplest framework, the Kriging model exactly interpolates the observatio
     \centering
     \includegraphics[width=0.6\textwidth]{../numerical_experiments/chapter1/figures/kriging_1D.png}
     \caption{Illustration of an ordinary Kriging model fitted on a limited set of observations ($n=7$). 
-    The predictor is represented in and several trajectories of the conditioned GP are drawn and represented in purple.}
+    The predictor is represented in red and several trajectories of the conditioned GP are drawn and represented in purple.}
     \label{fig:kriging_1D}
 \end{figure}
 
@@ -1884,7 +1882,7 @@ However, in most cases, the failure domain represents a very restricted area of 
 Active learning methods were proposed to iteratively concentrate the learning set around this border. 
 
 For rare event estimation, the surrogate only needs to be accurate near the LSF. 
-In other words, it should accurately discriminate the points leading to the safe domain from those leading to the failure domain. 
+In other words, it should accurately discriminate the points belonging to the safe domain from those belonging to the failure domain. 
 In fact, this problem can be seen as binary classification. 
 For example, active learning procedures using SVM classifiers have been adapted to this specific goal \citep{bourinet_2018}. 
 
@@ -1897,7 +1895,7 @@ A first Gaussian process $G_n(\bx) \sim \iN(\eta_n(\bx), s_n^2(\bx))$ is fitted 
 The deviation number $U$ is looking for points close to the LSF while presenting a high Kriging variance. 
 This criterion to be minimized is defined as:   
 \begin{equation}
-    \iA^{\textrm{U}}(\bx; \by_n) = \frac{\left|\yth - \eta_n(\bx)\right|}{s_n^2(\bx)}\, , 
+    \iA^{\textrm{U}}(\bx; \by_n) = \frac{\left|\yth - \eta_n(\bx)\right|}{s_n(\bx)}\, , 
     \label{eq:U}
 \end{equation}
 where $\yth \in R$ is a threshold defining the failure domain such as $\{\bx \in \iD_\bX \, | \, g(\bx) \leq \yth\}$. 

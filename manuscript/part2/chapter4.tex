@@ -13,7 +13,7 @@
 
 \begin{tcolorbox}[colback=gray!5!white, colframe=gray!5!white, coltitle=gray, coltext=gray, fontupper=\footnotesize, fontlower=\footnotesize, title=\textbf{Parts of this chapter are adapted from the following publication:}]
     \begin{itemize}
-        \item[\ding{125}] E. Fekhari, V. Chabridon, J. Mur\'{e} and B. Iooss (2024). ``Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature''. In: \textit{Data-Centric Engineering}, In press.
+        \item[\ding{125}] E. Fekhari, V. Chabridon, J. Mur\'{e} and B. Iooss (2024). ``Given-data probabilistic fatigue assessment for offshore wind turbines using Bayesian quadrature''. In: \textit{Data-Centric Engineering}, 5, e5.
     \end{itemize}
 \end{tcolorbox}
 
@@ -155,6 +155,7 @@ A limitation of the present study is that its controller-induced uncertainty (li
 
 \begin{table*} 
     \begin{center}
+    \caption{Description of the environmental data.}
     \begin{tabularx}{\textwidth}{@{\extracolsep\fill}llll@{}}
     \hline
     Variable & Notation & Unit & Description\\
@@ -167,7 +168,6 @@ A limitation of the present study is that its controller-induced uncertainty (li
     Wave direction & $\theta_{\mathrm{wave}} $ & deg. &  10-min. average wave direction\\
     \hline
     \end{tabularx}
-    \caption{Description of the environmental data.}
     \label{tab:envi_variables_c4}
     \end{center}
 \end{table*}
@@ -312,7 +312,7 @@ In the literature, a large panel of numerical integration methods has been propo
 For example, \cite{bos_2020} recently developed a quadrature rule based on arbitrary sample sets which was applied to a similar industrial OWT use case.  
 
 Alternatively, sampling methods rely on generating a set of points $\bX_n$ drawn from the input distribution to compute the arithmetic mean of their realizations (i.e., uniform weights $\left\{w_i = \frac1n \right\}_{i=1}^n$). 
-Among them, low-discrepancy sequences, also called ``quasi-Monte Carlo'' sampling (e.g., Sobol', Halton, Faure sequences \citealp{leobacher_2014}) are known to improve the standard Monte Carlo convergence rate and will be used as a deterministic reference method in the following numerical experiments.
+Among them, low-discrepancy sequences, also called ``quasi-Monte Carlo'' sampling (e.g., Sobol', Halton, Faure sequences, see \citealp{leobacher_2014}) are known to improve the standard Monte Carlo convergence rate and will be used as a deterministic reference method in the following numerical experiments.
 
 %\paragraph{Quantization of probability measures and quadrature}
 %------------------------------------------------------------%
@@ -412,6 +412,7 @@ The correlation lengths for the squared exponential and Mat\'{e}rn kernels are s
 
 \begin{table*}
     \begin{center}
+    \caption{Kernels considered in the following numerical experiments.}
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lll@{}}
     \hline
     Energy-distance & $k_E(\bx,\bx') = \frac12\, \left(\| \bx \| + \| \bx' \| - \| \bx-\bx' \|\right)$ & \\
@@ -421,7 +422,6 @@ The correlation lengths for the squared exponential and Mat\'{e}rn kernels are s
      & & $\quad + \frac{5}{3 \theta^2} (x - x')^2 \Bigr) \exp \left( - \frac{\sqrt{5}}{\theta} |x - x'| \right)$ \\
     \hline
     \end{tabular*}
-    \caption{Kernels considered in the following numerical experiments.}
     \label{tab:kernels}
     \end{center}
 \end{table*}
@@ -473,7 +473,7 @@ To solve a probabilistic integration problem, the concept of Bayesian quadrature
 %------------------------------------------------------------%
 \paragraph{Gaussian processes for Bayesian quadrature}%------%
 
-Kernel methods and GP present a lot of connections and equivalences, thoroughly reviewed by \cite{motonobu_2018}. 
+Kernel methods and GP present a lot of connections and equivalences, thoroughly reviewed by \cite{kanagawa_2018}. 
 In numerical integration, GP have been used to build quadrature rules in the seminal paper of \cite{ohagan_1991}, introducing the concept of \emph{Bayesian quadrature} (\abv{bq}). 
 Let us recall the probabilistic integration problem $I_\pi(g) = \int_{\iD_\bX} g(\bx) \dd \pi(\bx)$ (stated in \eq{eq:quadrature_rule}). 
 From a general point of view, this quantity could be generalized by composing $g$ with another function $\psi$ (e.g., other moments, quantiles, exceedance probabilities). 
@@ -557,7 +557,7 @@ Then, an a posteriori 95\% prediction interval around the mean Bayesian estimato
 
 \paragraph{Variance-based Bayesian quadrature rule.}%----------------%
 The link between the posterior variance and the squared MMD has been first made by \cite[Proposition 1]{husar_duvenaud_2012}: the expected variance in the BQ $\var\left(I_{\pi}(G_n)\right)$ is the MMD between the target distribution $\pi$ and $\zeta_n = \sum_{i=1}^n \wBQ^{(i)} \delta\left(\bx^{(i)}\right)$. 
-The proof is reproduced below (as well as in Proposition 6.1 from \citealp{motonobu_2018}): 
+The proof is reproduced below (as well as in Proposition 6.1 from \citealp{kanagawa_2018}): 
 \begin{subequations}
 \begin{align}
     \var\left(I_{\pi}(G_n)\right) &= \E\left[ \left(I_{\pi}(G_n) - I_{\zeta_n}(G_n)\right)^2\right]\\
@@ -586,7 +586,6 @@ Contrarily, \cite{motonobu_2019} presents a set of methods for BQ with transform
 %In the end, active methods are not widely used for numerical integration \citep{wei_2020,goncalves_batchvarov_2020}, and from a general point of view, one can wonder in which situation the active learning framework presents a actual added value. 
 
 %Apart from some very specific problems (e.g., contour finding of a limit-state function in reliability analysis \citep{echard_2011}. 
-
 %\begin{remark}
 %As much as the previous criteria will reduce the posterior variance, the estimation error may present a bias.
 %\end{remark}
@@ -596,7 +595,7 @@ Contrarily, \cite{motonobu_2019} presents a set of methods for BQ with transform
 \section{Numerical experiments}\label{sec:sec44}
 %============================================================%
 %============================================================%
-This section presents numerical results computed on two different analytical test cases, respectively in dimension 2 (test case \#1) and dimension 10 (test case \#2), with easy-to-evaluate functions $g(\cdot)$ and associated input distributions $\pi$. 
+This section presents numerical results computed on two different analytical test cases, respectively in dimension 2 (Test case \#1) and dimension 10 (Test case \#2), with easy-to-evaluate functions $g(\cdot)$ and associated input distributions $\pi$. 
 Therefore, reference values can easily be computed with great precision. 
 For each test case, a large reference Monte Carlo sample ($N_{\mathrm{ref}} = 10^8$) is taken. 
 This first benchmark compares the mean estimation of test cases given by a quasi-Monte Carlo technique (abbreviated by QMC in the next figures) which consists herein using a Sobol' sequence, and KH with the three kernels defined in Table \ref{tab:kernels}. 
@@ -620,9 +619,9 @@ In the same vein, \cite{kucherenko_feil_2011} build three classes of integrand s
     \item \emph{class B problems}: problem without unimportant variables, and important low-order interaction terms;
     \item \emph{class C problems}: problems without unimportant variables, and important high-order interaction terms. 
 \end{itemize}
-In the case of the two-dimensional Gaussian mixture problem (test case \#1), the complexity is carried by the mixture of Gaussian distributions with highly nonlinear dependencies.
-Then, the 10-dimensional ``GSobol function'' (test case \#2) with a set of coefficient $\{a_i=2\}_{i=1}^{10}$ has an effective dimension equal to 10 and belongs to the hardest class C from \cite{kucherenko_feil_2011}. 
-Probabilistic integration results are presented in \fig{fig:test case1} (test case \#1) and \fig{fig:test case2} (test case \#2). 
+In the case of the two-dimensional Gaussian mixture problem (Test case \#1), the complexity is carried by the mixture of Gaussian distributions with highly nonlinear dependencies.
+Then, the 10-dimensional ``GSobol function'' (Test case \#2) with a set of coefficient $\{a_i=2\}_{i=1}^{10}$ has an effective dimension equal to 10 and belongs to the hardest class C from \cite{kucherenko_feil_2011}. 
+Probabilistic integration results are presented in \fig{fig:test case1} (Test case \#1) and \fig{fig:test case2} (Test case \#2). 
 Kernel herding samples based on the squared exponential kernel are in green, those using the Mat\'{e}rn kernel are in orange, those using the energy-distance kernel are in red, while quasi-Monte Carlo samples built from Sobol' sequences are in gray. 
 Convergences of the arithmetic means are plotted on the left and MMDs on the right. 
 The respective BQ estimators of the means are plotted in dashed lines. 
@@ -647,12 +646,12 @@ The respective BQ estimators of the means are plotted in dashed lines.
 \end{remark}
 \medskip
 
-Regarding the results for the test case \#1, the convergence plots are provided in \fig{fig:test case1}. 
+Regarding the results for Test case \#1, the convergence plots are provided in \fig{fig:test case1}. 
 KH consistently converges faster than quasi-Monte Carlo in this case, especially for small sizes in terms of MMD. 
 BQ weights tend to reduce the fluctuations in the mean convergence, which ensures better performance for any size. 
 Overall, applying the weights enhances the convergence rate.
 
-Then, the convergence plots corresponding to the test case \#2 are provided in \fig{fig:test case2}. 
+Then, the convergence plots corresponding to Test case \#2 are provided in \fig{fig:test case2}. 
 Although quasi-Monte Carlo is known to suffer the ``curse of dimensionality'', KH does not outperform it drastically in this example. 
 In fact, KH with uniform weights performs worse than quasi-Monte Carlo while optimally-weighted KH does slightly better. 
 Moreover, the results confirm that $\MMD_{\mathrm{BQ}}< \MMD_{\mathrm{unif}}$ for all the proposed experiments. 
@@ -671,7 +670,7 @@ Between the three kernels employed for KH, the energy-distance kernel performs s
     \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian_Mixture_convergence_ED.pdf}
     \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/Gaussian_Mixture_convergence_MMD_ED.pdf}\\
 \end{center}
-\caption{Analytical benchmark results on the test case \#1.} \label{fig:test case1}
+\caption{Analytical benchmark results on Test case \#1.} \label{fig:test case1}
 \end{figure}
 
 \begin{figure}[!h]
@@ -683,7 +682,7 @@ Between the three kernels employed for KH, the energy-distance kernel performs s
     \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol_10D_(normal_input)_convergence_ED.pdf}
     \includegraphics[width=0.48\textwidth]{part2/figures/DCE/analytical_bench/GSobol_10D_(normal_input)_convergence_MMD_ED.pdf}\\
 \end{center}
-\caption{Analytical benchmark results on the test case \#2.} \label{fig:test case2}
+\caption{Analytical benchmark results on Test case \#2.} \label{fig:test case2}
 \end{figure}
 
 %----------------------------------------------------------------------%

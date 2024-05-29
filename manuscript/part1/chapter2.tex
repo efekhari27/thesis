@@ -19,8 +19,8 @@
 Wind energy is a highly competitive industry with increasing regulations regarding its impact on ecosystems, land and sea use, landscapes, or air traffic management \citep{eolien_en_mer_2022}. 
 During the long process of winning calls for tenders, obtaining construction permits, or through wind farm exploitation, an advanced technical understanding of such systems might offer a competitive advantage. 
 
-The operation of offshore wind turbines (OWTs) is driven by multiple physics coupled. 
-This behavior results from different external solicitations which are highly turbulent and uncertain. 
+The operation of offshore wind turbines (OWTs) is driven by multiple coupled physics. 
+This behavior results from different external loading which are highly turbulent and uncertain. 
 Among them, the \textit{metocean} (abbreviation of ``meteorology'' and ``oceanography'') environmental conditions play a primary role. 
 Yet, many other types of solicitations affect the exploitation of offshore wind turbines such as the corrosion of the structure, global scour, marine growth, stress concentration factor induced by the manufacturing process, etc. 
 
@@ -122,7 +122,7 @@ In this thesis, the Kaimal spectrum as defined in \cite{iec_2019} is used for tu
 \end{equation} 
 such that $f$ is the frequency, $\overline{U}$ is the longitudinal mean speed at hub-height, $L_k$ are the Kaimal length scales, and $\sigma_k$ standard deviations. 
 Along with the Kaimal wind speed spectrum, a spatial coherence model is usually defined in the frequency domain. 
-Each couple of nodes in the mesh are correlated, for example, using an exponential coherence model (see the complete definition in \citealp[Apepndix C]{iec_2019}).
+Each couple of nodes in the mesh are correlated, for example, using an exponential coherence model (see the complete definition in \citealp[Appendix C]{iec_2019}).
 
 In this thesis, the full-field turbulent wind fields (i.e., over a regular mesh) are generated using TurbSim, a software developed by the National Renewable Energy Laboratory (NREL) \citep{turbsim_2009}. 
 TurbSim generates time realizations by adapting the spectral method proposed in \citet{veers_1988_sandia} (relying on the inverse Fourier transforms of each axial component).   
@@ -158,7 +158,7 @@ When studying the wind resources at a wind farm scale, modeling wind energy loss
 The wake is caused by the extraction of the wind kinetic energy, reducing the wind speed and increasing the turbulence downstream of the turbines (see the illustration in \fig{fig:wake_illustration}). 
 In a wind farm, this effect depends on the spacing between turbines, as well as the ambient wind speed and turbulence intensity. 
 The turbines positioned at the center of the farm are indeed the most impacted by the wake. 
-As a wind farm owner, the consequence of the wake is twofold: a loss of energy production (in the range of 10 to 20 percent depending on the farm \citealp[Chapt. 9]{burton_2021_wind_handbook}), and an increase in fatigue loads (due to the asymmetric loading added by the wake turbulences).
+As a wind farm owner, the consequence of the wake is twofold: a loss of energy production (in the range of 10 to 20 percent depending on the farm \citealp[Chap. 9]{burton_2021_wind_handbook}), and an increase in fatigue loads (due to the asymmetric loading added by the wake turbulences).
 
 \begin{figure}%[h!]
     \centering
@@ -237,7 +237,7 @@ As they rely on linear assumptions, they are unable to model the nonlinearities 
 These aspects happen to be essential in the design of OWTs \citep{jonkman_2011_ISOPE}. 
 As an alternative, the behavior of OWT systems is also simulated in the time domain. 
 
-In the time domain, such systems may be models at different fidelity levels. 
+In the time domain, such systems may be modeled at different fidelity levels. 
 The diagram in \fig{fig:owt_modeling_fidelities} illustrates the increasing complexities of two physics involved in OWT modeling, aerodynamics and structural dynamics respectively. 
 Generally, the computational cost increases with the model fidelity, making UQ intractable at some point. 
 In the present work, the numerical model of an OWT studied is actually a chain of three models executed sequentially (as illustrated in \fig{fig:owt_chained_model}): 
@@ -460,7 +460,7 @@ After identifying the stress cycles identified on the results of the OWT simulat
 \paragraph{Stress cycle identification.}
 %------------------------------------------------------------%
 Offshore wind turbine simulators as DIEGO, deliver a time-dependent stress tensor. 
-Although damage studies are commonly realized on the axial stress $\sigma_11$, the other components of the tensor could also be taken into account. 
+Although damage studies are commonly realized on the axial stress $\sigma_{11}$, the other components of the tensor could also be taken into account. 
 To ease the manipulation of this tensor, the equivalent Von Mises stress is computed, turning a multiaxial stress into an equivalent uniaxial stress. 
 One can also consider a ``plane strain'' hypothesis on the Cauchy stress tensor $\underline{\underline{\sigma}}$, which is expressed as:
 \begin{equation}
@@ -474,7 +474,7 @@ This assumption simplifies the expression of the equivalent Von Mises stress $\s
 \begin{equation}
     \sigma_{\mathrm{VM}}=\sqrt{{\frac {1}{2}}\left[(\sigma _{11}-\sigma _{22})^{2}+(\sigma _{22}-\sigma _{33})^{2}+(\sigma _{33}-\sigma _{11})^{2}\right] + 3 \sigma _{12}^{2}}.
 \end{equation}
-Stress cycles can now be identified on the axial stress $\sigma_11$ or the equivalent Von Mises stress $\sigma_{\mathrm{VM}}$ time series. 
+Stress cycles can now be identified on the axial stress $\sigma_{11}$ or the equivalent Von Mises stress $\sigma_{\mathrm{VM}}$ time series. 
 The usual method to identify fatigue stress cycles is called \textit{rainflow counting} \citep{dowling_1972}. 
 In this approach, fatigue stress cycles are only defined by their amplitude (also called ``range'') and mean value, regardless of their chronology. 
 Rainflow counting returns a list of stress ranges identified and denoted by $s \in \R_+$ in the following. 
@@ -789,7 +789,7 @@ During the planning and operation of a wind farm project, the metocean condition
 At the early stage, datasets generated by fine mesoscale numerical simulation can be used to assess the wind potential. 
 This was typically the case during the call for tenders\footnote{\url{https://eolbretsud.debatpublic.fr/}} issued by the French government regarding the construction of two floating offshore wind farms in the south coast of Brittany (of respectively 250 and 500 MW of nominal power). 
 Open-access environmental data of the sea-states in this region were available, as a result of mesoscale simulations \citep{raoult_2018_anemoc3} realized by EDF R\&D.    
-In a second phase, the local conditions are measured using a meteorological mast with wind speed cup anemometers at different heights and wave boys are generally installed in the vicinity of the future farm. 
+In a second phase, the local conditions are measured using a meteorological mast with wind speed cup anemometers at different heights and wave buoys are generally installed in the vicinity of the future farm. 
 As a cheaper alternative to met masts, new measurement technologies such as floating LIDARs (standing for ``light detection and ranging'') were studied by \citet{gottschall_2017_floating_LIDAR}. 
 Then, different adequation methods between the local measures and the data obtained by mesoscale simulations were reviewed in \citet{sempreviva_2008_wind_assessment_review}.  
 Finally, after the installation of the turbines, the acquisition system (usually called ``\abv{scada}'', for ``supervisory control and data acquisition'') measures wind conditions with a sampling period of ten minutes. 
@@ -803,6 +803,7 @@ Note that the environmental data resulting from the SCADA system of the Teesside
 
 \begin{table}[h!]
     \centering
+    \caption{Marginal distributions of the environmental random variables.}
     \begin{tabular}{ l l l}
         \hline
         {\it Name} & {\it Notation} & {\it Description}\\
@@ -817,7 +818,6 @@ Note that the environmental data resulting from the SCADA system of the Teesside
         %Air density & $\delta$ & - & -\\
         \hline
     \end{tabular}
-    \caption{Marginal distributions of the environmental random variables.}
     \label{tab:envi_variables}
 \end{table}
 
@@ -836,6 +836,7 @@ Each of them is assumed independent, with a marginal probabilistic model arising
 
 \begin{table}[h!]
     \centering
+    \caption{Marginal distributions of the system random variables.}
     \begin{tabular}{llll}
         \hline
         {\it Name} & {\it Notation} & {\it Marginal model} & {\it Remark}\\
@@ -845,7 +846,6 @@ Each of them is assumed independent, with a marginal probabilistic model arising
         S-N curve coeff. & $\varepsilon$ & $\mathcal{LN}(\mu_\varepsilon=1, \, \sigma^2_\varepsilon=0.2^2)$ & --\\
         Critical damage & $D_{\mathrm{cr}}$ & $\mathcal{LN}(\mu_{D_{\mathrm{cr}}}=1, \, \sigma^2_{D_{\mathrm{cr}}}=0.3^2)$ & --\\\hline
     \end{tabular}
-    \caption{Marginal distributions of the system random variables.}
     \label{tab:sys_variables}
 \end{table}
 

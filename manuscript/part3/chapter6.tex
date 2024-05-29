@@ -130,9 +130,9 @@ Note that the BANCS method does not require any iso-probabilistic transform eith
 
 Nonparametric inference requires tuning the scaling parameters for KDE and the polynomial order $m$ (considered equal for all the input dimensions) for EBC. 
 In the current implementation of BANCS, the KDE is tuned using Silverman's rule\footnotemark~\citep{silverman_1981} while the EBC is tuned to minimize an asymptotic mean integrated squared error (AMISE). 
-As discussed in Chapter~\ref{chpt:3}, for a dataset with size $n$ and dimension $d$, the AMISE tuning for the EBC was defined by \citet{sancetta_satchell_2004} as:
+As discussed in Chapter~\ref{chpt:3}, for a dataset with size $N$ and dimension $d$, the AMISE tuning for the EBC was defined by \citet{sancetta_satchell_2004} as:
 \begin{equation}\label{eq:amise_tuning}
-    m_{\mathrm{AIMSE}} = 1 + N^{2/(d+4)}.
+    m_{\mathrm{AIMSE}} = 1 + \left\lfloor N^{2/(d+4)} \right\rfloor.
 \end{equation}
 In our experience, EBC tuning in \eq{eq:amise_tuning} works well for the BANCS algorithm and will be systematically used in the following. 
 This tuning sets a rather low polynomial order to the EBC, which avoids overfitting issues. 
@@ -150,7 +150,7 @@ This estimator also benefits from an IS variance, estimated using the same sampl
     \what{\var}\left(\widehat{\pf}^{\mathrm{BANCS}}\right) = \frac{1}{N-1} \left[\frac1N \sum_{i=1}^N \left(\frac{f_\bX\left(\bx_{[k_\#]}^{(i)}\right)}{\widehat{f}_{[k_\#]}\left(\bx_{[k_\#]}^{(i)}\right)}\right)^2 \, \1_{\left\{g(\bx_{[k_\#]}^{(i)}) \leq \yth \right\}}\left(\bx_{[k_\#]}^{(i)}\right) \, - \, \left(\widehat{\pf}^{\mathrm{BANCS}}\right)^2\right]\, .
 \end{equation}
 
-\fig{fig:bancs_illustration} illustrates the nonparametric fit and conditional sampling in the BANCS method on a two-dimensional reliability problem (later introduced as ``test case \#1'', see Subsection~\ref{sec:testcases}). 
+\fig{fig:bancs_illustration} illustrates the nonparametric fit and conditional sampling in the BANCS method on a two-dimensional reliability problem (later introduced as ``Test case \#1'', see Subsection~\ref{sec:testcases}). 
 At the iteration $k=0$, the conditional distribution fitted (with PDF represented by the blue isolines) slightly crosses the quantile border $\widehat{q}_{[0]}^{\, p_0}$ (in blue). 
 Ideally, the conditional distribution fitted, with PDF denoted by $\what{f}_{[1]}$, should be bounded by this border. 
 At the second iteration, the PDF of the conditional distribution denoted by $\what{f}_{[2]}$, is represented by the brown isolines. 
@@ -170,7 +170,7 @@ Including the samples from the previous iterations refines the goodness-of-fit n
         \includegraphics[width=\linewidth]{part3/figures/BANCS/bancs_illustration1.jpg}
         \caption{Iteration $k=1$.}
     \end{subfigure}
-    \caption{BANCS algorithm applied to test case \#1: illustration of conditional sampling and nonparametric fit at the first and second iterations (with $p_0=0.2$ and $N=10^3$).}
+    \caption{BANCS algorithm applied to Test case \#1: illustration of conditional sampling and nonparametric fit at the first and second iterations (with $p_0=0.2$ and $N=10^3$).}
     \label{fig:bancs_illustration}
 \end{figure}
 
@@ -264,6 +264,7 @@ Note that the color scale associated to the output values is log-transformed to 
 
 \begin{table}[h]
 \centering
+\caption{Input probabilistic model for Test case \#5. Each variable $X_j$ follows a lognormal distributions such that $\ln(X_j)\sim \iN\left(\mu, (\delta \mu)^2 \right)$.}
 \begin{tabular}{ lcccccccc }
     \hline
     Variable                     & $m_p$ & $m_s$ & $k_p$ & $k_s$ & $\zeta_p$ & $\zeta_s$ & $F_s$ & $S_0$ \\
@@ -273,22 +274,21 @@ Note that the color scale associated to the output values is log-transformed to 
     Coeff. of variation $\delta$ & 0.1 & 0.1 & 0.2 & 0.2 & 0.4 & 0.5 & 0.1 & 0.1\\
     \hline
 \end{tabular}
-\caption{Input probabilistic model for test case \#5. Each variable $X_j$ follows a lognormal distributions such that $\ln(X_j)\sim \iN\left(\mu, (\delta \mu)^2 \right)$.}
 \label{tab:oscillator}
 \end{table}
 
-Among the problems introduced in the present subsection, test case \#1 is used to illustrate the algorithm while more challenging reliability problems (i.e., test cases \#2, \#4, and \#5) are part of the numerical benchmark of BANCS. 
-To study the ROSA as a post-processing of BANCS, numerical experiments are performed on a well-known function in GSA (test case \#3) and the most challenging reliability problem in the group (test case \#5). 
+Among the problems introduced in the present subsection, Test case \#1 is used to illustrate the algorithm while more challenging reliability problems (i.e., test cases \#2, \#4, and \#5) are part of the numerical benchmark of BANCS. 
+To study the ROSA as a post-processing of BANCS, numerical experiments are performed on a well-known function in GSA (Test case \#3) and the most challenging reliability problem in the group (Test case \#5). 
 
 %============================================================%
 \subsection{Benchmark results and analysis}
 %============================================================%
 
 In the present section, the BANCS algorithm is applied to three analytical test cases and its performances are compared with SS and NAIS. 
-After representing the two first iterations of BANCS on test case \#1 in \fig{fig:bancs_illustration}, all BANCS iterations from this case are illustrated in \fig{fig:2D_toycase_reliability} (a). 
+After representing the two first iterations of BANCS on Test case \#1 in \fig{fig:bancs_illustration}, all BANCS iterations from this case are illustrated in \fig{fig:2D_toycase_reliability} (a). 
 This figure shows the intermediate quantiles $\left\{\widehat{q}_{[k]}^{\, p_0}\right\}_{k=1}^{k_\#}$ which are estimated over conditional samples of size $N=10^4$. 
 The failure samples corresponding to each elite set are represented in the same color as their $p_0$-quantile border. 
-\fig{fig:2D_toycase_reliability} (b) provides the same kind of illustration for BANCS applied to test case \#2, a well-known system reliability problem. 
+\fig{fig:2D_toycase_reliability} (b) provides the same kind of illustration for BANCS applied to Test case \#2, a well-known system reliability problem. 
 On these two-dimensional cases, one can visualize the empirical quantiles driving the conditional distributions toward the failure domain(s), and the ability of the nonparametric inference to capture multi-modal patterns.  
 
 After this first illustration of BANCS, a more extensive benchmark is proposed. 
@@ -297,16 +297,16 @@ Then, a boostrap procedure on this set is performed to compute a confidence inte
 Empirical variances and coefficients of variation (COV) associated with the probability estimators are also computed on the sets of repetitions. 
 This way, the SS coefficient of variation is not the result of an approximation (tending to underestimate the true SS coefficient of variation as explained in \citealp{Papaioannou_PEM_2015}).
 \fig{fig:bancs_benchmark} summarizes the results of this benchmark comparing BANCS with SS and NAIS w.r.t. various sample sizes $N \in \{300, 500, 700, 1000, 2000, 5000, 10000\}$.  
-On the left side, the estimates of failure probabilities repeated 100 times are displayed by their average over the repetitions (full lines) and their bootsrap confidence intervals. 
+On the left side, the estimates of failure probabilities repeated 100 times are displayed by their average over the repetitions (full lines) and their bootstrap confidence intervals. 
 The reference value for each problem is also represented by a horizontal black line. 
 On the right side, an estimate of the coefficient of variation provides normalized information on the dispersion of the estimators.  
 Note that all the estimates are plotted against their total number of samples (corresponding to the number of evaluations of the function). 
 
-To present a diverse panel of problems, the benchmark is conducted on test case \#2 (four-branch problem with $d=2$), test case \#4 (with $d=7$), and test case \#5 (nonlinear oscillator problem with $d=8$). 
+To present a diverse panel of problems, the benchmark is conducted on Test case \#2 (four-branch problem with $d=2$), Test case \#4 (with $d=7$), and Test case \#5 (nonlinear oscillator problem with $d=8$). 
 BANCS consistently shows promising results in all three cases. 
 The variance of its estimator is always smaller or equivalent to the SS variance. 
 In test cases \#2 and \#3, BANCS estimation converges faster than SS and as fast as NAIS. 
-For test case \#4, the NAIS implementation used does not support input distributions with bounded domains and is therefore removed. 
+For Test case \#4, the NAIS implementation used does not support input distributions with bounded domains and is therefore removed. 
 BANCS does not encounter the same difficulty as it separately fits the copula and the marginals (which can be easily truncated). 
 For this rare and complex case (notice the nonlinearity in the cross-cuts displayed in \fig{fig:crosscut_oscillator}), BANCS is less accurate than SS for small-sized (i.e., $N\leq 10^3$), but becomes equivalent to SS for larger sample sizes.
 In general, BANCS shows equivalent or better performances than SS and NAIS (on these first toy cases), while providing i.i.d. sampling and offering a level of flexibility due to the nonparametric inference. 
@@ -314,7 +314,7 @@ In general, BANCS shows equivalent or better performances than SS and NAIS (on t
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{part3/figures/BANCS/crosscut_oscillator.png}
-    \caption{Cross-cut visualization of the limit-state function in test case \#5. 
+    \caption{Cross-cut visualization of the limit-state function in Test case \#5. 
     FORM's most-probable failure point $P^*$ is given by the black cross. 
     The LSF (full line) delimits the safe domain (in blue) and the failure domain (in red). 
     FORM approximation around $P^*$ is represented by the dashed lines.}
@@ -346,33 +346,33 @@ In general, BANCS shows equivalent or better performances than SS and NAIS (on t
     \begin{subfigure}[b]{0.49\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/RP4B_mean.png}
-        \caption{Failure probability (test case \#2).}
+        \caption{Failure probability (Test case \#2).}
     \end{subfigure}
     \begin{subfigure}[b]{0.47\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/RP4B_cov.png}
-        \caption{Coefficient of variation (test case \#2).}
+        \caption{Coefficient of variation (Test case \#2).}
     \end{subfigure}
     \begin{subfigure}[b]{0.49\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/RP38_mean.png}
-        \caption{Failure probability (test case \#4).}
+        \caption{Failure probability (Test case \#4).}
     \end{subfigure}
     \begin{subfigure}[b]{0.47\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/RP38_cov.png}
-        \caption{Coefficient of variation (test case \#4).}
+        \caption{Coefficient of variation (Test case \#4).}
     \end{subfigure}
 
     \begin{subfigure}[b]{0.49\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/Oscillator_mean.png}
-        \caption{Failure probability (test case \#5).}
+        \caption{Failure probability (Test case \#5).}
     \end{subfigure}
     \begin{subfigure}[b]{0.47\linewidth}
         \centering
         \includegraphics[width=\linewidth]{part3/figures/BANCS/Oscillator_cov.png}
-        \caption{Coefficient of variation (test case \#5).}
+        \caption{Coefficient of variation (Test case \#5).}
     \end{subfigure}
     \caption{Reliability analysis benchmark between BANCS, SS and NAIS using 100 repetitions of each experiment (with $p_0=0.1$ for every methods). 
                 The confidence intervals are obtained by bootstrap on the repetitions. 
@@ -410,7 +410,7 @@ All in all, this section aims to illustrate the estimation of HSIC-based TSA and
 After estimating a rare event probability with BANCS, a set of i.i.d. samples (each with size $N$) is available. 
 These consecutive samples gradually move towards the failure domain and become rarer from the perspective of the initial input distribution. 
 This section first recalls the TSA and CSA adaptation from \citet{marrel_2018} and \citet{marrel_chabridon_2021} of the HSIC indices, whose formulation was introduced for GSA in Section~\ref{sec:gsa}.
-Then, the computation of the so-called ``target-HSIC'' and ``conditional-HSIC'' indices is presented as a simple post-precessing of the BANCS reliability analysis. 
+Then, the computation of the so-called ``target-HSIC'' and ``conditional-HSIC'' indices is presented as a simple post-processing of the BANCS reliability analysis. 
 This procedure is illustrated for test cases \#3 and \#5. 
 
 
@@ -421,7 +421,7 @@ This procedure is illustrated for test cases \#3 and \#5.
 A first approach for TSA is to directly apply any sensitivity measure to the binary variable $\1_{\{g(\bX) \leq \yth\}}$. 
 However, this strategy does not distinguish points in the vicinity of the LSF from points that are far from this border. 
 In the present work, a threshold relaxation using the weight transformation proposed in \citet{marrel_2018} and further discussed in \citet{marrel_chabridon_2021} is applied to gather more information. 
-Let us consider the weight function $w_{\iF}: \R \rightarrow [0, 1]$ such that $w_{\iF}(y) = \exp(-d_{\iF}(y)/s)$, where $d_{\iF} = \mathrm{inf}_{y'\in \iF} \Vert y -y' \Vert$ is a distance to the border and $s\in\R$ is a smoothing parameter. 
+Let us consider the weight function $w_{\iF}: \R \rightarrow [0, 1]$ such that $w_{\iF}(y) = \exp(-d_{\iF}(y)/s)$, where $d_{\iF} = \mathrm{inf}_{y'\in \iF} \Vert y -y' \Vert$ is a distance to the border and $s\in\R^+$ is a smoothing parameter. 
 
 Then, a TSA measure can be defined as the result of any sensitivity measure applied between the random inputs $\bX$ and $w_{\iF}(Y)$. 
 In our case, the target-HSIC (T-HSIC) and its respective normalized version, called the target $R^2_{\HSIC}$ ($T \mhyphen R^2_{\HSIC}$) are defined as: 
@@ -489,13 +489,13 @@ Then the CSA is assessed on the sample $S_{k+1}$, drawn according to the distrib
 
 Both TSA and CSA are presented via the obtained HSIC indices (without $R^2_{\HSIC}(X_j, Y)$ for the sake of concisness) and p-values of independence tests. 
 These quantities are plotted as a function of the consecutive samples $S_k$ to study the evolution of sensitivities w.r.t. the intermediate failure events. 
-\fig{fig:rosa_ishigami} represents these results for the test case \#3 while \fig{fig:rosa_oscillator} shows the results for test case \#5. 
+\fig{fig:rosa_ishigami} represents these results for Test case \#3 while \fig{fig:rosa_oscillator} shows the results for Test case \#5. 
 To make sure that the estimation is coherent and ease the interpretation, a variable without any relation to the output was added. 
 This variable always follows a standard normal distribution and is called the control variable (abbreviated ``ctrl.'' in the figures). 
 Thus, the estimated T-HSIC and C-HSIC indices that present values equal to the control variable are not worth interpreting. 
 The present ROSA study is realized with the following simulation settings:
 \begin{itemize}
-    \item BANCS takes a sample size $N=5000$ and a probability $p_0=0.25$ (to get a more progressive convergence of the algorithm). Compared to the reference results, the estimated probabilities have a relative error of $2.46\%$ for test case \#3 and 1.86$\%$ for test case \#5; 
+    \item BANCS takes a sample size $N=5000$ and a probability $p_0=0.25$ (to get a more progressive convergence of the algorithm). Compared to the reference results, the estimated probabilities have a relative error of $2.46\%$ for Test case \#3 and 1.86$\%$ for Test case \#5; 
     \item The HSIC indices in the following are estimated by a U-statistic implemented in \ot; 
     \item The weight function used is $w_{\iF}(y) = \exp(-\frac1s \, \mathrm{inf}_{y'\in \iF} \Vert y -y' \Vert)$, where $s=0.1 \, \sigma_Y$;
     \item The independence tests by permutation are based on $10^3$ permutations.
@@ -503,7 +503,7 @@ The present ROSA study is realized with the following simulation settings:
 
 
 %------------------------------------------------------------%
-\paragraph{Result analysis from test case \#3:}
+\paragraph{Result analysis from Test case \#3:}
 %------------------------------------------------------------%
 
 From \fig{fig:rosa_ishigami}, one can see that the variable $X_2$ has the least influential TSA while the variable $X_3$ has the least influence on the CSA. 
@@ -515,7 +515,7 @@ Interestingly, this phenomenon does not impact the CSA, which shows an increasin
 
 
 %------------------------------------------------------------%
-\paragraph{Result analysis from test case \#5:}
+\paragraph{Result analysis from Test case \#5:}
 %------------------------------------------------------------%
 From \fig{fig:rosa_ishigami} corresponding to the nonlinear oscillator problem, one can see that the variables $F_s, \zeta_s$, and $\zeta_p$ have high T-HSIC and low target p-values, meaning that they contribute significantly the failure event.    
 Interestingly, the T-HSIC and C-HSIC indices of the resistance variable $F_s$ decrease as the problem becomes rarer. 
@@ -560,7 +560,7 @@ For example, it is clear that $F_s$ plays a special role in this context.
         \includegraphics[width=\linewidth]{part3/figures/BANCS/ishigami_Cpvalue_permutation.png}
         \caption{Conditional p-values by perm. ($10^3$ perm.).}
     \end{subfigure}
-    \caption{Target and conditional HSIC indices and p-values as post-processing of a reliability analysis by BANCS for the test case \#3 (modified Ishigami). 
+    \caption{Target and conditional HSIC indices and p-values as post-processing of a reliability analysis by BANCS for Test case \#3 (modified Ishigami). 
                 The consecutive samples from BANCS are denoted by $\{S_k\}_{k=1}^{k_\#}$ (each with size $N=5\times10^3$, with $p_0=0.25$).}
     \label{fig:rosa_ishigami}
 \end{figure}
@@ -591,7 +591,7 @@ For example, it is clear that $F_s$ plays a special role in this context.
         \includegraphics[width=\linewidth]{part3/figures/BANCS/oscillator_Cpvalue_permutation.png}
         \caption{Conditional p-values by perm. ($10^3$ perm.).}
     \end{subfigure}
-    \caption{Target and conditional HSIC indices and p-values as a post-processing of a reliability analysis by BANCS for the test case \#5 (nonlinear oscillator problem). 
+    \caption{Target and conditional HSIC indices and p-values as a post-processing of a reliability analysis by BANCS for Test case \#5 (nonlinear oscillator problem). 
     The consecutive samples from BANCS are denoted by $\{S_k\}_{k=1}^{k_\#}$ (each with size $N=5\times10^3$, with $p_0=0.25$).}
     \label{fig:rosa_oscillator}
 \end{figure}
