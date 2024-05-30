@@ -132,6 +132,7 @@ It can be written as follows:
         &= \left\langle \left(P_{\pi}(\bx) - P_{\zeta}(\bx) \right), \left(P_{\pi}(\bx) - P_{\zeta}(\bx) \right) \right\rangle_{\iH(k)}\\
         &= \left\langle P_{\pi}(\bx), P_{\pi}(\bx) \right\rangle_{\iH(k)} - 2 \left\langle P_{\pi}(\bx), P_{\zeta}(\bx) \right\rangle_{\iH(k)} + \left\langle P_{\zeta}(\bx), P_{\zeta}(\bx) \right\rangle_{\iH(k)}\\
         &= \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\pi(\bx) \dd\pi(\bx') - 2 \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\pi(\bx) \dd\zeta(\bx') + \iint_{\iD_{\bX}^2} k(\bx, \bx')\, \dd\zeta(\bx) \dd\zeta(\bx').
+        \label{eq:mmd_integral}
 \end{align}
 \end{subequations}
 Taking a discrete distribution with uniform weights $\zeta_n= \frac{1}{n} \sum_{i=1}^{n} \delta(\bx^{(i)})$, the squared MMD reduces to: 
@@ -139,3 +140,42 @@ Taking a discrete distribution with uniform weights $\zeta_n= \frac{1}{n} \sum_{
     \MMD^2(\pi, \zeta_n) = \varepsilon_\pi - \frac{2}{n} \sum_{i=1}^n P_{\pi}\left(\bx^{(i)}\right) + \frac{1}{n^2} \sum_{i, j=1}^n k\left(\bx^{(i)}, \bx^{(j)}\right).
 \end{equation}
 
+
+
+
+
+%------------------------------------------------------------%
+\paragraph*{Analytical computation of potentials for Mat\'ern kernels}
+%------------------------------------------------------------%
+According to \eq{eq:mmd_integral}, the computation of the MMD moslty relies on the expression of potentials. 
+For most of the distributions $\pi$ studied, the potentials are estimated on a candidate set with size $N$ such that $P_\pi(\bx) \approx \frac1N \sum_{i=1}^N k\left(\bx^{(i)}, \bx\right)$, which forces us to manipulate heavy covariance matrices. 
+However, for specific combinations of distributions and kernels, one can directly express the potential function analytically. 
+If $\pi$ is the uniform distribution on $[0, 1]$, a summary of analytical potentials for various kernels is proposed in \citet[Table 1]{pronzato_zhigljavsky_2020}. 
+This section develops the analytical expression of the potential, in the case of standard normal distributions with Matérn kernels (with $\eta=5/2$).
+
+The analytical potential is expressed hereafter in the one-dimensional case, in a higher dimension, it is the product of one-dimensional potentials (similarly to tensor-product kernels). 
+When $\pi$ is the uniform on $[0,1]$ and $k$ is a Matérn kernelwith smoothness $\nu=5/2$ and correlation length $\theta$ (see \eqref{eq:Matern5/2}), the potential $P_{\pi}$ is defined as:
+\bea
+    P_{\pi}(x) = \frac{16 \theta}{3 \sqrt{5}} - \frac{1}{15 \theta} (S_\theta(x) + S_\theta(1-x)),
+\eea
+where
+\bea
+\nonumber
+    S_\theta(x) = 
+    \exp\left(- \frac{\sqrt{5}}{\theta} x \right) 
+    \left( 5 \sqrt{5} x^2 + 25 \theta x + 8 \sqrt{5} \theta^2 \right).
+\eea
+For other Matérn kernels with $\nu=1/2$ and $\nu=3/2$, similar results can be found in \citet{pronzato_zhigljavsky_2020}. 
+
+When $\pi$ is the standard normal distribution, and $k$ is a Matérn kernel with smoothness $\nu=5/2$ and correlation length $\theta$, the potential $P_{\pi}$ is defined as $P_{\pi}(x) = T_\theta(x) + T_\theta(-x)$, where:
+\bea
+T_\theta(x) &=&
+    \frac{1}{6} 
+    \left( 
+        \frac{5}{\theta^2} x^2 + 
+        \left( 3 - \frac{10}{\theta^2} \right) \frac{\sqrt{5}}{\theta} x + \frac{5}{\theta^2} \left( \frac{5}{\theta^2} -2 \right) + 3
+    \right) \\
+    && \times\, \mathrm{erfc} \left( \frac{\frac{\sqrt{5}}{\theta} - x}{\sqrt{2}} \right)
+    \exp\left(\frac{5}{2 \theta^2} - \frac{\sqrt{5}}{\theta}x\right) + \frac{1}{3 \sqrt{2 \pi}} \frac{\sqrt{5}}{\theta} 
+    \left( 3 - \frac{5}{\theta^2} \right) \exp\left(-\frac{x^2}{2}\right). 
+\eea

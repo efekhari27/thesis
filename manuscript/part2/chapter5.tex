@@ -756,10 +756,13 @@ Weighting can also be applied to models that do not interpolate the training dat
 For the industrial test case of Section~\ref{sec:val_res2}, the true $Q^2$ value is unknown, but the weight-corrected estimation $Q_{n*}^2$ of $Q^2$ is close to the value estimated by Leave-One-Out cross-validation and to the median of the empirical distribution of $Q^2$ values obtained by random $k$-fold cross-validation. 
 At the same time, estimation by $Q_{n*}^2$ involves a much smaller computational cost than cross-validation methods and uses a dataset fully independent of the one used to construct the model. 
 
-To each of the design methods considered to select a test set a downside can be attached. 
+Each of the design methods considered for selecting a test set can have a downside. 
 FSSF requires knowledge of the input distribution to be able to apply an iso-probabilistic transformation if necessary; it tends to select many points along the boundary of the candidate set considered. 
 Support points require the computation of the $N(N-1)/2$ distances between all pairs of candidate points, which implies significant memory requirements for large $N$; the energy-distance kernel on which the method relies cannot be used for the weighting procedure. 
-Finally, the efficient implementation of KH relies on analytical expressions for the potentials $P_{\pi}$, which are available for particular distributions (like the uniform and the Gaussian) and kernels (like Mat\'{e}rn) only (see the summary table in \citealp[p.66]{briol_phd_2019}). 
+Finally, the efficient implementation of KH relies on analytical expressions for the potentials $P_{\pi}$, which are explicitly available for particular distributions. 
+For uniform distributions on $[0, 1]$, a summary for various kernels is presented in \citet[Table 1]{pronzato_zhigljavsky_2020}. 
+In the specific case of standard normal distributions with Matérn kernels (with $\eta=5/2$), the analytical expression of the potential is given in Appendix~\ref{apx:B}.  
+More combinations of distributions and kernels are adressed in the thesis of \citet[p.66]{briol_phd_2019}. 
 The great freedom in the choice of the kernel $K$ gives a lot of flexibility, but at the same time implies that some non-trivial decisions have to be made; also, the internal parameters of $K$, such as its correlation lengths, must be specified. 
 Future work should go beyond empirical rules of thumb and study the influence of these choices.
 
